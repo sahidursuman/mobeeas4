@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  state: MyString
+  number: MyString
+  expiry_date: 2015-09-03
+  checked: false
+  checked_by: 1
+  user_id: 
+
+two:
+  name: MyString
+  state: MyString
+  number: MyString
+  expiry_date: 2015-09-03
+  checked: false
+  checked_by: 1
+  user_id: 

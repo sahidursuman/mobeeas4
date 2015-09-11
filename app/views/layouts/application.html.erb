@@ -5,10 +5,30 @@
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet">
 </head>
 <body>
-
+<%= render 'layouts/home_navbar' %>
+<div class="container">
 <%= yield %>
+</div>
+<script>
+ (function($){
+  $(function(){
 
+    // Show sideNav
+    $('.button-collapse').sideNav('show');
+    // Hide sideNav
+    $('.button-collapse').sideNav('hide');
+    $('.parallax').parallax();
+    $('select').material_select();
+    $('.datepicker').pickadate({
+       // selectMonths: true, // Creates a dropdown to control month
+       // selectYears: 15 // Creates a dropdown of 15 years to control year
+     });
+  }); // end of document ready
+})(jQuery); // end of jQuery name space
+</script>
 </body>
 </html>

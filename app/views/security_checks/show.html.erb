@@ -1,0 +1,39 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @security_check.name %>
+</p>
+
+<p>
+  <strong>State:</strong>
+  <%= @security_check.state %>
+</p>
+
+<p>
+  <strong>Number:</strong>
+  <%= @security_check.number %>
+</p>
+
+<p>
+  <strong>Expiry date:</strong>
+  <%= @security_check.expiry_date %>
+</p>
+
+<p>
+  <strong>Checked:</strong>
+  <%= @security_check.checked %>
+</p>
+
+<p>
+  <strong>Checked by:</strong>
+  <%= @security_check.checked_by %>
+</p>
+
+<p>
+  <strong>User:</strong>
+  <%= @security_check.user %>
+</p>
+
+<%= link_to 'Edit', edit_security_check_path(@security_check) %> |
+<%= link_to 'Back', security_checks_path %>

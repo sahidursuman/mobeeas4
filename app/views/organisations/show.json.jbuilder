@@ -1,0 +1,1 @@
+json.extract! @organisation, :id, :organisation_type_id, :name, :contact_name, :contact_email, :contact_phone, :address, :suburb, :state, :postcode, :country, :logo, :website, :acara_school_id, :school_type, :latitude, :longitude, :created_at, :updated_at

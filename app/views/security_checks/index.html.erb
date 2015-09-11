@@ -1,0 +1,39 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Security Checks</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>State</th>
+      <th>Number</th>
+      <th>Expiry date</th>
+      <th>Checked</th>
+      <th>Checked by</th>
+      <th>User</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @security_checks.each do |security_check| %>
+      <tr>
+        <td><%= security_check.name %></td>
+        <td><%= security_check.state %></td>
+        <td><%= security_check.number %></td>
+        <td><%= security_check.expiry_date %></td>
+        <td><%= security_check.checked %></td>
+        <td><%= security_check.checked_by %></td>
+        <td><%= security_check.user %></td>
+        <td><%= link_to 'Show', security_check %></td>
+        <td><%= link_to 'Edit', edit_security_check_path(security_check) %></td>
+        <td><%= link_to 'Destroy', security_check, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Security check', new_security_check_path %>

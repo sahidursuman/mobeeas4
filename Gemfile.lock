@@ -85,12 +85,15 @@ GEM
     execjs (2.6.0)
     friendly_id (5.1.0)
       activerecord (>= 4.0.0)
+    geocoder (1.2.9)
     globalid (0.3.6)
       activesupport (>= 4.1.0)
     http-cookie (1.0.2)
       domain_name (~> 0.5)
     i18n (0.7.0)
     i18n_data (0.7.0)
+    indefinite_article (0.2.4)
+      activesupport
     invisible_captcha (0.8.0)
       rails
     jbuilder (2.3.1)
@@ -222,6 +225,8 @@ DEPENDENCIES
   country_select
   devise
   friendly_id
+  geocoder
+  indefinite_article
   invisible_captcha
   jbuilder (~> 2.0)
   jquery-rails

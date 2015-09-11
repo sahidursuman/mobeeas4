@@ -1,0 +1,21 @@
+<%= simple_form_for(@opportunity) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="form-inputs">
+    <%= f.association :organisation %>
+    <%= f.association :user %>
+    <%= f.input :opportunity_status %>
+    <%= f.input :name %>
+    <%= f.input :tagline %>
+    <%= f.input :info %>
+    <%= f.input :planned_start_date %>
+    <%= f.input :duration %>
+    <%= f.input :pay %>
+    <%= f.input :commencement_date %>
+    <%= f.input :completion_date %>
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>

@@ -1,0 +1,53 @@
+<%= simple_form_for(@profile) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="input-field">
+    <%= f.association :candidate_type, label: false %>
+
+  </div>
+  <div class="row">
+    <div class="input-field col s6">
+      <%= f.input :first_name %>
+    </div>
+    <div class="input-field col s6">
+      <%= f.input :last_name %>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col s12">
+      <%= f.input :picture %>
+    </div>
+  </div>
+  <div class="row">
+    <div class="input-field col s12">
+      <%= f.input :bio %>
+    </div>
+  </div>
+  <div class="row">
+    <div class="input-field col s12">
+      <%= f.input :address %>
+    </div>
+  </div>
+    <div class="row">
+      <div class="input-field col s4">
+        <%= f.input :suburb %>
+      </div>
+      <div class="input-field col s4">
+        <%= f.input :state %>
+      </div>
+      <div class="input-field col s4">
+        <%= f.input :postcode %>
+      </div>
+    </div>
+    <div class="row">
+      <div class="input-field col s6">
+        <%= f.input :phone %>
+      </div>
+      <div class="input-field col s6">
+        <%= f.input :website %>
+      </div>
+    </div>
+
+    <%= f.button :submit %>
+
+<% end %>

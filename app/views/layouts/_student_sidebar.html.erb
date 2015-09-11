@@ -1,0 +1,6 @@
+
+    <li class="bold active"><%= link_to '<i class="medium material-icons left">dashboard</i> Dashboard'.html_safe, root_path %></li>
+    <li class="bold"><%= link_to '<i class="medium material-icons left">person</i> Profile'.html_safe, student_profile_path(current_user.student_profile) %></li>
+    <li class="bold"><%= link_to '<i class="medium material-icons left">label</i> Skills'.html_safe, student_profile_path(current_user.student_profile) %></li>
+    <li><%= link_to '<i class="medium material-icons left">view_list</i> Engagements'.html_safe, student_profile_path(current_user.student_profile) %></li>
+    <li><%= link_to '<i class="medium material-icons left">comment</i> Messages'.html_safe, student_profile_path(current_user.student_profile) %></li>

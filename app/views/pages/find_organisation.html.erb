@@ -1,0 +1,38 @@
+<h1>Find your organisation</h1>
+
+<% if params[:search] %>
+	<% if @organisations.any? %>
+		<table class="bordered">
+		<%= @organisations.each do |org| %>
+			<tr>
+				<td><%= org.name %></td>
+				<td><a href="#" class="btn">Connect to <%= org.name %></a></td>
+			</tr>
+		<% end %>
+		</table>
+		<% else %>
+		<h4>No organisations with that name are listed.</h4>
+		<%= link_to "Add your organisation", new_organisation_path(org_type: params[:org_type]), class: 'btn' %>
+	<% end %>
+<% elsif params[:org_type] %>
+	<h4>See if your organisation is already listed</h4>
+	<%= form_tag(find_organisation_path, :method => "get", id: "search-form") do %>
+	<%= hidden_field_tag :org_type, params[:org_type], value: params[:org_type] %>
+	<div class="row">
+	  <div class="input-field col s6">
+	    <%= text_field_tag :search, params[:search] %>
+	    <label for="search"><i class="material-icons left">search</i> Find your organisation</label>
+	  </div>
+	</div>
+	  <%= submit_tag "Search", class: 'btn btn-edit' %>
+	<% end %>
+
+
+	
+
+<% else %>
+	<h4>What type of organisation do you represent?</h4>
+	<% @organisation_types.each do |org_type| %>
+		<%= link_to org_type.name, find_organisation_path(org_type: org_type.id), class: 'btn' %>
+	<% end %>
+<% end %>

@@ -1,0 +1,18 @@
+@import "materialize/components/color";
+$primary-color: color("green", "lighten-3") !default;
+@import 'materialize';
+@import 'form';
+
+body {
+    background: #EEE;
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+}
+
+@media only screen and (min-width : 601px) {
+  nav, nav .nav-wrapper i, nav a.button-collapse, nav a.button-collapse i {
+    height: 100px;
+    line-height: 100px; }
+  .navbar-fixed {
+    height: 100px; } }

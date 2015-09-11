@@ -1,0 +1,25 @@
+<div class="card ">
+  <div class="card-content black-text">
+    <span class="card-title blue-text text-darken-2">Register <% if params[:user_type]  %> as <%= params[:user_type].indefinitize %> <% end %></span>
+    <%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name), html: { class: 'form-login' }) do |f| %>
+	
+  	<%= f.error_notification %>
+
+    <%= f.input :email, label: 'Your email', required: true, autofocus: true %>
+    <%= f.input :password, label: 'Choose a password', required: true, hint: ("#{@minimum_password_length} characters minimum" if @minimum_password_length) %>
+    <% if params[:user_type] %>
+    	<%= f.input :user_type, as: :hidden, input_html: { value: params[:user_type]} %>
+    <% end %>
+    <button type="submit" class="btn waves-effect waves-light" name="action">Register</button>
+	<hr>
+	<p>Already a MOBEEAS member? <%= render "devise/shared/links" %></p>
+  </div>
+<% end %>
+</div>
+    </div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>

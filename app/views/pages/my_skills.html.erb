@@ -1,0 +1,17 @@
+<h2>Add/Edit your skills</h2>
+
+<ul class="collapsible" data-collapsible="accordion">
+	<% @skill_categories.each do |skill_category| %>
+    <li>
+      <div class="collapsible-header"><i class="material-icons">filter_drama</i><%= skill_category.name %></div>
+      <div class="collapsible-body">
+      	<% skill_category.skills.each do |skill| %>
+				
+				<% unless skill.users.include?(current_user) %>
+					<%= link_to skill.name, add_user_skill_path(skill), class: 'waves-effect waves-teal btn-flat' %>
+				<% end %>
+			<% end %>
+      </div>
+    </li>
+  <% end %>
+    

@@ -1,0 +1,17 @@
+<%= simple_form_for(@education) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="input-field">
+    <%= f.input :institution, label: 'High School/University/College' %>
+  </div>
+  <div class="input-field">
+    <%= f.input :course, label: 'Course/Degree if University or College' %>
+  </div>
+  <div class="input-field">
+    <%= f.input :year_completed, label: 'Year completed (past or future)' %>
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>

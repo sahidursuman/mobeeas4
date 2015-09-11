@@ -1,0 +1,9 @@
+<li class="bold <%= 'active' if current_page?(root_path) %> "><%= link_to '<span class="blue-text"><i class="medium material-icons left">dashboard</i></span> Dashboard'.html_safe, root_path %></li>
+<% if current_user.teacher_profile %>
+<li class="bold <%= 'active' if controller_name == 'teacher_profiles' %>"><%= link_to '<span class="blue-text"><i class="medium material-icons left">person</i></span> Profile'.html_safe, teacher_profile_path(current_user.teacher_profile) %></li>
+<li><a class="" href="#"><span class="blue-text"><i class="medium material-icons left">dns</i></span> Projects</a></li>
+<li><%= link_to teacher_profile_path(current_user.teacher_profile) do %>
+<span class="blue-text"><i class="medium material-icons left">comment</i></span> Messages
+<% end %>
+</li>
+<% end %>

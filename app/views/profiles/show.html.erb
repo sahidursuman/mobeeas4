@@ -1,0 +1,111 @@
+<p id="notice"><%= notice %></p>
+
+<div class="row">
+<div class="col m4">
+ <div class="card">
+    <div class="card-image waves-effect waves-block waves-light">
+      <img class="activator" src="<%= asset_path 'pete.jpg' %>">
+    </div>
+    <div class="card-content">
+      <span class="card-title activator blue-text">Profile<i class="material-icons right">mode_edit</i></span>
+      <h4><%= @profile.first_name %> <%= @profile.last_name %></h4>
+      <p><strong>Email:</strong> <%= @profile.user.email %></p>
+      <p>
+        <strong>Phone:</strong>
+        <%= @profile.phone %>
+      </p>
+
+      <p>
+        <strong>Website:</strong>
+        <%= @profile.website %>
+      </p>
+      <hr>
+      <h5>About me:</h5>
+      <p><%= @profile.bio %></p>
+      <hr>
+      <h5>Address</h5>
+      <p><%= @profile.address %></p>
+      <p><%= @profile.suburb %> <%= @profile.state %> <%= @profile.postcode %></p>
+    </div>
+    <div class="card-reveal">
+      <span class="card-title grey-text text-darken-4">Edit profile<i class="material-icons right">close</i></span>
+      <%= render 'profiles/form' %>
+    </div>
+  </div>
+</div>
+<div class="col m8">
+<!-- SKILLS -->
+  <div class="card">
+    <div class="card-content">
+      <span class="card-title blue-text">Your skills</span>
+
+      <p><% if @user_skills.any? %>
+        <ul>
+          <% @user_skills.each do |user_skill| %>
+            <li><%= user_skill.name %></li>
+          <% end %>
+        </ul>
+      <% else %>
+        No skills listed.
+      <% end %></p>
+    </div>
+    <div class="card-action">
+      <a href="/my_skills">Add skills</a>
+    </div>
+  </div>
+  <!-- EDUCATION -->
+  <div class="card">
+    <div class="card-content">
+      <span class="card-title blue-text">Your education</span>
+
+      <p><% if @user_educations.any? %>
+        <% @user_educations.each do |user_education| %>
+          <p>
+            <%= user_education.institution %>: 
+            <%= user_education.course %> 
+            <%= link_to edit_education_path(user_education) do %><i class="material-icons tiny  ">mode_edit</i><% end %>
+          </p>
+        <% end %>
+      <% else %>
+        No education listed.
+      <% end %></p>
+    </div>
+    <div class="card-action">
+      <a href="/educations/new">Add education</a>
+    </div>
+  </div>
+  <!-- SECURITY CHECKS -->
+  <div class="card">
+    <div class="card-content">
+      <span class="card-title blue-text">Your security checks</span>
+
+      <p><% if @user_security_checks.any? %>
+        <table>
+          <thead><tr>
+            <th>Type</th>
+            <th>State</th>
+            <th>Expires</th>
+            <th>Number</th>
+            <th></th>
+            </tr>
+          </thead>
+        <% @user_security_checks.each do |check| %>
+          <tr>
+            <td><%= check.name %></td>
+            <td><%= check.state %></td> 
+            <td><%= check.expiry_date.strftime('%d %b %y') %></td>
+            <td> <%= check.number %></td>
+            <td><%= link_to edit_security_check_path(check) do %><i class="material-icons tiny  ">mode_edit</i><% end %></td>
+          </tr>
+        <% end %>
+        </table>
+      <% else %>
+        No security checks listed.
+      <% end %></p>
+    </div>
+    <div class="card-action">
+      <a href="/security_checks/new">Add a security check</a>
+    </div>
+  </div>
+</div>
+</div>

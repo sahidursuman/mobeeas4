@@ -1,0 +1,14 @@
+<%= simple_form_for(@opportunity_application) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="form-inputs">
+    <%= f.association :user %>
+    <%= f.association :opportunity %>
+    <%= f.input :introduction %>
+    <%= f.input :application_status %>
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>

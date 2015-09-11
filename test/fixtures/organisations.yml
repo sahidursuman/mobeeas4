@@ -1,0 +1,37 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  organisation_type_id: 
+  name: MyString
+  contact_name: MyString
+  contact_email: MyString
+  contact_phone: MyString
+  address: MyString
+  suburb: MyString
+  state: MyString
+  postcode: MyString
+  country: MyString
+  logo: MyString
+  website: MyString
+  acara_school_id: MyString
+  school_type: MyString
+  latitude: MyString
+  longitude: MyString
+
+two:
+  organisation_type_id: 
+  name: MyString
+  contact_name: MyString
+  contact_email: MyString
+  contact_phone: MyString
+  address: MyString
+  suburb: MyString
+  state: MyString
+  postcode: MyString
+  country: MyString
+  logo: MyString
+  website: MyString
+  acara_school_id: MyString
+  school_type: MyString
+  latitude: MyString
+  longitude: MyString
