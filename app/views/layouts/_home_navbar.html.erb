@@ -8,7 +8,7 @@
         <!-- <li><a href="sass.html"><i class="material-icons left">search</i>Find Opportunities</a></li> -->
         
         <% if user_signed_in? %>
-          <% if current_user.profile %>
+          <% if current_user.profile and current_user.profile.id != nil %>
             <li><%= link_to profile_path(current_user.profile) do %><i class="material-icons left">account_circle</i> My Profile<% end %></li>
           <% end %>
         <!-- <li><a href="collapsible.html"><i class="material-icons left">message</i> 4 new</a></li> -->

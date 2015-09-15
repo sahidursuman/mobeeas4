@@ -4,10 +4,10 @@
 <div class="col m4">
  <div class="card">
     <div class="card-image waves-effect waves-block waves-light">
-      <% if @profile.picture %>
+      <% if @profile.picture.present? %>
         <%= image_tag(@profile.picture_url, class: 'img-responsive activator') %>
       <% else %>
-        <%= image_tag 'user.png', class: 'img-responsive activator' %>
+        <img src="<%= asset_path 'user.png' %>" class='img-responsive activator'>
       <% end %>
     </div>
     <div class="card-content">
@@ -39,7 +39,7 @@
 </div>
 <div class="col m8">
 <!-- SKILLS -->
-  <div class="card" data-no-turbolink>
+  <div class="card">
     <div class="card-content">
       <span class="card-title blue-text">Your skills</span>
 
@@ -59,7 +59,7 @@
   </div>
   <!-- EDUCATION -->
   <div class="card">
-    <div class="card-content" data-no-turbolink>
+    <div class="card-content">
       <span class="card-title blue-text">Your education</span>
 
       <p><% if @user_educations.any? %>
@@ -80,7 +80,7 @@
   </div>
   <!-- SECURITY CHECKS -->
   <div class="card">
-    <div class="card-content" data-no-turbolink>
+    <div class="card-content">
       <span class="card-title blue-text">Your security checks</span>
 
       <p><% if @user_security_checks.any? %>
