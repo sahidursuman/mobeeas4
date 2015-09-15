@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150903005618) do
+ActiveRecord::Schema.define(version: 20150915031436) do
 
   create_table "candidate_skills", force: :cascade do |t|
     t.integer  "user_id"
@@ -37,6 +37,7 @@ ActiveRecord::Schema.define(version: 20150903005618) do
     t.string   "year_completed"
     t.datetime "created_at",     null: false
     t.datetime "updated_at",     null: false
+    t.boolean  "terms"
   end
 
   add_index "educations", ["user_id"], name: "index_educations_on_user_id"

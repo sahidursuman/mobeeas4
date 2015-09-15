@@ -1,6 +1,6 @@
 class PagesController < ApplicationController
 	skip_before_action :authenticate_user!, only: [:home, :contact]
-	# layout 'devise', except: :admin
+	layout 'home', only: :home
   def home
   end
 
@@ -26,7 +26,8 @@ class PagesController < ApplicationController
   end
 
   def my_skills
-    @skill_categories = SkillCategory.all
+    @skill_categories = SkillCategory.includes(:skills)
     @skills = Skill.all
+    @my_skills = current_user.skills
   end
 end

@@ -2,15 +2,17 @@
   <%= f.error_notification %>
 
   <div class="input-field">
-    <%= f.input :institution, label: 'High School/University/College' %>
+    <%= f.input :institution, label: 'High School/University/College', label_input: { class: 'active'} %>
   </div>
   <div class="input-field">
     <%= f.input :course, label: 'Course/Degree if University or College' %>
   </div>
   <div class="input-field">
     <%= f.input :year_completed, label: 'Year completed (past or future)' %>
-  </div>
-
+  </div>  <input value="0" type="hidden" name="education[terms]" /><input class="boolean optional" type="checkbox" value="1" name="education[terms]" id="education_terms" /><label class="boolean optional checkbox" for="education_terms">I agree to allow MOBEEAS representatives to confirm my enrolment at this educational institution.</label>
+  <div class="row"><div class="col m12">
+  
+</div></div>
   <div class="form-actions">
     <%= f.button :submit %>
   </div>

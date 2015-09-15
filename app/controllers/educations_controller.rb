@@ -42,7 +42,7 @@ class EducationsController < ApplicationController
   def update
     respond_to do |format|
       if @education.update(education_params)
-        format.html { redirect_to @education, notice: 'Education was successfully updated.' }
+        format.html { redirect_to profile_path(current_user.profile), notice: 'Education was successfully updated.' }
         format.json { render :show, status: :ok, location: @education }
       else
         format.html { render :edit }
@@ -56,7 +56,7 @@ class EducationsController < ApplicationController
   def destroy
     @education.destroy
     respond_to do |format|
-      format.html { redirect_to educations_url, notice: 'Education was successfully destroyed.' }
+      format.html { redirect_to profile_path(current_user.profile), notice: 'Education was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
@@ -69,6 +69,6 @@ class EducationsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def education_params
-      params.require(:education).permit(:user_id, :institution, :course, :year_completed)
+      params.require(:education).permit(:terms, :user_id, :institution, :course, :year_completed)
     end
 end

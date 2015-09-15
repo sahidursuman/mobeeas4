@@ -1,5 +1,5 @@
 @import "materialize/components/color";
-$primary-color: color("green", "lighten-3") !default;
+$primary-color: color("teal", "lighten-1") !default;
 @import 'materialize';
 @import 'form';
 
@@ -16,3 +16,12 @@ body {
     line-height: 100px; }
   .navbar-fixed {
     height: 100px; } }
+nav {
+	background-color: white;
+}
+nav ul a {
+	color: $primary-color;
+}
+.parallax-container {
+      height: 400px;
+    }

@@ -42,7 +42,7 @@ class SecurityChecksController < ApplicationController
   def update
     respond_to do |format|
       if @security_check.update(security_check_params)
-        format.html { redirect_to @security_check, notice: 'Security check was successfully updated.' }
+        format.html { redirect_to profile_path(current_user.profile), notice: 'Security check was successfully updated.' }
         format.json { render :show, status: :ok, location: @security_check }
       else
         format.html { render :edit }

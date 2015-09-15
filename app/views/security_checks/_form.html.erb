@@ -1,21 +1,22 @@
-<%= simple_form_for(@security_check) do |f| %>
-  <%= f.error_notification %>
+<%= form_for(@security_check) do |f| %>
+  <%# f.error_notification %>
 
   <div class="input-field">
-    <%= f.input :name, label: false, collection: ['Working with Children', 'Police Check'] %>
-    <%= f.label :name, label: 'Security check type' %>
+    <%= f.select(:name, options_for_select(['Working with Children', 'Police Check'])) %>
+    <%= f.label 'Security check type' %>
   </div>
   <div class="input-field">
-    <%= f.input :state, label: false, collection: ['ACT', 'NSW', 'NT', 'QLD', 'SA', 'TAS', 'VIC', 'WA' ] %>
-    <label>State that issued clearance check</label>
+    <%= f.select(:state, options_for_select(['ACT', 'NSW', 'NT', 'QLD', 'SA', 'TAS', 'VIC', 'WA' ])) %>
+    <%= f.label 'State issued' %>
   </div>
   <div class="input-field">
-    <%= f.input :number, label: 'Clearance check number' %>
+    <%= f.text_field :number %>
+    <%= f.label 'Clearance check number' %>
   </div>
   <div class="input-field">
-    <%= f.input :expiry_date, input_html: { class: 'datepicker' } %>
+    <%= f.date_field :expiry_date, class: 'datepicker' %>
+    <%= f.label 'Expiry date' %>
   </div>
-
   <div class="form-actions">
     <%= f.button :submit %>
   </div>
