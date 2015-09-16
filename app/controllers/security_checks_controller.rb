@@ -1,6 +1,6 @@
 class SecurityChecksController < ApplicationController
   before_action :set_security_check, only: [:show, :edit, :update, :destroy]
-
+  skip_before_action :check_admin, except: [:index, :show]
   # GET /security_checks
   # GET /security_checks.json
   def index

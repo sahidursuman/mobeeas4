@@ -26,8 +26,8 @@ class PagesController < ApplicationController
   end
 
   def my_skills
-    @skill_categories = SkillCategory.includes(:skills)
-    @skills = Skill.all
+    @skill_categories = SkillCategory.includes(:skills).order(name: :asc)
+    # @skills = Skill.all
     @my_skills = current_user.skills
   end
 end

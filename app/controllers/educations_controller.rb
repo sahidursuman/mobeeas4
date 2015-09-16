@@ -1,6 +1,6 @@
 class EducationsController < ApplicationController
   before_action :set_education, only: [:show, :edit, :update, :destroy]
-
+  skip_before_action :check_admin, except: [:index, :show]
   # GET /educations
   # GET /educations.json
   def index
@@ -19,6 +19,7 @@ class EducationsController < ApplicationController
 
   # GET /educations/1/edit
   def edit
+    
   end
 
   # POST /educations

@@ -1,6 +1,6 @@
 class SkillsController < ApplicationController
   before_action :set_skill, only: [:add_user, :remove_user, :show, :edit, :update, :destroy]
-  
+  skip_before_action :check_admin, only: [:add_user, :remove_user]
 
   def add_user
     @skill.users << current_user
@@ -74,6 +74,8 @@ class SkillsController < ApplicationController
   end
 
   private
+
+
     # Use callbacks to share common setup or constraints between actions.
     def set_skill
       @skill = Skill.find(params[:id])

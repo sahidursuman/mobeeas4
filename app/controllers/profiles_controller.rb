@@ -1,7 +1,7 @@
 class ProfilesController < ApplicationController
   before_action :set_profile, only: [:show]
   before_action :current_user_profile, only: [:edit, :update, :destroy]
-
+  
   # GET /profiles
   # GET /profiles.json
   def index

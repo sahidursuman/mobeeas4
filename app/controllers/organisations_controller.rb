@@ -1,6 +1,6 @@
 class OrganisationsController < ApplicationController
   before_action :set_organisation, only: [:show, :edit, :update, :destroy]
-
+  skip_before_action :check_admin, except: [:index, :show]
   # GET /organisations
   # GET /organisations.json
   def index
