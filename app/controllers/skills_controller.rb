@@ -1,5 +1,6 @@
 class SkillsController < ApplicationController
   before_action :set_skill, only: [:add_user, :remove_user, :show, :edit, :update, :destroy]
+  
 
   def add_user
     @skill.users << current_user
