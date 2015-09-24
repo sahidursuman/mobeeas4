@@ -1,7 +1,7 @@
 class ProfilesController < ApplicationController
   before_action :set_profile, only: [:show]
   before_action :current_user_profile, only: [:edit, :update, :destroy]
-  
+
   # GET /profiles
   # GET /profiles.json
   def index
@@ -15,7 +15,7 @@ class ProfilesController < ApplicationController
   # GET /profiles/1
   # GET /profiles/1.json
   def show
-    if @profile.user == current_user
+    if @profile.user == current_user or current_user.has_role? :admin
       @user = current_user
       @user_skills = @user.skills
       @user_educations = @user.educations
@@ -86,6 +86,6 @@ class ProfilesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def profile_params
-      params.require(:profile).permit(:candidate_type_id, :user_id, :first_name, :last_name, :picture, :bio, :address, :suburb, :state, :postcode, :country, :phone, :website, :latitude, :longitude)
+      params.require(:profile).permit(:dob, :candidate_type_id, :user_id, :first_name, :last_name, :picture, :bio, :address, :suburb, :state, :postcode, :country, :phone, :website, :latitude, :longitude)
     end
 end

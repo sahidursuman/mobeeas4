@@ -9,6 +9,10 @@ class Profile < ActiveRecord::Base
 
 	mount_uploader :picture, PictureUploader
 
+	def name
+		[first_name, last_name].compact.join(' ')
+	end
+
 	def profile_data
 		[address, suburb, state, postcode, country].compact.join(', ')
 	end

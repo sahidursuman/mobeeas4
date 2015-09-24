@@ -1,2 +1,20 @@
-<h1>Pages#admin</h1>
-<p>Find me in app/views/pages/admin.html.erb</p>
+<h1>Admin</h1>
+<div class="card">
+	<div class="card-content black-text">
+		<table>
+			<tr>
+				<th>Name</th>
+				<th>Candidate type</th>
+			</tr>
+			<% @users.each do |user| %>
+				<% if user.profile %>
+					<tr>
+						<td><%= link_to user.profile.name, profile_path(user.profile) %></td>
+						<td><%= user.profile.candidate_type.name %></td>
+					</tr>
+				<% end %>
+			<% end %>
+		</table>
+	</div>
+</div>
+

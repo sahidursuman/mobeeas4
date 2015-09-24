@@ -15,8 +15,8 @@ class SkillsController < ApplicationController
   # GET /skills
   # GET /skills.json
   def index
-    @skill_categories = SkillCategory.all
-    @skills = Skill.all
+    @skill_categories = SkillCategory.includes(:skills)
+    # @skills = Skill.all
   end
 
   # GET /skills/1
