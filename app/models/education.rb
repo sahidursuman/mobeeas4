@@ -1,7 +1,7 @@
 class Education < ActiveRecord::Base
   belongs_to :user
 
-  validates :institution, :course, :year_completed, :terms, presence: true
+  validates :institution, :course, :year_completed, presence: true
   # validates :terms, :acceptance => {:accept => true}, if: :current_enrolment?
   
 
