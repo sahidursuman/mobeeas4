@@ -11,7 +11,7 @@ class Skill < ActiveRecord::Base
 
   def is_verified?(user_id)
     if User.find(user_id).skills
-  	 CandidateSkill.find_by('user_id = ? && skill_id = ?', user_id, self.id).verified
+  	 CandidateSkill.find_by('user_id = ? and skill_id = ?', user_id, self.id).verified
     end
   end
 end
