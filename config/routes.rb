@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :enquiries
+  resources :agreements
   resources :candidate_types
   resources :opportunity_applications
   resources :opportunities
@@ -19,6 +21,8 @@ Rails.application.routes.draw do
   get 'find_organisation', to: 'pages#find_organisation'
   root 'pages#home'
   get 'my_skills', to: 'pages#my_skills'
+  get 'thanks', to: 'pages#thanks'
+  get 'about', to: 'pages#about'
   devise_for :users, controllers: { registrations: "registrations" }
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

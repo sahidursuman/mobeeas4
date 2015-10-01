@@ -2,12 +2,20 @@
   <%# f.error_notification %>
 
   <div class="input-field">
-    <%= f.select(:name, options_for_select(['Working with Children', 'Police Check'])) %>
+    <%= f.select(:name, options_for_select(['Working with Children', 'Police Check']), class: 'browser-default') %>
     <%= f.label 'Security check type' %>
   </div>
   <div class="input-field">
-    <%= f.select(:state, options_for_select(['ACT', 'NSW', 'NT', 'QLD', 'SA', 'TAS', 'VIC', 'WA' ])) %>
-    <%= f.label 'State issued' %>
+    <select name="security_check[state]" id="security_check_state" class="browser-default">
+    <option value=""></option>
+    <option value="ACT">ACT</option>
+    <option value="NSW">NSW</option>
+    <option value="NT">NT</option>
+    <option value="QLD">QLD</option>
+    <option value="SA">SA</option>
+    <option value="TAS">TAS</option>
+    <option value="VIC">VIC</option>
+    <option value="WA">WA</option></select>
   </div>
   <div class="input-field">
     <%= f.text_field :number %>
@@ -18,6 +26,6 @@
     <%= f.label 'Expiry date' %>
   </div>
   <div class="form-actions">
-    <%= f.button :submit %>
+    <button type="submit" class="btn">Add Security Check</button>
   </div>
 <% end %>

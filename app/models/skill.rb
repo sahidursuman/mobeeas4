@@ -8,4 +8,8 @@ class Skill < ActiveRecord::Base
   def self.alphabetical
   	order(name: :asc)
   end
+
+  def is_verified?(user_id)
+  	CandidateSkill.find_by('user_id == ? and skill_id == ?', user_id, self.id).verified
+  end
 end

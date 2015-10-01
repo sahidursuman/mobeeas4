@@ -1,5 +1,5 @@
 class PagesController < ApplicationController
-	skip_before_action :authenticate_user!, only: [:home, :contact]
+	skip_before_action :authenticate_user!, only: [:home, :contact, :thanks]
 	layout 'home', only: :home
   def home
   end
@@ -31,8 +31,13 @@ class PagesController < ApplicationController
   end
 
   def my_skills
-    @skill_categories = SkillCategory.includes(:skills).order(name: :asc)
+    @skill_categories = SkillCategory.includes(:skills)
     # @skills = Skill.all
     @my_skills = current_user.skills
+  end
+
+  def thanks
+  end
+  def about
   end
 end

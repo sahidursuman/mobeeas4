@@ -1,0 +1,39 @@
+<div class="card-content">
+  <span class="card-title blue-text"><i class="fa fa-sliders"></i> Your skills</span>
+      
+  <% if @user_skills.any? %>
+    <table>
+      <thead>
+        <tr>
+          <th>Category</th>
+          <th>Skill</th>
+          <th class="right-align">Verified</th>
+        </tr>
+      </thead>
+      <tbody>
+      <% @user_skills.each do |user_skill| %>
+        <tr>
+          <td><%= user_skill.skill_category.name %></td>
+          <td><%= user_skill.name %></td>
+          <td class="right-align">
+            <% if user_skill.is_verified?(@profile.user.id) %>
+              <span class="green-text"><i class="fa fa-check-circle"></i></span>
+            <% else %>
+              <span class="red-text"><i class="fa fa-times"></i></span>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+      </tbody>
+    </table>
+       
+  <% else %>
+    No skills listed.
+  <% end %></p>
+</div>
+<div class="card-action">
+  <a href="/my_skills">Add skills</a>
+  <% if @user_skills.any? %>
+    <a href="#">Verify your skills</a>
+  <% end %>
+</div>

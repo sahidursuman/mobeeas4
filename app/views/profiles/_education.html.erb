@@ -1,0 +1,37 @@
+<div class="card-content">
+      <span class="card-title blue-text"><i class="fa fa-graduation-cap"></i> Your education</span>
+
+      <p><% if @user_educations.any? %>
+        <table>
+          <thead>
+            <tr>
+              <th>Institution</th>
+              <th>Course</th>
+              <th class="right-align">Verified</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @user_educations.each do |user_education| %>
+              <tr>
+                <td><%= user_education.institution %></td>
+                <td><%= user_education.course %> <%= link_to edit_education_path(user_education) do %><i class="material-icons tiny  ">mode_edit</i><% end %></td>
+                <td class="right-align">
+                  <% if user_education.verified %>
+                    <span class="green-text"><i class="fa fa-check-circle"></i></span>
+                  <% else %>
+                    <span class="red-text"><i class="fa fa-times"></i></span>
+                  <% end %>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      <% else %>
+        No education listed.
+      <% end %></p>
+    </div>
+    <div class="card-action">
+      <a href="/educations/new">Add education</a>
+      <a href="#">Verify your education</a>
+    </div>

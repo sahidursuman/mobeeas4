@@ -11,13 +11,25 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150924020853) do
+ActiveRecord::Schema.define(version: 20151001062125) do
+
+  create_table "agreements", force: :cascade do |t|
+    t.integer  "user_id"
+    t.boolean  "ethics",          default: false
+    t.boolean  "code_of_conduct", default: false
+    t.boolean  "terms",           default: false
+    t.datetime "created_at",                      null: false
+    t.datetime "updated_at",                      null: false
+  end
+
+  add_index "agreements", ["user_id"], name: "index_agreements_on_user_id"
 
   create_table "candidate_skills", force: :cascade do |t|
     t.integer  "user_id"
     t.integer  "skill_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
+    t.boolean  "verified",   default: false
   end
 
   add_index "candidate_skills", ["skill_id"], name: "index_candidate_skills_on_skill_id"
@@ -35,12 +47,24 @@ ActiveRecord::Schema.define(version: 20150924020853) do
     t.string   "institution"
     t.string   "course"
     t.string   "year_completed"
-    t.datetime "created_at",     null: false
-    t.datetime "updated_at",     null: false
+    t.datetime "created_at",                     null: false
+    t.datetime "updated_at",                     null: false
     t.boolean  "terms"
+    t.boolean  "verified",       default: false
   end
 
   add_index "educations", ["user_id"], name: "index_educations_on_user_id"
+
+  create_table "enquiries", force: :cascade do |t|
+    t.string   "enquiry_type"
+    t.string   "name"
+    t.string   "email"
+    t.string   "phone"
+    t.string   "company"
+    t.text     "message"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+  end
 
   create_table "friendly_id_slugs", force: :cascade do |t|
     t.string   "slug",                      null: false
@@ -151,10 +175,11 @@ ActiveRecord::Schema.define(version: 20150924020853) do
     t.string   "website"
     t.string   "latitude"
     t.string   "longitude"
-    t.datetime "created_at",        null: false
-    t.datetime "updated_at",        null: false
+    t.datetime "created_at",                            null: false
+    t.datetime "updated_at",                            null: false
     t.integer  "candidate_type_id"
     t.date     "dob"
+    t.string   "status",            default: "pending"
   end
 
   add_index "profiles", ["candidate_type_id"], name: "index_profiles_on_candidate_type_id"
@@ -176,11 +201,11 @@ ActiveRecord::Schema.define(version: 20150924020853) do
     t.string   "state"
     t.string   "number"
     t.date     "expiry_date"
-    t.boolean  "checked"
     t.integer  "checked_by"
     t.integer  "user_id"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
+    t.boolean  "verified",    default: false
   end
 
   add_index "security_checks", ["user_id"], name: "index_security_checks_on_user_id"

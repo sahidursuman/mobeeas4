@@ -5,6 +5,7 @@ class User < ActiveRecord::Base
 	has_one :org_user
 	has_one :organisation, through: :org_user
 	has_one :profile
+	has_one :agreement
 	has_many :security_checks
 	has_many :candidate_skills
 	has_many :skills, through: :candidate_skills

@@ -1,0 +1,16 @@
+<%= simple_form_for(@enquiry) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="form-inputs">
+    <% f.input :enquiry_type %>
+    <%= f.input :name, label: 'Your name' %>
+    <%= f.input :email %>
+    <%= f.input :phone %>
+    <%= f.input :company %>
+    <%= f.input :message, input_html: { class: 'materialize-textarea'} %>
+  </div>
+
+  <div class="form-actions">
+    <button type="submit" class="btn light-blue">Get in touch</button>
+  </div>
+<% end %>

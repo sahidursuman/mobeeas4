@@ -1,0 +1,44 @@
+<div class="card-content">
+      <span class="card-title blue-text"><i class="fa fa-check-square-o"></i> Your agreements</span>
+      <table>
+          <thead>
+            <tr>
+              <th>Agreement</th>
+              <th>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Statement of Ethics</td>
+              <td class="right-align">
+                <% if @agreement.ethics %>
+                  <span class="green-text"><i class="fa fa-check-circle"></i></span>
+                <% else %>
+                  <a href="#modal-ethics" class="modal-trigger">Read and agree</a>
+                <% end %>
+              </td>
+            </tr>
+            <tr>
+              <td>Code of Conduct</td>
+              <td class="right-align">
+                <% if @agreement.ethics %>
+                  <span class="green-text"><i class="fa fa-check-circle"></i></span>
+                <% else %>
+                  <a href="#modal-conduct" class="modal-trigger">Read and agree</a>
+                <% end %>
+              </td>
+            </tr>
+            <tr>
+              <td>Terms & Conditions</td>
+              <td class="right-align">
+                <% if @agreement.ethics %>
+                  <span class="green-text"><i class="fa fa-check-circle"></i></span>
+                <% else %>
+                  <a href="#modal-terms" class="modal-trigger">Read and agree</a>
+                <% end %>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+    </div>

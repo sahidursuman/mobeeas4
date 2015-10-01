@@ -11,8 +11,13 @@
     <%= f.input :year_completed, label: 'Year completed (past or future)' %>
   </div>  
 
-  <p>By clicking 'Create Education', I agree to allow MOBEEAS representatives to confirm my enrolment at this educational institution.
+  <!-- <p>By clicking 'Add Course', I agree to allow MOBEEAS representatives to confirm my enrolment at this educational institution.</p> -->
+  <br>
   <div class="form-actions">
-    <%= f.button :submit %>
+    <% if @education.new_record? %>
+      <button type="submit" class="btn light-blue">Add course</button>
+    <% else %>
+      <button type="submit" class="btn">Update course</button>
+    <% end %>
   </div>
 <% end %>

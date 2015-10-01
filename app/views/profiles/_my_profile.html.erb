@@ -1,0 +1,33 @@
+<div class="card-image waves-effect waves-block waves-light">
+      <% if @profile.picture.present? %>
+        <%= image_tag(@profile.picture_url, class: 'img-responsive activator') %>
+      <% else %>
+        <img src="<%= asset_path 'user.png' %>" class='img-responsive activator'>
+      <% end %>
+    </div>
+    <div class="card-content">
+      <span class="card-title activator blue-text"><i class="fa fa-user"></i> Profile<i class="material-icons right">mode_edit</i></span>
+      <h4><%= @profile.first_name %> <%= @profile.last_name %></h4>
+      <p><strong>Date of birth:</strong> <%= @profile.dob.strftime('%d/%m/%y') if @profile.dob %>
+      <p><strong>Email:</strong> <%= @profile.user.email %></p>
+      <p>
+        <strong>Phone:</strong>
+        <%= @profile.phone %>
+      </p>
+
+      <p>
+        <strong>Website:</strong>
+        <%= @profile.website %>
+      </p>
+      <hr>
+      <h5>About me:</h5>
+      <p><%= @profile.bio %></p>
+      <hr>
+      <h5>Address</h5>
+      <p><%= @profile.address %></p>
+      <p><%= @profile.suburb %> <%= @profile.state %> <%= @profile.postcode %></p>
+    </div>
+    <div class="card-reveal">
+      <span class="card-title grey-text text-darken-4">Edit profile<i class="material-icons right">close</i></span>
+      <%= render 'profiles/form' %>
+    </div>

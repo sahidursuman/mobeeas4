@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>User:</strong>
+  <%= @agreement.user %>
+</p>
+
+<p>
+  <strong>Ethics:</strong>
+  <%= @agreement.ethics %>
+</p>
+
+<p>
+  <strong>Code of conduct:</strong>
+  <%= @agreement.code_of_conduct %>
+</p>
+
+<p>
+  <strong>Terms:</strong>
+  <%= @agreement.terms %>
+</p>
+
+<%= link_to 'Edit', edit_agreement_path(@agreement) %> |
+<%= link_to 'Back', agreements_path %>
