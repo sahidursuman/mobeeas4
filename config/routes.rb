@@ -1,6 +1,15 @@
 Rails.application.routes.draw do
+  resources :skill_verifications do
+    member do
+      get :approve
+    end
+  end
   resources :enquiries
-  resources :agreements
+  resources :agreements do
+    member do
+      get :agree_to
+    end
+  end
   resources :candidate_types
   resources :opportunity_applications
   resources :opportunities
@@ -13,7 +22,11 @@ Rails.application.routes.draw do
     end
   end
   resources :skill_categories
-  resources :educations
+  resources :educations do
+    member do 
+      get :verify
+    end
+  end
   resources :profiles
   get 'admin', to: 'pages#admin'
   get 'contact', to: 'pages#contact'

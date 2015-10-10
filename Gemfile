@@ -57,6 +57,7 @@ gem 'sitemap_generator'
 gem 'materialize-sass'
 gem 'indefinite_article'
 gem 'geocoder'
+# gem 'prawn'
 group :development do
   gem 'better_errors'
   gem 'quiet_assets'

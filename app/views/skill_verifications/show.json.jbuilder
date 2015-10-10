@@ -1,0 +1,1 @@
+json.extract! @skill_verification, :id, :user_id, :referree_name, :referree_email, :referree_phone, :referree_relationship, :time_known, :work_ethic, :communication, :presentation, :accomplishments, :created_at, :updated_at

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151001062125) do
+ActiveRecord::Schema.define(version: 20151010052807) do
 
   create_table "agreements", force: :cascade do |t|
     t.integer  "user_id"
@@ -24,12 +24,23 @@ ActiveRecord::Schema.define(version: 20151001062125) do
 
   add_index "agreements", ["user_id"], name: "index_agreements_on_user_id"
 
+  create_table "candidate_skill_verifications", force: :cascade do |t|
+    t.integer  "candidate_skill_id"
+    t.integer  "skill_verification_id"
+    t.datetime "created_at",            null: false
+    t.datetime "updated_at",            null: false
+  end
+
+  add_index "candidate_skill_verifications", ["candidate_skill_id"], name: "index_candidate_skill_verifications_on_candidate_skill_id"
+  add_index "candidate_skill_verifications", ["skill_verification_id"], name: "index_candidate_skill_verifications_on_skill_verification_id"
+
   create_table "candidate_skills", force: :cascade do |t|
     t.integer  "user_id"
     t.integer  "skill_id"
-    t.datetime "created_at",                 null: false
-    t.datetime "updated_at",                 null: false
-    t.boolean  "verified",   default: false
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
+    t.boolean  "verified",    default: false
+    t.string   "skill_level"
   end
 
   add_index "candidate_skills", ["skill_id"], name: "index_candidate_skills_on_skill_id"
@@ -216,6 +227,26 @@ ActiveRecord::Schema.define(version: 20151001062125) do
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
   end
+
+  create_table "skill_verifications", force: :cascade do |t|
+    t.integer  "user_id"
+    t.string   "referree_name"
+    t.string   "referree_email"
+    t.string   "referree_phone"
+    t.string   "referree_relationship"
+    t.string   "time_known"
+    t.integer  "work_ethic"
+    t.integer  "communication"
+    t.integer  "presentation"
+    t.text     "accomplishments"
+    t.datetime "created_at",            null: false
+    t.datetime "updated_at",            null: false
+    t.string   "guid"
+    t.boolean  "approve"
+  end
+
+  add_index "skill_verifications", ["guid"], name: "index_skill_verifications_on_guid"
+  add_index "skill_verifications", ["user_id"], name: "index_skill_verifications_on_user_id"
 
   create_table "skills", force: :cascade do |t|
     t.integer  "skill_category_id"

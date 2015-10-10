@@ -29,7 +29,7 @@ class EnquiriesController < ApplicationController
 
     respond_to do |format|
       if @enquiry.save
-        format.html { redirect_to thanks_path, notice: 'Enquiry was successfully created.' }
+        format.html { redirect_to thanks_path(type: 'enquiry'), notice: 'Enquiry was successfully created.' }
         format.json { render :show, status: :created, location: @enquiry }
       else
         format.html { render :new }

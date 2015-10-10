@@ -22,7 +22,7 @@
             <tr>
               <td>Code of Conduct</td>
               <td class="right-align">
-                <% if @agreement.ethics %>
+                <% if @agreement.code_of_conduct %>
                   <span class="green-text"><i class="fa fa-check-circle"></i></span>
                 <% else %>
                   <a href="#modal-conduct" class="modal-trigger">Read and agree</a>
@@ -32,7 +32,7 @@
             <tr>
               <td>Terms & Conditions</td>
               <td class="right-align">
-                <% if @agreement.ethics %>
+                <% if @agreement.terms %>
                   <span class="green-text"><i class="fa fa-check-circle"></i></span>
                 <% else %>
                   <a href="#modal-terms" class="modal-trigger">Read and agree</a>

@@ -11,13 +11,13 @@
         </tr>
       </thead>
       <tbody>
-      <% @user_skills.each do |user_skill| %>
+      <% @candidate_skills.each do |candidate_skill| %>
         <tr>
-          <td><%= user_skill.skill_category.name %></td>
-          <td><%= user_skill.name %></td>
+          <td><%= candidate_skill.skill.skill_category.name %></td>
+          <td><%= candidate_skill.skill.name %></td>
           <td class="right-align">
-            <% if user_skill.is_verified?(@profile.user.id) %>
-              <span class="green-text"><i class="fa fa-check-circle"></i></span>
+            <% if candidate_skill.skill_level %>
+              <span class="bold teal-text"><%= candidate_skill.skill_level %></span>
             <% else %>
               <span class="red-text"><i class="fa fa-times"></i></span>
             <% end %>
@@ -34,6 +34,6 @@
 <div class="card-action">
   <a href="/my_skills">Add skills</a>
   <% if @user_skills.any? %>
-    <a href="#">Verify your skills</a>
+    <%= link_to "Verify your skills", new_skill_verification_path, class: 'waves-effect waves-teal btn-flat' %>
   <% end %>
 </div>

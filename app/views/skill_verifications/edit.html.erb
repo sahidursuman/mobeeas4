@@ -1,0 +1,67 @@
+<div class="card">
+	<div class="card-content">
+
+<h1>Skill Verification</h1>
+
+<table>
+	<tr>
+		<th>Candidate name</th>
+		<td><%= @skill_verification.user.profile.name %></td>
+	</tr>
+	<tr>
+		<th>Referree name</th>
+		<td><%= @skill_verification.referree_name %></td>
+	</tr>
+	<tr>
+		<th>Referree email</th>
+		<td><%= @skill_verification.referree_email %></td>
+	</tr>
+	<tr>
+		<th>Referree phone</th>
+		<td><%= @skill_verification.referree_phone %></td>
+	</tr>
+	<tr>
+		<th>Relationshop to candidate</th>
+		<td><%= @skill_verification.referree_relationship %></td>
+	</tr>
+	<tr>
+		<th>Time known</th>
+		<td><%= @skill_verification.time_known %></td>
+	</tr>
+	<tr>
+		<th>Ethics score</th>
+		<td><%= @skill_verification.work_ethic %></td>
+	</tr>
+	<tr>
+		<th>Communication score</th>
+		<td><%= @skill_verification.communication %></td>
+	</tr>
+	<tr>
+		<th>Presentation score</th>
+		<td><%= @skill_verification.presentation %></td>
+	</tr>
+	<tr>
+		<th>Skills</th>
+		<td>
+			<ul>
+			<% @skill_verification.candidate_skills.each do |candidate_skill| %>
+				<li>
+					<strong>
+					<%= candidate_skill.skill.skill_category.name %> 
+					<%= candidate_skill.skill.name %>: </strong>
+					<%= candidate_skill.skill_level %>
+				</li>
+			<% end %>
+			</ul>
+		</td>
+	</tr>
+	<tr>
+		<th>Other comments (accomplishments)</th>
+		<td><%= @skill_verification.accomplishments %></td>
+	</tr>
+
+</table>
+<%= link_to 'Approve Skill Verification', approve_skill_verification_path(@skill_verification), class: 'btn light-blue' %>
+<hr>
+<%= link_to 'All Skill Verifications', skill_verifications_path %>
+</div></div>

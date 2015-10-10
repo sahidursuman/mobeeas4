@@ -1,6 +1,16 @@
 class AgreementsController < ApplicationController
-  before_action :set_agreement, only: [:show, :edit, :update, :destroy]
+  before_action :set_agreement, only: [:agree_to, :show, :edit, :update, :destroy]
 
+  def agree_to
+    if params[:agreement_type] == 'ethics'
+      @agreement.update_attributes(ethics: true)
+    elsif params[:agreement_type] == 'code_of_conduct'
+      @agreement.update_attributes(code_of_conduct: true)
+    elsif params[:agreement_type] == 'terms'
+      @agreement.update_attributes(terms: true)
+    end
+    redirect_to :back
+  end
   # GET /agreements
   # GET /agreements.json
   def index

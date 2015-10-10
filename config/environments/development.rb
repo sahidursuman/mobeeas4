@@ -21,10 +21,11 @@ Rails.application.configure do
   config.action_mailer.default :charset => "utf-8"
 
   config.action_mailer.smtp_settings = {
-    :address   => "smtp.mandrillapp.com",
-    :port      => 25,
-    :user_name => ENV["MANDRILL_USERNAME"],
-    :password  => ENV["MANDRILL_API_KEY"]
+    :address   => "smtp.mailgun.org",
+    :port      => 587,
+    :user_name => 'postmaster@mobeeas.com',
+    :password  => 'a2b1212d01b5da864969e0e48ac6ee54',
+    :domain => 'mobeeas.com'
   }
 
 

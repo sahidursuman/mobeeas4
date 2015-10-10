@@ -1,0 +1,57 @@
+<%= simple_form_for(@skill_verification) do |f| %>
+  <%= f.error_notification %>
+  <p>Your name: <%= current_user.profile.name %></p>
+  <p>Your email: <%= current_user.email %></p>
+
+  <p>Please complete the details of your referree. An email will be sent to them - you can see the contents of the email below.</p>
+  <div class="form-inputs">
+    <%= f.input :user_id, as: :hidden, input_html: { value: current_user.id } %>
+    <div class="row">
+      <div class="col m6">
+        <%= f.input :referree_name %>
+      </div>
+      <div class="col m6">
+        <%= f.input :referree_email %>
+      </div>
+    </div>
+
+  </div>
+  <p>Choose which skills this referree can verify.</p>
+  <%# f.association :candidate_skills, as: :check_boxes %>
+
+
+  <% current_user.candidate_skills.each do |candidate_skill| %>
+    
+    <input class="check_boxes optional" type="checkbox" value="<%= candidate_skill.id %>" name="skill_verification[candidate_skill_ids][]" id="skill_verification_candidate_skill_ids_<%= candidate_skill.id %>" />
+    <label for="skill_verification_candidate_skill_ids_<%= candidate_skill.id %>">
+      <%= candidate_skill.skill.skill_category.name %>: <%= candidate_skill.skill.name %>
+    </label>
+    <br>
+  <% end %>
+    <br>
+
+  <input type="hidden" name="skill_verification[candidate_skill_ids][]" value="" />
+  
+  <div class="form-actions">
+    <button type="submit" class="waves-effect waves-light btn light-blue">Send referree request</button>
+  </div>
+
+<% end %>
+<hr>
+<h5>Example email sent to referree</h5>
+<div class="card grey lighten-4">
+    <div class="card-content grey-text text-darken-3">
+    <p>Dear (referee),</p>
+<br>
+<p>MOBEEAS (Managed Opportunities Between Employers, Educators and
+Students) gives undergraduates, academics and professionals the opportunity to share their expertise with school students and teachers in collaborative learning experiences.</p>
+<br>
+<p>I am applying to join MOBEEAS and require a referee to verify my nominated skills. I would appreciate it if you could comple this reference form at your earliest convenience. </p>
+<br>
+<p>Thank you for taking the time to provide me with a reference and for your verification of my skills.</p>
+<br>
+<p>Yours Sincerely<br>
+<%= current_user.profile.name %>
+</p>
+</div>
+</div>

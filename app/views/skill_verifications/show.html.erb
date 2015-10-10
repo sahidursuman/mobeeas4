@@ -1,0 +1,128 @@
+<div class="row">
+  <div class="col m8 offset-m2">
+    <div class="card white">
+      <div class="card-content grey-text text-darken-2">
+
+<h2>Hi <%= @skill_verification.referree_name %></h2>
+
+<p>Thank you for taking the time to provide me with a reference and for your verification of my skills.</p>
+<br>
+<p class="flow-text">Skill Verification Form</p>
+<p>
+  <strong>Candidate name:</strong>
+  <%= @skill_verification.user.profile.name %>
+</p>
+<p>
+  <strong>Your name:</strong>
+  <%= @skill_verification.referree_name %>
+</p>
+<p>
+  <strong>Your email:</strong>
+  <%= @skill_verification.referree_email %>
+</p>
+
+<%= simple_form_for(@skill_verification) do |f| %>
+  <%= f.error_notification %>
+  <p>
+    <strong>Please provide your phone number:</strong></p>
+    <div class="row"><div class="col m4"><%= f.input :referree_phone, label: false, placeholder: 'Your phone number' %></div></div>
+    
+
+  <p>
+    <strong>What is your relationship to the candidate, <%= @skill_verification.user.profile.name %>?</strong>  </p>
+    <%# f.input :referree_relationship, as: :check_boxes, collection: ['Current teacher', 'Former teacher', 'Family Aquaintance', 'Minister of Religion', 'Colleague', 'Other'] %>
+    <input class="check_boxes optional" type="checkbox" value="Current teacher" name="skill_verification[referree_relationship][]" id="skill_verification_referree_relationship_current_teacher" />
+    <label for="skill_verification_referree_relationship_current_teacher">Current teacher
+    </label>
+    <br>
+    
+      
+    
+      <input class="check_boxes optional" type="checkbox" value="Former teacher" name="skill_verification[referree_relationship][]" id="skill_verification_referree_relationship_former_teacher" />
+      <label for="skill_verification_referree_relationship_former_teacher">Former teacher
+    </label>
+    <br>
+    
+      <input class="check_boxes optional" type="checkbox" value="Family Aquaintance" name="skill_verification[referree_relationship][]" id="skill_verification_referree_relationship_family_aquaintance" />
+<label for="skill_verification_referree_relationship_family_aquaintance">Family Aquaintance
+    </label>
+    <br>
+    
+      <input class="check_boxes optional" type="checkbox" value="Minister of Religion" name="skill_verification[referree_relationship][]" id="skill_verification_referree_relationship_minister_of_religion" />
+<label for="skill_verification_referree_relationship_minister_of_religion">Minister of Religion</label>
+<br>
+    
+      <input class="check_boxes optional" type="checkbox" value="Colleague" name="skill_verification[referree_relationship][]" id="skill_verification_referree_relationship_colleague" />
+<label for="skill_verification_referree_relationship_colleague">Colleague</label>
+<br>
+    
+      <input class="check_boxes optional" type="checkbox" value="Other" name="skill_verification[referree_relationship][]" id="skill_verification_referree_relationship_other" />
+<label for="skill_verification_referree_relationship_other">Other</label>
+<br>
+      </span><input type="hidden" name="skill_verification[referree_relationship][]" value="" />
+
+<br>
+  <p>
+    <strong>How long have you known <%= @skill_verification.user.profile.name %>?</strong></p>
+    <%# f.input :time_known, as: :check_boxes, collection: ['Less than 1 year', 'Between 1 and 3 years', 'More than 3 years'] %>
+
+    <input class="check_boxes optional" type="checkbox" value="Less than 1 year" name="skill_verification[time_known][]" id="skill_verification_time_known_less_than_1_year" /><label for="skill_verification_time_known_less_than_1_year">Less than 1 year</label><br>
+
+    <input class="check_boxes optional" type="checkbox" value="Between 1 and 3 years" name="skill_verification[time_known][]" id="skill_verification_time_known_between_1_and_3_years" /><label for="skill_verification_time_known_between_1_and_3_years">Between 1 and 3 years</label><br>
+
+    <input class="check_boxes optional" type="checkbox" value="More than 3 years" name="skill_verification[time_known][]" id="skill_verification_time_known_more_than_3_years" /><label for="skill_verification_time_known_more_than_3_years">More than 3 years</label><br>
+
+    <input type="hidden" name="skill_verification[time_known][]" value="" />
+  
+    <br>
+  <p>
+    <strong>What is your evaluation of the following traits for <%= @skill_verification.user.profile.name %>?</strong>
+    </p>
+     
+    
+  <p>Work ethic</p>
+    <%# f.input :work_ethic, as: :radio_buttons, collection: 1..10 %>
+    <% ethics = 1..10 %>
+    <% ethics.each do |ethic_value| %>
+      <input class="radio_buttons optional with-gap" type="radio" value="<%= ethic_value %>" name="skill_verification[work_ethic]" id="skill_verification_work_ethic_<%= ethic_value %>" /><label for="skill_verification_work_ethic_<%= ethic_value %>"><%= ethic_value %></label>
+    <% end %>
+    <br><br>
+  <p>Communication skills</p>
+    <% communications = 1..10 %>
+    <% communications.each do |communication_value| %>
+      <input class="radio_buttons optional with-gap" type="radio" value="<%= communication_value %>" name="skill_verification[communication]" id="skill_verification_communication_<%= communication_value %>" /><label for="skill_verification_communication_<%= communication_value %>"><%= communication_value %></label>
+    <% end %>
+    <br><br>
+  <p>Presentation</p>
+  <% presentations = 1..10 %>
+    <% presentations.each do |presentation_value| %>
+      <input class="radio_buttons optional with-gap" type="radio" value="<%= presentation_value %>" name="skill_verification[presentation]" id="skill_verification_presentation_<%= presentation_value %>" /><label for="skill_verification_presentation_<%= presentation_value %>"><%= presentation_value %></label>
+    <% end %>
+    <br><br>
+
+    <p><strong>Please rate the candidate for the following skills:</strong></p>
+
+    <% @candidate_skills.each_with_index do |candidate_skill, index| %>
+    <p><%= candidate_skill.skill.skill_category.name %>: <%= candidate_skill.skill.name %></p>
+      <input class="radio_buttons optional with-gap" type="radio" value="Competent" name="skill_verification[candidate_skills_attributes][<%= index %>][skill_level]" id="skill_verification_candidate_skills_attributes_<%= index %>_skill_level_competent" />
+      <label for="skill_verification_candidate_skills_attributes_<%= index %>_skill_level_competent">Competent
+    </label>
+    <input class="radio_buttons optional with-gap" type="radio" value="Highly skilled" name="skill_verification[candidate_skills_attributes][<%= index %>][skill_level]" id="skill_verification_candidate_skills_attributes_<%= index %>_skill_level_highly_skilled" /><label for="skill_verification_candidate_skills_attributes_<%= index %>_skill_level_highly_skilled">Highly skilled</label>
+    <input class="radio_buttons optional with-gap" type="radio" value="Expert" name="skill_verification[candidate_skills_attributes][<%= index %>][skill_level]" id="skill_verification_candidate_skills_attributes_<%= index %>_skill_level_expert" /><label for="skill_verification_candidate_skills_attributes_<%= index %>_skill_level_expert">Expert</label> 
+
+    <input type="hidden" value="<%= candidate_skill.id %>" name="skill_verification[candidate_skills_attributes][<%= index %>][id]" id="skill_verification_candidate_skills_attributes_<%= index %>_id" />
+    <br><br>
+    <% end %>
+   
+  <p>
+  <br>
+    <strong>Can you provide any notable accomplishments for <%= @skill_verification.user.profile.name %>?</strong>
+    <textarea rows="5" class="text optional materialize-textarea" name="skill_verification[accomplishments]" id="skill_verification_accomplishments" placeholder="Write here...">
+    </textarea>
+  </p>
+  <button type="submit" class="waves-effect waves-light btn light-blue">Confirm skill verification</button>
+<% end %>
+</div>
+</div>
+</div>
+</div>
