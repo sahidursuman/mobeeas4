@@ -10,7 +10,7 @@
 				<% if user.profile %>
 					<tr>
 						<td><%= link_to user.profile.name, profile_path(user.profile) %></td>
-						<td><%= user.profile.candidate_type.name %></td>
+						<td><%= user.profile.candidate_type.name if user.profile.candidate_type %></td>
 					</tr>
 				<% end %>
 			<% end %>
