@@ -13,8 +13,8 @@
       <tbody>
       <% @candidate_skills.each do |candidate_skill| %>
         <tr>
-          <td><%= candidate_skill.skill.skill_category.name %></td>
-          <td><%= candidate_skill.skill.name %></td>
+          <td><%= candidate_skill.skill.skill_category.name if candidate_skill.skill %></td>
+          <td><%= candidate_skill.skill.name if candidate_skill.skill %></td>
           <td class="right-align">
             <% if candidate_skill.skill_level %>
               <span class="bold teal-text"><%= candidate_skill.skill_level %></span>
