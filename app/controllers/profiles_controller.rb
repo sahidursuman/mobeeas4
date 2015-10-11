@@ -16,7 +16,7 @@ class ProfilesController < ApplicationController
   # GET /profiles/1.json
   def show
     if @profile.user == current_user or current_user.has_role? :admin
-      @user = current_user
+      @user = @profile.user
       @candidate_skills = @user.candidate_skills
       @user_skills = @user.skills.includes(:candidate_skills)
       # @user_skills_categories = SkillCategory.joins(@user_skills)
