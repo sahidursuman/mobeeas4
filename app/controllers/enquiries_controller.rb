@@ -30,7 +30,7 @@ class EnquiriesController < ApplicationController
     respond_to do |format|
       if @enquiry.save
         EnquiryMailer.response(@enquiry.id).deliver_now
-        EnquiryMailer.received(@enquiry.id).deliver.now
+        EnquiryMailer.received(@enquiry.id).deliver_now
         format.html { redirect_to thanks_path(type: 'enquiry'), notice: 'Enquiry was successfully created.' }
         format.json { render :show, status: :created, location: @enquiry }
       else
