@@ -3,7 +3,7 @@
   <p>Your name: <%= current_user.profile.name %></p>
   <p>Your email: <%= current_user.email %></p>
 
-  <p>Please complete the details of your referree. An email will be sent to them - you can see the contents of the email below.</p>
+  <p>Please complete the details of your referee. An email will be sent to them - you can see the contents of the email below.</p>
   <div class="form-inputs">
     <%= f.input :user_id, as: :hidden, input_html: { value: current_user.id } %>
     <div class="row">
@@ -16,7 +16,7 @@
     </div>
 
   </div>
-  <p>Choose which skills this referree can verify.</p>
+  <p>Choose which skills this referee can verify.</p>
   <%# f.association :candidate_skills, as: :check_boxes %>
 
 
@@ -34,12 +34,12 @@
   <input type="hidden" name="skill_verification[candidate_skill_ids][]" value="" />
   
   <div class="form-actions">
-    <button type="submit" class="waves-effect waves-light btn light-blue">Send referree request</button>
+    <button type="submit" class="waves-effect waves-light btn light-blue">Send referee request</button>
   </div>
 
 <% end %>
 <hr>
-<h5>Example email sent to referree</h5>
+<h5>Example email sent to referee</h5>
 <div class="card grey lighten-4">
     <div class="card-content grey-text text-darken-3">
     <p>Dear (referee),</p>
