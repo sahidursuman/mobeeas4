@@ -3,15 +3,15 @@
   <p>Your name: <%= current_user.profile.name %></p>
   <p>Your email: <%= current_user.email %></p>
 
-  <p>Please complete the details of your referee. An email will be sent to them - you can see the contents of the email below.</p>
+  <p>Please complete the details of your referee. An email will be sent to them as indicated by the sample below.</p>
   <div class="form-inputs">
     <%= f.input :user_id, as: :hidden, input_html: { value: current_user.id } %>
     <div class="row">
       <div class="col m6">
-        <%= f.input :referree_name %>
+        <%= f.input :referree_name, label: "Your referee's name" %>
       </div>
       <div class="col m6">
-        <%= f.input :referree_email %>
+        <%= f.input :referree_email, label: "Your referee's email" %>
       </div>
     </div>
 

@@ -57,15 +57,13 @@ gem 'sitemap_generator'
 gem 'materialize-sass'
 gem 'indefinite_article'
 gem 'geocoder'
-# gem 'prawn'
+gem 'pg'
+gem 'passenger'
 group :development do
   gem 'better_errors'
   gem 'quiet_assets'
-  gem 'sqlite3'
+  gem "rails-erd"
 end
 
 group :production do
-  gem 'rails_12factor'
-  gem 'passenger'
-  gem 'pg'
-end
+  gem 'rails_12factor'end
