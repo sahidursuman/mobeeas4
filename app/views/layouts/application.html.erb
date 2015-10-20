@@ -2,12 +2,20 @@
 <html>
 <head>
   <title><%= content_for?(:title) ? yield(:title) : 'MOBEEAS - Managed Opportunites Between Employers, Educators and Students' %></title>
-  <%= stylesheet_link_tag    'application', media: 'all'%>
-  <%= javascript_include_tag 'application' %>
+  <!-- <%#= stylesheet_link_tag    'application', media: 'all'%> -->
+  <!-- <%#= javascript_include_tag 'application' %> -->
+  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
       rel="stylesheet">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+
+  <!-- this should go after your </body> -->
+<link rel="stylesheet" type="text/css" href="jquery.datetimepicker.css"/ >
+<script src="jquery.js"></script>
+<script src="build/jquery.datetimepicker.full.min.js"></script>
+
 </head>
 <body>
 <%= render 'layouts/home_navbar' %>
@@ -23,12 +31,12 @@
     $('.button-collapse').sideNav('hide');
     $('.parallax').parallax();
     $('select').material_select();
-    
-     $('.modal-trigger').leanModal();
-    $('.datepicker').pickadate({
-       // selectMonths: true, // Creates a dropdown to control month
-       // selectYears: 15 // Creates a dropdown of 15 years to control year
-     });
+
+    $('.modal-trigger').leanModal();
+    $('.datetimepicker').datetimepicker({
+      // timepicker:false,
+      format:'d.m.Y'
+    });
     $('.collapsible').collapsible({
       accordion : false // A setting that changes the collapsible behavior to expandable instead of the default accordion style
     });

@@ -1,6 +1,7 @@
 @import "materialize/components/color";
 $primary-color: color("teal", "lighten-1") !default;
 @import 'materialize';
+@import 'datetimepicker';
 @import 'form';
 
 body {
@@ -25,3 +26,64 @@ nav ul a {
 .parallax-container {
       height: 400px;
     }
+
+.palette1 {
+  color: #13a99e;
+}
+
+.palette1-bg {
+  background-color: #13a99e;
+}
+
+.palette2 {
+  color: #001731;
+}
+
+.palette2-bg {
+  background-color: #001731;
+}
+
+.height-250px {
+  height: 250px;
+}
+
+.align-center {
+  text-align: center;
+}
+
+.align-justify {
+  text-align: justify;
+}
+
+.font-24px {
+  font-size: 24px;
+}
+
+.margin-0px {
+  margin: 0px;
+}
+
+.margin-top-20px {
+  margin-top: 20px;
+}
+
+.margin-bottom-20px {
+  margin-bottom: 20px;
+}
+
+.padding-left-0px {
+  padding-left: 0px;
+}
+.padding-right-0px {
+  padding-right: 0px;
+}
+
+.card .card-action {
+  color: #000000;
+  margin-right: 0px;
+  padding-right: 0px;
+}
+
+footer.page-footer {
+  margin-top: 0px;
+}

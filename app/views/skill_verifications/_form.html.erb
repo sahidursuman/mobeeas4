@@ -14,6 +14,12 @@
         <%= f.input :referree_email, label: "Your referee's email" %>
       </div>
     </div>
+    <div class="row">
+      <div class="col s12">
+        <p>If you would like to include a brief personal message in addition to the text shown below, please include it here:</p>
+        <%= f.input :message, label: "Message: (max 200 characters)", input_html: { maxlength: 200 } %>
+      </div>
+    </div>
 
   </div>
   <p>Choose which skills this referee can verify.</p>
@@ -32,7 +38,7 @@
     <br>
 
   <input type="hidden" name="skill_verification[candidate_skill_ids][]" value="" />
-  
+
   <div class="form-actions">
     <button type="submit" class="waves-effect waves-light btn light-blue">Send referee request</button>
   </div>
@@ -43,6 +49,8 @@
 <div class="card grey lighten-4">
     <div class="card-content grey-text text-darken-3">
     <p>Dear (referee),</p>
+<br>
+<p>(Your brief message will appear here.)</p>
 <br>
 <p>MOBEEAS (Managed Opportunities Between Employers, Educators and
 Students) gives undergraduates, academics and professionals the opportunity to share their expertise with school students and teachers in collaborative learning experiences.</p>

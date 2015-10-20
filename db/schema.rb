@@ -11,7 +11,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151010052807) do
+ActiveRecord::Schema.define(version: 20151019035201) do
+
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
 
   create_table "agreements", force: :cascade do |t|
     t.integer  "user_id"
@@ -22,7 +25,7 @@ ActiveRecord::Schema.define(version: 20151010052807) do
     t.datetime "updated_at",                      null: false
   end
 
-  add_index "agreements", ["user_id"], name: "index_agreements_on_user_id"
+  add_index "agreements", ["user_id"], name: "index_agreements_on_user_id", using: :btree
 
   create_table "candidate_skill_verifications", force: :cascade do |t|
     t.integer  "candidate_skill_id"
@@ -31,8 +34,8 @@ ActiveRecord::Schema.define(version: 20151010052807) do
     t.datetime "updated_at",            null: false
   end
 
-  add_index "candidate_skill_verifications", ["candidate_skill_id"], name: "index_candidate_skill_verifications_on_candidate_skill_id"
-  add_index "candidate_skill_verifications", ["skill_verification_id"], name: "index_candidate_skill_verifications_on_skill_verification_id"
+  add_index "candidate_skill_verifications", ["candidate_skill_id"], name: "index_candidate_skill_verifications_on_candidate_skill_id", using: :btree
+  add_index "candidate_skill_verifications", ["skill_verification_id"], name: "index_candidate_skill_verifications_on_skill_verification_id", using: :btree
 
   create_table "candidate_skills", force: :cascade do |t|
     t.integer  "user_id"
@@ -43,8 +46,8 @@ ActiveRecord::Schema.define(version: 20151010052807) do
     t.string   "skill_level"
   end
 
-  add_index "candidate_skills", ["skill_id"], name: "index_candidate_skills_on_skill_id"
-  add_index "candidate_skills", ["user_id"], name: "index_candidate_skills_on_user_id"
+  add_index "candidate_skills", ["skill_id"], name: "index_candidate_skills_on_skill_id", using: :btree
+  add_index "candidate_skills", ["user_id"], name: "index_candidate_skills_on_user_id", using: :btree
 
   create_table "candidate_types", force: :cascade do |t|
     t.string   "name"
@@ -64,7 +67,7 @@ ActiveRecord::Schema.define(version: 20151010052807) do
     t.boolean  "verified",       default: false
   end
 
-  add_index "educations", ["user_id"], name: "index_educations_on_user_id"
+  add_index "educations", ["user_id"], name: "index_educations_on_user_id", using: :btree
 
   create_table "enquiries", force: :cascade do |t|
     t.string   "enquiry_type"
@@ -85,10 +88,10 @@ ActiveRecord::Schema.define(version: 20151010052807) do
     t.datetime "created_at"
   end
 
-  add_index "friendly_id_slugs", ["slug", "sluggable_type", "scope"], name: "index_friendly_id_slugs_on_slug_and_sluggable_type_and_scope", unique: true
-  add_index "friendly_id_slugs", ["slug", "sluggable_type"], name: "index_friendly_id_slugs_on_slug_and_sluggable_type"
-  add_index "friendly_id_slugs", ["sluggable_id"], name: "index_friendly_id_slugs_on_sluggable_id"
-  add_index "friendly_id_slugs", ["sluggable_type"], name: "index_friendly_id_slugs_on_sluggable_type"
+  add_index "friendly_id_slugs", ["slug", "sluggable_type", "scope"], name: "index_friendly_id_slugs_on_slug_and_sluggable_type_and_scope", unique: true, using: :btree
+  add_index "friendly_id_slugs", ["slug", "sluggable_type"], name: "index_friendly_id_slugs_on_slug_and_sluggable_type", using: :btree
+  add_index "friendly_id_slugs", ["sluggable_id"], name: "index_friendly_id_slugs_on_sluggable_id", using: :btree
+  add_index "friendly_id_slugs", ["sluggable_type"], name: "index_friendly_id_slugs_on_sluggable_type", using: :btree
 
   create_table "opportunities", force: :cascade do |t|
     t.integer  "organisation_id"
@@ -106,8 +109,8 @@ ActiveRecord::Schema.define(version: 20151010052807) do
     t.datetime "updated_at",         null: false
   end
 
-  add_index "opportunities", ["organisation_id"], name: "index_opportunities_on_organisation_id"
-  add_index "opportunities", ["user_id"], name: "index_opportunities_on_user_id"
+  add_index "opportunities", ["organisation_id"], name: "index_opportunities_on_organisation_id", using: :btree
+  add_index "opportunities", ["user_id"], name: "index_opportunities_on_user_id", using: :btree
 
   create_table "opportunity_applications", force: :cascade do |t|
     t.integer  "user_id"
@@ -118,8 +121,8 @@ ActiveRecord::Schema.define(version: 20151010052807) do
     t.datetime "updated_at",         null: false
   end
 
-  add_index "opportunity_applications", ["opportunity_id"], name: "index_opportunity_applications_on_opportunity_id"
-  add_index "opportunity_applications", ["user_id"], name: "index_opportunity_applications_on_user_id"
+  add_index "opportunity_applications", ["opportunity_id"], name: "index_opportunity_applications_on_opportunity_id", using: :btree
+  add_index "opportunity_applications", ["user_id"], name: "index_opportunity_applications_on_user_id", using: :btree
 
   create_table "opportunity_skills", force: :cascade do |t|
     t.integer  "skill_id"
@@ -128,8 +131,8 @@ ActiveRecord::Schema.define(version: 20151010052807) do
     t.datetime "updated_at", null: false
   end
 
-  add_index "opportunity_skills", ["project_id"], name: "index_opportunity_skills_on_project_id"
-  add_index "opportunity_skills", ["skill_id"], name: "index_opportunity_skills_on_skill_id"
+  add_index "opportunity_skills", ["project_id"], name: "index_opportunity_skills_on_project_id", using: :btree
+  add_index "opportunity_skills", ["skill_id"], name: "index_opportunity_skills_on_skill_id", using: :btree
 
   create_table "org_users", force: :cascade do |t|
     t.integer  "user_id"
@@ -138,8 +141,8 @@ ActiveRecord::Schema.define(version: 20151010052807) do
     t.datetime "updated_at",      null: false
   end
 
-  add_index "org_users", ["organisation_id"], name: "index_org_users_on_organisation_id"
-  add_index "org_users", ["user_id"], name: "index_org_users_on_user_id"
+  add_index "org_users", ["organisation_id"], name: "index_org_users_on_organisation_id", using: :btree
+  add_index "org_users", ["user_id"], name: "index_org_users_on_user_id", using: :btree
 
   create_table "organisation_types", force: :cascade do |t|
     t.string   "name"
@@ -169,7 +172,7 @@ ActiveRecord::Schema.define(version: 20151010052807) do
     t.datetime "updated_at",           null: false
   end
 
-  add_index "organisations", ["organisation_type_id"], name: "index_organisations_on_organisation_type_id"
+  add_index "organisations", ["organisation_type_id"], name: "index_organisations_on_organisation_type_id", using: :btree
 
   create_table "profiles", force: :cascade do |t|
     t.integer  "user_id"
@@ -193,8 +196,8 @@ ActiveRecord::Schema.define(version: 20151010052807) do
     t.string   "status",            default: "pending"
   end
 
-  add_index "profiles", ["candidate_type_id"], name: "index_profiles_on_candidate_type_id"
-  add_index "profiles", ["user_id"], name: "index_profiles_on_user_id"
+  add_index "profiles", ["candidate_type_id"], name: "index_profiles_on_candidate_type_id", using: :btree
+  add_index "profiles", ["user_id"], name: "index_profiles_on_user_id", using: :btree
 
   create_table "roles", force: :cascade do |t|
     t.string   "name"
@@ -204,8 +207,8 @@ ActiveRecord::Schema.define(version: 20151010052807) do
     t.datetime "updated_at"
   end
 
-  add_index "roles", ["name", "resource_type", "resource_id"], name: "index_roles_on_name_and_resource_type_and_resource_id"
-  add_index "roles", ["name"], name: "index_roles_on_name"
+  add_index "roles", ["name", "resource_type", "resource_id"], name: "index_roles_on_name_and_resource_type_and_resource_id", using: :btree
+  add_index "roles", ["name"], name: "index_roles_on_name", using: :btree
 
   create_table "security_checks", force: :cascade do |t|
     t.string   "name"
@@ -219,7 +222,7 @@ ActiveRecord::Schema.define(version: 20151010052807) do
     t.boolean  "verified",    default: false
   end
 
-  add_index "security_checks", ["user_id"], name: "index_security_checks_on_user_id"
+  add_index "security_checks", ["user_id"], name: "index_security_checks_on_user_id", using: :btree
 
   create_table "skill_categories", force: :cascade do |t|
     t.string   "name"
@@ -243,10 +246,11 @@ ActiveRecord::Schema.define(version: 20151010052807) do
     t.datetime "updated_at",            null: false
     t.string   "guid"
     t.boolean  "approve"
+    t.text     "message"
   end
 
-  add_index "skill_verifications", ["guid"], name: "index_skill_verifications_on_guid"
-  add_index "skill_verifications", ["user_id"], name: "index_skill_verifications_on_user_id"
+  add_index "skill_verifications", ["guid"], name: "index_skill_verifications_on_guid", using: :btree
+  add_index "skill_verifications", ["user_id"], name: "index_skill_verifications_on_user_id", using: :btree
 
   create_table "skills", force: :cascade do |t|
     t.integer  "skill_category_id"
@@ -256,7 +260,7 @@ ActiveRecord::Schema.define(version: 20151010052807) do
     t.datetime "updated_at",        null: false
   end
 
-  add_index "skills", ["skill_category_id"], name: "index_skills_on_skill_category_id"
+  add_index "skills", ["skill_category_id"], name: "index_skills_on_skill_category_id", using: :btree
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
@@ -275,16 +279,16 @@ ActiveRecord::Schema.define(version: 20151010052807) do
     t.string   "uid"
   end
 
-  add_index "users", ["email"], name: "index_users_on_email", unique: true
-  add_index "users", ["provider"], name: "index_users_on_provider"
-  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
-  add_index "users", ["uid"], name: "index_users_on_uid"
+  add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
+  add_index "users", ["provider"], name: "index_users_on_provider", using: :btree
+  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
+  add_index "users", ["uid"], name: "index_users_on_uid", using: :btree
 
   create_table "users_roles", id: false, force: :cascade do |t|
     t.integer "user_id"
     t.integer "role_id"
   end
 
-  add_index "users_roles", ["user_id", "role_id"], name: "index_users_roles_on_user_id_and_role_id"
+  add_index "users_roles", ["user_id", "role_id"], name: "index_users_roles_on_user_id_and_role_id", using: :btree
 
 end

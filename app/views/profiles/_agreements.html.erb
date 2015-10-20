@@ -10,7 +10,8 @@
           </thead>
           <tbody>
             <tr>
-              <td>Statement of Ethics</td>
+              <!-- <td><%#= link_to Statement of Ethics, render "profiles/ethics_agreement"%></td> -->
+              <td><a href="#modal-ethics" class="modal-trigger">Statement of Ethics</a></td>
               <td class="right-align">
                 <% if @agreement.ethics %>
                   <span class="green-text"><i class="fa fa-check-circle"></i></span>
@@ -20,7 +21,7 @@
               </td>
             </tr>
             <tr>
-              <td>Code of Conduct</td>
+              <td><a href="#modal-conduct" class="modal-trigger">Code of Conduct</a></td>
               <td class="right-align">
                 <% if @agreement.code_of_conduct %>
                   <span class="green-text"><i class="fa fa-check-circle"></i></span>
@@ -29,15 +30,20 @@
                 <% end %>
               </td>
             </tr>
+
             <tr>
-              <td>Terms & Conditions</td>
+              <td><a href="#modal-terms-cond" class="modal-trigger">Terms & Conditions</a></td>
               <td class="right-align">
                 <% if @agreement.terms %>
                   <span class="green-text"><i class="fa fa-check-circle"></i></span>
                 <% else %>
-                  <a href="#modal-terms" class="modal-trigger">Read and agree</a>
+                  <a href="#modal-terms-cond" class="modal-trigger">Read and agree</a>
                 <% end %>
               </td>
+            </tr>
+
+
+
             </tr>
           </tbody>
         </table>

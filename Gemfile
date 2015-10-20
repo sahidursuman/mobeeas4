@@ -59,6 +59,11 @@ gem 'indefinite_article'
 gem 'geocoder'
 gem 'pg'
 gem 'passenger'
+
+source 'https://rails-assets.org' do
+  gem 'rails-assets-datetimepicker'
+end
+
 group :development do
   gem 'better_errors'
   gem 'quiet_assets'

@@ -89,6 +89,6 @@ class SkillVerificationsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def skill_verification_params
-      params.require(:skill_verification).permit(:user_id, :referree_name, :referree_email, :referree_phone, :work_ethic, :communication, :presentation, :accomplishments, :referree_relationship => [], :time_known => [], :candidate_skill_ids => [], :candidate_skills_attributes => [:id, :skill_level])
+      params.require(:skill_verification).permit(:user_id, :referree_name, :referree_email, :referree_phone, :work_ethic, :communication, :presentation, :accomplishments, :message, :referree_relationship => [], :time_known => [], :candidate_skill_ids => [], :candidate_skills_attributes => [:id, :skill_level])
     end
 end

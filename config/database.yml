@@ -13,8 +13,8 @@ development:
   adapter: postgresql
   database: mobeeas4_development
   host: localhost
-  user: pete
-  password: 
+  user: katherinafatiguso
+  password:
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
@@ -23,8 +23,8 @@ test:
   adapter: postgresql
   database: mobeeas4_test
   host: localhost
-  user: pete
-  password: 
+  user: katherinafatiguso
+  password:
 
 production:
   <<: *default

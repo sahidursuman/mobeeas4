@@ -3,8 +3,12 @@
 <p>
   Hi <%= @skill_verification.referree_name %>
 </p>
-
+<br>
 <p>
+  <% if @skill_verification.message.present? %>
+    <%= @skill_verification.message %>
+  <% end %>
+
 <a href="http://mobeeas.com">MOBEEAS</a> (Managed Opportunities Between Employers, Educators and
 Students) gives undergraduates, academics and professionals the opportunity to share their expertise with school students and teachers in collaborative learning experiences.</p>
 

@@ -2,6 +2,7 @@ user = User.create(email: 'admin@example.com', password: '12345678')
 user.add_role :admin
 user2 = User.create(email: 'candidate@example.com', password: '12345678')
 user2.add_role :candidate
+# Profile.create(user_id: user2.id, )
 OrganisationType.create(name: 'School', description: 'Primary, Middle and High Schools')
 OrganisationType.create(name: 'University', description: 'Australian University')
 OrganisationType.create(name: 'College', description: 'TAFEs and Private Colleges')

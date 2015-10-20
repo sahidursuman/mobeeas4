@@ -2,14 +2,14 @@
   <%= f.error_notification %>
 
   <div class="input-field">
-    
+
     <select class="select optional browser-default" name="profile[candidate_type_id]" id="profile_candidate_type_id">
     <% if @profile.new_record? %>
         <option value="" disabled selected>Which best describes you?</option>
       <% else %>
         <option value="<%= @profile.candidate_type_id %>" disabled selected><%= @profile.candidate_type.name if @profile.candidate_type %></option>
       <% end %>
-    
+
     <option value="1">University Student</option>
     <option value="2">Industry Expert</option>
     <option value="3">Academic</option></select>
@@ -23,7 +23,9 @@
     </div>
   </div>
   <label for="dob">Date of birth</label>
-  <%= f.date_field :dob %>
+  <%#= f.date_field :dob, input_html: { class: 'datetimepicker' } %>
+  <%= f.date_field :dob, as: :string, input_html: { class: 'datetimepicker' } %>
+
   <div class="row">
     <div class="col s12">
       <%= f.input :picture %>
@@ -37,7 +39,7 @@
   <% if @profile.new_record? %>
     <div class="row">
       <div class="col s12">
-      
+
       <p class="blue-text"><strong>Note: Your personal contact information will not be made public. It is used to find opportunities in your area.</strong></p>
 
       </div>
@@ -67,7 +69,7 @@
       <option value="TAS">TAS</option>
       <option value="VIC">VIC</option>
       <option value="WA">WA</option></select>
-       
+
       </div>
       <div class="input-field col s4">
         <%= f.input :postcode %>
