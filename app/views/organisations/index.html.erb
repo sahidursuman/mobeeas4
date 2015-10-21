@@ -1,57 +1,33 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Listing Organisations</h1>
-
-<table>
-  <thead>
-    <tr>
-      <th>Organisation type</th>
-      <th>Name</th>
-      <th>Contact name</th>
-      <th>Contact email</th>
-      <th>Contact phone</th>
-      <th>Address</th>
-      <th>Suburb</th>
-      <th>State</th>
-      <th>Postcode</th>
-      <th>Country</th>
-      <th>Logo</th>
-      <th>Website</th>
-      <th>Acara school</th>
-      <th>School type</th>
-      <th>Latitude</th>
-      <th>Longitude</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @organisations.each do |organisation| %>
-      <tr>
-        <td><%= organisation.organisation_type %></td>
-        <td><%= organisation.name %></td>
-        <td><%= organisation.contact_name %></td>
-        <td><%= organisation.contact_email %></td>
-        <td><%= organisation.contact_phone %></td>
-        <td><%= organisation.address %></td>
-        <td><%= organisation.suburb %></td>
-        <td><%= organisation.state %></td>
-        <td><%= organisation.postcode %></td>
-        <td><%= organisation.country %></td>
-        <td><%= organisation.logo %></td>
-        <td><%= organisation.website %></td>
-        <td><%= organisation.acara_school_id %></td>
-        <td><%= organisation.school_type %></td>
-        <td><%= organisation.latitude %></td>
-        <td><%= organisation.longitude %></td>
-        <td><%= link_to 'Show', organisation %></td>
-        <td><%= link_to 'Edit', edit_organisation_path(organisation) %></td>
-        <td><%= link_to 'Destroy', organisation, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
+<div class="row">
+  <div class="col s12 m10 offset-m1 l10 offset-l1">
+    <h3>Listing Organisations</h3>
+    <p>
+      Please search first if the school or company has already been added into the listing.
+    </p>
+    <%= form_tag(organisations_path, :method => "get", id: "search-form") do %>
+      <%= text_field_tag :search, params[:search], placeholder: "Search State, Suburb or Postcode"%>
+      <%= submit_tag "Search" %>
     <% end %>
-  </tbody>
-</table>
+    <% if @organisations.present? %>
+      <% @organisations.each do |organisation| %>
+        <a href="/organisations/<%= organisation.id %>">
+          <ul class="collection" style="list-style-type: none;">
+            <li class="collection-item avatar" style="list-style-type: none;">
+              <img src="assets/company_logo.jpg" alt="" class="circle">
+              <p><span class="bold"><%= organisation.name %></span></p>
+              <p><%= organisation.suburb %>  <%= organisation.state %>  <%= organisation.country %></p>
+            </li>
+          </ul>
+        </a>
+      <% end %>
+    <br>
+    <% else %> <!-- it’s good to notify reader if not found -->
+      <p>There are no organisations with description: <%= params[:search] %>.</p>
+      <%= link_to 'New Organisation', new_organisation_path %>
+    <% end %>
 
-<br>
 
-<%= link_to 'New Organisation', new_organisation_path %>
+  </div>
+</div>

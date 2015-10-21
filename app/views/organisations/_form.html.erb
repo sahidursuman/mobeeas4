@@ -3,7 +3,7 @@
 
   <div class="form-inputs">
     <%= f.input :organisation_type_id, input_html: {value: params[:org_type] } %>
-    <%= f.input :name %>
+    <%= f.input :name, label: 'Organisation name' %>
     <%= f.input :contact_name %>
     <%= f.input :contact_email %>
     <%= f.input :contact_phone %>
@@ -14,9 +14,8 @@
     <%= f.input :country %>
     <%= f.input :logo %>
     <%= f.input :website %>
-    <% if @org_type.name = 'School' %>
-      <%= f.input :school_type %>
-    <% end %>
+    <%= f.input :school_type %>
+
   </div>
 
   <div class="form-actions">

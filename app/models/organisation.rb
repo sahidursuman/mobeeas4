@@ -11,6 +11,6 @@ class Organisation < ActiveRecord::Base
 	end
 
 	def self.search(search)
-	  where("name LIKE ?", "%#{search}%")
+	  where("name ILIKE ? OR suburb ILIKE ? OR state ILIKE ?", "%#{search}%", "%#{search}%", "%#{search}%")
 	end
 end

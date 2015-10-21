@@ -17,13 +17,13 @@ Rails.application.routes.draw do
   resources :organisation_types
   resources :security_checks
   resources :skills do
-    member do 
+    member do
       get :add_user, :remove_user
     end
   end
   resources :skill_categories
   resources :educations do
-    member do 
+    member do
       get :verify
     end
   end
@@ -36,7 +36,8 @@ Rails.application.routes.draw do
   get 'my_skills', to: 'pages#my_skills'
   get 'thanks', to: 'pages#thanks'
   get 'about', to: 'pages#about'
-  devise_for :users, controllers: { registrations: "registrations" }
+
+  devise_for :users
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

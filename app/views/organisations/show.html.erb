@@ -1,84 +1,89 @@
 <p id="notice"><%= notice %></p>
+<div class="row">
+  <div class="col s12 m10 offset-m1 l10 offset-l1">
+    <div class="card">
+      <p>
+        <strong>Organisation type:</strong>
+        <%= @organisation.organisation_type.name %>
+      </p>
 
-<p>
-  <strong>Organisation type:</strong>
-  <%= @organisation.organisation_type %>
-</p>
+      <p>
+        <strong>Name:</strong>
+        <%= @organisation.name %>
+      </p>
 
-<p>
-  <strong>Name:</strong>
-  <%= @organisation.name %>
-</p>
+      <p>
+        <strong>Contact name:</strong>
+        <%= @organisation.contact_name %>
+      </p>
 
-<p>
-  <strong>Contact name:</strong>
-  <%= @organisation.contact_name %>
-</p>
+      <p>
+        <strong>Contact email:</strong>
+        <%= @organisation.contact_email %>
+      </p>
 
-<p>
-  <strong>Contact email:</strong>
-  <%= @organisation.contact_email %>
-</p>
+      <p>
+        <strong>Contact phone:</strong>
+        <%= @organisation.contact_phone %>
+      </p>
 
-<p>
-  <strong>Contact phone:</strong>
-  <%= @organisation.contact_phone %>
-</p>
+      <p>
+        <strong>Address:</strong>
+        <%= @organisation.address %>
+      </p>
 
-<p>
-  <strong>Address:</strong>
-  <%= @organisation.address %>
-</p>
+      <p>
+        <strong>Suburb:</strong>
+        <%= @organisation.suburb %>
+      </p>
 
-<p>
-  <strong>Suburb:</strong>
-  <%= @organisation.suburb %>
-</p>
+      <p>
+        <strong>State:</strong>
+        <%= @organisation.state %>
+      </p>
 
-<p>
-  <strong>State:</strong>
-  <%= @organisation.state %>
-</p>
+      <p>
+        <strong>Postcode:</strong>
+        <%= @organisation.postcode %>
+      </p>
 
-<p>
-  <strong>Postcode:</strong>
-  <%= @organisation.postcode %>
-</p>
+      <p>
+        <strong>Country:</strong>
+        <%= @organisation.country %>
+      </p>
 
-<p>
-  <strong>Country:</strong>
-  <%= @organisation.country %>
-</p>
+      <p>
+        <strong>Logo:</strong>
+        <%= @organisation.logo %>
+      </p>
 
-<p>
-  <strong>Logo:</strong>
-  <%= @organisation.logo %>
-</p>
+      <p>
+        <strong>Website:</strong>
+        <%= @organisation.website %>
+      </p>
 
-<p>
-  <strong>Website:</strong>
-  <%= @organisation.website %>
-</p>
+      <p>
+        <strong>Acara school:</strong>
+        <%= @organisation.acara_school_id %>
+      </p>
 
-<p>
-  <strong>Acara school:</strong>
-  <%= @organisation.acara_school_id %>
-</p>
+      <p>
+        <strong>School type:</strong>
+        <%= @organisation.school_type %>
+      </p>
 
-<p>
-  <strong>School type:</strong>
-  <%= @organisation.school_type %>
-</p>
+      <p>
+        <strong>Latitude:</strong>
+        <%= @organisation.latitude %>
+      </p>
 
-<p>
-  <strong>Latitude:</strong>
-  <%= @organisation.latitude %>
-</p>
+      <p>
+        <strong>Longitude:</strong>
+        <%= @organisation.longitude %>
+      </p>
 
-<p>
-  <strong>Longitude:</strong>
-  <%= @organisation.longitude %>
-</p>
-
-<%= link_to 'Edit', edit_organisation_path(@organisation) %> |
-<%= link_to 'Back', organisations_path %>
+      <%#= link_to 'Edit', edit_organisation_path(@organisation) %> |
+      <%= link_to 'Back', organisations_path %>
+    </div>
+  </div>
+</div>
