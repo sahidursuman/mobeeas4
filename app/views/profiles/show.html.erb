@@ -59,6 +59,10 @@
         <%= link_to 'I Agree', agree_to_agreement_path(@agreement, agreement_type: 'ethics'), class: "modal-action modal-close waves-effect waves-green btn-flat" %>
         <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">I Disagree</a>
       </div>
+    <% else %>
+      <div class="modal-footer">
+        <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Close</a>
+      </div>
     <% end %>
   </div>
 
@@ -73,13 +77,15 @@
         <%= link_to 'I Agree', agree_to_agreement_path(@agreement, agreement_type: 'code_of_conduct'), class: "modal-action modal-close waves-effect waves-green btn-flat" %>
         <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">I Disagree</a>
       </div>
+      <% else %>
+        <div class="modal-footer">
+          <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Close</a>
+        </div>
     <% end %>
   </div>
 
 
   <!-- TERMS & CONDITIONS -->
-
-
   <div id="modal-terms-cond" class="modal modal-fixed-footer">
     <div class="modal-content">
       <%= render 'terms_agreement' %>
@@ -90,5 +96,9 @@
         <%= link_to 'I Agree', agree_to_agreement_path(@agreement, agreement_type: 'terms'), class: "modal-action modal-close waves-effect waves-green btn-flat" %>
         <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">I Disagree</a>
       </div>
+      <% else %>
+        <div class="modal-footer">
+          <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Close</a>
+        </div>      
     <% end %>
   </div>

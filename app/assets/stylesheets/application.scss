@@ -91,3 +91,9 @@ footer.page-footer {
 .text-underline {
   text-decoration: underline;
 }
+
+ul li {
+  list-style-type: disc;
+  margin-left: 1.5em; /* which should give space for the disc to show */
+  list-style-position: inside; /* will put the disc inside of the li element, for debugging purposes */
+}

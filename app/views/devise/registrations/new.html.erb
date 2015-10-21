@@ -2,7 +2,7 @@
   <div class="card-content black-text">
     <span class="card-title blue-text text-darken-2">Register <% if params[:user_type]  %> as <%= params[:user_type].indefinitize %> <% end %></span>
     <%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name), html: { class: 'form-login' }) do |f| %>
-	
+
   	<%= f.error_notification %>
 
     <%= f.input :email, label: 'Your email', required: true, autofocus: true %>
@@ -13,6 +13,7 @@
     <button type="submit" class="btn waves-effect waves-light" name="action">Register</button>
 	<hr>
 	<p>Already a MOBEEAS member? <%= render "devise/shared/links" %></p>
+  <p><a href="/">Return Home</a></p>
   </div>
 <% end %>
 </div>
