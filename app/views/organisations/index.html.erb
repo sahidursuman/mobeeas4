@@ -4,7 +4,7 @@
   <div class="col s12 m10 offset-m1 l10 offset-l1">
     <h3>Listing Organisations</h3>
     <p>
-      Please search first if the school or company has already been added into the listing.
+      Before adding a new organisation/school, please search first to check if it is available already.
     </p>
     <%= form_tag(organisations_path, :method => "get", id: "search-form") do %>
       <%= text_field_tag :search, params[:search], placeholder: "Search State, Suburb or Postcode"%>
