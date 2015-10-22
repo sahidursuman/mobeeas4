@@ -7,8 +7,8 @@
 
         	<%= f.error_notification %>
 
-          <%= f.input :email, label: 'Your email', required: true, autofocus: true %>
-          <%= f.input :password, label: 'Choose a password', required: true, hint: ("#{@minimum_password_length} characters minimum" if @minimum_password_length) %>
+          <%= f.input :email, label: 'Your email', autofocus: true %>
+          <%= f.input :password, label: 'Choose a password', hint: ("#{@minimum_password_length} characters minimum" if @minimum_password_length) %>
           <% if params[:user_type] %>
           	<%= f.input :user_type, as: :hidden, input_html: { value: params[:user_type]} %>
           <% end %>
