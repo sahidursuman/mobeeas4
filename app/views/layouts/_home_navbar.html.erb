@@ -22,7 +22,7 @@
 				<li><%= link_to '<i class="material-icons left">exit_to_app</i> Log Out'.html_safe, destroy_user_session_path, method: :delete %></li>
 			<% else %>
 
-        <li><%= link_to login_signup_path do %><i class="material-icons left">account_circle</i> Sign in22<% end %></li>
+        <li><%= link_to new_user_session_path do %><i class="material-icons left">account_circle</i> Sign in<% end %></li>
 
 			<% end %>
       </ul>
@@ -33,8 +33,7 @@
         <% if user_signed_in? %>
 				<li><%= link_to "Sign Out", destroy_user_session_path, method: :delete %></li>
 			<% else %>
-				<!-- <li><%#= link_to "Sign In", new_user_session_path %></li> -->
-        <li><%= link_to "Sign In", login_signup_path %></li>
+				<li><%= link_to "Sign In", new_user_session_path %></li>
 			<% end %>
       </ul>
     </div></div>
