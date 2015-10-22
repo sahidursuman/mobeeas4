@@ -2,88 +2,51 @@
 <div class="row">
   <div class="col s12 m10 offset-m1 l10 offset-l1">
     <div class="card">
-      <p>
-        <strong>Organisation type:</strong>
-        <%= @organisation.organisation_type.name %>
-      </p>
 
-      <p>
-        <strong>Name:</strong>
-        <%= @organisation.name %>
-      </p>
+    </div>
+  </div>
+</div>
 
-      <p>
-        <strong>Contact name:</strong>
-        <%= @organisation.contact_name %>
-      </p>
 
-      <p>
-        <strong>Contact email:</strong>
-        <%= @organisation.contact_email %>
-      </p>
 
-      <p>
-        <strong>Contact phone:</strong>
-        <%= @organisation.contact_phone %>
-      </p>
+<p id="notice"><%= notice %></p>
 
-      <p>
-        <strong>Address:</strong>
-        <%= @organisation.address %>
-      </p>
+<div class="row">
+  <!-- PROFILE -->
+  <div class="col m4">
+    <div class="card">
+      <%= render 'organisations/org_profile' %>
+    </div>
+  </div>
 
-      <p>
-        <strong>Suburb:</strong>
-        <%= @organisation.suburb %>
-      </p>
+<!-- RIGHT COLUMN -->
+  <div class="col m8">
+    <!-- WELCOME BUTTON-->
+    <a class="waves-effect waves-light btn modal-trigger" href="#modal-welcome"><i class="material-icons left">speaker_notes</i>Getting Started</a>
+      <div id="modal-welcome" class="modal">
+        <div class="modal-content">
 
-      <p>
-        <strong>State:</strong>
-        <%= @organisation.state %>
-      </p>
+        </div>
+      </div>
 
-      <p>
-        <strong>Postcode:</strong>
-        <%= @organisation.postcode %>
-      </p>
+  <!-- AGREEMENTS -->
+  <div class="card">
+    <h5>Organisation Users Profiles</h5>
+    <!-- <a href="/org_user_profiles/new">I would like to apply for becoming the member of this organisation</a> -->
 
-      <p>
-        <strong>Country:</strong>
-        <%= @organisation.country %>
-      </p>
 
-      <p>
-        <strong>Logo:</strong>
-        <%= @organisation.logo %>
-      </p>
-
-      <p>
-        <strong>Website:</strong>
-        <%= @organisation.website %>
-      </p>
-
-      <p>
-        <strong>Acara school:</strong>
-        <%= @organisation.acara_school_id %>
-      </p>
-
-      <p>
-        <strong>School type:</strong>
-        <%= @organisation.school_type %>
-      </p>
-
-      <p>
-        <strong>Latitude:</strong>
-        <%= @organisation.latitude %>
-      </p>
-
-      <p>
-        <strong>Longitude:</strong>
-        <%= @organisation.longitude %>
-      </p>
-
-      <%#= link_to 'Edit', edit_organisation_path(@organisation) %> |
-      <%= link_to 'Back', organisations_path %>
+  </div>
+  <!-- SKILLS -->
+    <div class="card">
+      <p>some info here2</p>
+    </div>
+    <!-- EDUCATION -->
+    <div class="card">
+      <p>some info here3</p>
+    </div>
+    <!-- SECURITY CHECKS -->
+    <div class="card">
+      <p>some info here4</p>
     </div>
   </div>
 </div>

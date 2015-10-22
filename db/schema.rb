@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151019035201) do
+ActiveRecord::Schema.define(version: 20151022034903) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -133,6 +133,22 @@ ActiveRecord::Schema.define(version: 20151019035201) do
 
   add_index "opportunity_skills", ["project_id"], name: "index_opportunity_skills_on_project_id", using: :btree
   add_index "opportunity_skills", ["skill_id"], name: "index_opportunity_skills_on_skill_id", using: :btree
+
+  create_table "org_user_profiles", force: :cascade do |t|
+    t.string   "first_name"
+    t.string   "last_name"
+    t.string   "phone"
+    t.string   "position"
+    t.boolean  "admin_status",    default: false
+    t.boolean  "verified_status", default: false
+    t.string   "guid"
+    t.integer  "user_id"
+    t.datetime "created_at",                      null: false
+    t.datetime "updated_at",                      null: false
+  end
+
+  add_index "org_user_profiles", ["guid"], name: "index_org_user_profiles_on_guid", using: :btree
+  add_index "org_user_profiles", ["user_id"], name: "index_org_user_profiles_on_user_id", using: :btree
 
   create_table "org_users", force: :cascade do |t|
     t.integer  "user_id"
@@ -291,4 +307,5 @@ ActiveRecord::Schema.define(version: 20151019035201) do
 
   add_index "users_roles", ["user_id", "role_id"], name: "index_users_roles_on_user_id_and_role_id", using: :btree
 
+  add_foreign_key "org_user_profiles", "users"
 end

@@ -1,0 +1,53 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>First name:</strong>
+  <%= @org_user_profile.first_name %>
+</p>
+
+<p>
+  <strong>Last name:</strong>
+  <%= @org_user_profile.last_name %>
+</p>
+
+<p>
+  <strong>Phone:</strong>
+  <%= @org_user_profile.phone %>
+</p>
+
+<p>
+  <strong>Email:</strong>
+  <%= @org_user_profile.user.email %>
+</p>
+<p>
+  <strong>Position:</strong>
+  <%= @org_user_profile.position %>
+</p>
+
+<p>
+  <strong>Admin status:</strong>
+  <%= @org_user_profile.admin_status %>
+</p>
+
+<p>
+  <strong>Verified status:</strong>
+  <%= @org_user_profile.verified_status %>
+</p>
+
+<p>
+  <strong>Direct Supervisor:</strong>
+  <%= @org_user_profile.organisation.contact_name %>
+</p>
+
+<p>
+  <strong>Supervisor Email:</strong>
+  <%= @org_user_profile.organisation.contact_email %>
+</p>
+
+<p>
+  <strong>Supervisor Phone:</strong>
+  <%= @org_user_profile.organisation.contact_phone %>
+</p>
+
+<%= link_to 'Edit', edit_org_user_profile_path(@org_user_profile) %> |
+<%= link_to 'Back', org_user_profiles_path %>

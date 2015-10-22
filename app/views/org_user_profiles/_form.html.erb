@@ -1,0 +1,20 @@
+<%= simple_form_for(@org_user_profile) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="form-inputs">
+    <%= f.input :first_name %>
+    <%= f.input :last_name %>
+    <%= f.input :phone %>
+    <%= f.input :position %>
+    <% if !@org_user_profile.new_record? %><!-- only appears for edit-->
+      <%= f.input :admin_status %>
+      <%= f.input :verified_status %>
+    <% end %>
+    <%= f.input :guid %>
+    <%= f.association :user, :as => :hidden %>
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>

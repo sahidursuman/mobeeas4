@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :org_user_profiles
   resources :skill_verifications do
     member do
       get :approve
