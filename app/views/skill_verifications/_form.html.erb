@@ -25,7 +25,6 @@
   <p>Choose which skills this referee can verify.</p>
   <%# f.association :candidate_skills, as: :check_boxes %>
 
-
   <% current_user.candidate_skills.each do |candidate_skill| %>
     <% if candidate_skill.skill %>
     <input class="check_boxes optional" type="checkbox" value="<%= candidate_skill.id %>" name="skill_verification[candidate_skill_ids][]" id="skill_verification_candidate_skill_ids_<%= candidate_skill.id %>" />

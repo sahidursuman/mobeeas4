@@ -1,6 +1,12 @@
 class OrgUserProfilesController < ApplicationController
   before_action :set_org_user_profile, only: [:show, :edit, :update, :destroy]
 
+  def verified_and_admin_approved
+    @org_user_profiles.update_attributes(admin_status: true)
+    @org_user_profiles.update_attributes(verified_status: true)
+  end
+
+
   # GET /org_user_profiles
   # GET /org_user_profiles.json
   def index
@@ -30,6 +36,7 @@ class OrgUserProfilesController < ApplicationController
     respond_to do |format|
       if @org_user_profile.save
         format.html { redirect_to @org_user_profile, notice: 'Org user profile was successfully created.' }
+        # format.html { redirect_to :back, notice: 'Org user profile was successfully created.' }
         format.json { render :show, status: :created, location: @org_user_profile }
       else
         format.html { render :new }

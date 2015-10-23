@@ -1,0 +1,85 @@
+<h1>New Organisation Notification</h1>
+
+<p>
+  Dear <%= @organisation.contact_name %>,
+</p>
+<p>
+  Your organisation <%= @organisation.name %> profile has been created in MOBEEAS and a new organisation host for MOBEEAS has been added, waiting for your approval.
+  Here is your organisation details in MOBEEAS:
+<p>
+
+<p>
+  <strong>Organisation type:</strong>
+  <%= @organisation.organisation_type.name %>
+</p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @organisation.name %>
+</p>
+
+<p>
+  <strong>Contact name:</strong>
+  <%= @organisation.contact_name %>
+</p>
+
+<p>
+  <strong>Contact email:</strong>
+  <%= @organisation.contact_email %>
+</p>
+
+<p>
+  <strong>Contact phone:</strong>
+  <%= @organisation.contact_phone %>
+</p>
+
+<p>
+  <strong>Address:</strong>
+  <%= @organisation.address %>
+</p>
+
+<p>
+  <strong>Suburb:</strong>
+  <%= @organisation.suburb %>
+</p>
+
+<p>
+  <strong>State:</strong>
+  <%= @organisation.state %>
+</p>
+
+<p>
+  <strong>Postcode:</strong>
+  <%= @organisation.postcode %>
+</p>
+
+<p>
+  <strong>Country:</strong>
+  <%= @organisation.country %>
+</p>
+
+
+<p>
+  <strong>Website:</strong>
+  <%= @organisation.website %>
+</p>
+
+<p>
+  Your organisation representative details is below, he or she will need your approval to use the token that is purchased for creating your opportunity in MOBEEAS.
+</p>
+<p>
+    <strong>Name: </strong><%= @user.org_user_profile.first_name %> <%= @user.org_user_profile.last_name %>
+</p>
+<p>
+    <strong>Phone: </strong><%= @user.org_user_profile.phone %>
+</p>
+<p>
+    <strong>Email: </strong><%= @user.email %>
+</p>
+<p>
+    <strong>Position: </strong><%= @user.org_user_profile.position %>
+</p>
+
+
+<!-- <p><%#= link_to 'Approve this on the site', organisation_url(@organisation) %></p> -->
+<p><%= link_to 'Approve Organisation and Host Profiles', verified_and_admin_approved_org_user_profile_url(@user.org_user_profile.id, @organisation.id) %></p>

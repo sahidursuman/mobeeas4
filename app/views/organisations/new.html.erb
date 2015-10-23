@@ -1,5 +1,31 @@
 <h1>New Organisation</h1>
+<p>
+  Before you can create a new organisation, FIRST you need to enter your profile details first.
+</p>
 
-<%= render 'form' %>
+<!-- ORG USER PROFILE -->
+<% @new_org_user_profile = OrgUserProfile.new %>
+<% @new_org_user_profile.user_id = current_user.id %>
+
+<%= simple_form_for(@new_org_user_profile) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="form-inputs">
+    <%= f.input :first_name %>
+    <%= f.input :last_name %>
+    <%= f.input :phone %>
+    <%= f.input :position %>
+    <%#= f.input :guid %>
+    <%#= f.association :user, :as => :hidden %>
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>
+  <br><br>
+
+
+<%#= render 'form' %>
 
 <%= link_to 'Back', organisations_path %>

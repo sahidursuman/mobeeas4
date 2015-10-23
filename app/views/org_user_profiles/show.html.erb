@@ -34,20 +34,53 @@
   <%= @org_user_profile.verified_status %>
 </p>
 
+<!-- DO NOT USE THIS BUT KEEP THIS
 <p>
   <strong>Direct Supervisor:</strong>
-  <%= @org_user_profile.organisation.contact_name %>
+  <%#= @org_user_profile.user.organisations.find_by(params[:org_id]).contact_name %>
 </p>
 
 <p>
   <strong>Supervisor Email:</strong>
-  <%= @org_user_profile.organisation.contact_email %>
+  <%#= @org_user_profile.user.organisations.find_by(params[:org_id]).contact_email %>
 </p>
 
 <p>
   <strong>Supervisor Phone:</strong>
-  <%= @org_user_profile.organisation.contact_phone %>
+  <%#= @org_user_profile.user.organisations.find_by(params[:org_id]).contact_phone %>
 </p>
+-->
+<h4>ORGANISATION DETAILS:</h4>
+<br>
+<% @new_organisation = Organisation.new %>
+
+<!-- ORGANISATION-->
+<%= simple_form_for(@new_organisation) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="form-inputs">
+    <%= f.input :organisation_type_id, input_html: {value: params[:org_type] } %>
+    <%= f.input :name, label: 'Organisation name' %>
+    <%= f.input :contact_name %>
+    <%= f.input :contact_email %>
+    <%= f.input :contact_phone %>
+    <%= f.input :address %>
+    <%= f.input :suburb %>
+    <%= f.input :state %>
+    <%= f.input :postcode %>
+    <%= f.input :country %>
+    <%= f.input :logo %>
+    <%= f.input :website %>
+    <%= f.input :acara_school_id %>
+    <%= f.input :school_type %>
+
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>
+
 
 <%= link_to 'Edit', edit_org_user_profile_path(@org_user_profile) %> |
 <%= link_to 'Back', org_user_profiles_path %>

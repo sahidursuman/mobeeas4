@@ -1,6 +1,10 @@
 <h1>New Organisation Notification</h1>
 
 <p>
+  Hi Bronwyn, a new organisation has been added, waiting for approval of the organisation's director.
+</p>
+
+<p>
   <strong>Organisation type:</strong>
   <%= @organisation.organisation_type.name %>
 </p>
@@ -56,4 +60,9 @@
   <%= @organisation.website %>
 </p>
 
-<p><%= link_to 'Approve this on the site', organisation_url(@organisation) %></p>
+<p>
+  <strong>New Host email</strong>
+  <%#= @organisation.user.email %>
+</p>
+
+<p><%= link_to 'View this Organisation', organisation_url(@organisation) %></p>
