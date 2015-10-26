@@ -1,8 +1,9 @@
 <div class="card-image waves-effect waves-block waves-light">
   <% if @profile.picture.present? %>
-    <%= image_tag(@profile.picture_url, class: 'img-responsive activator') %>
+    <%= cl_image_tag(@profile.picture_url, class: 'img-responsive activator') %>
   <% else %>
-    <img src="<%= asset_path 'user.png' %>" class='img-responsive activator'>
+    <%= cl_image_tag("user.png", class: 'img-responsive activator') %>
+    <!-- <img src="<%#= asset_path 'user.png' %>" class='img-responsive activator'> -->
   <% end %>
 </div>
 <div class="card-content">

@@ -67,6 +67,7 @@
 <p>
   Your organisation representative details is below, he or she will need your approval to use the token that is purchased for creating your opportunity in MOBEEAS.
 </p>
+
 <p>
     <strong>Name: </strong><%= @user.org_user_profile.first_name %> <%= @user.org_user_profile.last_name %>
 </p>
@@ -80,6 +81,8 @@
     <strong>Position: </strong><%= @user.org_user_profile.position %>
 </p>
 
+<% @org_user_profile = @user.org_user_profile %>
+<p><%= @org_user_profile.first_name %><p>
+<p><%= @org_user_profile.id %><p>
 
-<!-- <p><%#= link_to 'Approve this on the site', organisation_url(@organisation) %></p> -->
-<p><%= link_to 'Approve Organisation and Host Profiles', verified_and_admin_approved_org_user_profile_url(@user.org_user_profile.id, @organisation.id) %></p>
+<p><%= link_to 'Approve Organisation and Host Profiles', verified_and_admin_approved_org_user_profile_url(@user.org_user_profile.id, org_id: @organisation.id) %></p>

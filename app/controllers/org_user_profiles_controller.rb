@@ -1,9 +1,11 @@
 class OrgUserProfilesController < ApplicationController
-  before_action :set_org_user_profile, only: [:show, :edit, :update, :destroy]
+  before_action :set_org_user_profile, only: [:verified_and_admin_approved, :show, :edit, :update, :destroy]
 
   def verified_and_admin_approved
-    @org_user_profiles.update_attributes(admin_status: true)
-    @org_user_profiles.update_attributes(verified_status: true)
+    @org_user_profile.update_attributes(admin_status: true, verified_status: true)
+    @organisation = Organisation.find(params[:org_id])
+    redirect_to organisation_path(@organisation)
+
   end
 
 

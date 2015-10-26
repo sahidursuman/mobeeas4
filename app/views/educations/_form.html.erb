@@ -9,9 +9,47 @@
   </div>
   <div class="input-field">
     <%= f.input :year_completed, label: 'Year completed (past or future)' %>
-  </div>  
+  </div><br>
 
-  <p>By clicking 'Add Course', I agree to allow MOBEEAS representatives to confirm my enrolment at this educational institution.</p>
+  <div class="input-field"><br><br>
+
+    <!-- <%#= f.input :achievement , label: "Evidences of Achievements"%><a href="#modal-achievements" class="modal-trigger"><i class="material-icons">help</i></a>
+    <div id="modal-achievements" class="modal">
+      <div class="modal-content">
+        <p>
+          Please upload any evidence of your educational achievements from this institution as a PDF file here.
+          Please combine multiple transcripts into a sinle PDF file per institution.
+        </p>
+      </div>
+      <div class="modal-footer">
+        <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Close</a>
+      </div>
+    </div> -->
+
+    <div class="row">
+      <div class="col s12">
+        <%= f.input :achievement %>
+        <a href="#modal-achievements" class="modal-trigger"><i class="material-icons">help</i></a>
+        <div id="modal-achievements" class="modal">
+          <div class="modal-content">
+            <p>
+              Please upload any evidence of your educational achievements from this institution as a PDF file here.
+              Please combine multiple transcripts into a sinle PDF file per institution.
+            </p>
+          </div>
+          <div class="modal-footer">
+            <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Close</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <% if @education.achievement.present? %>
+    <p>Uploaded File:</p>
+    <p><%= @education.achievement %></p>
+  <% end %>
+
   <br>
   <div class="form-actions">
     <% if @education.new_record? %>

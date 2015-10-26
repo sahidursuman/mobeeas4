@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151022034903) do
+ActiveRecord::Schema.define(version: 20151026003639) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -65,6 +65,7 @@ ActiveRecord::Schema.define(version: 20151022034903) do
     t.datetime "updated_at",                     null: false
     t.boolean  "terms"
     t.boolean  "verified",       default: false
+    t.string   "achievement"
   end
 
   add_index "educations", ["user_id"], name: "index_educations_on_user_id", using: :btree

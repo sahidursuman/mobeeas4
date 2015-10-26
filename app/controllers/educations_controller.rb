@@ -19,7 +19,7 @@ class EducationsController < ApplicationController
 
   # GET /educations/1/edit
   def edit
-    
+
   end
 
   # POST /educations
@@ -70,6 +70,6 @@ class EducationsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def education_params
-      params.require(:education).permit(:terms, :user_id, :institution, :course, :year_completed)
+      params.require(:education).permit(:terms, :user_id, :institution, :course, :year_completed, :achievement)
     end
 end

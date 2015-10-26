@@ -7,6 +7,7 @@
             <tr>
               <th>Institution</th>
               <th>Course</th>
+              <th>Achievements</th>
               <th class="right-align">Verified</th>
               <th></th>
             </tr>
@@ -15,7 +16,14 @@
             <% @user_educations.each do |user_education| %>
               <tr>
                 <td><%= user_education.institution %></td>
-                <td><%= user_education.course %> <%= link_to edit_education_path(user_education) do %><i class="material-icons tiny  ">mode_edit</i><% end %></td>
+                <td><%= user_education.course %></td>
+                <% if user_education.achievement.present? %>
+                  <td><%= link_to 'File uploaded  ', user_education.achievement_url %><%= link_to edit_education_path(user_education) do %><i class="material-icons tiny  ">mode_edit</i><% end %></td>
+                <% else %>
+                  <td>No file  <%= link_to edit_education_path(user_education) do %><i class="material-icons tiny  ">mode_edit</i><% end %></td>
+                <% end %>
+                <!-- <td><%#= user_education.achievement_url %> <%= link_to edit_education_path(user_education) do %><i class="material-icons tiny  ">mode_edit</i><% end %></td> -->
+
                 <td class="right-align">
                   <% if user_education.verified %>
                     <span class="green-text"><i class="fa fa-check-circle"></i></span>
@@ -33,5 +41,5 @@
     </div>
     <div class="card-action">
       <a href="/educations/new">Add education</a>
-      
+
     </div>

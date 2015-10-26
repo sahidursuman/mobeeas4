@@ -1,19 +1,19 @@
 ---
 development:
-  cloud_name: coder-factory
-  api_key: '767274749816166'
-  api_secret: CRN-Tcdy6YyibdHh06yzaDAemMU
+  cloud_name: mobeeas-com
+  api_key: '162321622739299'
+  api_secret: Hdt1srTEiaZ0w-xF8I0UNzEQrzQ
   enhance_image_tag: true
   static_image_support: false
 production:
-  cloud_name: coder-factory
-  api_key: '767274749816166'
-  api_secret: CRN-Tcdy6YyibdHh06yzaDAemMU
+  cloud_name: mobeeas-com
+  api_key: '162321622739299'
+  api_secret: Hdt1srTEiaZ0w-xF8I0UNzEQrzQ
   enhance_image_tag: true
   static_image_support: true
 test:
-  cloud_name: coder-factory
-  api_key: '767274749816166'
-  api_secret: CRN-Tcdy6YyibdHh06yzaDAemMU
+  cloud_name: mobeeas-com
+  api_key: '162321622739299'
+  api_secret: Hdt1srTEiaZ0w-xF8I0UNzEQrzQ
   enhance_image_tag: true
   static_image_support: false

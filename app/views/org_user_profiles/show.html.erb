@@ -34,7 +34,7 @@
   <%= @org_user_profile.verified_status %>
 </p>
 
-<!-- DO NOT USE THIS BUT KEEP THIS
+<!-- DO NOT USE THIS BUT KEEP THIS PERHAPS FOR USE IN THE FUTURE
 <p>
   <strong>Direct Supervisor:</strong>
   <%#= @org_user_profile.user.organisations.find_by(params[:org_id]).contact_name %>
@@ -61,14 +61,14 @@
   <div class="form-inputs">
     <%= f.input :organisation_type_id, input_html: {value: params[:org_type] } %>
     <%= f.input :name, label: 'Organisation name' %>
-    <%= f.input :contact_name %>
-    <%= f.input :contact_email %>
-    <%= f.input :contact_phone %>
     <%= f.input :address %>
     <%= f.input :suburb %>
     <%= f.input :state %>
     <%= f.input :postcode %>
     <%= f.input :country %>
+    <%= f.input :contact_name %>
+    <%= f.input :contact_email %>
+    <%= f.input :contact_phone %>
     <%= f.input :logo %>
     <%= f.input :website %>
     <%= f.input :acara_school_id %>

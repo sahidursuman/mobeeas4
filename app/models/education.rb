@@ -4,6 +4,8 @@ class Education < ActiveRecord::Base
   validates :institution, :course, :year_completed, presence: true
   # validates :terms, :acceptance => {:accept => true}, if: :current_enrolment?
 
+  mount_uploader :achievement, PictureUploader
+
   def current_enrolment?
   	year_completed >= Date.today.year.to_s
   end
