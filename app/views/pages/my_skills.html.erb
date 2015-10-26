@@ -29,7 +29,9 @@
         <% end %>
       </div>
       <div class="card-action">
-        <%= link_to 'Return to profile', profile_path(current_user.profile) %>
+        <% if current_user.profile.present? %>
+          <%= link_to 'Return to profile', profile_path(current_user.profile) %>
+        <% end %>
       </div>
     </div>
   </div>
