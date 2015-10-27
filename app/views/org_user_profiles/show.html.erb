@@ -1,5 +1,5 @@
 <p id="notice"><%= notice %></p>
-
+<%= params %>
 <p>
   <strong>First name:</strong>
   <%= @org_user_profile.first_name %>
@@ -50,6 +50,7 @@
   <%#= @org_user_profile.user.organisations.find_by(params[:org_id]).contact_phone %>
 </p>
 -->
+
 <h4>ORGANISATION DETAILS:</h4>
 <br>
 <% @new_organisation = Organisation.new %>
@@ -59,13 +60,26 @@
   <%= f.error_notification %>
 
   <div class="form-inputs">
-    <%= f.input :organisation_type_id, input_html: {value: params[:org_type] } %>
+    <%= f.association :organisation_type  %>
     <%= f.input :name, label: 'Organisation name' %>
-    <%= f.input :address %>
-    <%= f.input :suburb %>
-    <%= f.input :state %>
-    <%= f.input :postcode %>
-    <%= f.input :country %>
+    <%= f.input :address, label: 'Street Address' %>
+    <div class="row">
+      <div class="col s6">
+        <%= f.input :suburb %>
+      </div>
+      <div class="col s6" style="list-style-type: none;">
+        <%= f.input :state, priority: [ "NSW" ], collection: [ "NSW", "QLD", "SA", "TAS", "VIC", "ACT", "WA"] %>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col s6">
+        <%= f.input :postcode %>
+      </div>
+      <div class="col s6">
+        <%= f.input :country %>
+      </div>
+    </div>
+
     <%= f.input :contact_name %>
     <%= f.input :contact_email %>
     <%= f.input :contact_phone %>
@@ -82,5 +96,7 @@
 <% end %>
 
 
-<%= link_to 'Edit', edit_org_user_profile_path(@org_user_profile) %> |
-<%= link_to 'Back', org_user_profiles_path %>
+<!-- DO NOT USE THIS
+<%#= link_to 'Edit', edit_org_user_profile_path(@org_user_profile) %> |
+<%#= link_to 'Back', org_user_profiles_path %>
+-->

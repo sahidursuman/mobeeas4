@@ -25,28 +25,49 @@
     <a class="waves-effect waves-light btn modal-trigger" href="#modal-welcome"><i class="material-icons left">speaker_notes</i>Getting Started</a>
       <div id="modal-welcome" class="modal">
         <div class="modal-content">
-
+          <p>Something to appear here</p>
         </div>
       </div>
 
-  <!-- AGREEMENTS -->
+  <!-- APPROVED ADMIN -->
   <div class="card">
-    <h5>Organisation Users Profiles</h5>
-    <!-- <a href="/org_user_profiles/new">I would like to apply for becoming the ADMIN HOST of this organisation</a> -->
-    <%#= link_to "I would like to apply for becoming the ADMIN HOST of this organisation", org_user_profiles_path(org_id: @organisation.id)%>
+    <h5>Approved Admin</h5>
+    <p>Approved Admin will have the ability to purchase and spend the company's tokens</p>
+    <ol>
+      <% @organisation.users.each do |user| %>
+        <!-- Displays the users that has been approved by org supervisor to be an admin and the status verified -->
+        <% if (user.org_user_profile.admin_status) && (user.org_user_profile.verified_status) %>
+          <li><%= user.org_user_profile.first_name %> <%= user.org_user_profile.last_name %></li>
+        <% end %>
+      <% end %>
+    </ol>
 
+    <p>Would you like to apply for an admin position? Your application is subject to the approval of organisation's supervisor.</p>
+    <%= link_to "Apply", new_org_user_profile_path(org_id: @organisation.id, add_user: 'yes')%>
   </div>
-  <!-- SKILLS -->
-    <div class="card">
-      <p>some info here2</p>
-    </div>
-    <!-- EDUCATION -->
-    <div class="card">
-      <p>some info here3</p>
-    </div>
-    <!-- SECURITY CHECKS -->
-    <div class="card">
-      <p>some info here4</p>
-    </div>
+
+  <!-- APPROVED USERS -->
+  <div class="card">
+    <h5>Approved Users</h5>
+    <p>Approved User will have the ability to create opportunity and request the use of company's token from Admin.</p>
+    <ol>
+      <% @organisation.users.each do |user| %>
+        <!-- Displays the users whose status has been verified by org supervisor, but not to be at admin level -->
+        <% if !(user.org_user_profile.admin_status) && (user.org_user_profile.verified_status) %>
+          <li><%= user.org_user_profile.first_name %> <%= user.org_user_profile.last_name %></li>
+        <% end %>
+      <% end %>
+    </ol>
+  </div>
+
+  <!-- EDUCATION -->
+  <div class="card">
+    <p>some info here3</p>
+  </div>
+
+  <!-- SECURITY CHECKS -->
+  <div class="card">
+    <p>some info here4</p>
+  </div>
   </div>
 </div>

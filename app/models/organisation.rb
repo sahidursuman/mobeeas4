@@ -3,6 +3,8 @@ class Organisation < ActiveRecord::Base
   has_many :org_users
   has_many :users, through: :org_users
 
+  mount_uploader :logo, PictureUploader
+
   geocoded_by :school_data
 	after_validation :geocode
 

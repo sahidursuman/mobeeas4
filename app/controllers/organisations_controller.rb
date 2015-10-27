@@ -22,9 +22,6 @@ class OrganisationsController < ApplicationController
   # GET /organisations/new
   def new
     @organisation = Organisation.new
-    if params[:org_type]
-      @org_type = Organisation.find(params[:org_type])
-    end
   end
 
   # GET /organisations/1/edit

@@ -25,7 +25,7 @@
     <br>
     <% else %> <!-- it’s good to notify reader if not found -->
       <p>There are no organisations with description: <%= params[:search] %>.</p>
-      <%= link_to 'New Organisation', new_organisation_path %>
+      <%= link_to 'New Organisation', new_organisation_path(subs_type: 'new_org') %>
     <% end %>
 
 

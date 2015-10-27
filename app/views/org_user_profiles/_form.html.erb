@@ -10,11 +10,17 @@
       <%= f.input :admin_status %>
       <%= f.input :verified_status %>
     <% end %>
-    <%= f.input :guid %>
+    <%#= f.input :guid %>
     <%= f.association :user, :as => :hidden %>
   </div>
 
   <div class="form-actions">
-    <%= f.button :submit %>
+    <!-- org_id: @organisation.id, add_user: 'yes' -->
+    <% if params[:add_user] == 'yes'%>yes
+      <%= hidden_field_tag(:foo, 'blast') %>
+      <%= f.button :submit, "SUBMIT", params: 'foo', value: 'blast' %>
+    <% else %>no
+      <%= f.button :submit%>
+    <% end %>
   </div>
 <% end %>

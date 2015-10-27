@@ -35,8 +35,12 @@ class OrgUserProfilesController < ApplicationController
     @org_user_profile = OrgUserProfile.new(org_user_profile_params)
     @org_user_profile.user_id = current_user.id
 
+
     respond_to do |format|
       if @org_user_profile.save
+        if params[:foo]
+          puts 'hello'
+        end
         format.html { redirect_to @org_user_profile, notice: 'Org user profile was successfully created.' }
         # format.html { redirect_to :back, notice: 'Org user profile was successfully created.' }
         format.json { render :show, status: :created, location: @org_user_profile }
