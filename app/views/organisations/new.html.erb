@@ -1,6 +1,5 @@
 
 <h1>New Organisation</h1>
-<%= params %>
 <% if params[:subs_type] == 'new_org' %>
   <p>
     Before you can create a new organisation, FIRST you need to enter your profile details first.
@@ -21,9 +20,6 @@
       <%= f.input :last_name %>
       <%= f.input :phone %>
       <%= f.input :position %>
-      <% if params[:subs_type] == 'new_org' %>
-        hello
-      <% end %>
       <%#= f.input :guid %>
       <%#= f.association :user, :as => :hidden %>
     </div>

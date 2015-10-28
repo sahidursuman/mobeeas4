@@ -1,7 +1,7 @@
 <div class="card-content">
       <span class="card-title blue-text"><i class="fa fa-child"></i> Your security checks <a href="#modal-checks" class="modal-trigger"><i class="material-icons">help</i></a></span>
 
-      <p><% if @user_security_checks.any? %>
+      <p><% if @user_security_checks.present? %><!-- instead of .any?-->
         <table>
           <thead><tr>
             <th>Type</th>
@@ -14,7 +14,7 @@
         <% @user_security_checks.each do |check| %>
           <tr>
             <td><%= check.name %></td>
-            <td><%= check.state %></td> 
+            <td><%= check.state %></td>
             <td><%= check.expiry_date.strftime('%d %b %y') %></td>
             <td> <%= check.number %></td>
             <td class="right-align">

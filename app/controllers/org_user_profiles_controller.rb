@@ -5,7 +5,7 @@ class OrgUserProfilesController < ApplicationController
   def verified_and_admin_approved
     @org_user_profile.update_attributes(admin_status: true, verified_status: true)
     @organisation = Organisation.find(params[:org_id])
-    redirect_to thanks2_path
+    redirect_to thanks2_url
   end
 
 
