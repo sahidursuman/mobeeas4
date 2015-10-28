@@ -8,4 +8,9 @@ class OrgUserProfile < ActiveRecord::Base
   def set_guid
     self.guid = SecureRandom.uuid
   end
+
+  def name
+		[first_name, last_name].compact.join(' ')
+	end
+
 end

@@ -34,6 +34,13 @@
   <%= @org_user_profile.verified_status %>
 </p>
 
+<% if !(@org_user_profile.org_creator) && !(@org_user_profile.org_creator) %>
+  <p>
+    Your request has been sent to the organisation supervisor, pending for approval.
+    Once the approval is received, your name will appear in the list of organisation's hosts.
+  </p>
+<% end %>
+
 <!-- DO NOT USE THIS BUT KEEP THIS PERHAPS FOR USE IN THE FUTURE
 <p>
   <strong>Direct Supervisor:</strong>
@@ -50,50 +57,52 @@
   <%#= @org_user_profile.user.organisations.find_by(params[:org_id]).contact_phone %>
 </p>
 -->
+<!-- if org user profile is the creator of this organisation, only then the new organisation form will appear-->
+<% if @org_user_profile.org_creator %>
+  <h4>ORGANISATION DETAILS:</h4>
+  <br>
+  <% @new_organisation = Organisation.new %>
 
-<h4>ORGANISATION DETAILS:</h4>
-<br>
-<% @new_organisation = Organisation.new %>
+  <!-- ORGANISATION-->
+  <%= simple_form_for(@new_organisation) do |f| %>
+    <%= f.error_notification %>
 
-<!-- ORGANISATION-->
-<%= simple_form_for(@new_organisation) do |f| %>
-  <%= f.error_notification %>
-
-  <div class="form-inputs">
-    <%= f.association :organisation_type  %>
-    <%= f.input :name, label: 'Organisation name' %>
-    <%= f.input :address, label: 'Street Address' %>
-    <div class="row">
-      <div class="col s6">
-        <%= f.input :suburb %>
+    <div class="form-inputs">
+      <%= f.association :organisation_type  %>
+      <%= f.input :name, label: 'Organisation name' %>
+      <%= f.input :address, label: 'Street Address' %>
+      <div class="row">
+        <div class="col s6">
+          <%= f.input :suburb %>
+        </div>
+        <div class="col s6" style="list-style-type: none;">
+          <%= f.input :state, priority: [ "NSW" ], collection: [ "NSW", "QLD", "SA", "TAS", "VIC", "ACT", "WA"] %>
+        </div>
       </div>
-      <div class="col s6" style="list-style-type: none;">
-        <%= f.input :state, priority: [ "NSW" ], collection: [ "NSW", "QLD", "SA", "TAS", "VIC", "ACT", "WA"] %>
+      <div class="row">
+        <div class="col s6">
+          <%= f.input :postcode %>
+        </div>
+        <div class="col s6">
+          <%= f.input :country %>
+        </div>
       </div>
+
+      <%= f.input :contact_name %>
+      <%= f.input :contact_email %>
+      <%= f.input :contact_phone %>
+      <%= f.input :logo %>
+      <%= f.input :website %>
+      <%= f.input :acara_school_id %>
+      <%= f.input :school_type %>
+
     </div>
-    <div class="row">
-      <div class="col s6">
-        <%= f.input :postcode %>
-      </div>
-      <div class="col s6">
-        <%= f.input :country %>
-      </div>
+
+    <div class="form-actions">
+      <%= f.button :submit %>
     </div>
-
-    <%= f.input :contact_name %>
-    <%= f.input :contact_email %>
-    <%= f.input :contact_phone %>
-    <%= f.input :logo %>
-    <%= f.input :website %>
-    <%= f.input :acara_school_id %>
-    <%= f.input :school_type %>
-
-  </div>
-
-  <div class="form-actions">
-    <%= f.button :submit %>
-  </div>
-<% end %>
+  <% end %>
+<% end %> <!-- end if the org user profile is not an organisation creator -->
 
 
 <!-- DO NOT USE THIS

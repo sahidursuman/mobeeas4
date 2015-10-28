@@ -9,6 +9,9 @@
   <!-- ORG USER PROFILE -->
   <% @new_org_user_profile = OrgUserProfile.new %>
   <% @new_org_user_profile.user_id = current_user.id %>
+  <% @new_org_user_profile.org_creator = true %>
+  <% @new_org_user_profile.save!%>
+
 
   <%= simple_form_for(@new_org_user_profile) do |f| %>
     <%= f.error_notification %>
@@ -18,12 +21,15 @@
       <%= f.input :last_name %>
       <%= f.input :phone %>
       <%= f.input :position %>
+      <% if params[:subs_type] == 'new_org' %>
+        hello
+      <% end %>
       <%#= f.input :guid %>
       <%#= f.association :user, :as => :hidden %>
     </div>
 
     <div class="form-actions">
-        <%= f.button :submit %>
+        <%= f.button :submit, "Create Organisation User Profile" %>
     </div>
   <% end %>
 

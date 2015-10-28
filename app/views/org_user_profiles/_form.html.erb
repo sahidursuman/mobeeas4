@@ -12,15 +12,10 @@
     <% end %>
     <%#= f.input :guid %>
     <%= f.association :user, :as => :hidden %>
+    <%= hidden_field_tag 'organsation_id', params[:org_id]  %>
   </div>
 
   <div class="form-actions">
-    <!-- org_id: @organisation.id, add_user: 'yes' -->
-    <% if params[:add_user] == 'yes'%>yes
-      <%= hidden_field_tag(:foo, 'blast') %>
-      <%= f.button :submit, "SUBMIT", params: 'foo', value: 'blast' %>
-    <% else %>no
-      <%= f.button :submit%>
-    <% end %>
+    <%= f.button :submit%>
   </div>
 <% end %>

@@ -3,6 +3,10 @@ Rails.application.routes.draw do
     member do
       get :verified_and_admin_approved
     end
+    member do
+      get :verified_user
+    end
+
   end
   resources :skill_verifications do
     member do
@@ -40,6 +44,7 @@ Rails.application.routes.draw do
   root 'pages#home'
   get 'my_skills', to: 'pages#my_skills'
   get 'thanks', to: 'pages#thanks'
+  get 'thanks2', to: 'pages#thanks2'
   get 'about', to: 'pages#about'
 
   devise_for :users

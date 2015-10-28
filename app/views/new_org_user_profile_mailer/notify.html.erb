@@ -1,0 +1,17 @@
+<h1>New Organisation Notification</h1>
+
+<p>
+  Hi Bronwyn, a new organisation host has been added, waiting for approval of the organisation's director.
+</p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @user.org_user_profile.name %>
+</p>
+
+<p>
+  <strong>Organisation name:</strong>
+  <%= @organisation.name %>
+</p>
+
+<p><%= link_to 'View this Organisation Host', org_user_profile_url(@user.org_user_profile.id) %></p>

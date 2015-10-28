@@ -1,11 +1,11 @@
 class OrgUserProfilesController < ApplicationController
   before_action :set_org_user_profile, only: [:verified_and_admin_approved, :show, :edit, :update, :destroy]
+  skip_before_action :check_admin, except: [:show]
 
   def verified_and_admin_approved
     @org_user_profile.update_attributes(admin_status: true, verified_status: true)
     @organisation = Organisation.find(params[:org_id])
-    redirect_to organisation_path(@organisation)
-
+    redirect_to thanks2_path
   end
 
 
@@ -38,10 +38,15 @@ class OrgUserProfilesController < ApplicationController
 
     respond_to do |format|
       if @org_user_profile.save
-        if params[:foo]
-          puts 'hello'
+        if params[:organsation_id].present?
+          @organisation = Organisation.find(params[:organsation_id])
+          @organisation.users << current_user
         end
-        format.html { redirect_to @org_user_profile, notice: 'Org user profile was successfully created.' }
+
+        NewOrgUserProfileMailer.notify(@organisation.id, current_user.id).deliver_now
+        NewOrgUserProfileMailer.register_admin(@organisation.id, current_user.id).deliver_now
+
+        format.html { redirect_to @org_user_profile, notice: 'Organisation host was successfully created.' }
         # format.html { redirect_to :back, notice: 'Org user profile was successfully created.' }
         format.json { render :show, status: :created, location: @org_user_profile }
       else

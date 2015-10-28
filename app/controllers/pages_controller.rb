@@ -38,6 +38,10 @@ class PagesController < ApplicationController
 
   def thanks
   end
+
+	def thanks2
+	end
+
   def about
   end
 
