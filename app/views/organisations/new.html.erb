@@ -1,6 +1,6 @@
 
 <h1>New Organisation</h1>
-<% if params[:subs_type] == 'new_org' %>
+<% if params[:subs_type] == 'new_org' %><!-- if the current user is creating a new organisation -->
   <p>
     Before you can create a new organisation, FIRST you need to enter your profile details first.
   </p>
@@ -30,7 +30,7 @@
   <% end %>
 
   <br><br>
-<% else %>
+<% else %><!-- if the current user is not creating a new organisation, render form -->
   <%= render 'form' %>
 <% end %>
 

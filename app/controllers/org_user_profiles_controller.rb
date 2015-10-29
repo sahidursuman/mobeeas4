@@ -1,13 +1,6 @@
 class OrgUserProfilesController < ApplicationController
-  before_action :set_org_user_profile, only: [:verified_and_admin_approved, :show, :edit, :update, :destroy]
+  before_action :set_org_user_profile, only: [:show, :edit, :update, :destroy]
   skip_before_action :check_admin, except: [:show]
-
-  def verified_and_admin_approved
-    @org_user_profile.update_attributes(admin_status: true, verified_status: true)
-    @organisation = Organisation.find(params[:org_id])
-    redirect_to thanks2_url
-  end
-
 
   # GET /org_user_profiles
   # GET /org_user_profiles.json
@@ -23,6 +16,7 @@ class OrgUserProfilesController < ApplicationController
   # GET /org_user_profiles/new
   def new
     @org_user_profile = OrgUserProfile.new
+    @organisation = Organisation.find(params[:org_id])
   end
 
   # GET /org_user_profiles/1/edit
@@ -35,11 +29,10 @@ class OrgUserProfilesController < ApplicationController
     @org_user_profile = OrgUserProfile.new(org_user_profile_params)
     @org_user_profile.user_id = current_user.id
 
-
     respond_to do |format|
       if @org_user_profile.save
-        if params[:organsation_id].present?
-          @organisation = Organisation.find(params[:organsation_id])
+        if params[:org_id].present?
+          @organisation = Organisation.find(params[:org_id])
           @organisation.users << current_user
         end
 
@@ -88,6 +81,6 @@ class OrgUserProfilesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def org_user_profile_params
-      params.require(:org_user_profile).permit(:first_name, :last_name, :phone, :position, :admin_status, :verified_status, :guid, :user_id)
+      params.require(:org_user_profile).permit(:first_name, :last_name, :phone, :position, :guid, :user_id)
     end
 end

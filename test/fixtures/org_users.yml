@@ -1,9 +1,13 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  user_id: 
+  admin_status: false
+  verified_status: false
   organisation_id: 
+  user_id: 
 
 two:
-  user_id: 
+  admin_status: false
+  verified_status: false
   organisation_id: 
+  user_id: 

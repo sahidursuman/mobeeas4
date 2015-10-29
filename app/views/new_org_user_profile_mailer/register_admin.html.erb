@@ -34,6 +34,9 @@
   If you approve <%= @user.org_user_profile.name %> to be the admin host of your organisation, please click the link below.
   Thank you.
 </p>
+<% @org_user = OrgUser.find_by(user_id: @user.id, organisation_id: @organisation.id) %>
+<p>@org_user.organisation_id = <%= @org_user.organisation_id %></p>
+<p>@org_user.user_id = <%= @org_user.user_id %></p>
 
-<p><%= link_to 'Approve '+@user.org_user_profile.name, verified_and_admin_approved_org_user_profile_url(@user.org_user_profile.id, org_id: @organisation.id) %></p>
+<p><%= link_to 'Approve '+@user.org_user_profile.name, verified_and_admin_approved_org_user_url(@org_user.id, org_id: @organisation.id) %></p>
 <!-- <p><%#= link_to 'Click here to view your organisation details in MOBEEAS' organisation_url(@organisation.id) %></p> -->

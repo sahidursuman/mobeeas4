@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Admin status:</strong>
+  <%= @org_user.admin_status %>
+</p>
+
+<p>
+  <strong>Verified status:</strong>
+  <%= @org_user.verified_status %>
+</p>
+
+<p>
+  <strong>Organisation:</strong>
+  <%= @org_user.organisation %>
+</p>
+
+<p>
+  <strong>User:</strong>
+  <%= @org_user.user %>
+</p>
+
+<%= link_to 'Edit', edit_org_user_path(@org_user) %> |
+<%= link_to 'Back', org_users_path %>

@@ -33,31 +33,71 @@
   <div class="card">
     <h5>Approved Admin</h5>
     <p>Approved Admin will have the ability to purchase and spend the company's tokens</p>
-    <ol>
-      <% @organisation.users.each do |user| %>
-        <!-- Displays the users that has been approved by org supervisor to be an admin and the status verified -->
-        <% if (user.org_user_profile.admin_status) && (user.org_user_profile.verified_status) %>
-          <li><%= user.org_user_profile.first_name %> <%= user.org_user_profile.last_name %></li>
-        <% end %>
-      <% end %>
-    </ol>
+    <p>If you already applied for becoming a host for this organisation, your name will appear only if it is approved by organisation supervisor.</p>
+    <% if @organisation.users.present? %>
+      <ol>
+        <% @organisation.users.each do |user| %>
+          <% if user.org_users.present? %>
+              <% user.org_users.each do |org_user| %>
+                <li><p><strong><%= link_to user.org_user_profile.name, org_user_profile_path(user.org_user_profile.id) %></strong>
+                  <% if org_user.admin_status && org_user.verified_status %>
+                    (Verified)
+                  <% else %>
+                    (Not Verified)
+                  <% end %>
 
-    <p>Would you like to apply for an admin position? Your application is subject to the approval of organisation's supervisor.</p>
-    <%= link_to "Apply", new_org_user_profile_path(org_id: @organisation.id, add_user: 'yes')%>
+                  <!-- if the curret user is already linked to this organisation -->
+                  <% if org_user.user_id == current_user.id %>
+                    <%= link_to edit_org_user_profile_path(user.org_user_profile, org_id: @organisation.id) do %><i class="material-icons tiny">mode_edit</i><% end %>
+                    <%= link_to 'Disconnect', remove_host_from_organisation_path(@organisation, user_id: user.id)%>
+                </p></li>
+                  <% else %>
+
+                    <% if current_user.org_user_profile.present? %>
+                      <p>I already have a profile</p>
+                      <%= current_user.org_user_profile.first_name %>
+                    <% else %>
+                      <p>Would you like to become a host of <%= @organisation.name %>?</p>
+                      <p>I don't have a profile</p>
+                      <%= link_to 'Create My Profile', new_org_user_profile_path(org_id: @organisation.id) %>
+                    <% end %>
+                  <% end %>
+
+
+
+              <% end %><!-- end loop -->
+          <% end %><!-- if user.org_users.present? -->
+
+        <% end %><!-- end of loop -->
+      </ol>
+    <% end %>
+
+    <!-- search if current user is already associated with this organisation or not -->
+    <% current_user.organisations.each do |organisation| %>
+      <% if organisation.id == @organisation.id %>
+      <!-- if user is associated, then he can select to disassociate with organisation -->
+        <%#= link_to "Remove My Connection",  %>
+      <% else %>
+      <!-- else if user is not associated, then he can select to apply for this organisation -->
+      <p>Would you like to apply for an admin position? Your application is subject to the approval of organisation's supervisor.</p>
+      <%= link_to "Apply", new_org_user_profile_path(org_id: @organisation.id, add_user: 'yes')%>      <% end %>
+    <% end %>
   </div>
 
   <!-- APPROVED USERS -->
   <div class="card">
     <h5>Approved Users</h5>
     <p>Approved User will have the ability to create opportunity and request the use of company's token from Admin.</p>
-    <ol>
-      <% @organisation.users.each do |user| %>
-        <!-- Displays the users whose status has been verified by org supervisor, but not to be at admin level -->
-        <% if !(user.org_user_profile.admin_status) && (user.org_user_profile.verified_status) %>
-          <li><%= user.org_user_profile.first_name %> <%= user.org_user_profile.last_name %></li>
+    <% if @organisation.org_users.present? %>
+      <ol>
+        <% @organisation.org_users.each do |org_user| %>
+            <!-- Displays the users whose status has been verified by org supervisor, but not to be at admin level -->
+            <% if !(org_user.admin_status) && (org_user.verified_status) %>
+              <li><%= org_user.user.org_user_profile.name %></li>
+            <% end %>
         <% end %>
-      <% end %>
-    </ol>
+      </ol>
+    <% end %>
   </div>
 
   <!-- EDUCATION -->

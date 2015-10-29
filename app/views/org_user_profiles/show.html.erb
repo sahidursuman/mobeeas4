@@ -23,23 +23,6 @@
   <%= @org_user_profile.position %>
 </p>
 
-<p>
-  <strong>Admin status:</strong>
-  <%= @org_user_profile.admin_status %>
-</p>
-
-<p>
-  <strong>Verified status:</strong>
-  <%= @org_user_profile.verified_status %>
-</p>
-
-<% if !(@org_user_profile.org_creator) && !(@org_user_profile.org_creator) %>
-  <p>
-    Your request has been sent to the organisation supervisor, pending for approval.
-    Once the approval is received, your name will appear in the list of organisation's hosts.
-  </p>
-<% end %>
-
 <!-- DO NOT USE THIS BUT KEEP THIS PERHAPS FOR USE IN THE FUTURE
 <p>
   <strong>Direct Supervisor:</strong>
@@ -56,8 +39,25 @@
   <%#= @org_user_profile.user.organisations.find_by(params[:org_id]).contact_phone %>
 </p>
 -->
+
+<p>@org_user_profile.user_id = <%= @org_user_profile.user_id %></p>
+<% @connected = false %>
+<!-- Search if there is an organisation connected with this user, do not display new organisation form. -->
+<% if Organisation.present? %>
+  <% Organisation.all.each do |organisation| %>
+    <p>
+    <% organisation.org_users.each do |org_user| %>
+      <% if @org_user_profile.user_id ==  org_user.user_id %>
+        You are connected with organisation: <%= link_to organisation.name, organisation_path(organisation.id) %>.
+        <% @connected = true %>
+      <% end %>
+    <% end %>
+    </p>
+  <% end %>
+
+<% end %>
 <!-- if org user profile is the creator of this organisation, only then the new organisation form will appear-->
-<% if @org_user_profile.org_creator %>
+<% if @org_user_profile.org_creator && (@connected == false)%>
   <h4>ORGANISATION DETAILS:</h4>
   <br>
   <% @new_organisation = Organisation.new %>

@@ -6,16 +6,12 @@
     <%= f.input :last_name %>
     <%= f.input :phone %>
     <%= f.input :position %>
-    <% if !@org_user_profile.new_record? %><!-- only appears for edit-->
-      <%= f.input :admin_status %>
-      <%= f.input :verified_status %>
-    <% end %>
+    <%= hidden_field_tag(:org_id, params[:org_id]) %>
     <%#= f.input :guid %>
     <%= f.association :user, :as => :hidden %>
-    <%= hidden_field_tag 'organsation_id', params[:org_id]  %>
   </div>
 
   <div class="form-actions">
-    <%= f.button :submit%>
+    <%= f.button :submit, "Update Host Profile"%>
   </div>
 <% end %>

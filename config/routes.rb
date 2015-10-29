@@ -1,13 +1,15 @@
 Rails.application.routes.draw do
-  resources :org_user_profiles do
+  resources :org_users do
     member do
       get :verified_and_admin_approved
     end
     member do
-      get :verified_user
+      get :verified
     end
-
   end
+
+  resources :org_user_profiles
+
   resources :skill_verifications do
     member do
       get :approve
@@ -22,7 +24,11 @@ Rails.application.routes.draw do
   resources :candidate_types
   resources :opportunity_applications
   resources :opportunities
-  resources :organisations
+  resources :organisations do
+    member do
+      get :remove_host_from
+    end
+  end
   resources :organisation_types
   resources :security_checks
   resources :skills do

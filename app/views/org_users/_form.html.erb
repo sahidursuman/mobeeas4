@@ -1,0 +1,14 @@
+<%= simple_form_for(@org_user) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="form-inputs">
+    <%= f.input :admin_status %>
+    <%= f.input :verified_status %>
+    <%= f.association :organisation %>
+    <%= f.association :user %>
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>

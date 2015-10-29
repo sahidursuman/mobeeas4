@@ -1,7 +1,13 @@
 class OrganisationsController < ApplicationController
-  before_action :set_organisation, only: [:show, :edit, :update, :destroy]
+  before_action :set_organisation, only: [:remove_host_from, :show, :edit, :update, :destroy]
   # skip_before_action :check_admin, except: [:index, :show]
   skip_before_action :check_admin, except: [:show]
+
+  # if a host decides to remove his connection to this organisation
+  def remove_host_from
+    user = User.find(params[:user_id])
+    @organisation.users.delete(user)
+  end
 
   # GET /organisations
   # GET /organisations.json
