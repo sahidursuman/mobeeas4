@@ -101,6 +101,9 @@ ul li {
   list-style-position: inside; /* will put the disc inside of the li element, for debugging purposes */
 }
 
+.list-style-none{
+  list-style-type: none;
+}
 .bold {
   font-weight: bold;
 }

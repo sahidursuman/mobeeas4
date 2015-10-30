@@ -10,6 +10,7 @@
 
       <div class="row align-center">
         <div class="col s12 m4 l4">
+          <%#= render 'host_home'%>
           <div class="card palette1-bg">
             <div class="card-content white-text height-250px">
               <!-- <span class="card-title">Card Title</span> -->
@@ -19,10 +20,14 @@
               </p>
               <p class="font-24px">(Coming soon)</p>
             </div>
-            <div class="card-action">
-              <%#= link_to "", new_user_registration_path %>
-              <a class="waves-effect white btn margin-left-20px" href="/organisations"><span class="palette2">Register as a Host</span></a>
-            </div>
+            <br><br>
+            <!-- <div class="card-action"> -->
+              <div class="row">
+                <div class="col s12 m12 l12">
+                  <a class="waves-effect white btn margin-left-20px" href="/dashboard_host"><span class="palette2">Register as a Host</span></a>
+                </div><!-- col s12 m4 l4 -->
+              </div><!-- row -->
+            <!-- </div> -->
           </div>
         </div>
 

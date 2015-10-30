@@ -52,6 +52,10 @@ Rails.application.routes.draw do
   get 'thanks', to: 'pages#thanks'
   get 'thanks2', to: 'pages#thanks2'
   get 'about', to: 'pages#about'
+  get 'dashboard_host', to: 'pages#dashboard_host'
+  get 'dashboard_candidate', to: 'pages#dashboard_candidate'
+  get 'dashboard_sponsor', to: 'pages#dashboard_sponsor'
+
 
   devise_for :users
   # The priority is based upon order of creation: first created -> highest priority.

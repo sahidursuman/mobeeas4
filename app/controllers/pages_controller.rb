@@ -45,4 +45,11 @@ class PagesController < ApplicationController
   def about
   end
 
+	def dashboard_candidate
+	end
+	def dashboard_host
+	end
+	def dashboard_sponsor
+	end
+
 end
