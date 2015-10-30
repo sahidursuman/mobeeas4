@@ -38,49 +38,54 @@
       <ol>
         <% @organisation.users.each do |user| %>
           <% if user.org_users.present? %>
-              <% user.org_users.each do |org_user| %>
-                <li><p><strong><%= link_to user.org_user_profile.name, org_user_profile_path(user.org_user_profile.id) %></strong>
-                  <% if org_user.admin_status && org_user.verified_status %>
-                    (Verified)
-                  <% else %>
-                    (Not Verified)
-                  <% end %>
+            <% user.org_users.each do |org_user| %>
+            <!-- just show the profile that is linked to this organisation -->
+            <% if org_user.organisation_id == @organisation.id %>
+              <li><p>
+                <strong><%= link_to user.org_user_profile.name, org_user_profile_path(user.org_user_profile.id) %></strong>
+                <% if org_user.admin_status && org_user.verified_status %>
+                  (Verified)
+                <% else %>
+                  (Not Verified)
+                <% end %>
 
-                  <!-- if the curret user is already linked to this organisation -->
-                  <% if org_user.user_id == current_user.id %>
-                    <%= link_to edit_org_user_profile_path(user.org_user_profile, org_id: @organisation.id) do %><i class="material-icons tiny">mode_edit</i><% end %>
-                    <%= link_to 'Disconnect', remove_host_from_organisation_path(@organisation, user_id: user.id)%>
-                </p></li>
-                  <% else %>
+                <!-- if the curret user is already linked to this organisation they can edit or delete -->
+                <% if org_user.user_id == current_user.id %>
+                  <%= link_to edit_org_user_profile_path(user.org_user_profile, org_id: @organisation.id) do %><i class="material-icons tiny">mode_edit</i><% end %>
+                  <%= link_to 'Disconnect', remove_host_from_organisation_path(@organisation, user_id: user.id), data: {confirm: "Are you sure to remove the connection?"}%>
+                <% end %><!-- org_user.user_id == current_user.id -->
+              </p></li>
+            <% end %><!-- if org_user.organisation_id == @organisation.id -->
 
-                    <% if current_user.org_user_profile.present? %>
-                      <p>I already have a profile</p>
-                      <%= current_user.org_user_profile.first_name %>
-                    <% else %>
-                      <p>Would you like to become a host of <%= @organisation.name %>?</p>
-                      <p>I don't have a profile</p>
-                      <%= link_to 'Create My Profile', new_org_user_profile_path(org_id: @organisation.id) %>
-                    <% end %>
-                  <% end %>
-
-
-
-              <% end %><!-- end loop -->
+            <% end %><!-- end loop -->
           <% end %><!-- if user.org_users.present? -->
-
         <% end %><!-- end of loop -->
       </ol>
-    <% end %>
 
-    <!-- search if current user is already associated with this organisation or not -->
-    <% current_user.organisations.each do |organisation| %>
-      <% if organisation.id == @organisation.id %>
-      <!-- if user is associated, then he can select to disassociate with organisation -->
-        <%#= link_to "Remove My Connection",  %>
-      <% else %>
-      <!-- else if user is not associated, then he can select to apply for this organisation -->
-      <p>Would you like to apply for an admin position? Your application is subject to the approval of organisation's supervisor.</p>
-      <%= link_to "Apply", new_org_user_profile_path(org_id: @organisation.id, add_user: 'yes')%>      <% end %>
+    <!-- CHECK IF CURRENT USER WANTS TO JOIN IN WITH THIS ORGANISATION -->
+      <!-- check if current user already has profile -->
+      <% if current_user.org_user_profile.present? %>
+        <!--  if already has a profile, check if it is linked to this organisation -->
+        <% @connected = false %><!-- starts with connected is false -->
+        <%  current_user.org_users.each do |curr_org_user| %>
+          <% if curr_org_user.organisation_id == @organisation.id %>
+            <% @connected = true %>
+            <!-- if match is found, connected is true because current user is already linked up his profile to this organisation
+                and don't do anything -->
+          <% end %>
+        <% end %><!-- end curr_org_user loop -->
+        <% if @connected == false %><!-- if no connection is found -->
+          <p>You already have a host profile but not linked with <%= @organisation.name %>, would you like to host <%= @organisation.name %>?</p>
+          <p><%= current_user.org_user_profile.first_name %></p>
+        <% end %>
+      <% else %><!-- else if the user does not have a profile created -->
+        <p>
+          You haven't created a profile.
+          Would you like create a host profile and to become a host of <%= @organisation.name %>?
+        </p>
+        <%= link_to 'Create My Profile', new_org_user_profile_path(org_id: @organisation.id) %>
+      <% end %>
+
     <% end %>
   </div>
 
