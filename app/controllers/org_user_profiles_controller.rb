@@ -34,6 +34,7 @@ class OrgUserProfilesController < ApplicationController
         if params[:org_id].present?
           @organisation = Organisation.find(params[:org_id])
           @organisation.users << current_user
+          current_user.add_role :host
         end
 
         NewOrgUserProfileMailer.notify(@organisation.id, current_user.id).deliver_now

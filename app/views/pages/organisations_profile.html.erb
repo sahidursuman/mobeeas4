@@ -1,0 +1,17 @@
+<div class="row">
+  <div class="col c12 m8 offset-m2 l8 offset-l2">
+    <%= render 'layouts/sidebar' %>
+
+    <!-- Search for all organisations linked to this host -->
+    <%# @user = User.find(@org_user_profile.user_id)%>
+    <% if current_user.organisations.present? %>
+      <p>Currently you are connected with these organisations:</p>
+      <ol>
+        <% current_user.organisations.each do |organisation| %>
+          <li><%= link_to organisation.name, organisation_path(organisation.id) %></li>
+        <% end %>
+      </ol>
+    <% end %>
+
+  </div>
+</div>

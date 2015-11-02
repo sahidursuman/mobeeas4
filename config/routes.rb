@@ -55,6 +55,13 @@ Rails.application.routes.draw do
   get 'dashboard_host', to: 'pages#dashboard_host'
   get 'dashboard_candidate', to: 'pages#dashboard_candidate'
   get 'dashboard_sponsor', to: 'pages#dashboard_sponsor'
+  get 'host_profile', to: 'pages#host_profile'
+  get 'organisations_profile', to: 'pages#organisations_profile'
+  get 'purchase_tokens', to: 'pages#purchase_tokens'
+
+
+
+
 
 
   devise_for :users

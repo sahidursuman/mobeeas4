@@ -1,0 +1,32 @@
+<div class="row">
+  <div class="col c12 m8 offset-m2 l8 offset-l2">
+    <%= render 'layouts/sidebar' %>
+      <p>
+        <strong>First name:</strong>
+        <%= current_user.org_user_profile.first_name %>
+      </p>
+      <p>
+        <strong>Last name:</strong>
+        <%= current_user.org_user_profile.last_name %>
+      </p>
+
+      <p>
+        <strong>Phone:</strong>
+        <%= current_user.org_user_profile.phone %>
+      </p>
+
+      <p>
+        <strong>Email:</strong>
+        <%= current_user.org_user_profile.user.email %>
+      </p>
+      <p>
+        <strong>Position:</strong>
+        <%= current_user.org_user_profile.position %>
+      </p>
+
+      <% if current_user.id == @org_user_profile.user_id %>
+        <%= link_to 'Edit', edit_org_user_profile_path(current_user.org_user_profile)%>
+      <% end %>
+
+  </div>
+</div>
