@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :school_years
   resources :org_users do
     member do
       get :verified_and_admin_approved

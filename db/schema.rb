@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151029113233) do
+ActiveRecord::Schema.define(version: 20151103040322) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -97,20 +97,23 @@ ActiveRecord::Schema.define(version: 20151029113233) do
   create_table "opportunities", force: :cascade do |t|
     t.integer  "organisation_id"
     t.integer  "user_id"
-    t.string   "opportunity_status"
-    t.string   "name"
-    t.string   "tagline"
-    t.text     "info"
-    t.date     "planned_start_date"
-    t.string   "duration"
+    t.string   "opportunity_status", default: "draft"
+    t.string   "title"
+    t.text     "description"
     t.decimal  "pay"
     t.date     "commencement_date"
     t.date     "completion_date"
-    t.datetime "created_at",         null: false
-    t.datetime "updated_at",         null: false
+    t.datetime "created_at",                           null: false
+    t.datetime "updated_at",                           null: false
+    t.boolean  "paid_engagement",    default: false
+    t.text     "specific_skills"
+    t.text     "experiences"
+    t.text     "employment_terms"
+    t.integer  "school_year_id"
   end
 
   add_index "opportunities", ["organisation_id"], name: "index_opportunities_on_organisation_id", using: :btree
+  add_index "opportunities", ["school_year_id"], name: "index_opportunities_on_school_year_id", using: :btree
   add_index "opportunities", ["user_id"], name: "index_opportunities_on_user_id", using: :btree
 
   create_table "opportunity_applications", force: :cascade do |t|
@@ -228,6 +231,22 @@ ActiveRecord::Schema.define(version: 20151029113233) do
   add_index "roles", ["name", "resource_type", "resource_id"], name: "index_roles_on_name_and_resource_type_and_resource_id", using: :btree
   add_index "roles", ["name"], name: "index_roles_on_name", using: :btree
 
+  create_table "school_year_opportunities", force: :cascade do |t|
+    t.integer  "school_year_id"
+    t.integer  "opportunity_id"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+  end
+
+  add_index "school_year_opportunities", ["opportunity_id"], name: "index_school_year_opportunities_on_opportunity_id", using: :btree
+  add_index "school_year_opportunities", ["school_year_id"], name: "index_school_year_opportunities_on_school_year_id", using: :btree
+
+  create_table "school_years", force: :cascade do |t|
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "security_checks", force: :cascade do |t|
     t.string   "name"
     t.string   "state"
@@ -309,7 +328,10 @@ ActiveRecord::Schema.define(version: 20151029113233) do
 
   add_index "users_roles", ["user_id", "role_id"], name: "index_users_roles_on_user_id_and_role_id", using: :btree
 
+  add_foreign_key "opportunities", "school_years"
   add_foreign_key "org_user_profiles", "users"
   add_foreign_key "org_users", "organisations"
   add_foreign_key "org_users", "users"
+  add_foreign_key "school_year_opportunities", "opportunities"
+  add_foreign_key "school_year_opportunities", "school_years"
 end

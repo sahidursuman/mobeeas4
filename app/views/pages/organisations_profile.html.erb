@@ -11,6 +11,12 @@
           <li><%= link_to organisation.name, organisation_path(organisation.id) %></li>
         <% end %>
       </ol>
+    <% else %>
+      <p>You are currently not linked to any organisations. Please select one of the organisations below to join as the host.</p>
+    <% end %>
+
+    <% if @organisations.present? %>
+      <%= render template: "organisations/index" %>
     <% end %>
 
   </div>

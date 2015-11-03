@@ -3,7 +3,7 @@
   <%= f.error_notification %>
 
   <div class="form-inputs">
-    <%= f.association :organisation_type  %>
+    <%= f.association :organisation_type, :include_blank => false  %>
     <%= f.input :name, label: 'Organisation name' %>
     <%= f.input :address, label: 'Street Address' %>
     <div class="row">

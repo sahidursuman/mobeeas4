@@ -2,17 +2,54 @@
   <%= f.error_notification %>
 
   <div class="form-inputs">
-    <%= f.association :organisation %>
-    <%= f.association :user %>
-    <%= f.input :opportunity_status %>
-    <%= f.input :name %>
-    <%= f.input :tagline %>
-    <%= f.input :info %>
-    <%= f.input :planned_start_date %>
-    <%= f.input :duration %>
-    <%= f.input :pay %>
-    <%= f.input :commencement_date %>
-    <%= f.input :completion_date %>
+    <% @organisations = current_user.organisations %>
+    <%= f.association :organisation, collection: @organisations, :include_blank => false; %>
+    <%= f.association :user, :as => :hidden, input_html: { value: current_user.id } %>
+    <% if !@opportunity.new_record? %><!-- by default new opportunity status is 'draft'-->
+      <%= f.input :opportunity_status, collection: ["draft", "listed", "active", "completed"], :include_blank => false; %>
+    <% end %>
+    <%= f.input :title %>
+    <%= f.input :description, label: 'Description (max 1000 characters)', input_html: { maxlength: 1000 } %>
+    <%= f.input :commencement_date, as: :string, label: 'Anticipated Start Date', input_html: { class: 'datetimepicker'} %>
+    <%= f.input :completion_date, as: :string, label: 'Anticipated End Date', input_html: { class: 'datetimepicker'} %>
+    <p>Choose School Year level(s):
+    <%#= f.association :school_years, collection: SchoolYear.all, as: :check_boxes %>
+    <% if @opportunity.new_record? %><!-- if creating a new opportunity -->
+      <label class="check_boxes optional">School years</label>
+      <% @opportunity.school_years.each do |school_year| %>
+        <p>
+          <input class="" type="checkbox" value="<%= school_year.id %>" name="opportunity[school_year_ids][]" id="opportunity_school_year_ids_<%= school_year.id %>" checked />
+          <label for="opportunity_school_year_ids_<%= school_year.id %>"><%= school_year.name %></label>
+        </p>
+      <% end %>
+      <input type="hidden" name="opportunity[school_year_ids][]" value="" />
+    <% else %><!-- else if editing -->
+      <% @school_years.all.each do |school_year| %><!-- you must open all of the scholl year attributes -->
+        <p>
+          <input class="" type="checkbox" value="<%= school_year.id %>" name="opportunity[school_year_ids][]" id="opportunity_school_year_ids_<%= school_year.id %>" <%= @opportunity.school_years.include?(school_year) ? 'checked' : '' %> />
+          <label for="opportunity_school_year_ids_<%= school_year.id %>"><%= school_year.name %></label>
+        </p>
+      <% end %>
+      <input type="hidden" name="opportunity[school_year_ids][]" value="" />
+    <% end %>
+
+
+    <%= f.input :specific_skills, label: 'Other specific skills required of the MOBEEAS mentor (max 1000 characters)', input_html: { maxlength: 1000 } %>
+    <%= f.input :experiences, label: 'Other experience that would be advantagous (max 1000 characters)', input_html: { maxlength: 1000 } %>
+    <%#= f.input_field :paid_engagement, as: :radio_buttons %>
+    <p>Is this a paid engagement?</p>
+    <% if @opportunity.paid_engagement %><!-- if true, yes is selected in the edit form -->
+      <input class="with-gap" type="radio" value="true" name="opportunity[paid_engagement]" id="opportunity_paid_engagement_true"  checked="checked"/><label for="opportunity_paid_engagement_true">Yes</label>
+      <input class="with-gap" type="radio" value="false" name="opportunity[paid_engagement]" id="opportunity_paid_engagement_false" /><label for="opportunity_paid_engagement_false">No</label>
+    <% else %><!-- if true, no is selected in the edit form-->
+      <input class="with-gap" type="radio" value="true" name="opportunity[paid_engagement]" id="opportunity_paid_engagement_true" /><label for="opportunity_paid_engagement_true">Yes</label>
+      <input class="with-gap" type="radio" value="false" checked="checked" name="opportunity[paid_engagement]" id="opportunity_paid_engagement_false" /><label for="opportunity_paid_engagement_false">No</label>
+    <% end %>
+
+    <%= f.input :pay, label: 'Payment per hour (if applicable)' %>
+    <%= f.input :employment_terms, label: 'Renumeration or terms of employment (max 1000 characters)', input_html: { maxlength: 1000 } %>
+
+
   </div>
 
   <div class="form-actions">

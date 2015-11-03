@@ -59,6 +59,8 @@ gem 'indefinite_article'
 gem 'geocoder'
 gem 'pg'
 gem 'passenger'
+gem 'nested_form'
+gem 'will_paginate'
 
 source 'https://rails-assets.org' do
   gem 'rails-assets-datetimepicker'

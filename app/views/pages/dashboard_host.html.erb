@@ -3,35 +3,17 @@
     <%= render 'layouts/sidebar'%>
       <div class="row">
         <div class="col s12 m10 offset-m2 l10 offset-l2">
-          <%#= render 'pages/host_profile'%>
-
-          <p>
-            <strong>First name:</strong>
-            <%= current_user.org_user_profile.first_name %>
-          </p>
-          <p>
-            <strong>Last name:</strong>
-            <%= current_user.org_user_profile.last_name %>
-          </p>
-
-          <p>
-            <strong>Phone:</strong>
-            <%= current_user.org_user_profile.phone %>
-          </p>
-
-          <p>
-            <strong>Email:</strong>
-            <%= current_user.org_user_profile.user.email %>
-          </p>
-          <p>
-            <strong>Position:</strong>
-            <%= current_user.org_user_profile.position %>
-          </p>
+          <% if current_user.org_user_profile.present? %>
+          <%= render template: 'org_user_profiles/show'%>
 
           <% if current_user.id == @org_user_profile.user_id %>
             <%= link_to 'Edit My Profile', edit_org_user_profile_path(current_user.org_user_profile)%>
           <% end %>
 
+          <% else %> <!-- else if current_user's profile hasn't been created yet -->
+            <p> Please create your profile first</p>
+            <%= link_to "Create Host Profile", new_profile_path %>
+          <% end %>
         </div>
       </div>
   <% end %>

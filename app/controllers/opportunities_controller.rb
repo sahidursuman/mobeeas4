@@ -15,10 +15,15 @@ class OpportunitiesController < ApplicationController
   # GET /opportunities/new
   def new
     @opportunity = Opportunity.new
+    @school_years = SchoolYear.all
+    @school_years.each do |school_year|
+      @opportunity.school_years << school_year
+    end
   end
 
   # GET /opportunities/1/edit
   def edit
+    @school_years = SchoolYear.all
   end
 
   # POST /opportunities
@@ -69,6 +74,6 @@ class OpportunitiesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def opportunity_params
-      params.require(:opportunity).permit(:organisation_id, :user_id, :opportunity_status, :name, :tagline, :info, :planned_start_date, :duration, :pay, :commencement_date, :completion_date)
+      params.require(:opportunity).permit(:organisation_id, :user_id, :opportunity_status, :title, :description, :pay, :paid_engagement, :commencement_date, :completion_date, :specific_skills, :experiences, :employment_terms, :school_year_ids => [])
     end
 end

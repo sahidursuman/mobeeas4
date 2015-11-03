@@ -61,6 +61,7 @@ class PagesController < ApplicationController
 
 	def organisations_profile
 		@org_user_profile = current_user.org_user_profile
+		@organisations = Organisation.paginate(:page => params[:page], :per_page => 5)
 	end
 
 	def purchase_tokens

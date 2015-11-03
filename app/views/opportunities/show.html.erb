@@ -2,12 +2,14 @@
 
 <p>
   <strong>Organisation:</strong>
-  <%= @opportunity.organisation %>
+  <% @organisation = Organisation.find(@opportunity.organisation) %>
+  <%= @organisation.name %>
 </p>
 
 <p>
   <strong>User:</strong>
-  <%= @opportunity.user %>
+  <% @user = User.find(@opportunity.user) %>
+  <%= @user.org_user_profile.name %>
 </p>
 
 <p>
@@ -16,43 +18,63 @@
 </p>
 
 <p>
-  <strong>Name:</strong>
-  <%= @opportunity.name %>
+  <strong>Project Title:</strong>
+  <%= @opportunity.title %>
 </p>
 
 <p>
-  <strong>Tagline:</strong>
-  <%= @opportunity.tagline %>
+  <strong>Description:</strong>
+  <%= @opportunity.description %>
 </p>
 
 <p>
-  <strong>Info:</strong>
-  <%= @opportunity.info %>
-</p>
-
-<p>
-  <strong>Planned start date:</strong>
-  <%= @opportunity.planned_start_date %>
-</p>
-
-<p>
-  <strong>Duration:</strong>
-  <%= @opportunity.duration %>
-</p>
-
-<p>
-  <strong>Pay:</strong>
-  <%= @opportunity.pay %>
-</p>
-
-<p>
-  <strong>Commencement date:</strong>
+  <strong>Anticipated commencement date:</strong>
   <%= @opportunity.commencement_date %>
 </p>
 
 <p>
-  <strong>Completion date:</strong>
+  <strong>Anticipated completion date:</strong>
   <%= @opportunity.completion_date %>
+</p>
+
+<% if @opportunity.school_years.present? %>
+  <p>
+    <strong>School Year of the participants in the project:</strong>
+    <ol>
+      <% @opportunity.school_years.each do |level| %>
+        <li><%= level.name %></li>
+      <% end %>
+    </ol>
+  </p>
+<% end %>
+
+<p>
+  <strong>Specific skills requirement:</strong>
+  <%= @opportunity.specific_skills %>
+</p>
+
+<p>
+  <strong>Other experiences that would be advantagous:</strong>
+  <%= @opportunity.experiences %>
+</p>
+
+<p>
+  <strong>Is this a paid Engagement?</strong>
+  <% if @opportunity.paid_engagement %>
+    <p>Yes, paid engagement.</p>
+  <% else %>
+    <p>No, Not paid engagement.</p>
+  <% end %>
+</p>
+
+<p>
+  <strong>Hourly rate:</strong>
+  <%= @opportunity.pay %>
+</p>
+
+<p>
+  <strong>Remuneration or specific terms of employment:</strong>
+  <%= @opportunity.employment_terms %>
 </p>
 
 <%= link_to 'Edit', edit_opportunity_path(@opportunity) %> |

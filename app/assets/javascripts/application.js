@@ -13,5 +13,7 @@
 //= require jquery
 //= require jquery_ujs
 //= require materialize
-//= require_tree .
 //= require datetimepicker
+//= require turbolinks
+//= require jquery_nested_form
+//= require_tree .

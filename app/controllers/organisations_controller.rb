@@ -12,7 +12,7 @@ class OrganisationsController < ApplicationController
   # GET /organisations
   # GET /organisations.json
   def index
-    @organisations = Organisation.all
+    @organisations = Organisation.paginate(:page => params[:page], :per_page => 5)
     if params[:search]
       @organisations = Organisation.search(params[:search]).order("name DESC")
     else

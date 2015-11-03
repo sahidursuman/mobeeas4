@@ -1,7 +1,5 @@
 <p id="notice"><%= notice %></p>
 
-<div class="row">
-  <div class="col s12 m10 offset-m1 l10 offset-l1">
     <h3>Listing Organisations</h3>
     <p>
       Before adding a new organisation/school, please search first to check if it is available already.
@@ -11,6 +9,7 @@
       <%= submit_tag "Search" %>
     <% end %>
     <% if @organisations.present? %>
+      <%= will_paginate @organisations %>
       <% @organisations.each do |organisation| %>
         <a href="/organisations/<%= organisation.id %>">
           <ul class="collection" style="list-style-type: none;">
@@ -34,7 +33,3 @@
         <%= link_to 'New Organisation', new_organisation_path(subs_type: 'new_host_new_org') %>
       <% end %>
     <% end %>
-
-
-  </div>
-</div>
