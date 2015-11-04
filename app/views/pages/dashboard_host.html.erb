@@ -9,8 +9,7 @@
               <%= link_to 'Edit My Profile', edit_org_user_profile_path(current_user.org_user_profile)%>
             <% end %>
           <% else %> <!-- else if current_user's profile hasn't been created yet -->
-            <p> Please create your profile first</p>
-            <%= link_to "Create My Host Profile", new_org_user_profile_path %>
+            <p>Your host profile is not created. Please go to <%= link_to 'Organisations Index', organisations_profile_path %> and select one of the organisations as the first step to create your host profile.</p>
           <% end %>
         </div>
       </div>

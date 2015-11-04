@@ -14,9 +14,9 @@ class OrganisationsController < ApplicationController
   def index
     @organisations = Organisation.paginate(:page => params[:page], :per_page => 5)
     if params[:search]
-      @organisations = Organisation.search(params[:search]).order("name DESC")
+      @organisations = Organisation.search(params[:search]).order("name DESC").paginate(:page => params[:page], :per_page => 5)
     else
-      @organisations = Organisation.order("name DESC")
+      @organisations = Organisation.order("name DESC").paginate(:page => params[:page], :per_page => 5)
     end
   end
 

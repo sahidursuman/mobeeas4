@@ -1,15 +1,4 @@
 <p id="notice"><%= notice %></p>
-<div class="row">
-  <div class="col s12 m10 offset-m1 l10 offset-l1">
-    <div class="card">
-
-    </div>
-  </div>
-</div>
-
-
-
-<p id="notice"><%= notice %></p>
 
 <div class="row">
   <!-- PROFILE -->
@@ -33,7 +22,7 @@
   <div class="card">
     <h5>Approved Admin</h5>
     <p>Approved Admin will have the ability to purchase and spend the company's tokens</p>
-    <p>If you already applied for becoming a host for this organisation, your name will appear only if it is approved by organisation supervisor.</p>
+    <p>List of approved admin:</p>
     <% if @organisation.users.present? %>
       <ol>
         <% @organisation.users.each do |user| %>
@@ -80,8 +69,8 @@
         <% end %>
       <% else %><!-- else if the user does not have a profile created -->
         <p>
-          You haven't created a profile.
-          Would you like create a host profile and to become a host of <%= @organisation.name %>?
+          You haven't created a host profile.
+          Would you like create a host profile and to become an admin host of <%= @organisation.name %>?
         </p>
         <%= link_to 'Create My Profile', new_org_user_profile_path(org_id: @organisation.id) %>
       <% end %>
