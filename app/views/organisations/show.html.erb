@@ -90,7 +90,7 @@
           <% end %>
         <% end %><!-- end curr_org_user loop -->
         <% if @connected == false %><!-- if no connection is found -->
-          <p>You already have a <%= link_to "host profile", org_user_profile_path(current_user.org_user_profile.id, org_id: @organisation.id)%> but not connected to <%= @organisation.name %>, would you like to host <%= @organisation.name %>?</p>
+          <p>You already have a <%= link_to "host profile", org_user_profile_path(current_user.org_user_profile.id, view: 'my_profile')%> but not connected to <%= @organisation.name %>, would you like to host <%= @organisation.name %>?</p>
           <p><%= link_to "Connect me...", add_user_into_organisation_path(@organisation, user_id: current_user.id), data: {confirm: "You are about to link your profile to this organisation"} %></p>
         <% end %>
       <% else %><!-- else if the user does not have a profile created -->
