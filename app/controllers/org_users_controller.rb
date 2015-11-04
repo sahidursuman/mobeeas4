@@ -1,6 +1,6 @@
 class OrgUsersController < ApplicationController
   before_action :set_org_user, only: [:verified_and_admin_approved, :show, :edit, :update, :destroy]
-
+	skip_before_action :authenticate_user!, only: [:verified_and_admin_approved]
 
   def verified_and_admin_approved
     @org_user.update_attributes(admin_status: true, verified_status: true)
