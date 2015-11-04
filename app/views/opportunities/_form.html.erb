@@ -8,10 +8,24 @@
     <% if !@opportunity.new_record? %><!-- by default new opportunity status is 'draft'-->
       <%= f.input :opportunity_status, collection: ["draft", "listed", "active", "completed"], :include_blank => false; %>
     <% end %>
-    <%= f.input :title %>
-    <%= f.input :description, label: 'Description (max 1000 characters)', input_html: { maxlength: 1000 } %>
-    <%= f.input :commencement_date, as: :string, label: 'Anticipated Start Date', input_html: { class: 'datetimepicker'} %>
-    <%= f.input :completion_date, as: :string, label: 'Anticipated End Date', input_html: { class: 'datetimepicker'} %>
+    <div class="row">
+      <div class="input-field col s12">
+        <%= f.input :title, input_html: { class: 'materialize-textarea' } %>
+      </div>
+    </div>
+    <div class="row">
+      <div class="input-field col s12">
+        <%= f.input :description, label: 'Description (max 1000 characters)', input_html: { maxlength: 1000, class: 'materialize-textarea' } %>
+      </div>
+    </div>
+    <div class="row">
+      <div class="input-field col s6">
+          <%= f.input :commencement_date, as: :string, label: 'Anticipated Start Date', input_html: { class: 'datetimepicker materialize-textarea'} %>
+      </div>
+      <div class="input-field col s6">
+        <%= f.input :completion_date, as: :string, label: 'Anticipated End Date', input_html: { class: 'datetimepicker materialize-textarea'} %>
+      </div>
+    </div>
     <p>Choose School Year level(s):
     <%#= f.association :school_years, collection: SchoolYear.all, as: :check_boxes %>
     <% if @opportunity.new_record? %><!-- if creating a new opportunity -->
@@ -33,9 +47,16 @@
       <input type="hidden" name="opportunity[school_year_ids][]" value="" />
     <% end %>
 
-
-    <%= f.input :specific_skills, label: 'Other specific skills required of the MOBEEAS mentor (max 1000 characters)', input_html: { maxlength: 1000 } %>
-    <%= f.input :experiences, label: 'Other experience that would be advantagous (max 1000 characters)', input_html: { maxlength: 1000 } %>
+    <div class="row">
+      <div class="input-field col s12">
+        <%= f.input :specific_skills, label: 'Other specific skills required of the MOBEEAS mentor (max 1000 characters)', input_html: { maxlength: 1000, class: 'materialize-textarea' } %>
+      </div>
+    </div>
+    <div class="row">
+      <div class="input-field col s12">
+        <%= f.input :experiences, label: 'Other experience that would be advantagous (max 1000 characters)', input_html: { maxlength: 1000, class: 'materialize-textarea' } %>
+      </div>
+    </div>
     <%#= f.input_field :paid_engagement, as: :radio_buttons %>
     <p>Is this a paid engagement?</p>
     <% if @opportunity.paid_engagement %><!-- if true, yes is selected in the edit form -->
@@ -46,9 +67,16 @@
       <input class="with-gap" type="radio" value="false" checked="checked" name="opportunity[paid_engagement]" id="opportunity_paid_engagement_false" /><label for="opportunity_paid_engagement_false">No</label>
     <% end %>
 
-    <%= f.input :pay, label: 'Payment per hour (if applicable)' %>
-    <%= f.input :employment_terms, label: 'Renumeration or terms of employment (max 1000 characters)', input_html: { maxlength: 1000 } %>
-
+    <div class="row">
+      <div class="input-field col s12">
+        <%= f.input :pay, label: 'Payment per hour (if applicable)', input_html: { class: 'materialize-textarea' } %>
+      </div>
+    </div>
+    <div class="row">
+      <div class="input-field col s12">
+        <%= f.input :employment_terms, label: 'Renumeration or terms of employment (max 1000 characters)', input_html: { maxlength: 1000, class: 'materialize-textarea' } %>
+      </div>
+    </div>
 
   </div>
 

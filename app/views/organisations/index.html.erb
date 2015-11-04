@@ -25,7 +25,7 @@
     <% else %> <!-- it’s good to notify reader if not found -->
       <p>There are no organisations with description: <%= params[:search] %>.</p>
 
-      <% if current_user.org_user_profile.first_name.present? %>
+      <% if current_user.org_user_profile.present? %>
         <!-- if host profile already exist, just create a new organisation -->
         <%= link_to 'New Organisation', new_organisation_path(subs_type: 'new_org') %>
       <% else %>
