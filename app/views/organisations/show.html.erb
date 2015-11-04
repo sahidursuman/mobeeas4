@@ -59,18 +59,19 @@
         <%  current_user.org_users.each do |curr_org_user| %>
           <% if curr_org_user.organisation_id == @organisation.id %>
             <% @connected = true %>
-            <!-- if match is found, connected is true because current user is already linked up his profile to this organisation
+            <!-- if at least one match is found from many organisations, connected is true because current user is already linked up his profile to this organisation
                 and don't do anything -->
           <% end %>
         <% end %><!-- end curr_org_user loop -->
         <% if @connected == false %><!-- if no connection is found -->
-          <p>You already have a host profile but not linked with <%= @organisation.name %>, would you like to host <%= @organisation.name %>?</p>
-          <p><%= current_user.org_user_profile.first_name %></p>
+          <p>You already have a <%= link_to "host profile", org_user_profile_path(current_user.org_user_profile.id)%> but not connected to <%= @organisation.name %>, would you like to host <%= @organisation.name %>?</p>
+          <p><%= link_to "Connect me...", add_user_into_organisation_path(@organisation, user_id: current_user.id), data: {confirm: "You are about to link your profile to this organisation"} %></p>
         <% end %>
       <% else %><!-- else if the user does not have a profile created -->
         <p>
-          You haven't created a host profile.
-          Would you like create a host profile and to become an admin host of <%= @organisation.name %>?
+          You haven't created a host profile.<br>
+          Would you like create a host profile and to become an admin host of <%= @organisation.name %>?<br>
+          Your application is subject to the approval of the organisation supervisor.<br>
         </p>
         <%= link_to 'Create My Profile', new_org_user_profile_path(org_id: @organisation.id) %>
       <% end %>

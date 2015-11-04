@@ -29,6 +29,9 @@ Rails.application.routes.draw do
     member do
       get :remove_host_from
     end
+    member do
+      get :add_user_into
+    end
   end
   resources :organisation_types
   resources :security_checks

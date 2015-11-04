@@ -1,12 +1,22 @@
 
-  <ul id="slide-out" class="side-nav fixed margin-left-10px">
-  	<li class="logo list-style-none margin-top-20px margin-bottom-20px"><a href="/"><%= image_tag 'MOBEEAS.png', height: '122px', class: 'brand-logo responsive-img' %></a></li>
 	  <% if current_user.has_role? :student %>
-      <%= render 'layouts/student_sidebar' %>
+      <ul id="slide-out" class="side-nav fixed margin-left-10px">
+        <li class="logo list-style-none margin-top-20px margin-bottom-20px"><a href="/"><%= image_tag 'MOBEEAS.png', height: '122px', class: 'brand-logo responsive-img' %></a>
+        </li>
+        <%= render 'layouts/student_sidebar' %>
+      </ul>
 	  <% elsif current_user.has_role? :teacher %>
+      <ul id="slide-out" class="side-nav fixed margin-left-10px">
+        <li class="logo list-style-none margin-top-20px margin-bottom-20px"><a href="/"><%= image_tag 'MOBEEAS.png', height: '122px', class: 'brand-logo responsive-img' %></a>
+        </li>
 	  	<%= render 'layouts/teacher_sidebar' %>
+      </ul>
     <% elsif current_user.has_role? :host %>
+      <ul id="slide-out" class="side-nav fixed margin-left-10px">
+        <li class="logo list-style-none margin-top-20px margin-bottom-20px"><a href="/"><%= image_tag 'MOBEEAS.png', height: '122px', class: 'brand-logo responsive-img' %></a>
+        </li>
       <%= render 'layouts/host_sidebar' %>
+      </ul>
 	  <% end %>
   </ul>
   <!-- <a href="#" data-activates="slide-out" class="button-collapse"><i class="mdi-navigation-menu"></i></a> -->

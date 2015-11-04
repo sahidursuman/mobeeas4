@@ -3,10 +3,10 @@
 
   <div class="form-inputs">
     <% @organisations = current_user.organisations %>
-    <%= f.association :organisation, collection: @organisations, :include_blank => false; %>
+    <%= f.association :organisation, collection: @organisations, :include_blank => false %>
     <%= f.association :user, :as => :hidden, input_html: { value: current_user.id } %>
     <% if !@opportunity.new_record? %><!-- by default new opportunity status is 'draft'-->
-      <%= f.input :opportunity_status, collection: ["draft", "listed", "active", "completed"], :include_blank => false; %>
+      <%= f.input :opportunity_status, collection: ["draft", "listed", "active", "completed"], :include_blank => false %>
     <% end %>
     <div class="row">
       <div class="input-field col s12">

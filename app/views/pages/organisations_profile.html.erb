@@ -14,10 +14,8 @@
     <% else %>
       <p>You are currently not linked to any organisations. Please select one of the organisations below to join as the host.</p>
     <% end %>
-
+  </div>
+</div>
     <% if @organisations.present? %>
       <%= render template: "organisations/index" %>
     <% end %>
-
-  </div>
-</div>

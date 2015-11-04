@@ -42,6 +42,7 @@
 
 <!-- Search for all organisations linked to this host -->
 <% @user = User.find(@org_user_profile.user_id)%>
+
 <% if @user.organisations.present? %>
   <p>Currently you are connected with these organisations:</p>
   <ol>
@@ -49,55 +50,59 @@
       <li><%= link_to organisation.name, organisation_path(organisation.id) %></li>
     <% end %>
   </ol>
+
+<% else %>
+
+
+
+  <!-- if org user profile is the creator of this organisation, only then the new organisation form will appear-->
+  <% if @org_user_profile.org_creator%>
+    <h4>ORGANISATION DETAILS:</h4>
+    <br>
+    <% @new_organisation = Organisation.new %>
+
+    <!-- ORGANISATION-->
+    <%= simple_form_for(@new_organisation) do |f| %>
+      <%= f.error_notification %>
+
+      <div class="form-inputs">
+        <%= f.association :organisation_type, :include_blank => false  %>
+        <%= f.input :name, label: 'Organisation name' %>
+        <%= f.input :address, label: 'Street Address' %>
+        <div class="row">
+          <div class="col s6">
+            <%= f.input :suburb %>
+          </div>
+          <div class="col s6" style="list-style-type: none;">
+            <%= f.input :state, priority: [ "NSW" ], collection: [ "NSW", "QLD", "SA", "TAS", "VIC", "ACT", "WA"], :include_blank => false %>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col s6">
+            <%= f.input :postcode %>
+          </div>
+          <div class="col s6">
+            <%= f.input :country, priority: [ "Australia" ], :include_blank => false %>
+          </div>
+        </div>
+
+        <%= f.input :contact_name %>
+        <%= f.input :contact_email %>
+        <%= f.input :contact_phone %>
+        <%= f.input :logo %>
+        <%= f.input :website %>
+        <%= f.input :acara_school_id %>
+        <%= f.input :school_type %>
+
+      </div>
+
+      <div class="form-actions">
+        <%= f.button :submit %>
+      </div>
+    <% end %>
+  <% end %> <!-- end if the org user profile is not an organisation creator -->
+
 <% end %>
-
-<!-- if org user profile is the creator of this organisation, only then the new organisation form will appear-->
-<% if @org_user_profile.org_creator && (@connected == false)%>
-<h4>ORGANISATION DETAILS:</h4>
-<br>
-<% @new_organisation = Organisation.new %>
-
-<!-- ORGANISATION-->
-<%= simple_form_for(@new_organisation) do |f| %>
-  <%= f.error_notification %>
-
-  <div class="form-inputs">
-    <%= f.association :organisation_type  %>
-    <%= f.input :name, label: 'Organisation name' %>
-    <%= f.input :address, label: 'Street Address' %>
-    <div class="row">
-      <div class="col s6">
-        <%= f.input :suburb %>
-      </div>
-      <div class="col s6" style="list-style-type: none;">
-        <%= f.input :state, priority: [ "NSW" ], collection: [ "NSW", "QLD", "SA", "TAS", "VIC", "ACT", "WA"] %>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col s6">
-        <%= f.input :postcode %>
-      </div>
-      <div class="col s6">
-        <%= f.input :country %>
-      </div>
-    </div>
-
-    <%= f.input :contact_name %>
-    <%= f.input :contact_email %>
-    <%= f.input :contact_phone %>
-    <%= f.input :logo %>
-    <%= f.input :website %>
-    <%= f.input :acara_school_id %>
-    <%= f.input :school_type %>
-
-  </div>
-
-  <div class="form-actions">
-    <%= f.button :submit %>
-  </div>
-<% end %>
-<% end %> <!-- end if the org user profile is not an organisation creator -->
-
 
 <!-- DO NOT USE THIS
 <%#= link_to 'Edit', edit_org_user_profile_path(@org_user_profile) %> |
