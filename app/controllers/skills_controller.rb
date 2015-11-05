@@ -12,6 +12,16 @@ class SkillsController < ApplicationController
     redirect_to :back
   end
 
+  def add_required
+    @skill.opportunities << @opportunity
+    redirect_to :back
+  end
+
+  def remove_required
+    @skill.opportunities.delete(@opportunity)
+    redirect_to :back
+  end
+
   # GET /skills
   # GET /skills.json
   def index

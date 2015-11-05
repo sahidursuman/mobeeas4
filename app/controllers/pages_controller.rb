@@ -67,4 +67,10 @@ class PagesController < ApplicationController
 	def purchase_tokens
 	end
 
+	def required_skills
+		@skill_categories = SkillCategory.includes(:skills)
+		# @skills = Skill.all
+		@required_skills = @opportunity.skills
+	end
+
 end

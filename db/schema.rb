@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151103040322) do
+ActiveRecord::Schema.define(version: 20151105035956) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -100,7 +100,7 @@ ActiveRecord::Schema.define(version: 20151103040322) do
     t.string   "opportunity_status", default: "draft"
     t.string   "title"
     t.text     "description"
-    t.decimal  "pay"
+    t.string   "pay"
     t.date     "commencement_date"
     t.date     "completion_date"
     t.datetime "created_at",                           null: false
@@ -110,10 +110,12 @@ ActiveRecord::Schema.define(version: 20151103040322) do
     t.text     "experiences"
     t.text     "employment_terms"
     t.integer  "school_year_id"
+    t.integer  "skill_id"
   end
 
   add_index "opportunities", ["organisation_id"], name: "index_opportunities_on_organisation_id", using: :btree
   add_index "opportunities", ["school_year_id"], name: "index_opportunities_on_school_year_id", using: :btree
+  add_index "opportunities", ["skill_id"], name: "index_opportunities_on_skill_id", using: :btree
   add_index "opportunities", ["user_id"], name: "index_opportunities_on_user_id", using: :btree
 
   create_table "opportunity_applications", force: :cascade do |t|
@@ -130,12 +132,12 @@ ActiveRecord::Schema.define(version: 20151103040322) do
 
   create_table "opportunity_skills", force: :cascade do |t|
     t.integer  "skill_id"
-    t.integer  "project_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+    t.integer  "opportunity_id"
   end
 
-  add_index "opportunity_skills", ["project_id"], name: "index_opportunity_skills_on_project_id", using: :btree
+  add_index "opportunity_skills", ["opportunity_id"], name: "index_opportunity_skills_on_opportunity_id", using: :btree
   add_index "opportunity_skills", ["skill_id"], name: "index_opportunity_skills_on_skill_id", using: :btree
 
   create_table "org_user_profiles", force: :cascade do |t|
@@ -329,6 +331,8 @@ ActiveRecord::Schema.define(version: 20151103040322) do
   add_index "users_roles", ["user_id", "role_id"], name: "index_users_roles_on_user_id_and_role_id", using: :btree
 
   add_foreign_key "opportunities", "school_years"
+  add_foreign_key "opportunities", "skills"
+  add_foreign_key "opportunity_skills", "opportunities"
   add_foreign_key "org_user_profiles", "users"
   add_foreign_key "org_users", "organisations"
   add_foreign_key "org_users", "users"

@@ -4,4 +4,7 @@ class Opportunity < ActiveRecord::Base
 
   has_many :school_year_opportunities #the join table
   has_many :school_years, through: :school_year_opportunities
+
+  has_many :opportunity_skills
+  has_many :skills, through: :opportunity_skills
 end

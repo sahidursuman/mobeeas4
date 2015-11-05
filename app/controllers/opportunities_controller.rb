@@ -16,9 +16,6 @@ class OpportunitiesController < ApplicationController
   def new
     @opportunity = Opportunity.new
     @school_years = SchoolYear.all
-    @school_years.each do |school_year|
-      @opportunity.school_years << school_year
-    end
   end
 
   # GET /opportunities/1/edit

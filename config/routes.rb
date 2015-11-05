@@ -2,10 +2,7 @@ Rails.application.routes.draw do
   resources :school_years
   resources :org_users do
     member do
-      get :verified_and_admin_approved
-    end
-    member do
-      get :verified
+      get :verified_and_admin_approved, :verified
     end
   end
 
@@ -27,17 +24,14 @@ Rails.application.routes.draw do
   resources :opportunities
   resources :organisations do
     member do
-      get :remove_host_from
-    end
-    member do
-      get :add_user_into
+      get :remove_host_from, :add_user_into
     end
   end
   resources :organisation_types
   resources :security_checks
   resources :skills do
     member do
-      get :add_user, :remove_user
+      get :add_user, :remove_user, :add_required, :remove_required
     end
   end
   resources :skill_categories
@@ -62,7 +56,7 @@ Rails.application.routes.draw do
   get 'host_profile', to: 'pages#host_profile'
   get 'organisations_profile', to: 'pages#organisations_profile'
   get 'purchase_tokens', to: 'pages#purchase_tokens'
-
+  get 'required_skills', to: 'pages#required_skills'
 
 
 
