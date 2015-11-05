@@ -4,7 +4,29 @@
       <div class="row">
         <div class="col s12 m10 offset-m2 l10 offset-l2">
           <% if current_user.org_user_profile.present? %>
-            <%= render template: 'org_user_profiles/show'%>
+            <p>
+            <strong>First name:</strong>
+            <%= @org_user_profile.first_name %>
+            </p>
+
+            <p>
+            <strong>Last name:</strong>
+            <%= @org_user_profile.last_name %>
+            </p>
+
+            <p>
+            <strong>Phone:</strong>
+            <%= @org_user_profile.phone %>
+            </p>
+
+            <p>
+            <strong>Email:</strong>
+            <%= @org_user_profile.user.email %>
+            </p>
+            <p>
+            <strong>Position:</strong>
+            <%= @org_user_profile.position %>
+            </p>
             <% if current_user.id == @org_user_profile.user_id %>
               <%= link_to 'Edit My Profile', edit_org_user_profile_path(current_user.org_user_profile)%>
             <% end %>

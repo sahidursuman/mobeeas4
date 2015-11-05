@@ -64,7 +64,46 @@
           <% end %>
         <% end %><!-- end curr_org_user loop -->
         <% if @connected == false %><!-- if no connection is found -->
-          <p>You already have a <%= link_to "host profile", org_user_profile_path(current_user.org_user_profile.id, view: 'my_profile')%> but not connected to <%= @organisation.name %>, would you like to host <%= @organisation.name %>?</p>
+          <p>You already have a host profile but not connected to <%= @organisation.name %>, would you like to host <%= @organisation.name %>?</p>
+
+          <!-- Modal Trigger -->
+          <a class="waves-effect waves-light btn modal-trigger" href="#host_profile">View My Host Profile</a>
+
+          <!-- Modal Structure -->
+          <div id="host_profile" class="modal">
+            <div class="modal-content">
+              <h4>Modal Header</h4>
+              <p>
+              <strong>First name:</strong>
+              <%= current_user.org_user_profile.first_name %>
+              </p>
+
+              <p>
+              <strong>Last name:</strong>
+              <%= current_user.org_user_profile.last_name %>
+              </p>
+
+              <p>
+              <strong>Phone:</strong>
+              <%= current_user.org_user_profile.phone %>
+              </p>
+
+              <p>
+              <strong>Email:</strong>
+              <%= current_user.org_user_profile.user.email %>
+              </p>
+              <p>
+              <strong>Position:</strong>
+              <%= current_user.org_user_profile.position %>
+              </p>
+
+            </div>
+            <div class="modal-footer">
+              <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Close</a>
+            </div>
+          </div>
+          <!-- end of Modal -->
+
           <p><%= link_to "Connect me...", add_user_into_organisation_path(@organisation, user_id: current_user.id), data: {confirm: "You are about to link your profile to this organisation"} %></p>
         <% end %>
       <% else %><!-- else if the user does not have a profile created -->
@@ -90,7 +129,46 @@
           <% end %>
         <% end %><!-- end curr_org_user loop -->
         <% if @connected == false %><!-- if no connection is found -->
-          <p>You already have a <%= link_to "host profile", org_user_profile_path(current_user.org_user_profile.id, view: 'my_profile')%> but not connected to <%= @organisation.name %>, would you like to host <%= @organisation.name %>?</p>
+        <p>You already have a host profile but not connected to <%= @organisation.name %>, would you like to host <%= @organisation.name %>?</p>
+
+          <!-- Modal Trigger -->
+          <a class="waves-effect waves-light btn modal-trigger" href="#host_profile">View My Host Profile</a>
+
+          <!-- Modal Structure -->
+          <div id="host_profile" class="modal">
+            <div class="modal-content">
+              <h4>Modal Header</h4>
+              <p>
+              <strong>First name:</strong>
+              <%= current_user.org_user_profile.first_name %>
+              </p>
+
+              <p>
+              <strong>Last name:</strong>
+              <%= current_user.org_user_profile.last_name %>
+              </p>
+
+              <p>
+              <strong>Phone:</strong>
+              <%= current_user.org_user_profile.phone %>
+              </p>
+
+              <p>
+              <strong>Email:</strong>
+              <%= current_user.org_user_profile.user.email %>
+              </p>
+              <p>
+              <strong>Position:</strong>
+              <%= current_user.org_user_profile.position %>
+              </p>
+
+            </div>
+            <div class="modal-footer">
+              <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Close</a>
+            </div>
+          </div>
+          <!-- end of Modal -->
+
           <p><%= link_to "Connect me...", add_user_into_organisation_path(@organisation, user_id: current_user.id), data: {confirm: "You are about to link your profile to this organisation"} %></p>
         <% end %>
       <% else %><!-- else if the user does not have a profile created -->

@@ -1,27 +1,28 @@
 <p id="notice"><%= notice %></p>
-<p>
-<strong>First name:</strong>
-<%= @org_user_profile.first_name %>
-</p>
 
-<p>
-<strong>Last name:</strong>
-<%= @org_user_profile.last_name %>
-</p>
+  <p>
+  <strong>First name:</strong>
+  <%= @org_user_profile.first_name %>
+  </p>
 
-<p>
-<strong>Phone:</strong>
-<%= @org_user_profile.phone %>
-</p>
+  <p>
+  <strong>Last name:</strong>
+  <%= @org_user_profile.last_name %>
+  </p>
 
-<p>
-<strong>Email:</strong>
-<%= @org_user_profile.user.email %>
-</p>
-<p>
-<strong>Position:</strong>
-<%= @org_user_profile.position %>
-</p>
+  <p>
+  <strong>Phone:</strong>
+  <%= @org_user_profile.phone %>
+  </p>
+
+  <p>
+  <strong>Email:</strong>
+  <%= @org_user_profile.user.email %>
+  </p>
+  <p>
+  <strong>Position:</strong>
+  <%= @org_user_profile.position %>
+  </p>
 
 <!-- DO NOT USE THIS BUT KEEP THIS PERHAPS WILL BE USEFUL IN THE FUTURE
 <p>
@@ -55,7 +56,7 @@
 
 
   <!-- if org user profile is the creator of this organisation, only then the new organisation form will appear-->
-  <% if @org_user_profile.org_creator && !(params[:view] == 'my_profile')%>
+  <% if @org_user_profile.org_creator %>
     <h4>ORGANISATION DETAILS:</h4>
     <br>
     <% @new_organisation = Organisation.new %>
