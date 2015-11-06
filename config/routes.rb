@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :opportunity_times
   resources :school_years
   resources :org_users do
     member do

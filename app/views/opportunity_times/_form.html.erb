@@ -1,0 +1,15 @@
+<%= simple_form_for(@opportunity_time) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="form-inputs">
+    <%= f.input :time %>
+    <%= f.input :date %>
+    <%= f.input :day %>
+    <%= f.input :frequency %>
+    <%= f.association :opportunity %>
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>

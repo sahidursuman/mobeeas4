@@ -1,0 +1,35 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Opportunity Times</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Time</th>
+      <th>Date</th>
+      <th>Day</th>
+      <th>Frequency</th>
+      <th>Opportunity</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @opportunity_times.each do |opportunity_time| %>
+      <tr>
+        <td><%= opportunity_time.time %></td>
+        <td><%= opportunity_time.date %></td>
+        <td><%= opportunity_time.day %></td>
+        <td><%= opportunity_time.frequency %></td>
+        <td><%= opportunity_time.opportunity %></td>
+        <td><%= link_to 'Show', opportunity_time %></td>
+        <td><%= link_to 'Edit', edit_opportunity_time_path(opportunity_time) %></td>
+        <td><%= link_to 'Destroy', opportunity_time, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Opportunity time', new_opportunity_time_path %>

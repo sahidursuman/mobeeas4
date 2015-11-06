@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Time:</strong>
+  <%= @opportunity_time.time %>
+</p>
+
+<p>
+  <strong>Date:</strong>
+  <%= @opportunity_time.date %>
+</p>
+
+<p>
+  <strong>Day:</strong>
+  <%= @opportunity_time.day %>
+</p>
+
+<p>
+  <strong>Frequency:</strong>
+  <%= @opportunity_time.frequency %>
+</p>
+
+<p>
+  <strong>Opportunity:</strong>
+  <%= @opportunity_time.opportunity %>
+</p>
+
+<%= link_to 'Edit', edit_opportunity_time_path(@opportunity_time) %> |
+<%= link_to 'Back', opportunity_times_path %>
