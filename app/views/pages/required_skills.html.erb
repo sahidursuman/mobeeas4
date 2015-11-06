@@ -1,0 +1,39 @@
+<h2>Required Skills</h2>
+<div class="row">
+  <div class="col m8">
+    <h4>Available skills</h4>
+    <ul class="collapsible" data-collapsible="accordion">
+    	<% @skill_categories.each do |skill_category| %>
+        <li>
+          <div class="collapsible-header">
+            <i class="material-icons">filter_drama</i><%= skill_category.name %>
+          </div>
+          <div class="collapsible-body">
+          	<% skill_category.skills.each do |skill| %>
+    				<% unless skill.opportunities.include?(@opportunity) %>
+    					<%= link_to skill.name, add_required_skill_path(skill, opportunity_id: @opportunity.id), class: 'waves-effect waves-teal btn-flat' %>
+    				<% end %>
+    			<% end %>
+          </div>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+  <div class="col m4">
+    <h4>Required Skills </h4>
+    <div class="card">
+      <div class="card-content" id="my-skills">
+        <ol>
+          <% @required_skills.each do |required_skill| %>
+            <li><%= required_skill.name %> (<%= required_skill.skill_category.name %>)  <%= link_to 'remove', remove_required_skill_path(required_skill, opportunity_id: @opportunity.id) %></li>
+          <% end %>
+        </ol>
+      </div>
+      <div class="card-action">
+        <% if @opportunity.present? %>
+          <%= link_to 'Return to Opportunity details', opportunity_path(@opportunity) %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

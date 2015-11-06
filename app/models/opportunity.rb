@@ -7,4 +7,5 @@ class Opportunity < ActiveRecord::Base
 
   has_many :opportunity_skills
   has_many :skills, through: :opportunity_skills
+
 end

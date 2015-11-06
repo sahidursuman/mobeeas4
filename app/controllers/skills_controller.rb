@@ -1,5 +1,5 @@
 class SkillsController < ApplicationController
-  before_action :set_skill, only: [:add_user, :remove_user, :show, :edit, :update, :destroy]
+  before_action :set_skill, only: [:add_user, :remove_user, :add_required, :remove_required, :show, :edit, :update, :destroy]
   skip_before_action :check_admin, only: [:add_user, :remove_user]
 
   def add_user
@@ -13,11 +13,13 @@ class SkillsController < ApplicationController
   end
 
   def add_required
+    @opportunity = Opportunity.find(params[:opportunity_id])
     @skill.opportunities << @opportunity
     redirect_to :back
   end
 
   def remove_required
+    @opportunity = Opportunity.find(params[:opportunity_id])
     @skill.opportunities.delete(@opportunity)
     redirect_to :back
   end

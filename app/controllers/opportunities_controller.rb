@@ -7,6 +7,10 @@ class OpportunitiesController < ApplicationController
     @opportunities = Opportunity.all
   end
 
+  # def skills
+  #   @skills = Skill.all
+  # end
+
   # GET /opportunities/1
   # GET /opportunities/1.json
   def show

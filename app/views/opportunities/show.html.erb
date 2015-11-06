@@ -3,6 +3,11 @@
     <%= render 'layouts/sidebar' %>
     <p id="notice"><%= notice %></p>
 
+    <h5><%= @opportunity.title %></h5>
+    <p><strong><%= @opportunity.description %></strong></p>
+    <p><strong>Status: </strong><%= @opportunity.opportunity_status %></p>
+
+
     <p>
       <strong>Organisation:</strong>
       <% @organisation = Organisation.find(@opportunity.organisation) %>
@@ -10,39 +15,26 @@
     </p>
 
     <p>
-      <strong>User:</strong>
+      <strong>Host:</strong>
       <% @user = User.find(@opportunity.user) %>
       <%= @user.org_user_profile.name %>
     </p>
 
-    <p>
-      <strong>Opportunity status:</strong>
-      <%= @opportunity.opportunity_status %>
-    </p>
+
 
     <p>
-      <strong>Project Title:</strong>
-      <%= @opportunity.title %>
-    </p>
-
-    <p>
-      <strong>Description:</strong>
-      <%= @opportunity.description %>
-    </p>
-
-    <p>
-      <strong>Anticipated commencement date:</strong>
+      <strong>Start date:</strong>
       <%= @opportunity.commencement_date %>
     </p>
 
     <p>
-      <strong>Anticipated completion date:</strong>
+      <strong>End date:</strong>
       <%= @opportunity.completion_date %>
     </p>
 
     <% if @opportunity.school_years.present? %>
       <p>
-        <strong>School Year of the participants in the project:</strong>
+        <strong>Participants School Year level(s):</strong>
         <ol>
           <% @opportunity.school_years.each do |level| %>
             <li><%= level.name %></li>
@@ -51,13 +43,25 @@
       </p>
     <% end %>
 
+    <p>Skills Required of the MOBEEAS Mentor:</p>
+    <% if @opportunity.skills.present? %>
+      <ol>
+        <% @opportunity.skills.each do |skill| %>
+          <li><%= skill.name %> (<%= skill.skill_category.name %>)</li>
+        <% end %>
+      </ol>
+    <% else %>
+      <p>No skills listed</p>
+    <% end %>
+    <!-- <a href="/required_skills">Add skills</a> -->
+    <%= link_to "Add Skills", required_skills_path(oppo_id: @opportunity.id)%>
     <p>
       <strong>Specific skills requirement:</strong>
       <%= @opportunity.specific_skills %>
     </p>
 
     <p>
-      <strong>Other experiences that would be advantagous:</strong>
+      <strong>Other experiences that would be advantageous:</strong>
       <%= @opportunity.experiences %>
     </p>
 
@@ -80,7 +84,6 @@
       <%= @opportunity.employment_terms %>
     </p>
 
-    <%= link_to 'Edit', edit_opportunity_path(@opportunity) %> |
-    <%= link_to 'Back', dashboard_host_path %>
+    <%= link_to 'Edit', edit_opportunity_path(@opportunity) %>
   </div>
 </div>

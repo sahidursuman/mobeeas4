@@ -70,6 +70,7 @@ class PagesController < ApplicationController
 	def required_skills
 		@skill_categories = SkillCategory.includes(:skills)
 		# @skills = Skill.all
+		@opportunity = Opportunity.find(params[:oppo_id])
 		@required_skills = @opportunity.skills
 	end
 
