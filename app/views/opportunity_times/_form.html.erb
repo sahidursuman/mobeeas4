@@ -5,8 +5,8 @@
   <div class="form-inputs">
     <div class="row">
       <div class="col s4 m4 l4">
-        <%#= f.input :time, as: :string, label: 'Time', input_html: { class: 'datetimepicker2'},  value: ( f.object.time.strftime('%I:%M %p') unless f.object.time.blank?)  %>
-        <%= f.input :time, as: :string, label: 'Time', input_html: { class: 'datetimepicker2'},  value: localize( f.object.time, :format => "%I:::%m %p")  %>
+        <%= f.input :time, as: :string, label: 'Time', input_html: { class: 'datetimepicker2'},  value: ( f.object.time.strftime('%I:%M %p') unless f.object.time.blank?)  %>
+        <%#= f.input :time, as: :string, label: 'Time', input_html: { class: 'datetimepicker2'},  value: localize( f.object.time, :format => "%I:::%m %p")  %>
 
       </div>
       <div class="col s4 m4 l4">
