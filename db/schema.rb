@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151105035956) do
+ActiveRecord::Schema.define(version: 20151106035010) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -139,6 +139,18 @@ ActiveRecord::Schema.define(version: 20151105035956) do
 
   add_index "opportunity_skills", ["opportunity_id"], name: "index_opportunity_skills_on_opportunity_id", using: :btree
   add_index "opportunity_skills", ["skill_id"], name: "index_opportunity_skills_on_skill_id", using: :btree
+
+  create_table "opportunity_times", force: :cascade do |t|
+    t.time     "time"
+    t.date     "date"
+    t.string   "day"
+    t.string   "frequency"
+    t.integer  "opportunity_id"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+  end
+
+  add_index "opportunity_times", ["opportunity_id"], name: "index_opportunity_times_on_opportunity_id", using: :btree
 
   create_table "org_user_profiles", force: :cascade do |t|
     t.string   "first_name"
@@ -333,6 +345,7 @@ ActiveRecord::Schema.define(version: 20151105035956) do
   add_foreign_key "opportunities", "school_years"
   add_foreign_key "opportunities", "skills"
   add_foreign_key "opportunity_skills", "opportunities"
+  add_foreign_key "opportunity_times", "opportunities"
   add_foreign_key "org_user_profiles", "users"
   add_foreign_key "org_users", "organisations"
   add_foreign_key "org_users", "users"
