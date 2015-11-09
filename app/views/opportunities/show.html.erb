@@ -20,17 +20,35 @@
       <%= @user.org_user_profile.name %>
     </p>
 
-
-
     <p>
       <strong>Start date:</strong>
-      <%= @opportunity.commencement_date %>
+      <%= @opportunity.commencement_date.strftime("%A, %d %b %Y") %>
     </p>
 
     <p>
       <strong>End date:</strong>
-      <%= @opportunity.completion_date %>
+      <%= @opportunity.completion_date.strftime("%A, %d %b %Y")  %>
     </p>
+    <p><%=Date.today.to_s%></p>
+    <p><%=Time.now.to_s%></p>
+
+    <!-- <p><%#= link_to "Add Schedule", new_opportunity_time_path(opportunity_id: @opportunity.id)%></p> -->
+    <% if @opportunity.opportunity_times.present? %>
+      <ul class="list-style-disc">
+        <% @opportunity.opportunity_times.each do |t|%>
+          <% if t.date_time.present? %>
+            <li class="list-style-disc"><%= t.date_time.strftime("%A, %d %b %Y %l:%M %p") %> - <%= link_to 'Edit', edit_opportunity_time_path(t, opportunity_id: @opportunity.id) %> | <%= link_to 'Delete',t , method: :delete, data: { confirm: 'Are you sure?' } %></li>
+          <% elsif t.time.present? ||  t.day.present? || t.frequency.present? %>
+            <li class="list-style-disc"><%= t.time.strftime("%H:%M %p") %>, <%= t.day %>, <%= t.frequency %> - <%= link_to 'Edit', edit_opportunity_time_path(t, opportunity_id: @opportunity.id) %> | <%= link_to 'Delete', t, method: :delete, data: { confirm: 'Are you sure?' } %></li>
+          <% end %>
+
+        <% end %>
+      </ul>
+      <p><strong>Add Schedule:</strong></p>
+      <%= render 'time_form'%>
+    <% else %><!-- else if opportunity time is not present -->
+      <%= render 'time_form'%>
+    <% end %>
 
     <% if @opportunity.school_years.present? %>
       <p>

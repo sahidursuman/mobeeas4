@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151106035010) do
+ActiveRecord::Schema.define(version: 20151109122812) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -142,7 +142,7 @@ ActiveRecord::Schema.define(version: 20151106035010) do
 
   create_table "opportunity_times", force: :cascade do |t|
     t.time     "time"
-    t.date     "date"
+    t.datetime "date_time"
     t.string   "day"
     t.string   "frequency"
     t.integer  "opportunity_id"

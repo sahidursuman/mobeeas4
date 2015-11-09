@@ -1,28 +1,29 @@
+<p>Please Enter Schedule:</p>
+
+
+<% @opportunity_time = OpportunityTime.new(opportunity_id: @opportunity.id) %>
+<% @opportunity_time.opportunity_id = @opportunity.id %>
 
 <%= simple_form_for(@opportunity_time) do |f| %>
   <%= f.error_notification %>
-
   <div class="form-inputs">
     <div class="row">
-      <div class="col s4 m4 l4">
-        <%#= f.input :time, as: :string, label: 'Time', input_html: { class: 'datetimepicker2'},  value: ( f.object.time.strftime('%I:%M %p') unless f.object.time.blank?)  %>
-        <%= f.input :time, as: :string, label: 'Time', input_html: { class: 'datetimepicker2'},  value: localize( f.object.time, :format => "%I:::%m %p")  %>
-
+      <div class="col s3 m3 l3">
+        <%= f.input :time, as: :string, label: 'Time', input_html: { class: 'datetimepicker2'}  %>
       </div>
-      <div class="col s4 m4 l4">
+      <div class="col s3 m3 l3">
         <%= f.input :day, collection: [ "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday" ] %>
       </div>
-      <div class="col s4 m4 l4">
+      <div class="col s3 m3 l3">
         <%= f.input :frequency, collection: [ "Daily", "Weekly", "Fortnightly", "Monthly"] %>
       </div>
     </div><!-- end of row -->
     <div class="row">
-      <p><strong>-- Or --</strong></p>
-
       <div class="col s12 m12 l12">
-        <%= f.input :date_time, as: :string, label: "Enter Date and Time:" , input_html: { class: 'datetimepicker', format: "%d/%m/%Y  %I:%m %p" } %><br>
-      </div>
+        <p><strong>-- Or --</strong></p>
 
+        <%= f.input :date_time, as: :string, label: 'Enter Date and Time:', input_html: { class: 'datetimepicker', :format => "%d/%m/%Y  %I:%m %p"} %>
+      </div>
     </div><!-- end of row -->
     <%= hidden_field_tag(:opportunity_id, @opportunity.id)%>
       <%= f.association :opportunity, :as => :hidden, input_html: { value: @opportunity.id }  %>

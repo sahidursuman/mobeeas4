@@ -35,8 +35,16 @@
 
     $('.modal-trigger').leanModal();
     $('.datetimepicker').datetimepicker({
-       timepicker:false,
+      format:'d/m/Y - h:m a',
+      // inline:true //this will display the timedate box static on the page
+    });
+    $('.datetimepicker1').datetimepicker({
+      timepicker:false,
       format:'d/m/Y'
+    });
+    $('.datetimepicker2').datetimepicker({
+      datepicker:false, //time only
+      format:'h:m a'
     });
     $('.collapsible').collapsible({
       accordion : false // A setting that changes the collapsible behavior to expandable instead of the default accordion style
