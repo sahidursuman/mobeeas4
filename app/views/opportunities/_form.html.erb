@@ -10,8 +10,8 @@
     <% end %>
     <%= f.input :title %>
     <%= f.input :description, label: 'Description (max 1000 characters)', input_html: { maxlength: 1000} %>
-    <%= f.input :commencement_date, as: :string, label: 'Anticipated Start Date', input_html: { class: 'datetimepicker'} %>
-    <%= f.input :completion_date, as: :string, label: 'Anticipated End Date', input_html: { class: 'datetimepicker'} %>
+    <%= f.input :commencement_date, as: :string, label: 'Anticipated Start Date', input_html: { class: 'datetimepicker1'} %>
+    <%= f.input :completion_date, as: :string, label: 'Anticipated End Date', input_html: { class: 'datetimepicker1'} %>
     <p>Choose School Year level(s):
     <%#= f.association :school_years, collection: SchoolYear.all, as: :check_boxes %>
     <% if @opportunity.new_record? %><!-- if creating a new opportunity -->

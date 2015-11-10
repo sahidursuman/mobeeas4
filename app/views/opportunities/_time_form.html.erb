@@ -1,5 +1,4 @@
-<p>Please Enter Schedule:</p>
-
+<p><strong>Please Enter Time and Either Schedule or Date:</strong></p>
 
 <% @opportunity_time = OpportunityTime.new(opportunity_id: @opportunity.id) %>
 <% @opportunity_time.opportunity_id = @opportunity.id %>
@@ -9,22 +8,33 @@
   <div class="form-inputs">
     <div class="row">
       <div class="col s3 m3 l3">
-        <%= f.input :time, as: :string, label: 'Time', input_html: { class: 'datetimepicker2'}  %>
+        <p>Time</p>
+        <div class="border-top">
+          <%= f.input :time, as: :string, label: 'Time', input_html: { class: 'datetimepicker2'}  %>
+        </div>
       </div>
-      <div class="col s3 m3 l3">
-        <%= f.input :day, collection: [ "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday" ] %>
-      </div>
-      <div class="col s3 m3 l3">
-        <%= f.input :frequency, collection: [ "Daily", "Weekly", "Fortnightly", "Monthly"] %>
-      </div>
-    </div><!-- end of row -->
-    <div class="row">
-      <div class="col s12 m12 l12">
-        <p><strong>-- Or --</strong></p>
 
-        <%= f.input :date_time, as: :string, label: 'Enter Date and Time:', input_html: { class: 'datetimepicker', :format => "%d/%m/%Y  %I:%m %p"} %>
+        <div class="col s6 m6 l6">
+          <p>Schedule</p>
+            <div class="border-top">
+            <div class="col s6 m6 l6">
+              <%= f.input :day, collection: [ "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday" ] %>
+            </div>
+            <div class="col s6 m6 l6">
+              <%= f.input :frequency, collection: [ "Daily", "Weekly", "Fortnightly", "Monthly"] %>
+            </div>
+          </div>
+        </div>
+
+      <div class="col s3 m3 l3">
+          <p>or Date</p>
+          <div class="border-top">
+            <%= f.input :date_time, as: :string, label: 'Date:', input_html: { class: 'datetimepicker1', :format => "%d/%m/%Y  %I:%m %p"} %>
+          </div>
       </div>
+
     </div><!-- end of row -->
+
     <%= hidden_field_tag(:opportunity_id, @opportunity.id)%>
       <%= f.association :opportunity, :as => :hidden, input_html: { value: @opportunity.id }  %>
   </div>

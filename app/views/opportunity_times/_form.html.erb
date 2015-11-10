@@ -5,7 +5,7 @@
   <div class="form-inputs">
     <div class="row">
       <div class="col s4 m4 l4">
-        <%= f.input :time, as: :string, label: 'Time', input_html: { class: 'datetimepicker2'},  value: ( f.object.time.strftime('%I:%M %p') unless f.object.time.blank?)  %>
+        <%= f.input :time, as: :string, label: 'Time', input_html: { class: 'datetimepicker2'},  value: ( f.object.time.strftime('%l:%M %p') unless f.object.time.blank?)  %>
         <%#= f.input :time, as: :string, label: 'Time', input_html: { class: 'datetimepicker2'},  value: localize( f.object.time, :format => "%I:::%m %p")  %>
 
       </div>
@@ -16,14 +16,16 @@
         <%= f.input :frequency, collection: [ "Daily", "Weekly", "Fortnightly", "Monthly"] %>
       </div>
     </div><!-- end of row -->
+    <p><strong>-- Or Enter Date and Time --</strong></p>
     <div class="row">
-      <p><strong>-- Or --</strong></p>
-
-      <div class="col s12 m12 l12">
-        <%= f.input :date_time, as: :string, label: "Enter Date and Time:" , input_html: { class: 'datetimepicker', format: "%d/%m/%Y  %I:%m %p" } %><br>
+      <div class="col s6 m6 l6">
+        <%= f.input :date_time, as: :string, label: 'Date:', input_html: { class: 'datetimepicker1', :format => "%d/%m/%Y  %I:%m %p"} %>
       </div>
-
+      <div class="col s6 m6 l6">
+        <%= f.input :time, as: :string, label: 'Time', input_html: { class: 'datetimepicker2'}  %>
+      </div>
     </div><!-- end of row -->
+
     <%= hidden_field_tag(:opportunity_id, @opportunity.id)%>
       <%= f.association :opportunity, :as => :hidden, input_html: { value: @opportunity.id }  %>
   </div>

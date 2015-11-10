@@ -1,7 +1,7 @@
 <h1>Editing Opportunity Time</h1>
 <% @opportunity = Opportunity.find(params[:opportunity_id])%>
-<p>Please select one:</p>
+<p><strong>Please Enter Schedule:</strong></p>
 <%= render 'form' %>
-
-<%= link_to 'Show', @opportunity_time %> |
-<%= link_to 'Back', opportunity_times_path %>
+<!-- 
+<%#= link_to 'Show', @opportunity_time %> |
+<%#= link_to 'Back', opportunity_times_path %> -->

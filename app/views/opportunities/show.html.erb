@@ -1,5 +1,5 @@
 <div class="row">
-  <div class="col c12 m8 offset-m2 l8 offset-l2">
+  <div class="col c12 m10 offset-m2 l10 offset-l2">
     <%= render 'layouts/sidebar' %>
     <p id="notice"><%= notice %></p>
 
@@ -29,22 +29,19 @@
       <strong>End date:</strong>
       <%= @opportunity.completion_date.strftime("%A, %d %b %Y")  %>
     </p>
-    <p><%=Date.today.to_s%></p>
-    <p><%=Time.now.to_s%></p>
 
     <!-- <p><%#= link_to "Add Schedule", new_opportunity_time_path(opportunity_id: @opportunity.id)%></p> -->
     <% if @opportunity.opportunity_times.present? %>
       <ul class="list-style-disc">
         <% @opportunity.opportunity_times.each do |t|%>
           <% if t.date_time.present? %>
-            <li class="list-style-disc"><%= t.date_time.strftime("%A, %d %b %Y %l:%M %p") %> - <%= link_to 'Edit', edit_opportunity_time_path(t, opportunity_id: @opportunity.id) %> | <%= link_to 'Delete',t , method: :delete, data: { confirm: 'Are you sure?' } %></li>
-          <% elsif t.time.present? ||  t.day.present? || t.frequency.present? %>
-            <li class="list-style-disc"><%= t.time.strftime("%H:%M %p") %>, <%= t.day %>, <%= t.frequency %> - <%= link_to 'Edit', edit_opportunity_time_path(t, opportunity_id: @opportunity.id) %> | <%= link_to 'Delete', t, method: :delete, data: { confirm: 'Are you sure?' } %></li>
+            <li class="list-style-disc"><%= t.date_time.strftime("%A, %d %b %Y") %> <%= t.time.strftime("%l:%M %p") %> -  <%= link_to 'Delete',t , method: :delete, data: { confirm: 'Are you sure?' } %></li>
+          <% else %>
+            <li class="list-style-disc"><%= t.time %>, <%= t.day %>, <%= t.frequency %> -  <%= link_to 'Delete', t, method: :delete, data: { confirm: 'Are you sure?' } %></li>
           <% end %>
 
         <% end %>
       </ul>
-      <p><strong>Add Schedule:</strong></p>
       <%= render 'time_form'%>
     <% else %><!-- else if opportunity time is not present -->
       <%= render 'time_form'%>
