@@ -1,5 +1,5 @@
 class OrgUsersController < ApplicationController
-  before_action :set_org_user, only: [:verified_and_admin_approved, :show, :edit, :update, :destroy]
+  before_action :set_org_user, only: [:verified_and_admin_approved, :verified_host, :show, :edit, :update, :destroy]
 	skip_before_action :authenticate_user!, only: [:verified_and_admin_approved]
 
   def verified_and_admin_approved
@@ -8,8 +8,10 @@ class OrgUsersController < ApplicationController
     redirect_to thanks2_url
   end
 
-  def verified_user
-    # to be created
+  def verified_host
+    @org_user.update_attributes(admin_status: false, verified_status: true)
+    @organisation = Organisation.find(params[:org_id])
+    redirect_to thanks2_url
   end
 
 

@@ -1,5 +1,38 @@
-<h1>NewOrgUserProfileMailer#register_user</h1>
+<h1>New Host Notification</h1>
 
 <p>
-  <%= @greeting %>, find me in app/views/new_org_user_profile_mailer/register_user.html.erb
+  Dear <%= @organisation.contact_name %>,
 </p>
+<p>
+  Your organisation <%= @organisation.name %> new host participant has been created in MOBEEAS, waiting for your approval.
+  This user would like to apply for HOST level, have the ability to create opportunity and request the use of company's token from Admin Hosts.
+  Here is your new host details in MOBEEAS:
+<p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @user.org_user_profile.name %>
+</p>
+
+<p>
+  <strong>Phone:</strong>
+  <%= @user.org_user_profile.phone %>
+</p>
+
+<p>
+  <strong>Email:</strong>
+  <%= @user.email %>
+</p>
+
+<p>
+  <strong>Position:</strong>
+  <%= @user.org_user_profile.position %>
+</p>
+
+<p>
+  If you approve <%= @user.org_user_profile.name %> to be the admin host of your organisation, please click the link below.
+  Thank you.
+</p>
+
+<% @org_user = OrgUser.find_by(user_id: @user.id, organisation_id: @organisation.id) %>
+<p><%= link_to 'Approve '+@user.org_user_profile.name, verified_host_org_user_url(@org_user.id, org_id: @organisation.id) %></p>

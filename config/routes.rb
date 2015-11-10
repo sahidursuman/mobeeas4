@@ -3,7 +3,7 @@ Rails.application.routes.draw do
   resources :school_years
   resources :org_users do
     member do
-      get :verified_and_admin_approved, :verified
+      get :verified_and_admin_approved, :verified_host
     end
   end
 
@@ -25,7 +25,7 @@ Rails.application.routes.draw do
   resources :opportunities
   resources :organisations do
     member do
-      get :remove_host_from, :add_user_into
+      get :remove_host_from, :add_admin_into, :add_host_into
     end
   end
   resources :organisation_types

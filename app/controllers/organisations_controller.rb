@@ -1,5 +1,5 @@
 class OrganisationsController < ApplicationController
-  before_action :set_organisation, only: [:remove_host_from, :add_user_into, :show, :edit, :update, :destroy]
+  before_action :set_organisation, only: [:remove_host_from, :add_admin_into, :add_host_into, :show, :edit, :update, :destroy]
   # skip_before_action :check_admin, except: [:index, :show]
   skip_before_action :check_admin, except: [:show]
 
@@ -10,11 +10,19 @@ class OrganisationsController < ApplicationController
     redirect_to @organisation
   end
 
-  def add_user_into
+  def add_admin_into
     user = User.find(params[:user_id])
     @organisation.users << user
     NewOrgUserProfileMailer.notify(@organisation.id, user.id).deliver_now
     NewOrgUserProfileMailer.register_admin(@organisation.id, user.id).deliver_now
+    redirect_to @organisation
+  end
+
+  def add_host_into
+    user = User.find(params[:user_id])
+    @organisation.users << user
+    NewOrgUserProfileMailer.notify(@organisation.id, user.id).deliver_now
+    NewOrgUserProfileMailer.register_user(@organisation.id, user.id).deliver_now
     redirect_to @organisation
   end
 
