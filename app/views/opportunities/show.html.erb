@@ -30,20 +30,26 @@
       <%= @opportunity.completion_date.strftime("%A, %d %b %Y")  %>
     </p>
 
+
+
     <!-- <p><%#= link_to "Add Schedule", new_opportunity_time_path(opportunity_id: @opportunity.id)%></p> -->
     <% if @opportunity.opportunity_times.present? %>
+      <p><strong>Required activity dates, days and times:</strong></p>
       <ul class="list-style-disc">
         <% @opportunity.opportunity_times.each do |t|%>
           <% if t.date_time.present? %>
-            <li class="list-style-disc"><%= t.date_time.strftime("%A, %d %b %Y") %> <%= t.time.strftime("%l:%M %p") %> -  <%= link_to 'Delete',t , method: :delete, data: { confirm: 'Are you sure?' } %></li>
+            <li class="list-style-disc"><%= t.date_time.strftime("%e/%m/%y %A") %> <%= t.time.strftime("%l:%M %P") %> -  <%= link_to 'Delete',t , method: :delete, data: { confirm: 'Are you sure?' } %></li>
           <% else %>
-            <li class="list-style-disc"><%= t.time %>, <%= t.day %>, <%= t.frequency %> -  <%= link_to 'Delete', t, method: :delete, data: { confirm: 'Are you sure?' } %></li>
+            <li class="list-style-disc">--- /--- /---  <%= t.day %> <%= t.time.strftime("%l:%M %P") %> <%= t.frequency %> -  <%= link_to 'Delete', t, method: :delete, data: { confirm: 'Are you sure?' } %></li>
           <% end %>
 
         <% end %>
       </ul>
       <%= render 'time_form'%>
     <% else %><!-- else if opportunity time is not present -->
+      <p>
+        <strong>No specific dates, days and time setup yet.</strong>
+      </p>
       <%= render 'time_form'%>
     <% end %>
 

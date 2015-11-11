@@ -18,10 +18,10 @@
           <p>Schedule</p>
             <div class="border-top">
             <div class="col s6 m6 l6">
-              <%= f.input :day, collection: [ "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday" ] %>
+              <%= f.input :day, collection: [ "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday" ]  %>
             </div>
             <div class="col s6 m6 l6">
-              <%= f.input :frequency, collection: [ "Daily", "Weekly", "Fortnightly", "Monthly"] %>
+              <%= f.input :frequency, collection: [ "daily weekdays", "weekly", "fortnightly", "monthly" ], value: [ "daily weekdays", "weekly", "fortnightly", "monthly" ] %>
             </div>
           </div>
         </div>
