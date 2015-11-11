@@ -22,12 +22,12 @@
 
     <p>
       <strong>Start date:</strong>
-      <%= @opportunity.commencement_date.strftime("%A, %d %b %Y") %>
+      <%= @opportunity.commencement_date.strftime("%A, %e %b %Y") %>
     </p>
 
     <p>
       <strong>End date:</strong>
-      <%= @opportunity.completion_date.strftime("%A, %d %b %Y")  %>
+      <%= @opportunity.completion_date.strftime("%A, %e %b %Y")  %>
     </p>
 
 
@@ -38,7 +38,7 @@
       <ul class="list-style-disc">
         <% @opportunity.opportunity_times.each do |t|%>
           <% if t.date_time.present? %>
-            <li class="list-style-disc"><%= t.date_time.strftime("%e/%m/%y %A") %> <%= t.time.strftime("%l:%M %P") %> -  <%= link_to 'Delete',t , method: :delete, data: { confirm: 'Are you sure?' } %></li>
+            <li class="list-style-disc"><%= t.date_time.strftime("%d/%m/%y %A") %> <%= t.time.strftime("%l:%M %P") %> -  <%= link_to 'Delete',t , method: :delete, data: { confirm: 'Are you sure?' } %></li>
           <% else %>
             <li class="list-style-disc">--- /--- /---  <%= t.day %> <%= t.time.strftime("%l:%M %P") %> <%= t.frequency %> -  <%= link_to 'Delete', t, method: :delete, data: { confirm: 'Are you sure?' } %></li>
           <% end %>
