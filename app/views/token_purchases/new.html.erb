@@ -1,0 +1,26 @@
+<h1>New Token Purchase</h1>
+
+<h5>You are purchasing <%= @token_pack.name %> for <%= @organisation.name %>.</h5>
+
+<%= form_tag payments_path(token_pack: @token_pack.id, org_id: @organisation.id) do %>
+  <article>
+    <% if flash[:error].present? %>
+      <div id="error_explanation">
+        <p><%= flash[:error] %></p>
+      </div>
+    <% end %>
+    <label class="amount">
+      <span>Amount: <%= number_to_currency(@token_pack.member_price) %></span>
+    </label>
+  </article>
+
+  <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+          data-key="<%= Rails.configuration.stripe[:publishable_key] %>"
+          data-image="<%= asset_path 'MOBEEAS.png' %>"
+          data-name="MOBEEAS"
+          data-currency="aud"
+          data-email="<%= current_user.email %>"
+          data-description="<%= @token_pack.name %>"
+          data-amount="<%= (@token_pack.member_price * 100).to_int %>"
+          data-locale="auto"></script>
+<% end %>

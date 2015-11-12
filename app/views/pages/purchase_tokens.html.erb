@@ -2,5 +2,32 @@
   <div class="col c12 m8 offset-m2 l8 offset-l2">
     <%= render 'layouts/sidebar' %>
       <h5>Purchase Tokens</h5>
+
+      <% if current_user.organisations.present? %>
+        <p>Currently you are connected with these organisations:</p>
+        <ol>
+          <% current_user.organisations.each do |organisation| %>
+            <li><%= link_to organisation.name, organisation_path(organisation.id) %>
+              <p>Number of tokens: <%= organisation.number_of_tokens %></p>
+            </li>
+            <!-- only admin host can see the purchase token button -->
+            <% current_user.org_users.each do |org_users| %>
+              <% if org_users.admin_status && org_users.verified_status %>
+                <% @engagement_token_packs.each do |pack| %>
+                  <%= link_to new_token_purchase_path(org: organisation.id, token_pack: pack.id), class: 'btn btn-flat' do %>
+                    <%= button_label(pack, organisation) %><br>
+                  <% end %>
+                <% end %>
+
+              <% end %>
+            <% end %>
+
+
+          <% end %>
+        </ol>
+      <% else %>
+        <p>You are currently not linked to any organisations. Please select one of the organisations below to join as the host.</p>
+      <% end %>
+
   </div>
 </div>

@@ -1,5 +1,5 @@
 class PagesController < ApplicationController
-	skip_before_action :authenticate_user!, only: [:home, :contact, :thanks, :thanks2, :about]
+	skip_before_action :authenticate_user!, only: [:home, :contact, :thanks, :thanks2, :thanks3, :about]
 	layout 'home', only: :home
   def home
   end
@@ -42,6 +42,9 @@ class PagesController < ApplicationController
 	def thanks2
 	end
 
+	def thanks3
+	end
+
   def about
   end
 
@@ -65,6 +68,7 @@ class PagesController < ApplicationController
 	end
 
 	def purchase_tokens
+		@engagement_token_packs = EngagementTokenPack.order(member_price: :asc)
 	end
 
 	def required_skills

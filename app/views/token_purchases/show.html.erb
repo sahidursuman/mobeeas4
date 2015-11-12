@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>User:</strong>
+  <%= @token_purchase.user %>
+</p>
+
+<p>
+  <strong>Organisation:</strong>
+  <%= @token_purchase.organisation %>
+</p>
+
+<p>
+  <strong>Number of tokens:</strong>
+  <%= @token_purchase.number_of_tokens %>
+</p>
+
+<p>
+  <strong>Token price:</strong>
+  <%= @token_purchase.token_price %>
+</p>
+
+<p>
+  <strong>Payment total:</strong>
+  <%= @token_purchase.payment_total %>
+</p>
+
+<%= link_to 'Edit', edit_token_purchase_path(@token_purchase) %> |
+<%= link_to 'Back', token_purchases_path %>

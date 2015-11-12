@@ -15,6 +15,32 @@
     					<%= link_to skill.name, add_user_skill_path(skill), class: 'waves-effect waves-teal btn-flat' %>
     				<% end %>
     			<% end %>
+          <!-- Add a new other skill: -->
+          <div class="row">
+            <div class="col s6 m6 l6">
+              <p>Other Skill (subject to MOBEEAS approval): </p>
+            </div>
+            <div class="col s6 m6 l6">
+              <!-- I have just added new skill 'singing' -->
+              <% @other_skill = Skill.new %>
+              <%= simple_form_for(@other_skill) do |f| %>
+                <%= f.error_notification %>
+
+                <div class="form-inputs">
+                  <%= f.association :skill_category, :as => :hidden, input_html: { value: skill_category } %>
+                  <%= f.input :name %>
+                  <%#= f.input :description %>
+                </div>
+
+                <div class="form-actions">
+                  <%= f.button :submit %>
+                </div>
+              <% end %>
+            </div>
+          </div>  <!-- end of row -->
+
+
+
           </div>
         </li>
       <% end %>

@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @engagement_token_pack.name %>
+</p>
+
+<p>
+  <strong>Member price:</strong>
+  <%= @engagement_token_pack.member_price %>
+</p>
+
+<p>
+  <strong>Non member price:</strong>
+  <%= @engagement_token_pack.non_member_price %>
+</p>
+
+<p>
+  <strong>Number of tokens:</strong>
+  <%= @engagement_token_pack.number_of_tokens %>
+</p>
+
+<%= link_to 'Edit', edit_engagement_token_pack_path(@engagement_token_pack) %> |
+<%= link_to 'Back', engagement_token_packs_path %>

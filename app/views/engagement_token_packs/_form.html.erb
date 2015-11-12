@@ -1,0 +1,14 @@
+<%= simple_form_for(@engagement_token_pack) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="form-inputs">
+    <%= f.input :name %>
+    <%= f.input :member_price %>
+    <%= f.input :non_member_price %>
+    <%= f.input :number_of_tokens %>
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>

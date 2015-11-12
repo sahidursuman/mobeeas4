@@ -7,6 +7,12 @@
         <tr>
           <th>Category</th>
           <th>Skill</th>
+          <!-- only appears if just created a new skill which needs to be approved by MOBEEAS admin-->
+          <% @candidate_skills.each do |candidate_skill| %>
+            <% if !(candidate_skill.skill.approved) %>
+              <th class="right-align">Approved</th>
+            <% end %>
+          <% end %>
           <th class="right-align">Verified</th>
         </tr>
       </thead>
@@ -15,6 +21,12 @@
         <tr>
           <td><%= candidate_skill.skill.skill_category.name if candidate_skill.skill %></td>
           <td><%= candidate_skill.skill.name if candidate_skill.skill %></td>
+          <!-- only appears if just created a new skill which needs to be approved by MOBEEAS admin-->
+          <% if !(candidate_skill.skill.approved) %>
+            <td class="right-align">
+              <span class="red-text"><i class="fa fa-times"></i></span>
+            </td>
+          <% end %>
           <td class="right-align">
             <% if candidate_skill.skill_level %>
               <span class="bold teal-text"><%= candidate_skill.skill_level %></span>

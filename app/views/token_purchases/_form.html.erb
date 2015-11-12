@@ -1,0 +1,15 @@
+<%= simple_form_for(@token_purchase) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="form-inputs">
+    <%= f.association :user, :as => :hidden, input_html: { value: params[:organisation_id] } %>
+    <%= f.association :organisation, :as => :hidden, input_html: { value: params[:user_id] } %>
+    <%= f.input :number_of_tokens%>
+    <%= f.input :token_price %>
+    <%= f.input :payment_total %>
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>

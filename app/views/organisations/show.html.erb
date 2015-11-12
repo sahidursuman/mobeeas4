@@ -20,6 +20,7 @@
 
   <!-- APPROVED ADMIN -->
   <div class="card">
+    <div class="card-content">
     <h5>Approved Admin</h5>
     <p>Approved Admin will have the ability to purchase and spend the company's tokens</p>
 
@@ -186,7 +187,8 @@
         <%= link_to 'Create My Profile', new_org_user_profile_path(org_id: @organisation.id) %>
       <% end %>
     <% end %><!-- if @organisation.users.present? -->
-  </div>
+  </div></div>
+
 
   <!-------------------------------------->
   <!-- APPROVED HOSTS -->

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151110022823) do
+ActiveRecord::Schema.define(version: 20151112031014) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -69,6 +69,15 @@ ActiveRecord::Schema.define(version: 20151110022823) do
   end
 
   add_index "educations", ["user_id"], name: "index_educations_on_user_id", using: :btree
+
+  create_table "engagement_token_packs", force: :cascade do |t|
+    t.string   "name"
+    t.decimal  "member_price"
+    t.decimal  "non_member_price"
+    t.integer  "number_of_tokens"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+  end
 
   create_table "enquiries", force: :cascade do |t|
     t.string   "enquiry_type"
@@ -203,8 +212,9 @@ ActiveRecord::Schema.define(version: 20151110022823) do
     t.string   "school_type"
     t.string   "latitude"
     t.string   "longitude"
-    t.datetime "created_at",           null: false
-    t.datetime "updated_at",           null: false
+    t.datetime "created_at",                       null: false
+    t.datetime "updated_at",                       null: false
+    t.integer  "number_of_tokens",     default: 0
   end
 
   add_index "organisations", ["organisation_type_id"], name: "index_organisations_on_organisation_type_id", using: :btree
@@ -307,11 +317,25 @@ ActiveRecord::Schema.define(version: 20151110022823) do
     t.integer  "skill_category_id"
     t.string   "name"
     t.text     "description"
-    t.datetime "created_at",        null: false
-    t.datetime "updated_at",        null: false
+    t.datetime "created_at",                        null: false
+    t.datetime "updated_at",                        null: false
+    t.boolean  "approved",          default: false
   end
 
   add_index "skills", ["skill_category_id"], name: "index_skills_on_skill_category_id", using: :btree
+
+  create_table "token_purchases", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "organisation_id"
+    t.integer  "number_of_tokens"
+    t.decimal  "token_price"
+    t.decimal  "payment_total"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+  end
+
+  add_index "token_purchases", ["organisation_id"], name: "index_token_purchases_on_organisation_id", using: :btree
+  add_index "token_purchases", ["user_id"], name: "index_token_purchases_on_user_id", using: :btree
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
@@ -351,4 +375,6 @@ ActiveRecord::Schema.define(version: 20151110022823) do
   add_foreign_key "org_users", "users"
   add_foreign_key "school_year_opportunities", "opportunities"
   add_foreign_key "school_year_opportunities", "school_years"
+  add_foreign_key "token_purchases", "organisations"
+  add_foreign_key "token_purchases", "users"
 end

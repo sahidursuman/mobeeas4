@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  resources :engagement_token_packs
+  resources :payments, only: :create
+  resources :token_purchases
   resources :opportunity_times
   resources :school_years
   resources :org_users do
@@ -50,6 +53,7 @@ Rails.application.routes.draw do
   get 'my_skills', to: 'pages#my_skills'
   get 'thanks', to: 'pages#thanks'
   get 'thanks2', to: 'pages#thanks2'
+  get 'thanks3', to: 'pages#thanks3'
   get 'about', to: 'pages#about'
   get 'dashboard_host', to: 'pages#dashboard_host'
   get 'dashboard_candidate', to: 'pages#dashboard_candidate'
