@@ -10,17 +10,19 @@
         <div class="row">
           <div class="col s12">
             <div class="card">
-              <h5><strong>Title: </strong><%= opportunity.title %></h5>
-              <p><strong>Description: </strong><%= opportunity.description %></p>
-              <p><strong>Organisation: </strong><%= opportunity.organisation.name %></p>
-              <p><strong>Host Name: </strong><%= opportunity.user.org_user_profile.name %></p>
-              <p><strong>Opportunity Status: </strong><%= opportunity.opportunity_status %></p>
-              <p><strong>Start Date: </strong><%= opportunity.commencement_date %></p>
-              <p><strong>End Date: </strong><%= opportunity.completion_date %></p>
+              <div class="card-content">
+                <h5><strong>Title: </strong><%= opportunity.title %></h5>
+                <p><strong>Description: </strong><%= opportunity.description %></p>
+                <p><strong>Organisation: </strong><%= opportunity.organisation.name %></p>
+                <p><strong>Host Name: </strong><%= opportunity.user.org_user_profile.name %></p>
+                <p><strong>Opportunity Status: </strong><%= opportunity.opportunity_status %></p>
+                <p><strong>Start Date: </strong><%= opportunity.commencement_date %></p>
+                <p><strong>End Date: </strong><%= opportunity.completion_date %></p>
 
-              <p><strong></strong><%= link_to 'Show more...', opportunity %></p>
-              <p><strong></strong><%= link_to 'Edit', edit_opportunity_path(opportunity) %></p>
-              <p><strong></strong><%= link_to 'Destroy', opportunity, method: :delete, data: { confirm: 'Are you sure?' } %></p>
+                <p><strong></strong><%= link_to 'Show more...', opportunity %></p>
+                <p><strong></strong><%= link_to 'Edit', edit_opportunity_path(opportunity) %></p>
+                <p><strong></strong><%= link_to 'Destroy', opportunity, method: :delete, data: { confirm: 'Are you sure?' } %></p>
+              </div>
             </div>
           </div>
         </div>

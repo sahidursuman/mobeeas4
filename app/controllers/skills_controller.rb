@@ -49,10 +49,13 @@ class SkillsController < ApplicationController
   # POST /skills.json
   def create
     @skill = Skill.new(skill_params)
-
     respond_to do |format|
       if @skill.save
-        format.html { redirect_to @skill, notice: 'Skill was successfully created.' }
+        @candidate_skill = CandidateSkill.create(user_id: current_user.id, skill_id: @skill.id)
+        @candidate_skill.save
+
+        # format.html { redirect_to @skill, notice: 'Skill was successfully created.' }
+        format.html { redirect_to my_skills_path, notice: 'Skill was successfully created.' }
         format.json { render :show, status: :created, location: @skill }
       else
         format.html { render :new }
@@ -95,6 +98,6 @@ class SkillsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def skill_params
-      params.require(:skill).permit(:skill_category_id, :name, :description)
+      params.require(:skill).permit(:skill_category_id, :name, :description, :approved)
     end
 end

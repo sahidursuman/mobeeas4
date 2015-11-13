@@ -27,7 +27,7 @@
                 <%= f.error_notification %>
 
                 <div class="form-inputs">
-                  <%= f.association :skill_category, :as => :hidden, input_html: { value: skill_category } %>
+                  <%= f.association :skill_category, :as => :hidden, input_html: { value: skill_category.id } %>
                   <%= f.input :name %>
                   <%#= f.input :description %>
                 </div>

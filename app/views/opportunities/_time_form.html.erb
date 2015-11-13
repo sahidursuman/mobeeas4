@@ -36,10 +36,11 @@
     </div><!-- end of row -->
 
     <%= hidden_field_tag(:opportunity_id, @opportunity.id)%>
-      <%= f.association :opportunity, :as => :hidden, input_html: { value: @opportunity.id }  %>
+      <%= f.association :opportunity, :as => :hidden, input_html: { value: @opportunity.id }, class: 'right'  %>
   </div>
-
+  <br><br><br>
+<!-- The submit button below will appear in the modal button instead. -->
   <div class="form-actions">
-    <%= f.button :submit %>
+    <%= f.button :submit, "Save This Schedule" %>
   </div>
 <% end %>

@@ -32,6 +32,9 @@
 
 
 
+
+
+
     <!-- <p><%#= link_to "Add Schedule", new_opportunity_time_path(opportunity_id: @opportunity.id)%></p> -->
     <% if @opportunity.opportunity_times.present? %>
       <p><strong>Required activity dates, days and times:</strong></p>
@@ -42,16 +45,29 @@
           <% else %>
             <li class="list-style-disc">--- /--- /---  <%= t.day %> <%= t.time.strftime("%l:%M %P") %> <%= t.frequency %> -  <%= link_to 'Delete', t, method: :delete, data: { confirm: 'Are you sure?' } %></li>
           <% end %>
-
         <% end %>
       </ul>
-      <%= render 'time_form'%>
+      <a class="waves-effect waves-light btn modal-trigger" href="#opportunity_schedule">Add Opportunity Dates and Times</a>
     <% else %><!-- else if opportunity time is not present -->
       <p>
         <strong>No specific dates, days and time setup yet.</strong>
       </p>
-      <%= render 'time_form'%>
+      <a class="waves-effect waves-light btn modal-trigger" href="#opportunity_schedule">Add Opportunity Dates and Times</a>
     <% end %>
+
+    <!-- Modal Trigger -->
+
+    <!-- Modal Structure -->
+    <div id="opportunity_schedule" class="modal">
+      <div class="modal-content">
+        <%= render 'time_form'%>
+      </div>
+      <div class="modal-footer">
+        <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Close Without Saving</a>
+      </div>
+    </div>
+
+
 
     <% if @opportunity.school_years.present? %>
       <p>
@@ -64,7 +80,9 @@
       </p>
     <% end %>
 
-    <p>Skills Required of the MOBEEAS Mentor:</p>
+
+    <p>How many candidates would you like to engage for this opportunity?</p>
+    <p>Skills Required of the MOBEEAS Candidate:</p>
     <% if @opportunity.skills.present? %>
       <ol>
         <% @opportunity.skills.each do |skill| %>
@@ -74,15 +92,18 @@
     <% else %>
       <p>No skills listed</p>
     <% end %>
+
+
     <!-- <a href="/required_skills">Add skills</a> -->
+    <p>Put the add skill link under each candidate</p>
     <%= link_to "Add Skills", required_skills_path(oppo_id: @opportunity.id)%>
     <p>
-      <strong>Specific skills requirement:</strong>
+      <strong>GET RID OF THIS: Specific skills requirement:</strong>
       <%= @opportunity.specific_skills %>
     </p>
 
     <p>
-      <strong>Other experiences that would be advantageous:</strong>
+      <strong>KEEP THIS ONE: Other experiences that would be advantageous:</strong>
       <%= @opportunity.experiences %>
     </p>
 

@@ -20,6 +20,7 @@
           data-name="MOBEEAS"
           data-currency="aud"
           data-email="<%= current_user.email %>"
+          data-receipt-email="<%= current_user.email %>"
           data-description="<%= @token_pack.name %>"
           data-amount="<%= (@token_pack.member_price * 100).to_int %>"
           data-locale="auto"></script>

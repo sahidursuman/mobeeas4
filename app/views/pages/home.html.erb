@@ -6,7 +6,9 @@
   </div>
   <div class="section white">
     <div class="row container">
-      <h2 class="header align-center">Looking for opportunities to give back?</h2>
+      <h2 class="header align-center">
+        Get involved in Australian collaborative learning experiences
+      </h2>
 
       <div class="row align-center">
         <div class="col s12 m4 l4">
@@ -24,7 +26,13 @@
             <!-- <div class="card-action"> -->
               <div class="row">
                 <div class="col s12 m12 l12">
-                  <a class="waves-effect white btn margin-left-20px" href="/dashboard_host"><span class="palette2">Host Dashboard</span></a>
+                  <% if user_signed_in? %>
+                    <% if current_user.org_user_profile.present? %>
+                      <a class="waves-effect white btn margin-left-20px" href="/dashboard_host"><span class="palette2">Host Dashboard</span></a>
+                    <% end %>
+                  <% else %>
+                    <a class="waves-effect white btn margin-left-20px" href="/dashboard_host"><span class="palette2">Get Started Here</span></a>
+                  <% end %>
                 </div><!-- col s12 m4 l4 -->
               </div><!-- row -->
             <!-- </div> -->
@@ -41,7 +49,7 @@
               <p class="font-24px">(Coming soon)</p>
             </div>
             <div class="card-action">
-              <a class="waves-effect white btn margin-left-20px" href="#"><span class="palette2">Register as a Sponsor</span></a>
+              <a class="waves-effect white btn margin-left-20px" href="/enquiries/new"><span class="palette2">Get In Touch</span></a>
             </div>
           </div>
         </div>

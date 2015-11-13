@@ -40,6 +40,7 @@ class OrganisationsController < ApplicationController
   # GET /organisations/1
   # GET /organisations/1.json
   def show
+    @engagement_token_packs = EngagementTokenPack.order(member_price: :asc)
   end
 
   # GET /organisations/new

@@ -70,8 +70,7 @@
 
   <% @org_linked =  current_user.org_users.find_by(organisation_id: @organisation.id)%>
   <% unless @org_linked.nil? %>
-    <p>id <%= @org_linked.id%></p>
-    <p>organsiation id  <%= @org_linked.organisation_id%></p>
+
     <!-- If the current_user's admin status is true -->
     <% if @org_linked.admin_status%>
       <%= link_to "Edit Organisation", edit_organisation_path(@organisation.id)%>
@@ -92,7 +91,10 @@
     <strong>Longitude:</strong>
     <%#= @organisation.longitude %>
   </p> -->
+
+
 </div>
+
 
 <!-- <%#= link_to 'Edit', edit_organisation_path(@organisation) %> | -->
 <%#= link_to 'Back', organisations_path %>
