@@ -10,15 +10,18 @@
   <%= @org_user_profile.last_name %>
   </p>
 
-  <p>
-  <strong>Phone:</strong>
-  <%= @org_user_profile.phone %>
-  </p>
+  <%  if current_user.id == @org_user_profile.user_id %>
+    <p>
+    <strong>Phone:</strong>
+    <%= @org_user_profile.phone %>
+    </p>
 
-  <p>
-  <strong>Email:</strong>
-  <%= @org_user_profile.user.email %>
-  </p>
+    <p>
+    <strong>Email:</strong>
+    <%= @org_user_profile.user.email %>
+    </p>
+  <% end %>
+  
   <p>
   <strong>Position:</strong>
   <%= @org_user_profile.position %>

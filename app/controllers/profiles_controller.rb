@@ -45,8 +45,11 @@ class ProfilesController < ApplicationController
   def create
     @profile = Profile.new(profile_params)
     @profile.user = current_user
+
     respond_to do |format|
       if @profile.save
+        current_user.add_role :candidate
+
         format.html { redirect_to @profile, notice: 'Profile was successfully created.' }
         format.json { render :show, status: :created, location: @profile }
       else

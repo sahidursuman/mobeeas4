@@ -1,0 +1,13 @@
+<%= simple_form_for(@engagement) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="form-inputs">
+    <%= f.association :opportunity %>
+    <%= f.association :profile %>
+    <%= f.input :status %>
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>

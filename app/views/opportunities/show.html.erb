@@ -1,131 +1,190 @@
-<div class="row">
-  <div class="col c12 m10 offset-m2 l10 offset-l2">
-    <%= render 'layouts/sidebar' %>
-    <p id="notice"><%= notice %></p>
-
-    <h5><%= @opportunity.title %></h5>
-    <p><strong><%= @opportunity.description %></strong></p>
-    <p><strong>Status: </strong><%= @opportunity.opportunity_status %></p>
-
-
-    <p>
-      <strong>Organisation:</strong>
-      <% @organisation = Organisation.find(@opportunity.organisation) %>
-      <%= @organisation.name %>
-    </p>
-
-    <p>
-      <strong>Host:</strong>
-      <% @user = User.find(@opportunity.user) %>
-      <%= @user.org_user_profile.name %>
-    </p>
-
-    <p>
-      <strong>Start date:</strong>
-      <%= @opportunity.commencement_date.strftime("%A, %e %b %Y") %>
-    </p>
-
-    <p>
-      <strong>End date:</strong>
-      <%= @opportunity.completion_date.strftime("%A, %e %b %Y")  %>
-    </p>
-
-
-
-
-
-
-    <!-- <p><%#= link_to "Add Schedule", new_opportunity_time_path(opportunity_id: @opportunity.id)%></p> -->
-    <% if @opportunity.opportunity_times.present? %>
-      <p><strong>Required activity dates, days and times:</strong></p>
-      <ul class="list-style-disc">
-        <% @opportunity.opportunity_times.each do |t|%>
-          <% if t.date_time.present? %>
-            <li class="list-style-disc"><%= t.date_time.strftime("%d/%m/%y %A") %> <%= t.time.strftime("%l:%M %P") %> -  <%= link_to 'Delete',t , method: :delete, data: { confirm: 'Are you sure?' } %></li>
-          <% else %>
-            <li class="list-style-disc">--- /--- /---  <%= t.day %> <%= t.time.strftime("%l:%M %P") %> <%= t.frequency %> -  <%= link_to 'Delete', t, method: :delete, data: { confirm: 'Are you sure?' } %></li>
-          <% end %>
-        <% end %>
-      </ul>
-      <a class="waves-effect waves-light btn modal-trigger" href="#opportunity_schedule">Add Opportunity Dates and Times</a>
-    <% else %><!-- else if opportunity time is not present -->
-      <p>
-        <strong>No specific dates, days and time setup yet.</strong>
-      </p>
-      <a class="waves-effect waves-light btn modal-trigger" href="#opportunity_schedule">Add Opportunity Dates and Times</a>
-    <% end %>
-
-    <!-- Modal Trigger -->
-
-    <!-- Modal Structure -->
-    <div id="opportunity_schedule" class="modal">
-      <div class="modal-content">
-        <%= render 'time_form'%>
-      </div>
-      <div class="modal-footer">
-        <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Close Without Saving</a>
-      </div>
-    </div>
-
-
-
-    <% if @opportunity.school_years.present? %>
-      <p>
-        <strong>Participants School Year level(s):</strong>
-        <ol>
-          <% @opportunity.school_years.each do |level| %>
-            <li><%= level.name %></li>
-          <% end %>
-        </ol>
-      </p>
-    <% end %>
-
-
-    <p>How many candidates would you like to engage for this opportunity?</p>
-    <p>Skills Required of the MOBEEAS Candidate:</p>
-    <% if @opportunity.skills.present? %>
-      <ol>
-        <% @opportunity.skills.each do |skill| %>
-          <li><%= skill.name %> (<%= skill.skill_category.name %>)</li>
-        <% end %>
-      </ol>
-    <% else %>
-      <p>No skills listed</p>
-    <% end %>
-
-
-    <!-- <a href="/required_skills">Add skills</a> -->
-    <p>Put the add skill link under each candidate</p>
-    <%= link_to "Add Skills", required_skills_path(oppo_id: @opportunity.id)%>
-    <p>
-      <strong>GET RID OF THIS: Specific skills requirement:</strong>
-      <%= @opportunity.specific_skills %>
-    </p>
-
-    <p>
-      <strong>KEEP THIS ONE: Other experiences that would be advantageous:</strong>
-      <%= @opportunity.experiences %>
-    </p>
-
-    <p>
-      <strong>Is this a paid Engagement?</strong>
-      <% if @opportunity.paid_engagement %>
-        <p>Yes, paid engagement.</p>
-      <% else %>
-        <p>No, Not paid engagement.</p>
-      <% end %>
-    </p>
-
-    <p>
-      <strong>Hourly rate:</strong>
-      <%= @opportunity.pay %>
-    </p>
-
-    <p>
-      <strong>Remuneration or specific terms of employment:</strong>
-      <%= @opportunity.employment_terms %>
-    </p>
-
-    <%= link_to 'Edit', edit_opportunity_path(@opportunity) %>
+  <!-- SPONSORSHIP ------------>
+  <div class="row">
+    <div class="col m11 offset-m1">
+      <div class="card">
+        <div class="card-content">
+          <p>Proudly sponsored by: </p>
+        </div>
+      </div><!-- end of card-content -->
+    </div><!-- end of card -->
   </div>
-</div>
+
+
+  <!-- OPPORTUNITY ------------>
+  <div class="row">
+    <div class="col m6 offset-m1">
+      <div class="card" style="margin-left: none;">
+        <div class="card-content">
+          <%= render 'layouts/sidebar' %>
+          <p id="notice"><%= notice %></p>
+
+          <% @organisation = Organisation.find(@opportunity.organisation) %>
+          <div class="row">
+            <div class="col m2">
+              <div class="card-image waves-effect waves-block waves-light">
+                <% if @organisation.logo.present? %>
+                  <%= image_tag(@organisation.logo_url, class: 'img-responsive activator') %>
+                <% else %>
+                  <img src="<%= asset_path 'noPhoto-icon.png' %>" class='img-responsive activator'>
+                <% end %>
+              </div>
+            </div>
+            <div class="col m6">
+              <div class="card-image waves-effect waves-block waves-light">
+                <br><br>
+                <p><strong><%= @organisation.name %></strong></p>
+              </div>
+            </div>
+          </div><!-- end of row -->
+
+          <h5><%= @opportunity.title %></h5>
+          <p><strong><%= @opportunity.description %></strong></p>
+          <p><strong>Status: </strong><%= @opportunity.opportunity_status %></p>
+
+          <p>
+            <strong>Host:</strong>
+            <% @user = User.find(@opportunity.user) %>
+            <%= @user.org_user_profile.name %>
+          </p>
+
+          <p>
+            <strong>Start date:</strong>
+            <%= @opportunity.commencement_date.strftime("%A, %e %b %Y") %>
+          </p>
+
+          <p>
+            <strong>End date:</strong>
+            <%= @opportunity.completion_date.strftime("%A, %e %b %Y")  %>
+          </p>
+
+          <!-- <p><%#= link_to "Add Schedule", new_opportunity_time_path(opportunity_id: @opportunity.id)%></p> -->
+          <% if @opportunity.opportunity_times.present? %>
+            <p><strong>Required activity dates, days and times:</strong></p>
+            <ul class="list-style-disc">
+              <% @opportunity.opportunity_times.each do |t|%>
+                <% if t.date_time.present? %>
+                  <li class="list-style-disc"><%= t.date_time.strftime("%d/%m/%y %A") %> <%= t.time.strftime("%l:%M %P") %> -  <%= link_to 'Delete',t , method: :delete, data: { confirm: 'Are you sure?' } %></li>
+                <% else %>
+                  <li class="list-style-disc">--- /--- /---  <%= t.day %> <%= t.time.strftime("%l:%M %P") %> <%= t.frequency %> -  <%= link_to 'Delete', t, method: :delete, data: { confirm: 'Are you sure?' } %></li>
+                <% end %>
+              <% end %>
+            </ul>
+            <a class="waves-effect waves-light btn modal-trigger" href="#opportunity_schedule">Add Opportunity Dates and Times</a>
+          <% else %><!-- else if opportunity time is not present -->
+            <p>
+              <strong>No specific dates, days and time setup yet.</strong>
+            </p>
+            <a class="waves-effect waves-light btn modal-trigger" href="#opportunity_schedule">Add Opportunity Dates and Times</a>
+          <% end %>
+
+          <!-- Modal Trigger -->
+
+          <!-- Modal Structure -->
+          <div id="opportunity_schedule" class="modal">
+            <div class="modal-content">
+              <%= render 'time_form'%>
+            </div>
+            <div class="modal-footer">
+              <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Close Without Saving</a>
+            </div>
+          </div>
+
+          <% if @opportunity.school_years.present? %>
+            <p>
+              <strong>Participants School Year level(s):</strong>
+              <ol>
+                <% @opportunity.school_years.each do |level| %>
+                  <li><%= level.name %></li>
+                <% end %>
+              </ol>
+            </p>
+          <% end %>
+
+
+          <p>How many candidates would you like to engage for this opportunity?</p>
+          <p><%= @opportunity.number_of_candidates %></p>
+          <p>Skills Required of the MOBEEAS Candidate:</p>
+          <% if @opportunity.skills.present? %>
+            <ol>
+              <% @opportunity.skills.each do |skill| %>
+                <li><%= skill.name %> (<%= skill.skill_category.name %>)</li>
+              <% end %>
+            </ol>
+          <% else %>
+            <p>No skills listed</p>
+          <% end %>
+
+          <%= link_to "Add Skills", required_skills_path(oppo_id: @opportunity.id)%>
+
+          <p>
+            <strong>KEEP THIS ONE: Other experiences that would be advantageous:</strong>
+            <%= @opportunity.experiences %>
+          </p>
+
+          <p>
+            <strong>Is this a paid Engagement?</strong>
+            <% if @opportunity.paid_engagement %>
+              <p>Yes, paid engagement.</p>
+            <% else %>
+              <p>No, Not paid engagement.</p>
+            <% end %>
+          </p>
+
+          <p>
+            <strong>Hourly rate:</strong>
+            <%= @opportunity.pay %>
+          </p>
+
+          <p>
+            <strong>Remuneration or specific terms of employment:</strong>
+            <%= @opportunity.employment_terms %>
+          </p>
+
+          <%= link_to 'Edit', edit_opportunity_path(@opportunity) %>
+
+        </div><!-- end of card-content -->
+      </div><!-- end of card -->
+    </div> <!-- end of col m6 offset-m2-->
+
+
+    <div class="col m5">
+      <div class="card">
+        <div class="card-content">
+
+          <p>Candidates with matching skills:</p>
+          <!-- idea: if opportunity_skills is matching with the candidate_skills -->
+          <% @candidate_skills.each do |candidate_skill| %>
+            <% @opportunity.skills.each do |opportunity_skill| %>
+              <% if opportunity_skill.name == candidate_skill.skill.name %>
+                <%= opportunity_skill.name %>
+                <% @profile = Profile.find_by(user_id: candidate_skill.user_id) %>
+                <p>Profile ID: <%= @profile.id %> - <%= @profile.name %>
+                  <% if @opportunity.engagements.present? %>present
+                    <!-- do something here if the opportunity already has engagement to avoid repetition -->
+                    <% @matching = false %>
+                    <% @opportunity.engagements.each do |engagement| %>
+                    <!-- loop through the engagements table to see if there is already the same opportunity and profile -->
+                    <!-- if the engagement table has already the same opportunity_id and profile_id, then the matching flag will be set to true -->
+                      <% if (engagement.opportunity_id == @opportunity.id) && (engagement.profile_id == @profile.id) %>
+                        <% @matching = true %><!-- if matching is true then the matching record is already there, therefore do not do anything-->
+                      <% end %>
+                    <% end %><!-- end of loop -->
+                    <% if !(@matching) %><!-- if the matching value is false, i.e. no matching record in engagement table -->
+                      <% @engagement = Engagement.create(opportunity_id: @opportunity.id, profile_id: @profile.id )%>
+                      (<%= @engagement.status %>)
+                    <% end %>
+                  <% else %><!-- else if @opportunity.engagements present? is false -->
+                    <% @engagement = Engagement.create(opportunity_id: @opportunity.id, profile_id: @profile.id )%>
+                    (<%= @engagement.status %>)
+                  <% end %>
+                  (<%#= @engagement.status %>)
+                </p>
+
+              <% end %><!-- end of if opportunity_skill.name == candidate_skill.skill.name-->
+            <% end %>
+            <br>
+          <% end %>
+        </div><!-- end of card-content -->
+      </div><!-- end of card -->
+    </div><!-- end of col m2 -->
+  </div><!-- end of row -->

@@ -10,4 +10,11 @@ class Opportunity < ActiveRecord::Base
 
   has_many :opportunity_times
 
+  has_many :engagements
+  has_many :profiles, through: :engagements
+
+  validates :title, :description, :commencement_date, :completion_date, presence: true
+  validates :number_of_candidates, numericality: { greater_than: 0 }, presence: true
+
+
 end

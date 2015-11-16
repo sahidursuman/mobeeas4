@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :engagements
   resources :engagement_token_packs
   resources :payments, only: :create
   resources :token_purchases

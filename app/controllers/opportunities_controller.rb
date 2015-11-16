@@ -14,6 +14,7 @@ class OpportunitiesController < ApplicationController
   # GET /opportunities/1
   # GET /opportunities/1.json
   def show
+    @candidate_skills = CandidateSkill.all
   end
 
   # GET /opportunities/new
@@ -75,6 +76,6 @@ class OpportunitiesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def opportunity_params
-      params.require(:opportunity).permit(:organisation_id, :user_id, :opportunity_status, :title, :description, :pay, :paid_engagement, :commencement_date, :completion_date, :specific_skills, :experiences, :employment_terms, :school_year_ids => [])
+      params.require(:opportunity).permit(:organisation_id, :user_id, :opportunity_status, :title, :description, :pay, :paid_engagement, :commencement_date, :completion_date, :experiences, :employment_terms, :number_of_candidates, :school_year_ids => [])
     end
 end

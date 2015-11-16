@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151112031014) do
+ActiveRecord::Schema.define(version: 20151116032533) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -79,6 +79,17 @@ ActiveRecord::Schema.define(version: 20151112031014) do
     t.datetime "updated_at",       null: false
   end
 
+  create_table "engagements", force: :cascade do |t|
+    t.integer  "opportunity_id"
+    t.integer  "profile_id"
+    t.string   "status",         default: "pending"
+    t.datetime "created_at",                         null: false
+    t.datetime "updated_at",                         null: false
+  end
+
+  add_index "engagements", ["opportunity_id"], name: "index_engagements_on_opportunity_id", using: :btree
+  add_index "engagements", ["profile_id"], name: "index_engagements_on_profile_id", using: :btree
+
   create_table "enquiries", force: :cascade do |t|
     t.string   "enquiry_type"
     t.string   "name"
@@ -106,20 +117,20 @@ ActiveRecord::Schema.define(version: 20151112031014) do
   create_table "opportunities", force: :cascade do |t|
     t.integer  "organisation_id"
     t.integer  "user_id"
-    t.string   "opportunity_status", default: "draft"
+    t.string   "opportunity_status",   default: "draft"
     t.string   "title"
     t.text     "description"
     t.string   "pay"
     t.date     "commencement_date"
     t.date     "completion_date"
-    t.datetime "created_at",                           null: false
-    t.datetime "updated_at",                           null: false
-    t.boolean  "paid_engagement",    default: false
-    t.text     "specific_skills"
+    t.datetime "created_at",                             null: false
+    t.datetime "updated_at",                             null: false
+    t.boolean  "paid_engagement",      default: false
     t.text     "experiences"
     t.text     "employment_terms"
     t.integer  "school_year_id"
     t.integer  "skill_id"
+    t.integer  "number_of_candidates", default: 0
   end
 
   add_index "opportunities", ["organisation_id"], name: "index_opportunities_on_organisation_id", using: :btree
@@ -366,6 +377,8 @@ ActiveRecord::Schema.define(version: 20151112031014) do
 
   add_index "users_roles", ["user_id", "role_id"], name: "index_users_roles_on_user_id_and_role_id", using: :btree
 
+  add_foreign_key "engagements", "opportunities"
+  add_foreign_key "engagements", "profiles"
   add_foreign_key "opportunities", "school_years"
   add_foreign_key "opportunities", "skills"
   add_foreign_key "opportunity_skills", "opportunities"

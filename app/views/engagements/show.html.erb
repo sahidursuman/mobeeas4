@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Opportunity:</strong>
+  <%= @engagement.opportunity %>
+</p>
+
+<p>
+  <strong>Profile:</strong>
+  <%= @engagement.profile %>
+</p>
+
+<p>
+  <strong>Status:</strong>
+  <%= @engagement.status %>
+</p>
+
+<%= link_to 'Edit', edit_engagement_path(@engagement) %> |
+<%= link_to 'Back', engagements_path %>

@@ -2,6 +2,9 @@ class Profile < ActiveRecord::Base
   belongs_to :user
   belongs_to :candidate_type
 
+  has_many :engagements
+  has_many :opportunities, through: :engagements
+
   validates :first_name, :last_name, :bio, :suburb, :postcode, :state, presence: true
 
   geocoded_by :profile_data
