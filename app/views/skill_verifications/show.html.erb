@@ -96,11 +96,15 @@
 
           <% @candidate_skills.each_with_index do |candidate_skill, index| %>
             <p><%= candidate_skill.skill.skill_category.name %>: <%= candidate_skill.skill.name %></p>
-              <input class="radio_buttons optional with-gap" type="radio" value="Competent" name="skill_verification[candidate_skills_attributes][<%= index %>][skill_level]" id="skill_verification_candidate_skills_attributes_<%= index %>_skill_level_competent" />
+            <input class="radio_buttons optional with-gap" type="radio" value="Competent" name="skill_verification[candidate_skills_attributes][<%= index %>][skill_level]" id="skill_verification_candidate_skills_attributes_<%= index %>_skill_level_competent" />
               <label for="skill_verification_candidate_skills_attributes_<%= index %>_skill_level_competent">Competent
-            </label>
-            <input class="radio_buttons optional with-gap" type="radio" value="Highly skilled" name="skill_verification[candidate_skills_attributes][<%= index %>][skill_level]" id="skill_verification_candidate_skills_attributes_<%= index %>_skill_level_highly_skilled" /><label for="skill_verification_candidate_skills_attributes_<%= index %>_skill_level_highly_skilled">Highly skilled</label>
-            <input class="radio_buttons optional with-gap" type="radio" value="Expert" name="skill_verification[candidate_skills_attributes][<%= index %>][skill_level]" id="skill_verification_candidate_skills_attributes_<%= index %>_skill_level_expert" /><label for="skill_verification_candidate_skills_attributes_<%= index %>_skill_level_expert">Expert</label>
+              </label>
+            <input class="radio_buttons optional with-gap" type="radio" value="Highly skilled" name="skill_verification[candidate_skills_attributes][<%= index %>][skill_level]" id="skill_verification_candidate_skills_attributes_<%= index %>_skill_level_highly_skilled" />
+              <label for="skill_verification_candidate_skills_attributes_<%= index %>_skill_level_highly_skilled">Highly skilled
+              </label>
+            <input class="radio_buttons optional with-gap" type="radio" value="Expert" name="skill_verification[candidate_skills_attributes][<%= index %>][skill_level]" id="skill_verification_candidate_skills_attributes_<%= index %>_skill_level_expert" />
+              <label for="skill_verification_candidate_skills_attributes_<%= index %>_skill_level_expert">Expert
+              </label>
 
             <input type="hidden" value="<%= candidate_skill.id %>" name="skill_verification[candidate_skills_attributes][<%= index %>][id]" id="skill_verification_candidate_skills_attributes_<%= index %>_id" />
             <br><br>

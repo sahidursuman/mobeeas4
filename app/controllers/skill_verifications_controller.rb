@@ -2,6 +2,8 @@ class SkillVerificationsController < ApplicationController
   before_action :set_skill_verification, only: [:approve, :edit, :update, :destroy]
   skip_before_action :authenticate_user!, only: [:show, :update]
 
+# Ask Pete what is the purpose of this function.
+# What does approve attribute signify ?
   def approve
     if current_user.has_role? :admin
       @skill_verification.update_attributes(approve: true)
@@ -61,6 +63,14 @@ class SkillVerificationsController < ApplicationController
   def update
     respond_to do |format|
       if @skill_verification.update(skill_verification_params)
+        @skill_verification.candidate_skills.each do |candidate_skill|
+          # if the referee chose any skill level for this candidate (not blank), then verified is true.
+          if !(candidate_skill.skill_level.blank?)
+            candidate_skill.verified = true
+          end
+          @skill_verification.save! # must save the update
+        end # end of loop
+
         SkillVerificationMailer.approve(@skill_verification.id).deliver_now
         format.html { redirect_to thanks_path(type: 'skill-verification'), notice: 'Skill verification was successfully updated.' }
         format.json { render :show, status: :ok, location: @skill_verification }

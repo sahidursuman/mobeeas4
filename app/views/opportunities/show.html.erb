@@ -114,7 +114,7 @@
             <p>No skills listed</p>
           <% end %>
 
-          <%= link_to "Add Skills", required_skills_path(oppo_id: @opportunity.id)%>
+          <%= link_to "Add/Remove Skills", required_skills_path(oppo_id: @opportunity.id)%>
 
           <p>
             <strong>KEEP THIS ONE: Other experiences that would be advantageous:</strong>
@@ -151,39 +151,58 @@
       <div class="card">
         <div class="card-content">
 
-          <p>Candidates with matching skills:</p>
-          <!-- idea: if opportunity_skills is matching with the candidate_skills -->
-          <% @candidate_skills.each do |candidate_skill| %>
-            <% @opportunity.skills.each do |opportunity_skill| %>
-              <% if opportunity_skill.name == candidate_skill.skill.name %>
-                <%= opportunity_skill.name %>
-                <% @profile = Profile.find_by(user_id: candidate_skill.user_id) %>
-                <p>Profile ID: <%= @profile.id %> - <%= @profile.name %>
-                  <% if @opportunity.engagements.present? %>present
-                    <!-- do something here if the opportunity already has engagement to avoid repetition -->
-                    <% @matching = false %>
-                    <% @opportunity.engagements.each do |engagement| %>
-                    <!-- loop through the engagements table to see if there is already the same opportunity and profile -->
-                    <!-- if the engagement table has already the same opportunity_id and profile_id, then the matching flag will be set to true -->
-                      <% if (engagement.opportunity_id == @opportunity.id) && (engagement.profile_id == @profile.id) %>
-                        <% @matching = true %><!-- if matching is true then the matching record is already there, therefore do not do anything-->
-                      <% end %>
-                    <% end %><!-- end of loop -->
-                    <% if !(@matching) %><!-- if the matching value is false, i.e. no matching record in engagement table -->
-                      <% @engagement = Engagement.create(opportunity_id: @opportunity.id, profile_id: @profile.id )%>
-                      (<%= @engagement.status %>)
-                    <% end %>
-                  <% else %><!-- else if @opportunity.engagements present? is false -->
-                    <% @engagement = Engagement.create(opportunity_id: @opportunity.id, profile_id: @profile.id )%>
-                    (<%= @engagement.status %>)
-                  <% end %>
-                  (<%#= @engagement.status %>)
-                </p>
+          <% hash = {} %>
+          <% users = [] %>
+          <p>Candidates with matching and verified skills:</p>
+          <% @opportunity.opportunity_skills.each do |opportunity_skill| %>
+            <% hash[opportunity_skill.skill.name] = [] %> <!-- create a hash of array, key is skill name, value is user id -->
+            <% @candidate_skills.each do |candidate_skill| %>
+              <% if (candidate_skill.skill_id == opportunity_skill.skill.id) && (candidate_skill.verified) %>
+                <% hash[opportunity_skill.skill.name] << candidate_skill.user_id %>
+                <% if !(users.include?(candidate_skill.user_id))%><!-- only add a unique user id -->
+                  <% users << candidate_skill.user_id %>
+                <% end %>
+              <% end %>
+            <% end %><!-- end of candidate skill loop -->
+          <% end %><!-- end of opportunity loop -->
+          <%#= hash %><!-- print hash -->
 
-              <% end %><!-- end of if opportunity_skill.name == candidate_skill.skill.name-->
+          <% hash1 = {} %>
+          <% users.sort.each do |user| %><!-- print users -->
+            <% hash1[user] = []%>
+            <% hash.each_pair do |key, value| %>
+              <% if hash[key].include?(user) %><!-- the reverse of hash, i.e. key is user id, value is skill name -->
+                  <% hash1[user] << key %>
+              <% end %>
             <% end %>
-            <br>
           <% end %>
+          <br>
+          <%#= hash1 %><!-- print hash1 -->
+          <% hash1.each_pair do |key, value| %> <!-- key is user id, value is skill name -->
+          <% @found = true %><!-- start with found is true -->
+            <% @opportunity.opportunity_skills.each do |opportunity_skill| %>
+              <% @candidate = Profile.find_by(user_id: key)%>
+              <%= @candidate.name %> (ID: <%= key %>) -
+                <% value.each do |val| %>
+                  <%= val %>
+
+                  <!-- for testing only -->
+                  <!-- <%#= val %> : <%#= opportunity_skill.skill.name %>? -->
+
+                <% end %>
+                <% if !(hash1[key].include?(opportunity_skill.skill.name)) %> <!-- false when not all matching-->
+                  <% @found = false %> <!-- if an opportunity skill is not matching, @found become false -->
+                <% end %>
+              <br>
+            <% end %><!-- end of opportunity loop -->
+            <!-- for testing purpose only -->
+            <% if @found == true %>
+              Exact match<br>
+            <% else %>
+              Close match<br>
+            <% end %>
+          <% end %><!-- end of hash loop -->
+
         </div><!-- end of card-content -->
       </div><!-- end of card -->
     </div><!-- end of col m2 -->
