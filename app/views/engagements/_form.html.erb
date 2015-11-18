@@ -1,10 +1,13 @@
+<%= params[:opportunity_id]%>
+
 <%= simple_form_for(@engagement) do |f| %>
   <%= f.error_notification %>
 
   <div class="form-inputs">
-    <%= f.association :opportunity %>
-    <%= f.association :profile %>
-    <%= f.input :status %>
+    <%= f.association :opportunity, :as => :hidden, input_html: { value: params[:opp_id] } %>
+    <%= f.association :profile, :as => :hidden, input_html: { value: params[:profile_id] } %>
+    <%= f.input :status, :as => :hidden %>
+
   </div>
 
   <div class="form-actions">

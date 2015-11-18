@@ -1,5 +1,12 @@
 Rails.application.routes.draw do
-  resources :engagements
+  resources :messages
+  resources :engagements do
+    member do
+      get :short_list, :invite
+    end
+  end
+
+
   resources :engagement_token_packs
   resources :payments, only: :create
   resources :token_purchases

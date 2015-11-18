@@ -1,4 +1,5 @@
 <li class="bold margin-left-10px"><%= link_to 'Host  Profile', host_profile_path %></li>
+<li class="bold margin-left-10px"><%= link_to 'Inbox', messages_path(my_id: current_user.id) %></li>
 <li class="bold margin-left-10px"><%= link_to 'Organisations Index', organisations_profile_path %></li>
 <li class="bold margin-left-10px"><%= link_to 'Purchase Tokens', purchase_tokens_path %></li>
 <li class="bold margin-left-10px"><%= link_to 'Create Opportunity', new_opportunity_path %></li>

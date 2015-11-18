@@ -1,0 +1,18 @@
+<%= simple_form_for(@message) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="form-inputs">
+    <%= f.association :user, as: :hidden, input_html: { value: params[:from]} %>
+    <%= f.association :profile, as: :hidden, input_html: { value: params[:from]} %>
+    <%= f.association :opportunity, as: :hidden, input_html: { value: params[:from]} %>
+    <%= f.input :from, as: :hidden, input_html: { value: params[:from]} %>
+    <%= f.input :to, as: :hidden, input_html: { value: params[:to]} %>
+    <%= f.input :message_text %>
+    <%= f.input :status %>
+    <%= f.input :attachment %>
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>

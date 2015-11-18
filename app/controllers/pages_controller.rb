@@ -78,4 +78,8 @@ class PagesController < ApplicationController
 		@required_skills = @opportunity.skills
 	end
 
+	def conversations
+		@messages = Message.all.order("created_at DESC").page(params[:page]).per(10)
+	end
+
 end

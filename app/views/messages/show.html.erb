@@ -1,0 +1,44 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>User:</strong>
+  <%= @message.user %>
+</p>
+
+<p>
+  <strong>Profile:</strong>
+  <%= @message.profile %>
+</p>
+
+<p>
+  <strong>Opportunity:</strong>
+  <%= @message.opportunity %>
+</p>
+
+<p>
+  <strong>From:</strong>
+  <%= @message.from %>
+</p>
+
+<p>
+  <strong>To:</strong>
+  <%= @message.to %>
+</p>
+
+<p>
+  <strong>Message text:</strong>
+  <%= @message.message_text %>
+</p>
+
+<p>
+  <strong>Status:</strong>
+  <%= @message.status %>
+</p>
+
+<p>
+  <strong>Attachment:</strong>
+  <%= @message.attachment %>
+</p>
+
+<%= link_to 'Edit', edit_message_path(@message) %> |
+<%= link_to 'Back', messages_path %>

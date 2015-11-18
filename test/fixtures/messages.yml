@@ -1,0 +1,21 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  user_id: 
+  profile_id: 
+  opportunity_id: 
+  from: MyString
+  to: MyString
+  message_text: MyText
+  status: MyString
+  attachment: MyString
+
+two:
+  user_id: 
+  profile_id: 
+  opportunity_id: 
+  from: MyString
+  to: MyString
+  message_text: MyText
+  status: MyString
+  attachment: MyString

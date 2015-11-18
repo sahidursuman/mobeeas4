@@ -2,12 +2,12 @@
 
 <p>
   <strong>Opportunity:</strong>
-  <%= @engagement.opportunity %>
+  <%= @engagement.opportunity.title %>
 </p>
 
 <p>
   <strong>Profile:</strong>
-  <%= @engagement.profile %>
+  <%= @engagement.profile.name %>
 </p>
 
 <p>
@@ -15,5 +15,4 @@
   <%= @engagement.status %>
 </p>
 
-<%= link_to 'Edit', edit_engagement_path(@engagement) %> |
-<%= link_to 'Back', engagements_path %>
+<%= link_to 'Back to Opportunity', opportunity_path(@engagement.opportunity.id) %>

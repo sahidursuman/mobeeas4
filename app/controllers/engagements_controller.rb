@@ -1,5 +1,18 @@
 class EngagementsController < ApplicationController
-  before_action :set_engagement, only: [:show, :edit, :update, :destroy]
+  before_action :set_engagement, only: [:short_list, :invite, :show, :edit, :update, :destroy]
+
+
+  def short_list
+    @engagement.update_attributes(status: "short_listed")
+    @opportunity = Opportunity.find(params[:opportunity_id])
+    redirect_to @opportunity
+  end
+
+  def invite
+    @engagement.update_attributes(status: "invited")
+    @opportunity = Opportunity.find(params[:opportunity_id])
+    redirect_to @opportunity
+  end
 
   # GET /engagements
   # GET /engagements.json
@@ -55,8 +68,9 @@ class EngagementsController < ApplicationController
   # DELETE /engagements/1.json
   def destroy
     @engagement.destroy
+    @opportunity = Opportunity.find(params[:opportunity_id])
     respond_to do |format|
-      format.html { redirect_to engagements_url, notice: 'Engagement was successfully destroyed.' }
+      format.html { redirect_to @opportunity, notice: 'Engagement was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
