@@ -11,7 +11,9 @@
 <!-- RIGHT COLUMN -->
   <div class="col m8">
     <!-- WELCOME BUTTON-->
-    <a class="waves-effect waves-light btn modal-trigger" href="#modal-welcome"><i class="material-icons left">speaker_notes</i>Getting Started</a>
+    <a class="waves-effect waves-light btn modal-trigger" href="#modal-welcome"><i class="fa fa-comment"></i>  Getting Started</a>
+    <a class="waves-effect waves-light btn modal-trigger" href="/messages?my_id=<%= current_user.id %>"><i class="fa fa-envelope"></i>  My Inbox</a>
+
       <div id="modal-welcome" class="modal">
         <div class="modal-content">
           <%= render 'profiles/welcome' %>
@@ -99,6 +101,6 @@
       <% else %>
         <div class="modal-footer">
           <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Close</a>
-        </div>      
+        </div>
     <% end %>
   </div>

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151118052422) do
+ActiveRecord::Schema.define(version: 20151119040234) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -117,13 +117,13 @@ ActiveRecord::Schema.define(version: 20151118052422) do
   create_table "messages", force: :cascade do |t|
     t.integer  "user_id"
     t.integer  "opportunity_id"
-    t.string   "from"
-    t.string   "to"
     t.text     "message_text"
     t.string   "status",         default: "unread"
     t.string   "attachment"
     t.datetime "created_at",                        null: false
     t.datetime "updated_at",                        null: false
+    t.integer  "from"
+    t.integer  "to"
   end
 
   add_index "messages", ["opportunity_id"], name: "index_messages_on_opportunity_id", using: :btree
@@ -197,6 +197,7 @@ ActiveRecord::Schema.define(version: 20151118052422) do
     t.datetime "created_at",                  null: false
     t.datetime "updated_at",                  null: false
     t.boolean  "org_creator", default: false
+    t.integer  "connections", default: [],                 array: true
   end
 
   add_index "org_user_profiles", ["guid"], name: "index_org_user_profiles_on_guid", using: :btree
@@ -265,6 +266,7 @@ ActiveRecord::Schema.define(version: 20151118052422) do
     t.integer  "candidate_type_id"
     t.date     "dob"
     t.string   "status",            default: "pending"
+    t.integer  "connections",       default: [],                     array: true
   end
 
   add_index "profiles", ["candidate_type_id"], name: "index_profiles_on_candidate_type_id", using: :btree

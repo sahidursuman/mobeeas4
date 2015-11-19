@@ -8,7 +8,7 @@
       <% elsif (engagement.status == 'short_listed') %>
         <%= link_to 'Invite', invite_engagement_path(engagement, opportunity_id: @opportunity.id)%>  |
       <% end %>
-          <%= link_to 'Contact ' + @candidate.first_name, new_message_path(from: @opportunity.user_id, to: @candidate.id, opportunity_id: @opportunity.id)  %>  |
+          <%= link_to 'Contact ' + @candidate.first_name, new_message_path(from: @opportunity.user_id, to: @candidate.user.id, opportunity_id: @opportunity.id)  %>  |
           <%= link_to 'Decline', engagement_path(engagement, opportunity_id: @opportunity.id), method: :delete, data: { confirm: 'Are you sure?' } %>
     </p>
   <% end %><!-- end of if engagement.profile_id -->
@@ -16,7 +16,7 @@
 <% if !(@engaged) %><!-- if candidate is not linked to this opportunity then display link to start engagement -->
   <p>
     <%= link_to 'Start Engagement', new_engagement_path(opp_id: @opportunity.id, profile_id: @candidate.id) %>  |
-    Contact <%= @candidate.first_name %>
+    <%= link_to 'Contact ' + @candidate.first_name, new_message_path(from: @opportunity.user_id, to: @candidate.user.id, opportunity_id: @opportunity.id)  %>  |
   </p>
 <% end %>
 <br>

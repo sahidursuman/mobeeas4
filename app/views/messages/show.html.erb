@@ -1,44 +1,44 @@
 <p id="notice"><%= notice %></p>
 
 <p>
-  <strong>User:</strong>
-  <%= @message.user %>
-</p>
-
-<p>
-  <strong>Profile:</strong>
-  <%= @message.profile %>
-</p>
-
-<p>
-  <strong>Opportunity:</strong>
-  <%= @message.opportunity %>
-</p>
-
-<p>
   <strong>From:</strong>
-  <%= @message.from %>
+  <% @from = User.find(@message.from) %>
+  <% if @from.has_role? :candidate %>
+    <%= @from.profile.name %>
+  <% elsif @from.has_role? :host %>
+    <%= @from.org_user_profile.name %>
+  <% end %>
 </p>
 
 <p>
   <strong>To:</strong>
-  <%= @message.to %>
+  <% @to = User.find(@message.to) %>
+  <% if @to.has_role? :candidate %>
+    <%= @to.profile.name %>
+  <% elsif @to.has_role? :host %>
+    <%= @to.org_user_profile.name %>
+  <% end %>
 </p>
 
 <p>
-  <strong>Message text:</strong>
+  <strong>Opportunity:</strong>
+  <%= @message.opportunity.title %>
+</p>
+
+<p>
+  <strong>Message:</strong>
   <%= @message.message_text %>
 </p>
 
-<p>
-  <strong>Status:</strong>
-  <%= @message.status %>
-</p>
+<% if @message.attachment.present? %>
+  <p>
+    <strong>Attachment:</strong>
+    <%= @message.attachment %>
+  </p>
+<% end %>
 
-<p>
-  <strong>Attachment:</strong>
-  <%= @message.attachment %>
-</p>
-
-<%= link_to 'Edit', edit_message_path(@message) %> |
-<%= link_to 'Back', messages_path %>
+<% if @to.has_role? :candidate %>
+  <%= link_to 'Back to Messages with ' + @to.profile.name, conversations_path(contact: @message.to, my_id:@message.from) %>
+<% elsif @to.has_role? :host %>
+  <%= link_to 'Back to Messages with ' + @to.org_user_profile.name, conversations_path(contact: @message.to, my_id:@message.from) %>
+<% end %>

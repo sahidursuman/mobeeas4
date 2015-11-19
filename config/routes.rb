@@ -70,6 +70,7 @@ Rails.application.routes.draw do
   get 'organisations_profile', to: 'pages#organisations_profile'
   get 'purchase_tokens', to: 'pages#purchase_tokens'
   get 'required_skills', to: 'pages#required_skills'
+  get 'conversations', to: 'pages#conversations'
 
 
 
