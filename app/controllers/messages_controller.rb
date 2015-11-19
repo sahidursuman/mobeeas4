@@ -17,6 +17,7 @@ class MessagesController < ApplicationController
   # GET /messages/new
   def new
     @message = Message.new
+    @receiver = User.find(params[:to])
   end
 
   # GET /messages/1/edit

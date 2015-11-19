@@ -79,6 +79,12 @@ class PagesController < ApplicationController
 	end
 
 	def conversations
+		@contact_user = User.find(params[:contact])
+    if @contact_user.has_role? :candidate
+      @contact = @contact_user.profile.name
+    elsif @contact_user.has_role? :host
+      @contact = @contact_user.org_user_profile.name
+    end
 		@messages = Message.all.order("created_at DESC").paginate(:page => params[:page], :per_page => 5)
 	end
 

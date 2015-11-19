@@ -1,7 +1,6 @@
 <p id="notice"><%= notice %></p>
 
 <h4>View Contacts</h4>
-<%= params[:my_id]%>
 
 <% @receiver_user = User.find(params[:my_id]) %>
 <% if @receiver_user.has_role? :candidate %>
@@ -12,6 +11,7 @@
 
 <!-- Check the contacts from all messages to see if contact id is new and will be added into the connections list -->
 <% @messages.each do |message| %>
+  <!-- just find messages that are from me or to me only -->
   <% if (message.from == params[:my_id].to_i) || (message.to == params[:my_id].to_i) %>
     <!-- save the new contact that send me the message -->
     <% if (message.from != current_user.id) && !(@receiver.connections.include?(message.from))%>
@@ -28,40 +28,49 @@
       <% @receiver.save! %>
     <% end %>
   <% end %>
+<% end %><!-- end of @messages loop -->
+<br><br>
 
-  <!-- <tr>
-    <td><%#= message.user %></td>
-    <td><%#= message.opportunity %></td>
-    <td><%#= message.from %></td>
-    <td><%#= message.to %></td>
+<ol><!-- list all messages from each connection -->
+  <% @receiver.connections.each do |connection|%>
+    <p>
+      <% @sender_user = User.find(connection)%>
+      <% if @sender_user.has_role? :candidate %>
+        <% @sender = @sender_user.profile %>
+        <li>
+          <%= link_to @sender.name, conversations_path(my_id: current_user.id, contact: @sender_user.id) %>
+          <% if Message.count_new_messages(params[:my_id], @sender_user.id) > 0 %>
+            (<%= Message.count_new_messages(params[:my_id], @sender_user.id)%>)<!-- shows the number of unread messages -->
+          <% end %>
+        </li>
+      <% elsif @sender_user.has_role? :host %>
+        <% @sender = @sender_user.org_user_profile %>
+        <li>
+          <%= link_to @sender.name, conversations_path(my_id: current_user.id, contact: @sender_user.id) %>
+          <% if Message.count_new_messages(params[:my_id], @sender_user.id) > 0 %>
+            (<%= Message.count_new_messages(params[:my_id], @sender_user.id)%>)<!-- shows the number of unread messages -->
+          <% end %>
+        </li>
+      <% end %>
+    </p>
+  <% end %>
+</ol>
+
+<!--
+<%# @messages.each do |message| %>
+  <tr>
+    user id: <td><%#= message.user.id %></td>
+    title: <td><%#= message.opportunity.title %></td>
+    from: <td><%#= message.from %></td>
+    to: <td><%#= message.to %></td>
     <td><%#= message.message_text %></td>
     <td><%#= message.status %></td>
     <td><%#= message.attachment %></td>
     <td><%#= link_to 'Show', message %></td>
     <td><%#= link_to 'Edit', edit_message_path(message) %></td>
     <td><%#= link_to 'Destroy', message, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-  </tr> -->
-
-
-<% end %><!-- end of @messages loop -->
-<br><br>
-
-
-
-<% @messages.each do |message| %>
-  <tr>
-    user id: <td><%= message.user.id %></td>
-    title: <td><%= message.opportunity.title %></td>
-    from: <td><%= message.from %></td>
-    to: <td><%= message.to %></td>
-    <td><%= message.message_text %></td>
-    <td><%= message.status %></td>
-    <td><%= message.attachment %></td>
-    <td><%= link_to 'Show', message %></td>
-    <td><%= link_to 'Edit', edit_message_path(message) %></td>
-    <td><%= link_to 'Destroy', message, method: :delete, data: { confirm: 'Are you sure?' } %></td>
   </tr>
-<% end %>
-<br>
+<%# end %>
+<br> -->
 
-<%= link_to 'New Message', new_message_path %>
+<%#= link_to 'New Message', new_message_path %>
