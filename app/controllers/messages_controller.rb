@@ -31,6 +31,7 @@ class MessagesController < ApplicationController
 
     respond_to do |format|
       if @message.save
+        # should we send a mailer alert for EVERY new conversation???
         format.html { redirect_to @message, notice: 'Message was successfully created.' }
         format.json { render :show, status: :created, location: @message }
       else
@@ -72,6 +73,6 @@ class MessagesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def message_params
-      params.require(:message).permit(:user_id, :opportunity_id, :from, :to, :message_text, :status, :attachment)
+      params.require(:message).permit(:user_id, :opportunity_id, :message_text, :status, :attachment, :from, :to)
     end
 end

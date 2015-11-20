@@ -1,9 +1,9 @@
 <% if user_signed_in? %>
-  <%# if current_user.has_role? :host%>
-    <%= render 'layouts/sidebar'%>
-      <div class="row">
-        <div class="col s12 m10 offset-m2 l10 offset-l2">
-          <% if current_user.org_user_profile.present? %>
+  <% if current_user.has_role? :host %>
+    <% if current_user.org_user_profile.present? %>
+      <%= render 'layouts/sidebar'%>
+        <div class="row">
+          <div class="col s12 m10 offset-m2 l10 offset-l2">
             <p>
             <strong>First name:</strong>
             <%= @org_user_profile.first_name %>
@@ -30,10 +30,25 @@
             <% if current_user.id == @org_user_profile.user_id %>
               <%= link_to 'Edit My Profile', edit_org_user_profile_path(current_user.org_user_profile)%>
             <% end %>
-          <% else %> <!-- else if current_user's profile hasn't been created yet -->
-            <p>Your host profile is not created. Please go to <%= link_to 'Organisations Index', organisations_profile_path %> and select one of the organisations as the first step to create your host profile.</p>
-          <% end %>
+          </div>
         </div>
-      </div>
-  <%# end %>
+      <% else %> <!-- else if current_user's profile hasn't been created yet -->
+        <p>Your host profile is not created. Please go to <%= link_to 'Organisations Index', organisations_host_path %> and select one of the organisations as the first step to create your host profile.</p>
+      <% end %>
+  <!-- <%# elsif current_user.has_role? :candidate %>
+    <p>You are registered in MOBEEAS as a Candidate, to register as a Host please go to <%#= link_to "Home", root_path %> page and select option to register as a Host.</p>
+  <%# elsif !(current_user.has_role? :host) && !(current_user.has_role? :candidate) %> -->
+  <% else %>
+    <p>
+      Currently you are not registered as a Host in MOBEEAS.
+      <br>
+      If you would like to become a Host, please first search if the organisation that you would like to represent is already registered in MOBEEAS.
+      <br>
+      If the organisation that you are looking for is not in the list, you may create a new Organisation.
+      <br>
+      A newly added Organisation will need to be approved by the company's Director and then it may appear in MOBEEAS website.
+      <br>
+      <%= link_to "View all Organisations registered in MOBEEAS", organisations_path %>
+    </p>
+  <% end %>
 <% end %>

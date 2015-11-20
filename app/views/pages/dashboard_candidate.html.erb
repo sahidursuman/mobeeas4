@@ -1,0 +1,13 @@
+<% if user_signed_in? %>
+  <% if current_user.has_role? :candidate %>
+    <% if current_user.profile.present? %>
+      <%= render 'layouts/sidebar'%>
+
+
+    <% else %>
+      <p>Please create your Candidate Profile</p>
+    <% end %><!-- f current_user.org_user_profile.present? -->
+  <% else %>
+    <p>Currently you are not registered as a Candidate in MOBEEAS</p>
+  <% end %><!-- end of current_user.has_role? :candidate-->
+<% end %><!-- end of if user_signed_in? -->

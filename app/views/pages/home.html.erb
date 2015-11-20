@@ -29,9 +29,10 @@
                   <% if user_signed_in? %>
                     <% if current_user.org_user_profile.present? %>
                       <a class="waves-effect white btn margin-left-20px" href="/dashboard_host"><span class="palette2">Host Dashboard</span></a>
+                      <!-- In host dashboard the user will have distinction if he has a role as a Host or not. -->
                     <% end %>
                   <% else %>
-                    <a class="waves-effect white btn margin-left-20px" href="/dashboard_host"><span class="palette2">Get Started Here</span></a>
+                    <a class="waves-effect white btn margin-left-20px" href="/dashboard_host"><span class="palette2">Register as a Host</span></a>
                   <% end %>
                 </div><!-- col s12 m4 l4 -->
               </div><!-- row -->

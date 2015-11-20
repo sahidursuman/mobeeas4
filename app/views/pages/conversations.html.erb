@@ -1,38 +1,39 @@
-<h4>Conversations with <%= @contact %></h4>
+<h4>Conversations with <%= @contact.name %></h4>
 
 <%= will_paginate @messages %>
   <% @messages.each do |message| %>
     <!-- messages for me from contact -->
     <% if (message.to == params[:my_id].to_i) && (message.from == params[:contact].to_i) %>
     <!-- the function to change from unread to read status, ONLY for messages for me -->
-
       <% message.status_read %>
       <p>
         <div style="font-weight: bold; color: blue;">
           <%= message.message_text %><br>
         </div>
         <% if message.opportunity_id.present? %>
-          Opportunity Title: <%= Opportunity.find(message.opportunity_id).title %><br>
+          <% @opportunity = Opportunity.find(message.opportunity_id) %>
+          Opportunity Title: <%= @opportunity.title %><br>
         <% end %>
         <%= message.created_at.getlocal.strftime("%e %b %Y %I:%M:%S%p") %>
       </p>
     <% end %>
 
-    <!-- messages from me to contact -->
+    <!-- messages to contact from me -->
     <% if (message.to == params[:contact].to_i) && (message.from == params[:my_id].to_i) %>
       <p>
         <div style="font-style: italic; font-weight: bold;">
           <%= message.message_text %><br>
         </div>
         <% if message.opportunity_id.present? %>
-          Opportunity Title: <%= Opportunity.find(message.opportunity_id).title %><br>
+          <% @opportunity = Opportunity.find(message.opportunity_id) %>
+          Opportunity Title: <%= @opportunity.title %><br>
         <% end %>
         <%= message.created_at.getlocal.strftime("%e %b %Y %I:%M:%S%p") %>
       </p>
     <% end %>
   <% end %>
-  <%= will_paginate @messages %>
-  <br>
+<%= will_paginate @messages %>
+<br>
 
-  <%= link_to 'Reply', new_message_path(to: @contact_user, from: params[:my_id]), class: 'waves-effect waves-light btn palette4-bg' %>
-  <%= link_to 'Inbox', messages_path(my_id: params[:my_id]), class: 'waves-effect waves-light btn palette4-bg'%>
+<%#= link_to 'Reply to ' + @contact.first_name, new_message_path(to: @contact_user, from: params[:my_id], opportunity_id: @opportunity.id ), class: 'waves-effect waves-light btn palette4-bg' %>
+<%= link_to 'Mailbox', messages_path(my_id: params[:my_id]), class: 'waves-effect waves-light btn palette4-bg'%>

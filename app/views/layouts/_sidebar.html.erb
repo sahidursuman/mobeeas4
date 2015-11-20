@@ -1,16 +1,18 @@
+	  <% if current_user.has_role? :candidate %>
+      <ul id="slide-out" class="side-nav fixed margin-left-10px">
+        <li class="logo margin-top-20px margin-bottom-20px"><a href="/"><%= image_tag 'MOBEEAS.png', height: '122px', class: 'brand-logo responsive-img' %></a>
+        </li>
+        <%= render 'layouts/candidate_sidebar' %>
+      </ul>
 
-	  <% if current_user.has_role? :student %>
+
+		<!-- THERE IS NO ROLE AS TEACHER -->
+	  <!-- <%# elsif current_user.has_role? :teacher %>
       <ul id="slide-out" class="side-nav fixed margin-left-10px">
-        <li class="logo margin-top-20px margin-bottom-20px"><a href="/"><%= image_tag 'MOBEEAS.png', height: '122px', class: 'brand-logo responsive-img' %></a>
+        <li class="logo margin-top-20px margin-bottom-20px"><a href="/"><%#= image_tag 'MOBEEAS.png', height: '122px', class: 'brand-logo responsive-img' %></a>
         </li>
-        <%= render 'layouts/student_sidebar' %>
-      </ul>
-	  <% elsif current_user.has_role? :teacher %>
-      <ul id="slide-out" class="side-nav fixed margin-left-10px">
-        <li class="logo margin-top-20px margin-bottom-20px"><a href="/"><%= image_tag 'MOBEEAS.png', height: '122px', class: 'brand-logo responsive-img' %></a>
-        </li>
-	  	<%= render 'layouts/teacher_sidebar' %>
-      </ul>
+	  	<%#= render 'layouts/teacher_sidebar' %>
+      </ul> -->
     <% elsif current_user.has_role? :host %>
       <ul id="slide-out" class="side-nav fixed margin-left-10px">
         <li class="logo margin-top-20px margin-bottom-20px"><a href="/"><%= image_tag 'MOBEEAS.png', height: '122px', class: 'brand-logo responsive-img' %></a>

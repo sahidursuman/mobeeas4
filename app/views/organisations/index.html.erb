@@ -3,9 +3,14 @@
     <p id="notice"><%= notice %></p>
 
     <h3>Listing Organisations</h3>
-    <p>
-      Before adding a new organisation/school, please search first to check if it is available already.
-    </p>
+    
+    <!-- Only the user with role as Host can add a new organisation -->
+    <% if current_user.has_role? :host%>
+      <p>
+        Before adding a new organisation/school, please search first to check if it is available already.
+      </p>
+    <% end %>
+
     <%= form_tag(organisations_path, :method => "get", id: "search-form") do %>
       <%= text_field_tag :search, params[:search], placeholder: "Search State, Suburb or Postcode"%>
       <%= submit_tag "Search" %>
@@ -27,12 +32,15 @@
     <% else %> <!-- it’s good to notify reader if not found -->
       <p>There are no organisations with description: <%= params[:search] %>.</p>
 
-      <% if current_user.org_user_profile.present? %>
-        <!-- if host profile already exist, just create a new organisation -->
-        <%= link_to 'New Organisation', new_organisation_path(subs_type: 'new_org') %>
-      <% else %>
-        <!-- if host profile does not exist, create both host and organisation -->
-        <%= link_to 'New Organisation', new_organisation_path(subs_type: 'new_host_new_org') %>
+      <!-- Only the user with role as Host can add a new organisation -->
+      <% if current_user.has_role? :host%>
+        <% if current_user.org_user_profile.present? %>
+          <!-- if host profile already exist, just create a new organisation -->
+          <%= link_to 'New Organisation', new_organisation_path(subs_type: 'new_org') %>
+        <% else %>
+          <!-- if host profile does not exist, create both host and organisation -->
+          <%= link_to 'New Organisation', new_organisation_path(subs_type: 'new_host_new_org') %>
+        <% end %>
       <% end %>
     <% end %>
   </div>

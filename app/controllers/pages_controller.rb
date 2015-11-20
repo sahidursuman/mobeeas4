@@ -62,8 +62,12 @@ class PagesController < ApplicationController
 		@org_user_profile = current_user.org_user_profile
 	end
 
-	def organisations_profile
+	def organisations_host
 		@org_user_profile = current_user.org_user_profile
+		@organisations = Organisation.paginate(:page => params[:page], :per_page => 5)
+	end
+
+	def organisations_candidate
 		@organisations = Organisation.paginate(:page => params[:page], :per_page => 5)
 	end
 
@@ -80,12 +84,17 @@ class PagesController < ApplicationController
 
 	def conversations
 		@contact_user = User.find(params[:contact])
+		@opportunity
     if @contact_user.has_role? :candidate
-      @contact = @contact_user.profile.name
+      @contact = @contact_user.profile
     elsif @contact_user.has_role? :host
-      @contact = @contact_user.org_user_profile.name
+      @contact = @contact_user.org_user_profile
     end
 		@messages = Message.all.order("created_at DESC").paginate(:page => params[:page], :per_page => 5)
+	end
+
+	def candidate_profile
+
 	end
 
 end
