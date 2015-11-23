@@ -8,8 +8,8 @@
       <% elsif (engagement.status == 'short_listed') %>
         <%= link_to 'Invite', invite_engagement_path(engagement, opportunity_id: @opportunity.id)%>  |
       <% end %>
-          <%= link_to 'Contact ' + @candidate.first_name, new_message_path(from: @opportunity.user_id, to: @candidate.user.id, opportunity_id: @opportunity.id)  %>  |
-          <%= link_to 'Decline', engagement_path(engagement, opportunity_id: @opportunity.id), method: :delete, data: { confirm: 'Are you sure?' } %>
+      <%= link_to 'Contact ' + @candidate.first_name, new_message_path(from: @opportunity.user_id, to: @candidate.user.id, opportunity_id: @opportunity.id)  %>  |
+      <%= link_to 'Decline', engagement_path(engagement, opportunity_id: @opportunity.id), method: :delete, data: { confirm: 'Are you sure?' } %>
     </p>
   <% end %><!-- end of if engagement.profile_id -->
 <% end %><!-- end of @opportunity.engagements loop -->

@@ -31,29 +31,30 @@
       <% end %>
     <% end %><!-- end of @messages loop -->
 
+
     <ol><!-- list all messages from each connection -->
       <% @receiver.connections.each do |connection|%>
         <p>
-          <% @sender_user = User.find(connection)%>
-          <% if @sender_user.has_role? :candidate %>
-            <% @sender = @sender_user.profile %>
-            <li>
-              <%= link_to @sender.name, conversations_path(my_id: current_user.id, contact: @sender_user.id) %>
-              <% if Message.count_new_messages(params[:my_id], @sender_user.id) > 0 %>
-                (<%= Message.count_new_messages(params[:my_id], @sender_user.id)%>)<!-- shows the number of unread messages -->
-              <% end %>
-            </li>
-          <% elsif @sender_user.has_role? :host %>
-            <% @sender = @sender_user.org_user_profile %>
-            <li>
-              <%= link_to @sender.name, conversations_path(my_id: current_user.id, contact: @sender_user.id) %>
-              <% if Message.count_new_messages(params[:my_id], @sender_user.id) > 0 %>
-                (<%= Message.count_new_messages(params[:my_id], @sender_user.id)%>)<!-- shows the number of unread messages -->
-              <% end %>
-            </li>
-          <% end %>
+        <% @sender_user = User.find(connection)%>
+        <% if @sender_user.has_role? :candidate %>
+          <% @sender = @sender_user.profile %>
+          <li>
+            <%= link_to @sender.name, conversations_path(my_id: current_user.id, contact: @sender_user.id) %>
+            <% if Message.count_new_messages(params[:my_id], @sender_user.id) > 0 %>
+              (<%= Message.count_new_messages(params[:my_id], @sender_user.id)%>)<!-- shows the number of unread messages -->
+            <% end %>
+          </li>
+        <% elsif @sender_user.has_role? :host %>
+          <% @sender = @sender_user.org_user_profile %>
+          <li>
+            <%= link_to @sender.name, conversations_path(my_id: current_user.id, contact: @sender_user.id) %>
+            <% if Message.count_new_messages(params[:my_id], @sender_user.id) > 0 %>
+              (<%= Message.count_new_messages(params[:my_id], @sender_user.id)%>)<!-- shows the number of unread messages -->
+            <% end %>
+          </li>
+        <% end %>
         </p>
-      <% end %>
+      <% end %><!-- end of @receiver loop -->
     </ol>
 
     <!--

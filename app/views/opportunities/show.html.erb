@@ -44,7 +44,8 @@
           <p>
             <strong>Host:</strong>
             <% @host = User.find(@opportunity.user) %>
-            <%= @host.org_user_profile.name %>
+            <%= @host.org_user_profile.name %> -
+            <%= link_to 'Contact ' + @host.org_user_profile.first_name, new_message_path(from: current_user.id, to: @host.id, opportunity_id: @opportunity.id) %>
           </p>
 
           <p>
@@ -64,17 +65,27 @@
               <ul class="list-style-disc">
                 <% @opportunity.opportunity_times.each do |t|%>
                   <% if t.date_time.present? %>
-                    <li class="list-style-disc"><%= t.date_time.strftime("%d/%m/%y %A") %> <%= t.time.strftime("%l:%M %P") %> -  <%= link_to 'Delete',t , method: :delete, data: { confirm: 'Are you sure?' } %></li>
+                    <li class="list-style-disc"><%= t.date_time.strftime("%d/%m/%y %A") %> <%= t.time.strftime("%l:%M %P") %>
+                      <% if (current_user.has_role? :host) && (current_user.id == @opportunity.user_id) %>
+                         - <%= link_to 'Delete',t , method: :delete, data: { confirm: 'Are you sure?' } %></li>
+                      <% end %>
                   <% else %>
-                    <li class="list-style-disc">--- /--- /---  <%= t.day %> <%= t.time.strftime("%l:%M %P") %> <%= t.frequency %> -  <%= link_to 'Delete', t, method: :delete, data: { confirm: 'Are you sure?' } %></li>
+                    <li class="list-style-disc">--- /--- /---  <%= t.day %> <%= t.time.strftime("%l:%M %P") %> <%= t.frequency %>
+                      <% if (current_user.has_role? :host) && (current_user.id == @opportunity.user_id) %>
+                         - <%= link_to 'Delete', t, method: :delete, data: { confirm: 'Are you sure?' } %></li>
+                      <% end %>
                   <% end %>
                 <% end %>
               </ul>
-              <a class="modal-trigger" href="#opportunity_schedule">Add Opportunity Dates and Times</a>
+              <% if (current_user.has_role? :host) && (current_user.id == @opportunity.user_id) %>
+                <a class="modal-trigger" href="#opportunity_schedule">Add Opportunity Dates and Times</a>
+              <% end %>
             </p>
           <% else %><!-- else if opportunity time is not present -->
             <p><strong>No specific dates, days and time setup yet.</strong></p>
-            <a class="modal-trigger" href="#opportunity_schedule">Add Opportunity Dates and Times</a>
+            <% if (current_user.has_role? :host) && (current_user.id == @opportunity.user_id) %>
+              <a class="modal-trigger" href="#opportunity_schedule">Add Opportunity Dates and Times</a>
+            <% end %>
           <% end %>
 
           <!-- Modal Trigger -->
@@ -111,10 +122,14 @@
                   <li><%= skill.name %> (<%= skill.skill_category.name %>)</li>
                 <% end %>
               </ol>
-              <%= link_to "Add/Remove Skills", required_skills_path(oppo_id: @opportunity.id)%>
+              <% if (current_user.has_role? :host) && (current_user.id == @opportunity.user_id) %>
+                <%= link_to "Add/Remove Skills", required_skills_path(oppo_id: @opportunity.id)%>
+              <% end %>
             <% else %>
               No skills listed -
-              <%= link_to "Add/Remove Skills", required_skills_path(oppo_id: @opportunity.id)%>
+              <% if (current_user.has_role? :host) && (current_user.id == @opportunity.user_id) %>
+                <%= link_to "Add/Remove Skills", required_skills_path(oppo_id: @opportunity.id)%>
+              <% end %>
               <br>
             <% end %>
           </p><br>
@@ -143,7 +158,9 @@
             <%= @opportunity.employment_terms %>
           </p><br>
 
-          <%= link_to 'Edit This Opportunity', edit_opportunity_path(@opportunity) %>
+          <% if (current_user.has_role? :host) && (current_user.id == @opportunity.user_id) %>
+            <%= link_to 'Edit This Opportunity', edit_opportunity_path(@opportunity) %>
+          <% end %>
 
         </div><!-- end of card-content -->
       </div><!-- end of card -->
@@ -173,7 +190,7 @@
           <% hash1 = {} %>
           <% users.sort.each do |user| %><!-- print users -->
             <% hash1[user] = []%>
-            <% hash.each_pair do |key, value| %>
+            <% hash.each_pair do |key, value| %><!-- reversing hash[] into hash1[] -->
               <% if hash[key].include?(user) %><!-- hash1 is the reverse of hash, i.e. key is user id, value is skill name -->
                   <% hash1[user] << key %>
               <% end %>
@@ -181,26 +198,36 @@
           <% end %>
           <br>
           <%#= hash1 %><!-- print hash1, e.g. hash1[3] = ['dance', 'drama'] -->
-          <% hash1.each_pair do |key, value| %> <!-- key is user id, value is skill name -->
-            <% @candidate = Profile.find_by(user_id: key)%>
-            <strong><%= @candidate.name %></strong> (Profile ID: <%= @candidate.id %>) -
-            <% @found = true %><!-- start with found is true -->
-            <% value.each do |val| %>
-              <%= val %>
-            <% end %>
-            <br>
-            <% @opportunity.opportunity_skills.each do |opportunity_skill| %>
-              <% if !(hash1[key].include?(opportunity_skill.skill.name)) %> <!-- false when not all matching-->
-                <% @found = false %> <!-- if an opportunity skill is not matching, @found become false -->
+          <% if hash1.empty? %>
+            <p>No matching candidate</p>
+          <% else %>
+            <% hash1.each_pair do |key, value| %> <!-- key is user id, value is skill name -->
+              <% @candidate = Profile.find_by(user_id: key)%>
+              <strong><%= @candidate.name %></strong> (Profile ID: <%= @candidate.id %>) -
+              <% @found = true %><!-- start with found is true -->
+              <% value.each do |val| %>
+                <%= val %>
               <% end %>
-            <% end %><!-- end of opportunity loop -->
-            <% if @found == true %><!-- when all opportunity skills are matching with cand. skills, then found value stays true. -->
-              Exact match<br>
-            <% else %>
-              Close match<br>
-            <% end %>
-            <%= render 'engagement_links' %>
-          <% end %><!-- end of hash loop -->
+              <br>
+              <% @opportunity.opportunity_skills.each do |opportunity_skill| %>
+                <% if !(hash1[key].include?(opportunity_skill.skill.name)) %> <!-- false when not all matching-->
+                  <% @found = false %> <!-- if an opportunity skill is not matching, @found become false -->
+                <% end %>
+              <% end %><!-- end of opportunity loop -->
+              <% if @found == true %><!-- when all opportunity skills are matching with cand. skills, then found value stays true. -->
+                Exact match<br>
+              <% else %>
+                Close match<br>
+              <% end %>
+              <% if (current_user.has_role? :host) && (current_user.id == @opportunity.user_id) %>
+                <%= render 'engagement_links' %>
+              <% else %>
+                <br>
+              <% end %>
+            <% end %><!-- end of hash loop -->
+          <% end %><!-- end of if hash1.empty? -->
+          <p>Display all candidate link for Admin and Host? </p>
+          <%#= link_to 'View all candidates', profiles_path %>
 
         </div><!-- end of card-content -->
       </div><!-- end of card -->

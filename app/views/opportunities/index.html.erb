@@ -20,8 +20,10 @@
                 <p><strong>End Date: </strong><%= opportunity.completion_date %></p>
 
                 <p><strong></strong><%= link_to 'Show more...', opportunity %></p>
-                <p><strong></strong><%= link_to 'Edit', edit_opportunity_path(opportunity) %></p>
-                <p><strong></strong><%= link_to 'Destroy', opportunity, method: :delete, data: { confirm: 'Are you sure?' } %></p>
+                <% if (current_user.has_role? :host) && (current_user.id == opportunity.user_id) %>
+                  <p><strong></strong><%= link_to 'Edit', edit_opportunity_path(opportunity) %></p>
+                  <p><strong></strong><%= link_to 'Destroy', opportunity, method: :delete, data: { confirm: 'Are you sure?' } %></p>
+                <% end %>
               </div>
             </div>
           </div>

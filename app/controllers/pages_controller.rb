@@ -48,16 +48,6 @@ class PagesController < ApplicationController
   def about
   end
 
-	def dashboard_candidate
-	end
-
-	def dashboard_host
-		@org_user_profile = current_user.org_user_profile
-	end
-
-	def dashboard_sponsor
-	end
-
 	def host_profile
 		@org_user_profile = current_user.org_user_profile
 	end

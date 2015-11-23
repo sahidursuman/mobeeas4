@@ -1,6 +1,6 @@
 <div class="card-content">
-      <span class="card-title blue-text"><i class="fa fa-graduation-cap"></i> Your education</span>
-
+  <span class="card-title blue-text"><i class="fa fa-graduation-cap"></i> Your education</span>
+    <% if @user_educations.present? %>
       <p><% if @user_educations.any? %>
         <table>
           <thead>
@@ -38,6 +38,7 @@
       <% else %>
         No education listed.
       <% end %></p>
+    <% end %> <!-- end of if @user_educations.present? -->
     </div>
     <div class="card-action">
       <a href="/educations/new">Add education</a>

@@ -5,25 +5,24 @@
 
       <% if current_user.organisations.present? %>
         <p>Currently you are connected with these organisations:</p>
+          <!-- only admin host can see the purchase token button -->
         <ol>
-          <% current_user.organisations.each do |organisation| %>
-            <li><%= link_to organisation.name, organisation_path(organisation.id) %>
-              <p>Number of tokens: <%= organisation.number_of_tokens %></p>
-            </li>
-            <!-- only admin host can see the purchase token button -->
-            <% current_user.org_users.each do |org_users| %>
-              <% if org_users.admin_status && org_users.verified_status %>
+          <% current_user.org_users.each do |org_user| %>
+            <li>
+              <p>
+                <strong><%= link_to org_user.organisation.name, organisation_path(org_user.organisation.id) %></strong>
+                  - has <%= pluralize(org_user.organisation.number_of_tokens, 'token') %> 
+              </p>
+              <% if org_user.admin_status && org_user.verified_status %>
                 <% @engagement_token_packs.each do |pack| %>
-                  <%= link_to new_token_purchase_path(org: organisation.id, token_pack: pack.id), class: 'btn btn-flat' do %>
-                    <%= button_label(pack, organisation) %><br>
+                  <%= link_to new_token_purchase_path(org: org_user.organisation.id, token_pack: pack.id), class: 'btn btn-flat' do %>
+                    <%= button_label(pack, org_user.organisation) %><br>
                   <% end %>
                   <br>
-                <% end %>
-              <% end %>
-            <% end %>
-
-
-          <% end %>
+                <% end %><!-- end of loop @engagement_token_packs -->
+              <% end %><!-- end of if org_user.admin_status && org_user.verified_status -->
+            </li>
+          <% end %><!-- end of loop current_user.org_users -->
         </ol>
       <% else %>
         <p>You are currently not linked to any organisations. Please select one of the organisations below to join as the host.</p>

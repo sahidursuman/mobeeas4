@@ -4,7 +4,7 @@
   <!-- PROFILE -->
   <div class="col m4">
     <div class="card">
-      <%= render 'my_profile' %>
+      <%= render 'profiles/my_profile' %>
     </div>
   </div>
 
@@ -25,19 +25,19 @@
 
   <!-- AGREEMENTS -->
   <div class="card">
-      <%= render 'agreements' %>
+      <%= render 'profiles/agreements' %>
   </div>
   <!-- SKILLS -->
     <div class="card">
-      <%= render 'skills' %>
+      <%= render 'profiles/skills' %>
     </div>
     <!-- EDUCATION -->
     <div class="card">
-      <%= render 'education' %>
+      <%= render 'profiles/education' %>
     </div>
     <!-- SECURITY CHECKS -->
     <div class="card">
-      <%= render 'checks' %>
+      <%= render 'profiles/checks' %>
     </div>
   </div>
 </div>
@@ -56,36 +56,40 @@
   <!-- ETHICS -->
   <div id="modal-ethics" class="modal modal-fixed-footer">
     <div class="modal-content">
-      <%= render 'ethics_agreement' %>
+      <%= render 'profiles/ethics_agreement' %>
     </div>
 
-    <% if !@agreement.ethics %>
-      <div class="modal-footer">
-        <%= link_to 'I Agree', agree_to_agreement_path(@agreement, agreement_type: 'ethics'), class: "modal-action modal-close waves-effect waves-green btn-flat" %>
-        <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">I Disagree</a>
-      </div>
-    <% else %>
-      <div class="modal-footer">
-        <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Close</a>
-      </div>
+    <% if @agreement.present? %>
+      <% if !@agreement.ethics %>
+        <div class="modal-footer">
+          <%= link_to 'I Agree', agree_to_agreement_path(@agreement, agreement_type: 'ethics'), class: "modal-action modal-close waves-effect waves-green btn-flat" %>
+          <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">I Disagree</a>
+        </div>
+      <% else %>
+        <div class="modal-footer">
+          <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Close</a>
+        </div>
+      <% end %>
     <% end %>
   </div>
 
   <!-- CODE OF CONDUCT -->
   <div id="modal-conduct" class="modal modal-fixed-footer">
     <div class="modal-content">
-      <%= render 'code_of_conduct_agreement' %>
+      <%= render 'profiles/code_of_conduct_agreement' %>
     </div>
 
-    <% if !@agreement.code_of_conduct %>
-      <div class="modal-footer">
-        <%= link_to 'I Agree', agree_to_agreement_path(@agreement, agreement_type: 'code_of_conduct'), class: "modal-action modal-close waves-effect waves-green btn-flat" %>
-        <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">I Disagree</a>
-      </div>
-      <% else %>
+    <% if @agreement.present? %>
+      <% if !@agreement.code_of_conduct %>
         <div class="modal-footer">
-          <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Close</a>
+          <%= link_to 'I Agree', agree_to_agreement_path(@agreement, agreement_type: 'code_of_conduct'), class: "modal-action modal-close waves-effect waves-green btn-flat" %>
+          <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">I Disagree</a>
         </div>
+        <% else %>
+          <div class="modal-footer">
+            <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Close</a>
+          </div>
+      <% end %>
     <% end %>
   </div>
 
@@ -93,17 +97,19 @@
   <!-- TERMS & CONDITIONS -->
   <div id="modal-terms-cond" class="modal modal-fixed-footer">
     <div class="modal-content">
-      <%= render 'terms_agreement' %>
+      <%= render 'profiles/terms_agreement' %>
     </div>
 
-    <% if !@agreement.terms %>
-      <div class="modal-footer">
-        <%= link_to 'I Agree', agree_to_agreement_path(@agreement, agreement_type: 'terms'), class: "modal-action modal-close waves-effect waves-green btn-flat" %>
-        <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">I Disagree</a>
-      </div>
-      <% else %>
+    <% if @agreement.present? %>
+      <% if !@agreement.terms %>
         <div class="modal-footer">
-          <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Close</a>
+          <%= link_to 'I Agree', agree_to_agreement_path(@agreement, agreement_type: 'terms'), class: "modal-action modal-close waves-effect waves-green btn-flat" %>
+          <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">I Disagree</a>
         </div>
+        <% else %>
+          <div class="modal-footer">
+            <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Close</a>
+          </div>
+      <% end %>
     <% end %>
   </div>

@@ -1,55 +1,59 @@
 <div class="card-content">
   <span class="card-title blue-text"><i class="fa fa-sliders"></i> Your skills</span>
-
-  <% if @user_skills.any? %>
-    <table>
-      <thead>
-        <tr>
-          <th>Category</th>
-          <th>Skill</th>
-          <!-- only appears if just created a new skill which needs to be approved by MOBEEAS admin-->
-          <% @candidate_skills.each do |candidate_skill| %>
-            <%# if !(candidate_skill.skill.approved) %>
-              <!-- <th class="right-align">Approved</th> -->
-            <%# end %>
-
-              <%# candidate_skill.each do |cs| %>
-                <%#= cs.name  %>
+  <% if @user_skills.present? %>
+    <% if @user_skills.any? %>
+      <table>
+        <thead>
+          <tr>
+            <th>Category</th>
+            <th>Skill</th>
+            <!-- only appears if just created a new skill which needs to be approved by MOBEEAS admin-->
+            <% @candidate_skills.each do |candidate_skill| %>
+              <%# if !(candidate_skill.skill.approved) %>
+                <!-- <th class="right-align">Approved</th> -->
               <%# end %>
-          <% end %>
-          <th class="right-align">Verified</th>
-        </tr>
-      </thead>
-      <tbody>
-      <% @candidate_skills.each do |candidate_skill| %>
-        <tr>
-          <td><%= candidate_skill.skill.skill_category.name if candidate_skill.skill %></td>
-          <td><%= candidate_skill.skill.name if candidate_skill.skill %></td>
-          <!-- only appears if just created a new skill which needs to be approved by MOBEEAS admin-->
-          <!-- <%# if !(candidate_skill.skill.approved) %>
-            <td class="right-align">
-              <span class="red-text"><i class="fa fa-times"></i></span>
-            </td>
-          <%# end %> -->
-          <td class="right-align">
-            <% if candidate_skill.skill_level %>
-              <span class="bold teal-text"><%= candidate_skill.skill_level %></span>
-            <% else %>
-              <span class="red-text"><i class="fa fa-times"></i></span>
-            <% end %>
-          </td>
-        </tr>
-      <% end %>
-      </tbody>
-    </table>
 
-  <% else %>
-    No skills listed.
-  <% end %></p>
-</div>
-<div class="card-action">
-  <a href="/my_skills">Add skills</a>
-  <% if @user_skills.any? %>
-    <%= link_to "Verify your skills", new_skill_verification_path, class: 'waves-effect waves-teal btn-flat' %>
-  <% end %>
-</div>
+                <%# candidate_skill.each do |cs| %>
+                  <%#= cs.name  %>
+                <%# end %>
+            <% end %>
+            <th class="right-align">Verified</th>
+          </tr>
+        </thead>
+        <tbody>
+        <% @candidate_skills.each do |candidate_skill| %>
+          <tr>
+            <td><%= candidate_skill.skill.skill_category.name if candidate_skill.skill %></td>
+            <td><%= candidate_skill.skill.name if candidate_skill.skill %></td>
+            <!-- only appears if just created a new skill which needs to be approved by MOBEEAS admin-->
+            <!-- <%# if !(candidate_skill.skill.approved) %>
+              <td class="right-align">
+                <span class="red-text"><i class="fa fa-times"></i></span>
+              </td>
+            <%# end %> -->
+            <td class="right-align">
+              <% if candidate_skill.skill_level %>
+                <span class="bold teal-text"><%= candidate_skill.skill_level %></span>
+              <% else %>
+                <span class="red-text"><i class="fa fa-times"></i></span>
+              <% end %>
+            </td>
+          </tr>
+        <% end %><!-- end of @candidate_skills loop -->
+        </tbody>
+      </table>
+
+    <% else %>
+      No skills listed.
+    <% end %><!-- end of if @user_skills.any? -->
+  </p>
+  <% end %><!-- end of if @user_skills.present? -->
+</div><!-- end of card content -->
+  <div class="card-action">
+    <a href="/my_skills">Add skills</a>
+    <% if @user_skills.present? %>
+      <% if @user_skills.any? %>
+        <%= link_to "Verify your skills", new_skill_verification_path, class: 'waves-effect waves-teal btn-flat' %>
+      <% end %>
+    <% end %>
+  </div>

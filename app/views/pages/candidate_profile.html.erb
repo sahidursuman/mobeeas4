@@ -1,7 +1,9 @@
 <div class="row">
-  <div class="col c12 m8 offset-m2 l8 offset-l2">
+  <div class="col c12 m11 offset-m1 l11 offset-l1">
     <%= render 'layouts/sidebar' %>
-candidate Dashboard
-
+    <% @profile = Profile.find(current_user.profile.id)%>
+    <!-- Please note: render profiles/show below is rendering the partial file called '_show.html.erb',
+    which then will be rendering the template 'show.html.erb' -->
+    <%= render 'profiles/show' %>
   </div>
 </div>
