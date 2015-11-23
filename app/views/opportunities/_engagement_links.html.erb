@@ -1,22 +1,38 @@
-<% @engaged = false %>
-<% @opportunity.engagements.each do |engagement| %>
-  <% if engagement.profile_id == @candidate.id %>
-    <% @engaged = true %>
+<!-- The engagement links for the owner of this opportunity -->
+<% if (current_user.has_role? :host) && (current_user.id == @opportunity.user_id) %>
+  <% @engaged = false %>
+  <% @opportunity.engagements.each do |engagement| %>
+    <% if engagement.profile_id == @candidate.id %>
+      <% @engaged = true %>
+      <p>
+        <% if engagement.status == 'pending' %>
+          <%= link_to 'Short List?', short_list_engagement_path(engagement, opportunity_id: @opportunity.id)%>  |
+        <% elsif (engagement.status == 'short_listed') %>
+          <%= link_to 'Invite', invite_engagement_path(engagement, opportunity_id: @opportunity.id)%>  |
+        <% end %>
+        <%= link_to 'Contact ' + @candidate.first_name, new_message_path(from: @opportunity.user_id, to: @candidate.user.id, opportunity_id: @opportunity.id)  %>  |
+        <%= link_to 'Decline', engagement_path(engagement, opportunity_id: @opportunity.id), method: :delete, data: { confirm: 'Are you sure?' } %>
+      </p>
+    <% end %><!-- end of if engagement.profile_id -->
+  <% end %><!-- end of @opportunity.engagements loop -->
+  <% if !(@engaged) %><!-- if candidate is not linked to this opportunity then display link to start engagement -->
     <p>
-      <% if engagement.status == 'pending' %>
-        <%= link_to 'Short List?', short_list_engagement_path(engagement, opportunity_id: @opportunity.id)%>  |
-      <% elsif (engagement.status == 'short_listed') %>
-        <%= link_to 'Invite', invite_engagement_path(engagement, opportunity_id: @opportunity.id)%>  |
-      <% end %>
-      <%= link_to 'Contact ' + @candidate.first_name, new_message_path(from: @opportunity.user_id, to: @candidate.user.id, opportunity_id: @opportunity.id)  %>  |
-      <%= link_to 'Decline', engagement_path(engagement, opportunity_id: @opportunity.id), method: :delete, data: { confirm: 'Are you sure?' } %>
+      <%= link_to 'Start Engagement', new_engagement_path(opp_id: @opportunity.id, profile_id: @candidate.id) %>  |
+      <%= link_to 'Contact ' + @candidate.first_name, new_message_path(from: @opportunity.user_id, to: @candidate.user.id, opportunity_id: @opportunity.id)  %>
     </p>
-  <% end %><!-- end of if engagement.profile_id -->
-<% end %><!-- end of @opportunity.engagements loop -->
-<% if !(@engaged) %><!-- if candidate is not linked to this opportunity then display link to start engagement -->
-  <p>
-    <%= link_to 'Start Engagement', new_engagement_path(opp_id: @opportunity.id, profile_id: @candidate.id) %>  |
-    <%= link_to 'Contact ' + @candidate.first_name, new_message_path(from: @opportunity.user_id, to: @candidate.user.id, opportunity_id: @opportunity.id)  %>
-  </p>
-<% end %>
-<br>
+  <% end %>
+  <br>
+<% end %><!-- end of current_user.has_role? :host -->
+
+<!-- The accept button for the candidate that has the matching skill, at least one skill. -->
+<% if (@candidate.user.has_role? :candidate) && (@candidate.engagements.present?) %>
+  <!-- find an engagement record that contains the opportunity id and the candidate id and the engagement status is 'invited' for the current user only -->
+  <% @candidate.engagements.each do |engagement| %>
+    <% if (engagement.opportunity_id == @opportunity.id) && (engagement.profile_id == @candidate.id ) && (engagement.status == 'invited') %>
+      <% if (current_user.profile.id == engagement.profile_id) %>
+        <%= link_to 'Accept this opportunity', accept_engagement_path(engagement, opportunity_id: @opportunity.id) %>
+        <br><br>
+      <% end %>
+    <% end %>
+  <% end %><!-- end of @candidate.engagements loop -->
+<% end %><!-- end of if @candidate.has_role? :candidate -->

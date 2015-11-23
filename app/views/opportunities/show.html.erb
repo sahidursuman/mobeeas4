@@ -210,7 +210,8 @@
               <% end %>
               <br>
               <% @opportunity.opportunity_skills.each do |opportunity_skill| %>
-                <% if !(hash1[key].include?(opportunity_skill.skill.name)) %> <!-- false when not all matching-->
+                <!-- @found is false when ALL OF the opportunity skills are not matching with of the candidate's skills -->
+                <% if !(hash1[key].include?(opportunity_skill.skill.name)) %>
                   <% @found = false %> <!-- if an opportunity skill is not matching, @found become false -->
                 <% end %>
               <% end %><!-- end of opportunity loop -->
@@ -219,13 +220,10 @@
               <% else %>
                 Close match<br>
               <% end %>
-              <% if (current_user.has_role? :host) && (current_user.id == @opportunity.user_id) %>
-                <%= render 'engagement_links' %>
-              <% else %>
-                <br>
-              <% end %>
-            <% end %><!-- end of hash loop -->
+              <%= render 'engagement_links' %>
+            <% end %><!-- end of hash1 loop -->
           <% end %><!-- end of if hash1.empty? -->
+          <br>
           <p>Display all candidate link for Admin and Host? </p>
           <%#= link_to 'View all candidates', profiles_path %>
 

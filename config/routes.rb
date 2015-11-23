@@ -2,7 +2,7 @@ Rails.application.routes.draw do
   resources :messages
   resources :engagements do
     member do
-      get :short_list, :invite
+      get :short_list, :invite, :accept
     end
   end
 
