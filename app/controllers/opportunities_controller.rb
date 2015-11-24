@@ -1,5 +1,24 @@
 class OpportunitiesController < ApplicationController
-  before_action :set_opportunity, only: [:show, :edit, :update, :destroy]
+  before_action :set_opportunity, only: [:increase_one_candidate_into, :decrese_one_candidate_from, :show, :edit, :update, :destroy]
+
+
+  def increase_one_candidate_into
+    @opportunity.number_of_candidates += 1
+    @opportunity.save!
+    @organisation = Organisation.find(params[:org_id])
+    @organisation.number_of_tokens -= 1
+    @organisation.save!
+    redirect_to @opportunity
+  end
+
+  def decrese_one_candidate_from
+    @opportunity.number_of_candidates -= 1
+    @opportunity.save!
+    @organisation = Organisation.find(params[:org_id])
+    @organisation.number_of_tokens += 1
+    @organisation.save!
+    redirect_to @opportunity
+  end
 
   # GET /opportunities
   # GET /opportunities.json
@@ -15,6 +34,7 @@ class OpportunitiesController < ApplicationController
   # GET /opportunities/1.json
   def show
     @candidate_skills = CandidateSkill.all
+    @counter = 0
   end
 
   # GET /opportunities/new

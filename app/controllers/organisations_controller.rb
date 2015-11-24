@@ -26,6 +26,7 @@ class OrganisationsController < ApplicationController
     redirect_to @organisation
   end
 
+
   # GET /organisations
   # GET /organisations.json
   def index

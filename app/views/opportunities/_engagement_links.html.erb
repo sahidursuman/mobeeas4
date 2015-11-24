@@ -1,15 +1,24 @@
+<!-- This part will appear on Host Dashboard ----------------------------------------->
 <!-- The engagement links for the owner of this opportunity -->
 <% if (current_user.has_role? :host) && (current_user.id == @opportunity.user_id) %>
   <% @engaged = false %>
   <% @opportunity.engagements.each do |engagement| %>
     <% if engagement.profile_id == @candidate.id %>
       <% @engaged = true %>
-      <p>
-        <% if engagement.status == 'pending' %>
-          <%= link_to 'Short List?', short_list_engagement_path(engagement, opportunity_id: @opportunity.id)%>  |
-        <% elsif (engagement.status == 'short_listed') %>
-          <%= link_to 'Invite', invite_engagement_path(engagement, opportunity_id: @opportunity.id)%>  |
-        <% end %>
+
+          <% if engagement.status == 'pending' %>
+            <p>Status: <strong>Pending</strong></p>
+            <p><%= link_to 'Short list?', short_list_engagement_path(engagement, opportunity_id: @opportunity.id)%>  |
+          <% elsif (engagement.status == 'short_listed') %>
+            <p>Status: <strong>Short listed</strong></p>
+            <p><%= link_to 'Invite', invite_engagement_path(engagement, opportunity_id: @opportunity.id)%>  |
+          <% elsif (engagement.status == 'invited') %>
+            <p>Status: <strong>Invited</strong></p>
+          <% elsif (engagement.status == 'accepted') %>
+            <p>Status: <strong>Accepted</strong> <span class="green-text"><i class="fa fa-check-circle"></i></span></p>
+            <% @counter += 1 %>
+          <% end %>
+
         <%= link_to 'Contact ' + @candidate.first_name, new_message_path(from: @opportunity.user_id, to: @candidate.user.id, opportunity_id: @opportunity.id)  %>  |
         <%= link_to 'Decline', engagement_path(engagement, opportunity_id: @opportunity.id), method: :delete, data: { confirm: 'Are you sure?' } %>
       </p>
@@ -21,17 +30,25 @@
       <%= link_to 'Contact ' + @candidate.first_name, new_message_path(from: @opportunity.user_id, to: @candidate.user.id, opportunity_id: @opportunity.id)  %>
     </p>
   <% end %>
-  <br>
 <% end %><!-- end of current_user.has_role? :host -->
 
+
+<!-- This part will appear on Candidate Dashboard -------------------------------------------->
 <!-- The accept button for the candidate that has the matching skill, at least one skill. -->
 <% if (@candidate.user.has_role? :candidate) && (@candidate.engagements.present?) %>
-  <!-- find an engagement record that contains the opportunity id and the candidate id and the engagement status is 'invited' for the current user only -->
   <% @candidate.engagements.each do |engagement| %>
-    <% if (engagement.opportunity_id == @opportunity.id) && (engagement.profile_id == @candidate.id ) && (engagement.status == 'invited') %>
-      <% if (current_user.profile.id == engagement.profile_id) %>
+    <!-- If the host invited this candidate, the candidate dashboard will have the link to accept the opportunity -->
+    <% if (engagement.status == 'invited') && (engagement.opportunity_id == @opportunity.id) && (engagement.profile_id == @candidate.id ) %>
+      <% if (current_user.profile.present?) && (current_user.profile.id == engagement.profile_id) %>
+        <p>Status: <strong>Invited</strong></p>
         <%= link_to 'Accept this opportunity', accept_engagement_path(engagement, opportunity_id: @opportunity.id) %>
-        <br><br>
+        <br>
+      <% end %>
+    <% end %>
+    <!-- If the candidate accepted the invitation, the candidate dashboard will display status: accepted. -->
+    <% if (engagement.status == 'accepted') && (engagement.opportunity_id == @opportunity.id) && (engagement.profile_id == @candidate.id ) %>
+      <% if (current_user.profile.present?) && (current_user.profile.id == engagement.profile_id) %>
+        <p>Status: <strong>Accepted</strong> <span class="green-text"><i class="fa fa-check-circle"></i></span></p>
       <% end %>
     <% end %>
   <% end %><!-- end of @candidate.engagements loop -->

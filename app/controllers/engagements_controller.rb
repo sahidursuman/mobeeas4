@@ -17,6 +17,8 @@ class EngagementsController < ApplicationController
   def accept
     @engagement.update_attributes(status: "accepted")
     @opportunity = Opportunity.find(params[:opportunity_id])
+    @opportunity.opportunity_status = 'active'
+    @opportunity.save!
     redirect_to @opportunity
   end
 

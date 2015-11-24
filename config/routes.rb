@@ -33,7 +33,11 @@ Rails.application.routes.draw do
   end
   resources :candidate_types
   resources :opportunity_applications
-  resources :opportunities
+  resources :opportunities do
+    member do
+      get :increase_one_candidate_into, :decrese_one_candidate_from
+    end
+  end
   resources :organisations do
     member do
       get :remove_host_from, :add_admin_into, :add_host_into

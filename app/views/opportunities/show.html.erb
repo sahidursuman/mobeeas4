@@ -40,28 +40,31 @@
           <h5><%= @opportunity.title %></h5>
           <p><strong><%= @opportunity.description %></strong></p><br>
 
-          <p><strong>Status: </strong><%= @opportunity.opportunity_status %></p>
+          <p>Status: <strong><%= @opportunity.opportunity_status %></strong>
+            <% if @opportunity.opportunity_status == 'Active' %>
+             <span class="green-text"><i class="fa fa-check-circle"></i></span>
+            <% end %>
+          </p>
+          <% @host = User.find(@opportunity.user) %>
           <p>
-            <strong>Host:</strong>
-            <% @host = User.find(@opportunity.user) %>
-            <%= @host.org_user_profile.name %> -
-            <%= link_to 'Contact ' + @host.org_user_profile.first_name, new_message_path(from: current_user.id, to: @host.id, opportunity_id: @opportunity.id) %>
+            Host: <strong><%= @host.org_user_profile.name %></strong>
+            <!-- Do not display 'contact host' while the owner of this opportunity is viewing my own opportunity -->
+            <% if !(current_user.id == @host.id) %>
+               - <%= link_to 'Contact ' + @host.org_user_profile.first_name, new_message_path(from: current_user.id, to: @host.id, opportunity_id: @opportunity.id) %>
+            <% end %>
           </p>
 
           <p>
-            <strong>Start date:</strong>
-            <%= @opportunity.commencement_date.strftime("%A, %e %b %Y") %>
+            Start date: <strong><%= @opportunity.commencement_date.strftime("%A, %e %b %Y") %></strong>
           </p>
 
           <p>
-            <strong>End date:</strong>
-            <%= @opportunity.completion_date.strftime("%A, %e %b %Y")  %>
+            End date: <strong><%= @opportunity.completion_date.strftime("%A, %e %b %Y") %></strong>
           </p>
 
           <!-- <p><%#= link_to "Add Schedule", new_opportunity_time_path(opportunity_id: @opportunity.id)%></p> -->
           <% if @opportunity.opportunity_times.present? %>
-            <p><strong>Required activity dates, days and times:</strong></p>
-            <p>
+            <p>Required activity dates, days and times:
               <ul class="list-style-disc">
                 <% @opportunity.opportunity_times.each do |t|%>
                   <% if t.date_time.present? %>
@@ -82,7 +85,7 @@
               <% end %>
             </p>
           <% else %><!-- else if opportunity time is not present -->
-            <p><strong>No specific dates, days and time setup yet.</strong></p>
+            <p>No specific dates, days and time setup yet.</p>
             <% if (current_user.has_role? :host) && (current_user.id == @opportunity.user_id) %>
               <a class="modal-trigger" href="#opportunity_schedule">Add Opportunity Dates and Times</a>
             <% end %>
@@ -102,7 +105,7 @@
 
           <% if @opportunity.school_years.present? %>
             <p>
-              <br><strong>Participants School Year level(s):</strong>
+              <br>Participants School Year level(s):
               <ol>
                 <% @opportunity.school_years.each do |level| %>
                   <li><%= level.name %></li>
@@ -110,11 +113,19 @@
               </ol>
             </p>
           <% end %>
-
-          <p><strong>How many candidates would you like to engage for this opportunity?</strong></p>
-          <p><%= @opportunity.number_of_candidates %></p><br>
-
-          <p><strong>Skills Required of the MOBEEAS Candidate:</strong></p>
+          <% if current_user.id == @opportunity.user_id %>
+            <p>Your organisation currently holds: <strong><%= @organisation.number_of_tokens %> <%= (@organisation.number_of_tokens > 1) ? 'tokens' : 'token' %></strong></p>
+            <p>Number of candidates required: <strong><%= @opportunity.number_of_candidates %> <%= (@opportunity.number_of_candidates > 1) ? 'candidates' : 'candidate' %></strong></p>
+            <% if @organisation.number_of_tokens > 0 %>
+              <%= link_to 'Add 1 Candidate', increase_one_candidate_into_opportunity_path(org_id: @organisation.id), class: 'btn' %>
+            <% else %>
+              <p>Not enough token held by organisation.</p>
+            <% end %>
+            <% if @opportunity.number_of_candidates > 0 %>
+              <%= link_to 'Less 1 Candidate', decrese_one_candidate_from_opportunity_path(org_id: @organisation.id), class: 'btn' %>
+            <% end %>
+          <% end %>
+          <p><br>Skills Required of the MOBEEAS Candidate:</p>
           <p>
             <% if @opportunity.skills.present? %>
               <ol>
@@ -126,7 +137,7 @@
                 <%= link_to "Add/Remove Skills", required_skills_path(oppo_id: @opportunity.id)%>
               <% end %>
             <% else %>
-              No skills listed -
+              No skills is currently listed
               <% if (current_user.has_role? :host) && (current_user.id == @opportunity.user_id) %>
                 <%= link_to "Add/Remove Skills", required_skills_path(oppo_id: @opportunity.id)%>
               <% end %>
@@ -134,13 +145,11 @@
             <% end %>
           </p><br>
 
-          <p>
-            <strong>Other experiences that would be advantageous:</strong>
+          <p>Other advantageous experiences:
             <%= @opportunity.experiences %>
           </p><br>
 
-          <p>
-            <strong>Is this a paid Engagement?</strong>
+          <p>Is this a paid Engagement?
             <% if @opportunity.paid_engagement %>
               <p>Yes, paid engagement.</p>
             <% else %>
@@ -148,20 +157,35 @@
             <% end %>
           </p><br>
 
-          <p>
-            <strong>Hourly rate:</strong>
+          <p>Hourly rate:
             <%= @opportunity.pay %>
           </p><br>
 
-          <p>
-            <strong>Remuneration or specific terms of employment:</strong>
+          <p>Remuneration or specific terms of employment:
             <%= @opportunity.employment_terms %>
           </p><br>
 
+          <!-- only the opportunity owner can edit the opportunity details and status -->
           <% if (current_user.has_role? :host) && (current_user.id == @opportunity.user_id) %>
-            <%= link_to 'Edit This Opportunity', edit_opportunity_path(@opportunity) %>
-          <% end %>
+            <%= link_to 'Edit This Opportunity', edit_opportunity_path(@opportunity), class: 'btn' %>
+            <%= simple_form_for(@opportunity) do |f| %>
+              <%= f.error_notification %>
+              <!-- for the template -->
+              <!-- <div class="form-inputs">
+                  <%#= f.input :opportunity_status, label: "Update Opportunity Status:", collection: ["draft", "listed" , "completed"], as: :radio_buttons %>
+              </div> -->
+              <p>
+                <input class="with-gap" type="radio" value="draft" name="opportunity[opportunity_status]" id="opportunity_opportunity_status_draft" <%= (@opportunity.opportunity_status == 'draft') ? 'checked' : '' %> /><label for="opportunity_opportunity_status_draft">draft</label>
+                <input class="with-gap" type="radio" value="listed" name="opportunity[opportunity_status]" id="opportunity_opportunity_status_listed" <%= (@opportunity.opportunity_status == 'listed') ? 'checked' : '' %> /><label for="opportunity_opportunity_status_listed">listed</label>
+                <input class="with-gap" type="radio" value="completed" name="opportunity[opportunity_status]" id="opportunity_opportunity_status_completed" <%= (@opportunity.opportunity_status == 'completed') ? 'checked' : '' %> /><label for="opportunity_opportunity_status_completed">completed</label>
+              </p>
 
+              <div class="form-actions">
+                <%= f.button :submit, "Update Status" %>
+              </div>
+            <% end %>
+            <input type="hidden" name="opportunity[opportunity_status]" value"" />
+          <% end %><!-- end of if current user is the opportunity owner -->
         </div><!-- end of card-content -->
       </div><!-- end of card -->
     </div> <!-- end of col m6 offset-m2-->
@@ -196,14 +220,13 @@
               <% end %>
             <% end %>
           <% end %>
-          <br>
           <%#= hash1 %><!-- print hash1, e.g. hash1[3] = ['dance', 'drama'] -->
           <% if hash1.empty? %>
             <p>No matching candidate</p>
           <% else %>
             <% hash1.each_pair do |key, value| %> <!-- key is user id, value is skill name -->
               <% @candidate = Profile.find_by(user_id: key)%>
-              <strong><%= @candidate.name %></strong> (Profile ID: <%= @candidate.id %>) -
+              <br><strong><%= @candidate.name %></strong> (Profile ID: <%= @candidate.id %>) -
               <% @found = true %><!-- start with found is true -->
               <% value.each do |val| %>
                 <%= val %>
@@ -224,9 +247,11 @@
             <% end %><!-- end of hash1 loop -->
           <% end %><!-- end of if hash1.empty? -->
           <br>
+          <% if @counter > 0 %>
+            <p>Number of acceptance: <%= pluralize(@counter, 'candidate')%></p>
+          <% end %>
           <p>Display all candidate link for Admin and Host? </p>
           <%#= link_to 'View all candidates', profiles_path %>
-
         </div><!-- end of card-content -->
       </div><!-- end of card -->
     </div><!-- end of col m2 -->

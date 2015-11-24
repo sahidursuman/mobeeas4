@@ -41,7 +41,7 @@
   <div class="card">
     <div class="card-content">
       <h5>Approved Admin</h5>
-      <p>Approved Admin will have the ability to purchase and spend the company's tokens</p>
+      <p>Approved Admin will have the ability to purchase and apply organisation tokens.</p>
 
       <% if @organisation.org_users.admin_user.present? %>
         <p>List of approved admin:</p>
@@ -226,7 +226,7 @@
   <div class="card">
     <div class="card-content">
       <h5>Approved Hosts</h5>
-      <p>Approved Hosts will have the ability to create opportunity and request the use of company's token from Admin.</p>
+      <p>Approved Hosts will have the ability to create an opportunity and apply organisation tokens.</p>
       <% if @organisation.org_users.host_user.present? %>
         <p>List of approved hosts:</p>
         <ol>

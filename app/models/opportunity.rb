@@ -17,7 +17,7 @@ class Opportunity < ActiveRecord::Base
 
 
   validates :title, :description, :commencement_date, :completion_date, presence: true
-  validates :number_of_candidates, numericality: { greater_than: 0 }, presence: true
+  validates :number_of_candidates, numericality: { greater_than_equal: 0 }, presence: true
 
 
 end
