@@ -1,5 +1,5 @@
 class EngagementsController < ApplicationController
-  before_action :set_engagement, only: [:short_list, :invite, :accept, :show, :edit, :update, :destroy]
+  before_action :set_engagement, only: [:short_list, :invite, :accept, :apply_a_token_to, :show, :edit, :update, :destroy]
 
 
   def short_list
@@ -18,6 +18,17 @@ class EngagementsController < ApplicationController
     @engagement.update_attributes(status: "accepted")
     @opportunity = Opportunity.find(params[:opportunity_id])
     @opportunity.opportunity_status = 'active'
+    @opportunity.save!
+    redirect_to @opportunity
+  end
+
+  def apply_a_token_to
+    @engagement.update_attributes(status: "assigned a token")
+    @opportunity = Opportunity.find(params[:opportunity_id])
+    @opportunity.number_of_tokens -= 1
+    if !(@opportunity.opportunity_status == 'active')
+      @opportunity.opportunity_status = 'active'
+    end
     @opportunity.save!
     redirect_to @opportunity
   end
@@ -46,10 +57,11 @@ class EngagementsController < ApplicationController
   # POST /engagements.json
   def create
     @engagement = Engagement.new(engagement_params)
+    @opportunity = Opportunity.find(params[:opp_id])
 
     respond_to do |format|
       if @engagement.save
-        format.html { redirect_to @engagement, notice: 'Engagement was successfully created.' }
+        format.html { redirect_to @opportunity, notice: 'Engagement was successfully created.' }
         format.json { render :show, status: :created, location: @engagement }
       else
         format.html { render :new }

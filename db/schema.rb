@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151124052817) do
+ActiveRecord::Schema.define(version: 20151125004024) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -146,6 +146,7 @@ ActiveRecord::Schema.define(version: 20151124052817) do
     t.integer  "school_year_id"
     t.integer  "skill_id"
     t.integer  "number_of_candidates", default: 0
+    t.integer  "number_of_tokens",     default: 0
   end
 
   add_index "opportunities", ["organisation_id"], name: "index_opportunities_on_organisation_id", using: :btree

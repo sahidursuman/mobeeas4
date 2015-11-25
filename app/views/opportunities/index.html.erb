@@ -3,8 +3,8 @@
     <%= render 'layouts/sidebar' %>
 
     <p id="notice"><%= notice %></p>
-
-    <h1>Listing Opportunities</h1>
+    <%= params[:status]%>
+    <h4>Listing Opportunities</h4>
 
       <% @opportunities.each do |opportunity| %>
         <div class="row">

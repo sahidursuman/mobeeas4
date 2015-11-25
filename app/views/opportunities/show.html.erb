@@ -40,10 +40,12 @@
           <h5><%= @opportunity.title %></h5>
           <p><strong><%= @opportunity.description %></strong></p><br>
 
-          <p>Status: <strong><%= @opportunity.opportunity_status %></strong>
-            <% if @opportunity.opportunity_status == 'Active' %>
-             <span class="green-text"><i class="fa fa-check-circle"></i></span>
-            <% end %>
+
+          <% if @opportunity.opportunity_status == 'active' %>
+            <p>Status: <span class="red-text"><strong><%= @opportunity.opportunity_status %></strong></span>
+          <% else %>
+            <p>Status: <strong><%= @opportunity.opportunity_status %></strong>
+          <% end %>
           </p>
           <% @host = User.find(@opportunity.user) %>
           <p>
@@ -103,6 +105,22 @@
             </div>
           </div>
 
+          <!-- only opportunity owner can add/remove candidates and tokens -->
+          <% if (current_user.has_role? :host) && (current_user.id == @opportunity.user_id) %>
+            <p><br><%= @organisation.name%> currently holds: <strong><%= @organisation.number_of_tokens %> <%= (@organisation.number_of_tokens > 1) ? 'tokens' : 'token' %></strong></p>
+            <p>Number of candidates required: <strong><%= @opportunity.number_of_candidates %> <%= (@opportunity.number_of_candidates > 1) ? 'candidates' : 'candidate' %></strong></p>
+            <p>This opportunity currently holds: <strong><%= @opportunity.number_of_tokens %> <%= (@opportunity.number_of_tokens > 1) ? 'tokens' : 'token' %></strong></p>
+
+            <% if @organisation.number_of_tokens > 0 %>
+              <%= link_to 'Add 1 Candidate', increase_one_candidate_into_opportunity_path(org_id: @organisation.id), class: 'btn' %>
+            <% else %>
+              <p>Not enough token held by organisation.</p>
+            <% end %>
+            <% if @opportunity.number_of_candidates > 0 %>
+              <%= link_to 'Less 1 Candidate', decrease_one_candidate_from_opportunity_path(org_id: @organisation.id), class: 'btn' %>
+            <% end %>
+          <% end %>
+
           <% if @opportunity.school_years.present? %>
             <p>
               <br>Participants School Year level(s):
@@ -113,18 +131,8 @@
               </ol>
             </p>
           <% end %>
-          <% if current_user.id == @opportunity.user_id %>
-            <p>Your organisation currently holds: <strong><%= @organisation.number_of_tokens %> <%= (@organisation.number_of_tokens > 1) ? 'tokens' : 'token' %></strong></p>
-            <p>Number of candidates required: <strong><%= @opportunity.number_of_candidates %> <%= (@opportunity.number_of_candidates > 1) ? 'candidates' : 'candidate' %></strong></p>
-            <% if @organisation.number_of_tokens > 0 %>
-              <%= link_to 'Add 1 Candidate', increase_one_candidate_into_opportunity_path(org_id: @organisation.id), class: 'btn' %>
-            <% else %>
-              <p>Not enough token held by organisation.</p>
-            <% end %>
-            <% if @opportunity.number_of_candidates > 0 %>
-              <%= link_to 'Less 1 Candidate', decrese_one_candidate_from_opportunity_path(org_id: @organisation.id), class: 'btn' %>
-            <% end %>
-          <% end %>
+
+
           <p><br>Skills Required of the MOBEEAS Candidate:</p>
           <p>
             <% if @opportunity.skills.present? %>
@@ -167,30 +175,42 @@
 
           <!-- only the opportunity owner can edit the opportunity details and status -->
           <% if (current_user.has_role? :host) && (current_user.id == @opportunity.user_id) %>
-            <%= link_to 'Edit This Opportunity', edit_opportunity_path(@opportunity), class: 'btn' %>
             <%= simple_form_for(@opportunity) do |f| %>
               <%= f.error_notification %>
-              <!-- for the template -->
+              <!-- keep this for the template -->
               <!-- <div class="form-inputs">
                   <%#= f.input :opportunity_status, label: "Update Opportunity Status:", collection: ["draft", "listed" , "completed"], as: :radio_buttons %>
               </div> -->
               <p>
-                <input class="with-gap" type="radio" value="draft" name="opportunity[opportunity_status]" id="opportunity_opportunity_status_draft" <%= (@opportunity.opportunity_status == 'draft') ? 'checked' : '' %> /><label for="opportunity_opportunity_status_draft">draft</label>
-                <input class="with-gap" type="radio" value="listed" name="opportunity[opportunity_status]" id="opportunity_opportunity_status_listed" <%= (@opportunity.opportunity_status == 'listed') ? 'checked' : '' %> /><label for="opportunity_opportunity_status_listed">listed</label>
-                <input class="with-gap" type="radio" value="completed" name="opportunity[opportunity_status]" id="opportunity_opportunity_status_completed" <%= (@opportunity.opportunity_status == 'completed') ? 'checked' : '' %> /><label for="opportunity_opportunity_status_completed">completed</label>
-              </p>
-
+                <div class="row">
+                  <!-- Before an opportunity status changed to active, a host can set it to draft or listed -->
+                  <% if !(@opportunity.opportunity_status == 'active') %>
+                    <div class="col s12 m4 l4">
+                      <input class="with-gap" type="radio" value="draft" name="opportunity[opportunity_status]" id="opportunity_opportunity_status_draft" <%= (@opportunity.opportunity_status == 'draft') ? 'checked' : '' %> /><label for="opportunity_opportunity_status_draft">draft</label>
+                    </div>
+                    <div class="col s12 m4 l4">
+                      <input class="with-gap" type="radio" value="listed" name="opportunity[opportunity_status]" id="opportunity_opportunity_status_listed" <%= (@opportunity.opportunity_status == 'listed') ? 'checked' : '' %> /><label for="opportunity_opportunity_status_listed">listed</label>
+                    </div>
+                  <% else %>
+                    <div class="col s12 m4 l4">
+                      <input class="with-gap" type="radio" value="completed" name="opportunity[opportunity_status]" id="opportunity_opportunity_status_completed" <%= (@opportunity.opportunity_status == 'completed') ? 'checked' : '' %> /><label for="opportunity_opportunity_status_completed">completed</label>
+                    </div>
+                  <% end %><!-- end of if an opportunity status is 'active' -->
+                </div><!-- end of row -->
               <div class="form-actions">
                 <%= f.button :submit, "Update Status" %>
               </div>
             <% end %>
             <input type="hidden" name="opportunity[opportunity_status]" value"" />
+            <br>
+            <%= link_to 'Edit This Opportunity', edit_opportunity_path(@opportunity), class: 'btn' %>
+
           <% end %><!-- end of if current user is the opportunity owner -->
         </div><!-- end of card-content -->
       </div><!-- end of card -->
     </div> <!-- end of col m6 offset-m2-->
 
-
+    <!-- The right side -->
     <div class="col m5">
       <div class="card">
         <div class="card-content">
@@ -247,9 +267,6 @@
             <% end %><!-- end of hash1 loop -->
           <% end %><!-- end of if hash1.empty? -->
           <br>
-          <% if @counter > 0 %>
-            <p>Number of acceptance: <%= pluralize(@counter, 'candidate')%></p>
-          <% end %>
           <p>Display all candidate link for Admin and Host? </p>
           <%#= link_to 'View all candidates', profiles_path %>
         </div><!-- end of card-content -->

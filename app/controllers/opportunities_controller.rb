@@ -1,9 +1,10 @@
 class OpportunitiesController < ApplicationController
-  before_action :set_opportunity, only: [:increase_one_candidate_into, :decrese_one_candidate_from, :show, :edit, :update, :destroy]
+  before_action :set_opportunity, only: [:increase_one_candidate_into, :decrease_one_candidate_from, :show, :edit, :update, :destroy]
 
 
   def increase_one_candidate_into
     @opportunity.number_of_candidates += 1
+    @opportunity.number_of_tokens += 1
     @opportunity.save!
     @organisation = Organisation.find(params[:org_id])
     @organisation.number_of_tokens -= 1
@@ -11,8 +12,9 @@ class OpportunitiesController < ApplicationController
     redirect_to @opportunity
   end
 
-  def decrese_one_candidate_from
+  def decrease_one_candidate_from
     @opportunity.number_of_candidates -= 1
+    @opportunity.number_of_tokens -= 1
     @opportunity.save!
     @organisation = Organisation.find(params[:org_id])
     @organisation.number_of_tokens += 1
@@ -20,10 +22,21 @@ class OpportunitiesController < ApplicationController
     redirect_to @opportunity
   end
 
+
   # GET /opportunities
   # GET /opportunities.json
   def index
-    @opportunities = Opportunity.all
+    # @opportunities = Opportunity.all
+    
+    if params[:status] == 'draft'
+      @opportunities = Opportunity.all.draft
+    elsif params[:status] == 'listed'
+      @opportunities = Opportunity.all.listed
+    elsif params[:status] == 'active'
+      @opportunities = Opportunity.all.active
+    elsif params[:status] == 'completed'
+      @opportunities = Opportunity.all.completed
+    end
   end
 
   # def skills
@@ -34,7 +47,6 @@ class OpportunitiesController < ApplicationController
   # GET /opportunities/1.json
   def show
     @candidate_skills = CandidateSkill.all
-    @counter = 0
   end
 
   # GET /opportunities/new
@@ -96,6 +108,6 @@ class OpportunitiesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def opportunity_params
-      params.require(:opportunity).permit(:organisation_id, :user_id, :opportunity_status, :title, :description, :pay, :paid_engagement, :commencement_date, :completion_date, :experiences, :employment_terms, :number_of_candidates, :school_year_ids => [])
+      params.require(:opportunity).permit(:organisation_id, :user_id, :opportunity_status, :title, :description, :pay, :paid_engagement, :commencement_date, :completion_date, :experiences, :employment_terms, :number_of_candidates, :number_of_tokens, :school_year_ids => [])
     end
 end

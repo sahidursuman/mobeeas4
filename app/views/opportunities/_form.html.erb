@@ -5,9 +5,6 @@
     <% @organisations = current_user.organisations %>
     <%= f.association :organisation, collection: @organisations, :include_blank => false %>
     <%= f.association :user, :as => :hidden, input_html: { value: current_user.id } %>
-    <% if !@opportunity.new_record? %><!-- by default new opportunity status is 'draft'-->
-      <%= f.input :opportunity_status, collection: ["draft", "listed", "active", "completed"], :include_blank => false %>
-    <% end %>
     <%= f.input :title %>
     <%= f.input :description, label: 'Description (max 1000 characters)', input_html: { maxlength: 1000} %>
     <%= f.input :commencement_date, as: :string, label: 'Anticipated Start Date', input_html: { class: 'datetimepicker1'} %>

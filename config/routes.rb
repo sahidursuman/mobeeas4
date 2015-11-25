@@ -2,11 +2,9 @@ Rails.application.routes.draw do
   resources :messages
   resources :engagements do
     member do
-      get :short_list, :invite, :accept
+      get :short_list, :invite, :accept, :apply_a_token_to
     end
   end
-
-
   resources :engagement_token_packs
   resources :payments, only: :create
   resources :token_purchases
@@ -35,7 +33,7 @@ Rails.application.routes.draw do
   resources :opportunity_applications
   resources :opportunities do
     member do
-      get :increase_one_candidate_into, :decrese_one_candidate_from
+      get :increase_one_candidate_into, :decrease_one_candidate_from
     end
   end
   resources :organisations do

@@ -6,6 +6,7 @@
   <div class="form-inputs">
     <%= f.association :opportunity, :as => :hidden, input_html: { value: params[:opp_id] } %>
     <%= f.association :profile, :as => :hidden, input_html: { value: params[:profile_id] } %>
+    <%= hidden_field_tag(:opp_id, params[:opp_id]) %>
     <%= f.input :status, :as => :hidden %>
 
   </div>
