@@ -27,15 +27,15 @@ class OpportunitiesController < ApplicationController
   # GET /opportunities.json
   def index
     # @opportunities = Opportunity.all
-    
+
     if params[:status] == 'draft'
-      @opportunities = Opportunity.all.draft
+      @opportunities = Opportunity.draft
     elsif params[:status] == 'listed'
-      @opportunities = Opportunity.all.listed
+      @opportunities = Opportunity.listed
     elsif params[:status] == 'active'
-      @opportunities = Opportunity.all.active
+      @opportunities = Opportunity.active
     elsif params[:status] == 'completed'
-      @opportunities = Opportunity.all.completed
+      @opportunities = Opportunity.completed
     end
   end
 

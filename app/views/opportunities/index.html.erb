@@ -3,15 +3,39 @@
     <%= render 'layouts/sidebar' %>
 
     <p id="notice"><%= notice %></p>
-    <%= params[:status]%>
-    <h4>Listing Opportunities</h4>
-
+    <% if params[:status] == 'draft'%>
+      <h4>Draft Opportunities</h4>
+    <% elsif params[:status] == 'listed'%>
+      <h4>Listed Opportunities</h4>
+    <% elsif params[:status] == 'active'%>
+      <h4>Active Opportunities</h4>
+    <% elsif params[:status] == 'completed'%>
+      <h4>Completed Opportunities</h4>
+    <% end %>
       <% @opportunities.each do |opportunity| %>
         <div class="row">
           <div class="col s12">
             <div class="card">
               <div class="card-content">
-                <h5><strong>Title: </strong><%= opportunity.title %></h5>
+                <!-- Check if the current user has engagement with this opportunity -->
+                <% if opportunity.engagements.present? %>
+                  <% opportunity.engagements.each do |engagement| %>
+                    <% if (current_user.has_role? :candidate) && (current_user.profile.present?) && (current_user.profile.id == engagement.profile_id)%>
+                      <% if engagement.status == 'short_listed' %>
+                        <span class="red-text"><p>You have been short-listed to this opportunity.</p></span>
+                      <% elsif engagement.status == 'invited' %>
+                        <span class="red-text"><p>You have been invited to this opportunity.</p></span>
+                      <% elsif engagement.status == 'accepted' %>
+                        <span class="red-text"><p>You have accepted this opportunity.</p></span>
+                      <% elsif engagement.status == 'assigned a token' %>
+                        <span class="red-text"><p>You have received a token from the host and now engaged to this opportunity.</p></span>
+                      <% else %>
+                        <p>You are not engaged to this opportunity.</p>
+                      <% end %><!-- end of engagement status types -->
+                    <% end %>
+                  <% end %><!-- end of opportunity.engagements loop -->
+                <% end %><!-- end of if opportunity.engagements.present? -->
+                <h5><strong></strong><%= opportunity.title %></h5>
                 <p><strong>Description: </strong><%= opportunity.description %></p>
                 <p><strong>Organisation: </strong><%= opportunity.organisation.name %></p>
                 <p><strong>Host Name: </strong><%= opportunity.user.org_user_profile.name %></p>

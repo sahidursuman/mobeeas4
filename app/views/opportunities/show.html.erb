@@ -244,7 +244,14 @@
           <% if hash1.empty? %>
             <p>No matching candidate</p>
           <% else %>
-            <% hash1.each_pair do |key, value| %> <!-- key is user id, value is skill name -->
+            <!-- first, sort the hash based on the values (not keys) so that the candidate that has more matching set of skills will appear higher. -->
+            <% array2 = hash1.sort do |(key1, value1), (key2, value2)| %>
+              <% value2 <=> value1 %>
+            <% end %>
+            <% hash2 = Hash[array2]%>
+            <!-- 'Hash' is a keyword, this is to convert array type into hash type -->
+
+            <% hash2.each_pair do |key, value| %> <!-- key is user id, value is skill name -->
               <% @candidate = Profile.find_by(user_id: key)%>
               <br><strong><%= @candidate.name %></strong> (Profile ID: <%= @candidate.id %>) -
               <% @found = true %><!-- start with found is true -->
