@@ -21,7 +21,7 @@
     <%= @org_user_profile.user.email %>
     </p>
   <% end %>
-  
+
   <p>
   <strong>Position:</strong>
   <%= @org_user_profile.position %>
@@ -89,7 +89,7 @@
           </div>
         </div>
 
-        <%= f.input :contact_name %>
+        <%= f.input :contact_name, label: 'Executive of this Organisation: ' ' <a href="#modal_org_executive" class="modal-trigger"><i class="material-icons">help</i></a>'.html_safe %>
         <%= f.input :contact_email %>
         <%= f.input :contact_phone %>
         <%= f.input :logo %>
@@ -97,12 +97,27 @@
         <%= f.input :acara_school_id %>
         <%= f.input :school_type %>
 
+
+
       </div>
 
       <div class="form-actions">
         <%= f.button :submit %>
       </div>
     <% end %>
+
+    <!-- Modal Structure -->
+    <div id="modal_org_executive" class="modal">
+      <div class="modal-content">
+        <h4>Executive of this Organisation</h4>
+        <p>Enter the name and contact details for an Executive of this Organisation who will be able to authorise the listing of this new organisation in MOBEEAS.</p>
+      </div>
+      <div class="modal-footer">
+        <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">X</a>
+      </div>
+    </div>
+
+
   <% end %> <!-- end if the org user profile is not an organisation creator -->
 
 <% end %>
