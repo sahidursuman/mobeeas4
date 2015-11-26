@@ -154,23 +154,23 @@
           </p><br>
 
           <p>Other advantageous experiences:
-            <%= @opportunity.experiences %>
+            <strong><%= @opportunity.experiences %></strong>
           </p><br>
 
           <p>Is this a paid Engagement?
             <% if @opportunity.paid_engagement %>
-              <p>Yes, paid engagement.</p>
+              <p><strong>Yes, paid engagement.</strong></p>
             <% else %>
-              <p>No, Not paid engagement.</p>
+              <p><strong>No, Not paid engagement.</strong></p>
             <% end %>
           </p><br>
 
           <p>Hourly rate:
-            <%= @opportunity.pay %>
+            <strong><%= @opportunity.pay %></strong>
           </p><br>
 
           <p>Remuneration or specific terms of employment:
-            <%= @opportunity.employment_terms %>
+            <strong><%= @opportunity.employment_terms %></strong>
           </p><br>
 
           <!-- only the opportunity owner can edit the opportunity details and status -->

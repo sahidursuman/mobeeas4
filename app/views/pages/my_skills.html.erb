@@ -50,8 +50,10 @@
     <h4>My skills</h4>
     <div class="card">
       <div class="card-content" id="my-skills">
-        <% @my_skills.each do |my_skill| %>
-          <p><%= my_skill.name %> <%= link_to 'remove', remove_user_skill_path(my_skill) %></p>
+        <% if @my_skills.present? %>
+          <% @my_skills.each do |my_skill| %>
+            <p><%= my_skill.name %> <%= link_to 'remove', remove_user_skill_path(my_skill) %></p>
+          <% end %>
         <% end %>
       </div>
       <div class="card-action">
