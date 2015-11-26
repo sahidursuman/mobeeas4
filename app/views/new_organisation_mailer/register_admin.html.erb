@@ -5,7 +5,13 @@
 </p>
 <p>
   Your organisation <%= @organisation.name %> profile has been created in MOBEEAS and a new organisation host for MOBEEAS has been added, waiting for your approval.
-  Here is your organisation details in MOBEEAS:
+
+  Please click on the link below if you approve this application:
+  <!-- first, find the org_user of this current user, put it into the verified method below -->
+  <% @org_user = OrgUser.find_by(user_id: @user.id, organisation_id: @organisation.id)%>
+  <p><%= link_to 'Approve Organisation and Host Profiles', verified_and_admin_approved_org_user_url(@org_user, org_id: @organisation.id) %></p>
+  <br>
+  Here are your organisation details in MOBEEAS:
 <p>
 
 <p>
@@ -66,7 +72,7 @@
 
 <p>
   Your organisation representative's details are shown below.
-  This user would like to apply for ADMIN level, which means that he or she will be able to create new opportunities, purchase and issue engagement tokens.
+  This user would like to apply for <strong>ADMIN</strong> level, which means that he or she will be able to create new opportunities, purchase and issue engagement tokens.
 </p>
 
 <p>
@@ -81,7 +87,3 @@
 <p>
     <strong>Position: </strong><%= @user.org_user_profile.position %>
 </p>
-
-<!-- first, find the org_user of this current user, put it into the verified method below -->
-<% @org_user = OrgUser.find_by(user_id: @user.id, organisation_id: @organisation.id)%>
-<p><%= link_to 'Approve Organisation and Host Profiles', verified_and_admin_approved_org_user_url(@org_user, org_id: @organisation.id) %></p>
