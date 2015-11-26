@@ -8,6 +8,8 @@ class Organisation < ActiveRecord::Base
   geocoded_by :school_data
 	after_validation :geocode
 
+  validates :contact_name, :contact_email, :contact_phone, presence: true
+
 	def school_data
 		[name, address, suburb, state, postcode, country].compact.join(', ')
 	end
