@@ -5,13 +5,15 @@
 </p>
 <p>
   Your organisation <%= @organisation.name %> new host has been created in MOBEEAS, waiting for your approval.
-  This user would like to apply for <strong>ADMIN</strong> level, which means that he or she will be able to create new opportunities, purchase and issue engagement tokens.
+  <br>
+  This user would like to apply for <strong>ADMIN</strong> rights, which means that he or she will be able to create new opportunities, purchase and issue engagement tokens.
   <br>
   Please click on the link below if you approve this application:
   <br>
   <% @org_user = OrgUser.find_by(user_id: @user.id, organisation_id: @organisation.id) %>
   <%= link_to 'Approve '+@user.org_user_profile.name, verified_and_admin_approved_org_user_url(@org_user.id, org_id: @organisation.id) %>
-  <br>
+
+  <br><br>
   Here are the new host contact details:
 <p>
 

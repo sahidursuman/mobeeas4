@@ -7,6 +7,9 @@
     <%= f.input :phone %>
     <%= f.input :position %>
     <%= hidden_field_tag(:org_id, params[:org_id]) %>
+    <% if params[:is_admin].present? %>
+      <%= hidden_field_tag(:is_admin, params[:is_admin]) %>
+    <% end %>
     <%#= f.input :guid %>
     <%= f.association :user, :as => :hidden %>
   </div>

@@ -51,7 +51,7 @@
               <% user.org_users.each do |org_user| %>
               <!-- just show the profile that is linked to this organisation -->
                 <% if org_user.organisation_id == @organisation.id %>
-                  <% if org_user.admin_status && org_user.verified_status %>
+                  <% if (org_user.admin_status) && (org_user.verified_status) %>
                     <li><p>
                     <strong><%= link_to user.org_user_profile.name, org_user_profile_path(user.org_user_profile.id) %></strong>
                     (Verified)
@@ -60,11 +60,14 @@
                       <%= link_to edit_org_user_profile_path(user.org_user_profile, org_id: @organisation.id) do %><i class="material-icons tiny">mode_edit</i><% end %>
                       <%= link_to 'Disconnect', remove_host_from_organisation_path(@organisation, user_id: user.id), data: {confirm: "Are you sure to remove the connection?"}%>
                     <% end %><!-- end of org_user.user_id == current_user.id -->
-                  <!-- <%# elsif !(org_user.admin_status) && !(org_user.verified_status) %>
-                    <strong><%#= link_to user.org_user_profile.name, org_user_profile_path(user.org_user_profile.id) %></strong>
-                    (Not Verified) -->
-                  <% end %>
                     </p></li>
+                  <% elsif (org_user.admin_status) && !(org_user.verified_status) %>
+                    <li><p>
+                    <strong><%= link_to user.org_user_profile.name, org_user_profile_path(user.org_user_profile.id) %></strong>
+                    (Not Verified)
+                    </p></li>
+                  <% end %>
+
                 <% end %><!-- if org_user.organisation_id == @organisation.id -->
               <% end %><!-- end loop -->
             <% end %><!-- if user.org_users.present? -->
@@ -133,7 +136,7 @@
               </div>
               <!-- end of Modal -->
             <% end %>
-          <% else %><!-- else if the user does not have a profile created -->
+          <% else %><!-- else if the current user does not have a profile created -->
             <p>
               You haven't created a host profile.<br>
               Would you like create a host profile and to become an admin host of <%= @organisation.name %>?<br>
@@ -141,8 +144,12 @@
             </p>
             <%= link_to 'Create My Profile', new_org_user_profile_path(org_id: @organisation.id) %>
           <% end %>
-        <% else %>
-          <p>If you want to register as a Host, please start from the <%= link_to 'Home', root_path %> page.</p>
+        <% else %><!-- else if the current user does not have a role as a Host and thus no org_user_profile was created -->
+<!-------><p>
+            If you want to register as an ADMIN Host of this Organisation, please click on the link below.
+            <br>
+            <%= link_to 'Add me as an ADMIN Host to this Organisation', new_org_user_profile_path(org_id: @organisation.id, is_admin: 'yes') %>
+          </p>
         <% end  %>
 
       <% else %><!-- else if this organisation do not have a single host attached to it at all -->
@@ -214,7 +221,11 @@
             <%= link_to 'Create My Profile', new_org_user_profile_path(org_id: @organisation.id) %>
           <% end %>
         <% else %>
-          <p>If you want to register as a Host, please start from the <%= link_to 'Home', root_path %> page.</p>
+<!-------><p>
+            If you want to register as an ADMIN Host of this Organisation, please click on the link below.
+            <br>
+            <%= link_to 'Add me as an ADMIN Host to this Organisation', new_org_user_profile_path(org_id: @organisation.id, is_admin: 'yes') %>
+          </p>
         <% end %><!-- end if current_user.has_role? :host -->
       <% end %><!-- end if @organisation.users.present? -->
     </div><!-- end of card content -->
@@ -222,7 +233,7 @@
 
 
   <!-------------------------------------->
-  <!-- APPROVED HOSTS -->
+  <!-- APPROVED HOSTS (NOT ADMIN HOST) -->
   <div class="card">
     <div class="card-content">
       <h5>Approved Hosts</h5>
@@ -236,7 +247,7 @@
               <!-- just show the profile that is linked to this organisation -->
                 <% if org_user.organisation_id == @organisation.id %>
 
-                    <% if !(org_user.admin_status) && org_user.verified_status %>
+                    <% if !(org_user.admin_status) && (org_user.verified_status) %>
                       <li><p>
                         <strong><%= link_to user.org_user_profile.name, org_user_profile_path(user.org_user_profile.id) %></strong>
                         (Verified)
@@ -247,6 +258,11 @@
                         <% end %><!-- end of org_user.user_id == current_user.id -->
                       <!-- <%# else %>
                         (Not Verified) -->
+                      </p></li>
+                    <% elsif !(org_user.admin_status) && !(org_user.verified_status) %>
+                      <li><p>
+                        <strong><%= link_to user.org_user_profile.name, org_user_profile_path(user.org_user_profile.id) %></strong>
+                        (Not Verified)
                       </p></li>
                     <% end %>
 
@@ -325,8 +341,12 @@
             </p>
             <%= link_to 'Create My Profile', new_org_user_profile_path(org_id: @organisation.id) %>
           <% end %>
-        <% else %>
-          <p>If you want to register as a Host, please start from the <%= link_to 'Home', root_path %> page.</p>
+        <% else %><!-- else if the current user does not have Host role -->
+<!-------><p>
+            If you want to register as a HOST of this Organisation, please click on the link below.
+            <br>
+            <%= link_to 'Add me as a HOST to this Organisation', new_org_user_profile_path(org_id: @organisation.id, is_admin: 'no') %>
+          </p>
         <% end %><!-- end if user has role as Host -->
       <% else %><!-- else if this organisation do not have a single host attached to it at all -->
         <!-- CHECK IF CURRENT USER WANTS TO JOIN IN WITH THIS ORGANISATION -->
@@ -398,7 +418,11 @@
             <%= link_to 'Create My Profile', new_org_user_profile_path(org_id: @organisation.id) %>
           <% end %><!-- end of if current_user.org_user_profile.present?-->
         <% else %>
-          <p>If you want to register as a Host, please start from the <%= link_to 'Home', root_path %> page.</p>
+<!-------><p>
+            If you want to register as a HOST of this Organisation, please click on the link below.
+            <br>
+            <%= link_to 'Add me as a HOST to this Organisation', new_org_user_profile_path(org_id: @organisation.id, is_admin: 'no') %>
+          </p>
         <% end %><!-- end of if current user has role as a Host-->
       <% end %><!-- end of if @organisation.org_users.host_user.present? -->
     </div><!-- end of card content -->

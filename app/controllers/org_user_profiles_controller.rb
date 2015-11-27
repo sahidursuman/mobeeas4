@@ -36,9 +36,23 @@ class OrgUserProfilesController < ApplicationController
           @organisation.users << current_user
           current_user.add_role :host
         end
+        if params[:is_admin].present?
+          if (params[:is_admin] == 'yes') # if params is_admin is true
+            current_user.org_users.each do |org_user|
+              if (org_user.user_id == current_user.id) && (org_user.organisation_id == @organisation)
+                org_user.admin_status = true
+              end
+            end # end of loop
+            NewOrgUserProfileMailer.notify(@organisation.id, current_user.id).deliver_now
+            NewOrgUserProfileMailer.register_admin(@organisation.id, current_user.id).deliver_now
+          else # else if params[:is_admin] == 'no'
+            NewOrgUserProfileMailer.notify(@organisation.id, current_user.id).deliver_now
+            NewOrgUserProfileMailer.register_user(@organisation.id, current_user.id).deliver_now
+          end # end of if params[:is_admin] == 'yes'
+          current_user.save!
+        end # end if params[:is_admin].present?
 
-        NewOrgUserProfileMailer.notify(@organisation.id, current_user.id).deliver_now
-        NewOrgUserProfileMailer.register_admin(@organisation.id, current_user.id).deliver_now
+
 
         format.html { redirect_to @org_user_profile, notice: 'Organisation host was successfully created.' }
         # format.html { redirect_to :back, notice: 'Org user profile was successfully created.' }
