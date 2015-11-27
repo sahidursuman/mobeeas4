@@ -14,9 +14,9 @@
             <li><%= link_to admin_path do %><i class="material-icons left">account_box</i> Admin<% end %></li>
           <%# elsif current_user.profile and current_user.profile.id != nil %><!-- 1st version -->
           <% elsif current_user.profile.present? %>
-              <li><%= link_to candidate_profile_path do %><i class="material-icons left">account_circle</i> My Profile<% end %></li>
+              <li><%= link_to candidate_profile_path do %><i class="material-icons left">account_circle</i> My Dashboard<% end %></li>
           <% elsif current_user.org_user_profile.present? %>
-              <li><%= link_to host_profile_path do %><i class="material-icons left">account_circle</i> My Profile<% end %></li>
+              <li><%= link_to host_profile_path do %><i class="material-icons left">account_circle</i> My Dashboard<% end %></li>
           <% end %>
 
         <%# end %>
