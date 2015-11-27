@@ -1,6 +1,6 @@
 <h5>New Org User Profile</h5>
   <% @organisation = Organisation.find(params[:org_id])%>
-  <p>Organisation name that you would like to link to: <strong><%= @organisation.name %></strong></p>
+  <p>Organisation that you would like to link to: <strong><%= @organisation.name %></strong></p>
 <%= render 'form' %>
 
 <%= link_to 'Back', org_user_profiles_path %>
