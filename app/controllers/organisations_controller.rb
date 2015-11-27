@@ -1,7 +1,7 @@
 class OrganisationsController < ApplicationController
   before_action :set_organisation, only: [:remove_host_from, :add_admin_into, :add_host_into, :show, :edit, :update, :destroy]
   # skip_before_action :check_admin, except: [:index, :show]
-  skip_before_action :check_admin, except: [:show]
+  # skip_before_action :check_admin, except: [:show]
 
   # if a host decides to remove his connection to this organisation
   def remove_host_from
