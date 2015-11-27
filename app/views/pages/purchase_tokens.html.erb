@@ -11,9 +11,9 @@
             <li>
               <p>
                 <strong><%= link_to org_user.organisation.name, organisation_path(org_user.organisation.id) %></strong>
-                  - has <%= pluralize(org_user.organisation.number_of_tokens, 'token') %> 
+                  - has <%= pluralize(org_user.organisation.number_of_tokens, 'token') %>
               </p>
-              <% if org_user.admin_status && org_user.verified_status %>
+              <% if (org_user.admin_status) && (org_user.verified_status) %>
                 <% @engagement_token_packs.each do |pack| %>
                   <%= link_to new_token_purchase_path(org: org_user.organisation.id, token_pack: pack.id), class: 'btn btn-flat' do %>
                     <%= button_label(pack, org_user.organisation) %><br>

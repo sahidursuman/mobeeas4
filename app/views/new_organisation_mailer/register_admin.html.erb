@@ -5,9 +5,10 @@
 </p>
 <p>
   Your organisation <%= @organisation.name %> profile has been created in MOBEEAS and a new organisation host for MOBEEAS has been added, waiting for your approval.
-
+  <br>
   Please click on the link below if you approve this application:
   <!-- first, find the org_user of this current user, put it into the verified method below -->
+  <br>
   <% @org_user = OrgUser.find_by(user_id: @user.id, organisation_id: @organisation.id)%>
   <%= link_to 'Approve Organisation and Host Profiles', verified_and_admin_approved_org_user_url(@org_user, org_id: @organisation.id) %>
   <br>

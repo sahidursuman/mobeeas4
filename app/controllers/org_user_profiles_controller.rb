@@ -34,7 +34,9 @@ class OrgUserProfilesController < ApplicationController
         if params[:org_id].present?
           @organisation = Organisation.find(params[:org_id])
           @organisation.users << current_user
+          puts 'hello1'
           current_user.add_role :host
+          puts 'hello2'
         end
         if params[:is_admin].present?
           if (params[:is_admin] == 'yes') # if params is_admin is true
