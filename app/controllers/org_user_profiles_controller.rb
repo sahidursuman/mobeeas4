@@ -1,6 +1,6 @@
 class OrgUserProfilesController < ApplicationController
   before_action :set_org_user_profile, only: [:show, :edit, :update, :destroy]
-  skip_before_action :check_admin, except: [:show]
+  # skip_before_action :check_admin, except: [:show]
 
   # GET /org_user_profiles
   # GET /org_user_profiles.json
