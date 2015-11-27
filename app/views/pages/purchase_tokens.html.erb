@@ -15,6 +15,7 @@
               </p>
               <% if (org_user.admin_status) && (org_user.verified_status) %>
                 <% @engagement_token_packs.each do |pack| %>
+                  <p>I see you</p>
                   <%= link_to new_token_purchase_path(org: org_user.organisation.id, token_pack: pack.id), class: 'btn btn-flat' do %>
                     <%= button_label(pack, org_user.organisation) %><br>
                   <% end %>
