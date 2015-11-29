@@ -37,7 +37,7 @@
     <% end %><!-- end of @messages loop -->
   <%= will_paginate @messages %><br>
 
-<%= link_to 'Reply to ' + @contact.first_name, new_message_path(to: @contact_user, from: params[:my_id], opportunity_id: @opportunity.id ), class: 'waves-effect waves-light btn palette4-bg' %>
+<%= link_to 'Reply to ' + @contact.first_name, new_message_path(to: @contact_user, from: params[:my_id], class: 'waves-effect waves-light btn palette4-bg' %>
 <%= link_to 'Mailbox', messages_path(my_id: params[:my_id]), class: 'waves-effect waves-light btn palette4-bg'%>
 <% end %>
 
