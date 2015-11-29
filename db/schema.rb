@@ -166,16 +166,6 @@ ActiveRecord::Schema.define(version: 20151125004024) do
   add_index "opportunity_applications", ["opportunity_id"], name: "index_opportunity_applications_on_opportunity_id", using: :btree
   add_index "opportunity_applications", ["user_id"], name: "index_opportunity_applications_on_user_id", using: :btree
 
-  create_table "opportunity_skills", force: :cascade do |t|
-    t.integer  "skill_id"
-    t.datetime "created_at",     null: false
-    t.datetime "updated_at",     null: false
-    t.integer  "opportunity_id"
-  end
-
-  add_index "opportunity_skills", ["opportunity_id"], name: "index_opportunity_skills_on_opportunity_id", using: :btree
-  add_index "opportunity_skills", ["skill_id"], name: "index_opportunity_skills_on_skill_id", using: :btree
-
   create_table "opportunity_times", force: :cascade do |t|
     t.time     "time"
     t.date     "date_time"
@@ -395,19 +385,34 @@ ActiveRecord::Schema.define(version: 20151125004024) do
 
   add_index "users_roles", ["user_id", "role_id"], name: "index_users_roles_on_user_id_and_role_id", using: :btree
 
+  add_foreign_key "agreements", "users"
+  add_foreign_key "candidate_skill_verifications", "candidate_skills"
+  add_foreign_key "candidate_skill_verifications", "skill_verifications"
+  add_foreign_key "candidate_skills", "skills"
+  add_foreign_key "candidate_skills", "users"
+  add_foreign_key "educations", "users"
   add_foreign_key "engagements", "opportunities"
   add_foreign_key "engagements", "profiles"
   add_foreign_key "messages", "opportunities"
   add_foreign_key "messages", "users"
+  add_foreign_key "opportunities", "organisations"
   add_foreign_key "opportunities", "school_years"
   add_foreign_key "opportunities", "skills"
-  add_foreign_key "opportunity_skills", "opportunities"
+  add_foreign_key "opportunities", "users"
+  add_foreign_key "opportunity_applications", "opportunities"
+  add_foreign_key "opportunity_applications", "users"
   add_foreign_key "opportunity_times", "opportunities"
   add_foreign_key "org_user_profiles", "users"
   add_foreign_key "org_users", "organisations"
   add_foreign_key "org_users", "users"
+  add_foreign_key "organisations", "organisation_types"
+  add_foreign_key "profiles", "candidate_types"
+  add_foreign_key "profiles", "users"
   add_foreign_key "school_year_opportunities", "opportunities"
   add_foreign_key "school_year_opportunities", "school_years"
+  add_foreign_key "security_checks", "users"
+  add_foreign_key "skill_verifications", "users"
+  add_foreign_key "skills", "skill_categories"
   add_foreign_key "token_purchases", "organisations"
   add_foreign_key "token_purchases", "users"
 end
