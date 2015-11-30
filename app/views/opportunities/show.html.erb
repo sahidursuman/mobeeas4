@@ -135,7 +135,7 @@
 
           <p><br>Skills Required of the MOBEEAS Candidate:</p>
           <p>
-            <% if @opportunity.skills.present? %>
+            <% if (@opportunity.skills.any?) %>
               <ol>
                 <% @opportunity.skills.each do |skill| %>
                   <li><%= skill.name %> (<%= skill.skill_category.name %>)</li>
@@ -146,6 +146,7 @@
               <% end %>
             <% else %>
               No skills is currently listed
+              <br>
               <% if (current_user.has_role? :host) && (current_user.id == @opportunity.user_id) %>
                 <%= link_to "Add/Remove Skills", required_skills_path(oppo_id: @opportunity.id)%>
               <% end %>

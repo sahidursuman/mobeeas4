@@ -9,7 +9,8 @@
     <%= f.input :description, label: 'Description (max 1000 characters)', input_html: { maxlength: 1000} %>
     <%= f.input :commencement_date, as: :string, label: 'Anticipated Start Date', input_html: { class: 'datetimepicker1'} %>
     <%= f.input :completion_date, as: :string, label: 'Anticipated End Date', input_html: { class: 'datetimepicker1'} %>
-    <p>Choose School Year level(s):
+
+    <p>Choose School Year level(s):</p>
     <%#= f.association :school_years, collection: SchoolYear.all, as: :check_boxes %>
     <% if @opportunity.new_record? %><!-- if creating a new opportunity -->
       <label class="check_boxes optional">School years</label>
@@ -30,6 +31,7 @@
       <% end %>
       <input type="hidden" name="opportunity[school_year_ids][]" value="" />
     <% end %>
+
     <%= f.input :experiences, label: 'Other experience that would be advantageous (max 1000 characters)', input_html: { maxlength: 1000} %>
     <%#= f.input_field :paid_engagement, as: :radio_buttons %>
     <p>Is this a paid engagement?</p>
