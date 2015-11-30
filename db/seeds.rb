@@ -72,9 +72,13 @@ languages = [ "Arabic",
              "Vietnamese" ]
 
 
-english_categories = [ "Essential",
-                      "English as an Additional Language",
-                      "Extension"]
+english_categories = ["Primary",
+                      "Primary-English as an Additional Language",
+                      "Secondary-Essential",
+                      "Secondary-Advanced",
+                      "Secondary-English as an Additional Language",
+                      "Secondary-Extension 1",
+                      "Secondary-Extension 2"]
 
 technology_categories = [ "Wood",
                           "Metal",
