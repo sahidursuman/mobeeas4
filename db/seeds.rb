@@ -25,9 +25,8 @@ skill_categories = [ "Languages",
 "Digital Technologies",
 "Software Programming",
 "Mathematics",
-"Secondary",
-"Arts",
 "Dance",
+"Drama",
 "Media Arts",
 "Music",
 "Visual Arts",
@@ -70,18 +69,17 @@ languages = [ "Arabic",
              "Tamil",
              "Turkish",
              "Ukranian",
-             "Vietnamese",
-             "Other" ]
+             "Vietnamese" ]
 
 
 english_categories = [ "Essential",
                       "English as an Additional Language",
-                      "Extension",
-                      "Other"]
+                      "Extension"]
 
-technology_categories = ["Design & Technology",
-                         "Digital Technologies",
-                         "Other"]
+technology_categories = [ "Wood",
+                          "Metal",
+                          "Textiles",
+                          "Food"]
 
 
 design_and_technology_categories =  ["3D Printing"]
@@ -90,34 +88,42 @@ digital_technology_categories = [ "Robotics",
                                  "Electronics",
                                  "Software Programming" ]
 
-software_programming_categories = [ "Specific Languages",
-                                   "Application Development" ]
+software_programming_categories = [ "Python",
+                                    "C/C++",
+                                    "Java",
+                                    "HTML",
+                                    "Scratch",
+                                    "Blockly",
+                                    "Wyliodrin",
+                                    "Arduino",
+                                    "Application Development" ]
 
 mathematics_categories = [ "Primary",
-                          "Secondary",
-                          "Other" ]
+                          "Secondary-General",
+                          "Secondary-Advanced",
+                          "Secondary-Extension 1",
+                          "Secondary-Extension 2"]
 
-secondary_mathematics_categories = [ "Essential",
-                                    "General",
-                                    "Mathematical Methods",
-                                    "Specialist" ]
+dance_categories = ["Ballet",
+                    "Jazz Ballet",
+                    "Modern"]
 
-arts_categories = [ "Dance",
-                   "Drama",
-                   "Media Arts",
-                   "Music",
-                   "Visual Arts",
-                   "Other" ]
+drama_categories = ["Primary",
+                    "Secondary"]
 
+media_arts_categories = [ "Photography",
+                          "Video"]
 
-dance_categories = [ "Specific" ]
+music_categories = ["Piano",
+                    "Guitar",
+                    "Wind Instruments",
+                    "String Instruments"]
 
-media_arts_categories = [ "Specific" ]
-
-music_categories = [ "Specific" ]
 visual_arts_categories = [ "Graphic Design",
                           "Photography",
-                          "Other"]
+                          "Drawing",
+                          "Painting",
+                          "Sculpture"]
 
 studies_of_religion_categories = [ "Specific" ]
 
@@ -135,19 +141,19 @@ engineering_categories = [ "Civil",
                           "Electrical",
                           "Solar",
                           "Mechanical",
-                          "Other" ]
+                          "Mechatronics",
+                          "Biomedical"]
 
 digital_media_categories = ["Game Design",
                             "Animation",
                             "Video Editing",
-                            "Web Design",
-                            "Other"]
+                            "Web Design"]
 
 science_categories = [ "Biology",
                       "Chemistry",
                       "Earth & Environmental Science",
                       "Physics",
-                      "Other" ]
+                      "Marine Studies"]
 
 def create_categories(skill_categories)
   skill_categories.each do |skill_category|
@@ -171,9 +177,8 @@ create_subcategories("Design & Technology", design_and_technology_categories)
 create_subcategories("Digital Technologies", digital_technology_categories)
 create_subcategories("Software Programming", software_programming_categories)
 create_subcategories("Mathematics", mathematics_categories)
-create_subcategories("Secondary", secondary_mathematics_categories)
-create_subcategories("Arts", arts_categories)
 create_subcategories("Dance", dance_categories)
+create_subcategories("Drama", drama_categories)
 create_subcategories("Media Arts", media_arts_categories)
 create_subcategories("Music", music_categories)
 create_subcategories("Visual Arts", visual_arts_categories)
@@ -183,21 +188,26 @@ create_subcategories("Engineering", engineering_categories)
 create_subcategories("Digital Media", digital_media_categories)
 create_subcategories("Science", science_categories)
 
-SchoolYear.create!(name: 'preschool')
-SchoolYear.create!(name: 'kindergarten')
-SchoolYear.create!(name: 'year 1')
-SchoolYear.create!(name: 'year 2')
-SchoolYear.create!(name: 'year 3')
-SchoolYear.create!(name: 'year 4')
-SchoolYear.create!(name: 'year 5')
-SchoolYear.create!(name: 'year 6')
-SchoolYear.create!(name: 'year 7')
-SchoolYear.create!(name: 'year 8')
-SchoolYear.create!(name: 'year 9')
-SchoolYear.create!(name: 'year 10')
-SchoolYear.create!(name: 'year 11')
-SchoolYear.create!(name: 'year 12')
-SchoolYear.create!(name: 'beyond year 12')
+CandidateType.create!(name: "University Student")
+CandidateType.create!(name: "Professional")
+CandidateType.create!(name: "Industry Expert")
+CandidateType.create!(name: "Academic")
+
+SchoolYear.create!(name: 'Preschool')
+SchoolYear.create!(name: 'Kindergarten')
+SchoolYear.create!(name: 'Year 1')
+SchoolYear.create!(name: 'Year 2')
+SchoolYear.create!(name: 'Year 3')
+SchoolYear.create!(name: 'Year 4')
+SchoolYear.create!(name: 'Year 5')
+SchoolYear.create!(name: 'Year 6')
+SchoolYear.create!(name: 'Year 7')
+SchoolYear.create!(name: 'Year 8')
+SchoolYear.create!(name: 'Year 9')
+SchoolYear.create!(name: 'Year 10')
+SchoolYear.create!(name: 'Year 11')
+SchoolYear.create!(name: 'Year 12')
+SchoolYear.create!(name: 'Beyond Year 12')
 
 EngagementTokenPack.create!(name: 'One token', member_price: 63, non_member_price: 70, number_of_tokens: 1)
 EngagementTokenPack.create!(name: 'Two token', member_price: 120, non_member_price: 130, number_of_tokens: 2)
