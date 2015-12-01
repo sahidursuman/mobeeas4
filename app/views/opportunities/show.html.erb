@@ -218,59 +218,71 @@
 
           <% hash = {} %>
           <% users = [] %>
+
           <p>Candidates with matching and verified skills:</p>
+          <!-- First, set the hash keys with all matching candidates' user_id -->
           <% @opportunity.opportunity_skills.each do |opportunity_skill| %>
-            <% hash[opportunity_skill.skill.name] = [] %> <!-- create a hash of array, key is skill name, value is user id -->
             <% @candidate_skills.each do |candidate_skill| %>
               <% if (candidate_skill.skill_id == opportunity_skill.skill.id) && (candidate_skill.verified) %>
-                <% hash[opportunity_skill.skill.name] << candidate_skill.user_id %>
-                <% if !(users.include?(candidate_skill.user_id))%><!-- only add a unique user id -->
-                  <% users << candidate_skill.user_id %>
-                <% end %>
+                  <% hash[candidate_skill.user_id] = [] %> <!-- create a hash of array, key is skill name, value is user id -->
               <% end %>
             <% end %><!-- end of candidate skill loop -->
           <% end %><!-- end of opportunity loop -->
-          <%#= hash %><!-- print hash , e.g. hash['dance'] = {3, 10}-->
 
-          <% hash1 = {} %>
-          <% users.sort.each do |user| %><!-- print users -->
-            <% hash1[user] = []%>
-            <% hash.each_pair do |key, value| %><!-- reversing hash[] into hash1[] -->
-              <% if hash[key].include?(user) %><!-- hash1 is the reverse of hash, i.e. key is user id, value is skill name -->
-                  <% hash1[user] << key %>
+          <!-- Second, fill the hash value with array of skill_set according to the user_id in the hash key -->
+          <% @opportunity.opportunity_skills.each do |opportunity_skill| %>
+            <% @candidate_skills.each do |candidate_skill| %>
+              <% if (candidate_skill.skill_id == opportunity_skill.skill.id) && (candidate_skill.verified) %>
+                <% hash[candidate_skill.user_id] << [candidate_skill.skill.skill_category.name, candidate_skill.skill.name] %>
               <% end %>
-            <% end %>
+            <% end %><!-- end of @candidate_skills loop -->
           <% end %>
-          <%#= hash1 %><!-- print hash1, e.g. hash1[3] = ['dance', 'drama'] -->
-          <% if hash1.empty? %>
+          <%#= hash %><!-- print hash -->
+          <!-- hash[key] is the user_id
+          hash[value] is the array of [skill_category, skill] -->
+          <!-- e.g. {2=>[["Digital Technologies", "Robotics"], ["Design & Technology", "3D Printing"], ["English", "Secondary-Extension 1"], ["Mathematics", "Secondary-Extension 1"]] -->
+
+          <% if hash.empty? %>
             <p>No matching candidate</p>
           <% else %>
-            <!-- first, sort the hash based on the values (not keys) so that the candidate that has more matching set of skills will appear higher. -->
-            <% array2 = hash1.sort do |(key1, value1), (key2, value2)| %>
-              <% value2 <=> value1 %>
-            <% end %>
-            <% hash2 = Hash[array2]%>
-            <!-- 'Hash' is a keyword, this is to convert array type into hash type -->
-
-            <% hash2.each_pair do |key, value| %> <!-- key is user id, value is skill name -->
+            <% hash.each_pair do |key, value| %> <!-- key is user id, value is skill name -->
               <% @candidate = Profile.find_by(user_id: key)%>
-              <br><strong><%= @candidate.name %></strong> (Profile ID: <%= @candidate.id %>) -
-              <% @found = true %><!-- start with found is true -->
-              <% value.each do |val| %>
-                <%= val %>
-              <% end %>
               <br>
-              <% @opportunity.opportunity_skills.each do |opportunity_skill| %>
-                <!-- @found is false when ALL OF the opportunity skills are not matching with of the candidate's skills -->
-                <% if !(hash1[key].include?(opportunity_skill.skill.name)) %>
-                  <% @found = false %> <!-- if an opportunity skill is not matching, @found become false -->
-                <% end %>
-              <% end %><!-- end of opportunity loop -->
-              <% if @found == true %><!-- when all opportunity skills are matching with cand. skills, then found value stays true. -->
-                Exact match<br>
-              <% else %>
-                Close match<br>
-              <% end %>
+                <strong><%= @candidate.name %></strong> (Profile ID: <%= @candidate.id %>)
+
+                <% @found = false %><!-- start with found is true -->
+                <% counter = 0 %>
+                <% value.each do |val| %>
+                  <br><%= val[0] %> - <%= val[1] %>
+
+                  <!-- This function is to find the top exact match, which currently doesn't work --------->
+                  <% @opportunity.opportunity_skills.each do |opportunity_skill| %>
+                    <!-- @found is false when ALL OF the opportunity skills are not matching with of the candidate's skills -->
+                    <!-- <%#= val[0]%> - <%#= val[1]%><br> -->
+                    <!-- <%#= opportunity_skill.skill.skill_category.name %> = <%#= val[0] %><br>
+                    <%#= opportunity_skill.skill.name %> = <%#= val[1] %><br><br> -->
+
+                    <%# if !(val.include?([opportunity_skill.skill.skill_category.name, opportunity_skill.skill.name]))%>
+                    <!-- <%#= opportunity_skill.skill.skill_category.name %> - <%#= opportunity_skill.skill.name %><br><br> -->
+                    <% if (val[0] == opportunity_skill.skill.skill_category.name) && (val[1] == opportunity_skill.skill.name) %>
+                      <% counter += 1 %> <!-- if an opportunity skill is not matching, @found become false -->
+                    <%# else %>
+                      <%# @found = true %>
+                    <% end %>
+                    <%# if !(val[0] == opportunity_skill.skill.skill_category.name)  && !(val[1] == opportunity_skill.skill.name) %>
+                      <%# @found = false %> <!-- if an opportunity skill is not matching, @found become false -->
+                    <%# end %>
+                  <% end %><!-- end of @opportunity.opportunity_skills -->
+                <% end %><!-- end of value.each loop -->
+              <%# if @found == true %><!-- when all opportunity skills are matching with cand. skills, then found value stays true. -->
+                <!-- <br>Exact match<br> -->
+              <%# else %>
+                <!-- <br>Close match<br> -->
+              <%# end %>
+
+              <!-- End of searching Exact or Close match function, currently doesn't work --------------->
+
+              <!-- <p>Number of matching skills: <%#= counter%></p> -->
               <%= render 'engagement_links' %>
             <% end %><!-- end of hash1 loop -->
           <% end %><!-- end of if hash1.empty? -->

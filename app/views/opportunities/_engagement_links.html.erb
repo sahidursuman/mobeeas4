@@ -28,7 +28,7 @@
   <% end %><!-- end of @opportunity.engagements loop -->
   <% if !(@engaged) %><!-- if candidate is not linked to this opportunity (false), then display link to start engagement -->
     <p>
-      <%= link_to 'Start Engagement', new_engagement_path(opp_id: @opportunity.id, profile_id: @candidate.id) %>  |
+      <%= link_to 'Potential Candidate?', new_engagement_path(opp_id: @opportunity.id, profile_id: @candidate.id) %>  |
       <%= link_to 'Contact ' + @candidate.first_name, new_message_path(from: @opportunity.user_id, to: @candidate.user.id, opportunity_id: @opportunity.id)  %>
     </p>
   <% end %>
