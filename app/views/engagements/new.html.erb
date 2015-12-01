@@ -1,5 +1,5 @@
-<h5>New Engagement</h5>
+<h5><%= Opportunity.find(params[:opp_id]).title %></h5>
 
-<p>Invite <strong><%= Profile.find(params[:profile_id]).name %></strong> to be connected to the opportunity titled: <strong><%= Opportunity.find(params[:opp_id]).title %></strong>.<p>
+<p>Save <strong><%= Profile.find(params[:profile_id]).name %></strong> as a potential candidate for this opportunity.<p>
 <%= render 'form' %>
 <%= link_to 'Back', opportunity_path(params[:opp_id]) %>

@@ -10,7 +10,9 @@ class EngagementsController < ApplicationController
 
   def invite
     @engagement.update_attributes(status: "invited")
-    @opportunity = Opportunity.find(params[:opportunity_id])
+     @opportunity = Opportunity.find(params[:opportunity_id])
+    # @profile = Profile.find(params[:profile_id])
+    OpportunityMailer.invited(params[:opportunity_id], params[:profile_id]).deliver_now
     redirect_to @opportunity
   end
 

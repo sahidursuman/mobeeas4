@@ -7,22 +7,32 @@
       <% @engaged = true %><!-- if candidate id is matching, then there is already an engagement connection (true) -->
       <% if engagement.status == 'pending' %>
         <p>Status: <strong>Pending</strong></p>
-        <p><%= link_to 'Short list?', short_list_engagement_path(engagement, opportunity_id: @opportunity.id)%>  |
+        <p>
+          <%= link_to 'Short list?', short_list_engagement_path(engagement, opportunity_id: @opportunity.id)%>  |
+          <%= link_to 'Decline', engagement_path(engagement, opportunity_id: @opportunity.id), method: :delete, data: { confirm: 'Are you sure?' } %> |
+
       <% elsif (engagement.status == 'short_listed') %>
         <p>Status: <strong>Short listed</strong></p>
-        <p><%= link_to 'Invite', invite_engagement_path(engagement, opportunity_id: @opportunity.id)%>  |
+        <p>
+          <%= link_to 'Invite', invite_engagement_path(engagement, opportunity_id: @opportunity.id, profile_id: @candidate.id )%>  |
+          <%= link_to 'Decline', engagement_path(engagement, opportunity_id: @opportunity.id), method: :delete, data: { confirm: 'Are you sure?' } %> |
+
       <% elsif (engagement.status == 'invited') %>
         <p>Status: <strong>Invited</strong></p>
-      <% elsif (engagement.status == 'accepted') %>
+        <p>
+          <%= link_to 'Decline', engagement_path(engagement, opportunity_id: @opportunity.id), method: :delete, data: { confirm: 'Are you sure?' } %> |
+      <% elsif (engagement.status == 'accepted') && (@opportunity.number_of_tokens <= 0) %>
+        <p>
+          <strong>Please add more token(s) into this Opportunity.<strong></p>
+      <% elsif (engagement.status == 'accepted') && (@opportunity.number_of_tokens > 0) %>
         <p>Status: <strong>Accepted</strong> <span class="green-text"><i class="fa fa-check-circle"></i></span></p>
-        <p><%= link_to 'Apply a token to this candidate', apply_a_token_to_engagement_path(engagement, opportunity_id: @opportunity.id)%></p>
+        <p>
+          <%= link_to 'Apply a token to this candidate', apply_a_token_to_engagement_path(engagement, opportunity_id: @opportunity.id)%></p>
       <% elsif (engagement.status == 'assigned a token') %>
-      <p>Status: <strong>Assigned a token</strong> <span class="orange-text"><i class="fa fa-star"></i></span></p>
-
+        <p>Status: <strong>Assigned a token</strong> <span class="orange-text"><i class="fa fa-star"></i></span></p>
       <% end %>
 
-      <%= link_to 'Contact ' + @candidate.first_name, new_message_path(from: @opportunity.user_id, to: @candidate.user.id, opportunity_id: @opportunity.id)  %>  |
-      <%= link_to 'Decline', engagement_path(engagement, opportunity_id: @opportunity.id), method: :delete, data: { confirm: 'Are you sure?' } %>
+      <%= link_to 'Contact ' + @candidate.first_name, new_message_path(from: @opportunity.user_id, to: @candidate.user.id, opportunity_id: @opportunity.id)  %>
       </p>
     <% end %><!-- end of if engagement.profile_id -->
   <% end %><!-- end of @opportunity.engagements loop -->
@@ -43,7 +53,7 @@
     <% if (engagement.status == 'invited') && (engagement.opportunity_id == @opportunity.id) && (engagement.profile_id == @candidate.id ) %>
       <% if (current_user.profile.present?) && (current_user.profile.id == engagement.profile_id) %>
         <p>Status: <strong>Invited</strong></p>
-        <%= link_to 'Accept this opportunity', accept_engagement_path(engagement, opportunity_id: @opportunity.id) %>
+        <%= link_to 'Accept this opportunity', accept_engagement_path(engagement, opportunity_id: @opportunity.id), class: 'btn' %>
         <br>
       <% end %>
     <% end %>

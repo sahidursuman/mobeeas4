@@ -108,16 +108,19 @@
           <!-- only opportunity owner can add/remove candidates and tokens -->
           <% if (current_user.has_role? :host) && (current_user.id == @opportunity.user_id) %>
             <p><br><%= @organisation.name%> currently holds: <strong><%= @organisation.number_of_tokens %> <%= (@organisation.number_of_tokens > 1) ? 'tokens' : 'token' %></strong></p>
-            <p>Number of candidates required: <strong><%= @opportunity.number_of_candidates %> <%= (@opportunity.number_of_candidates > 1) ? 'candidates' : 'candidate' %></strong></p>
+
+            <!-- Do not show @opportunity.number_of_candidates, it is redundant info but do not delete it from the opportunities table -->
+            <!-- <p>Number of candidates required: <strong><%#= @opportunity.number_of_candidates %> <%= (@opportunity.number_of_candidates > 1) ? 'candidates' : 'candidate' %></strong></p> -->
+
             <p>This opportunity currently holds: <strong><%= @opportunity.number_of_tokens %> <%= (@opportunity.number_of_tokens > 1) ? 'tokens' : 'token' %></strong></p>
 
             <% if @organisation.number_of_tokens > 0 %>
-              <%= link_to 'Add 1 Candidate', increase_one_candidate_into_opportunity_path(org_id: @organisation.id), class: 'btn' %>
+              <%= link_to 'Transfer 1 Token into this Opportunity', increase_one_candidate_into_opportunity_path(org_id: @organisation.id), class: 'btn' %>
             <% else %>
               <p>Not enough token held by organisation.</p>
             <% end %>
-            <% if @opportunity.number_of_candidates > 0 %>
-              <%= link_to 'Less 1 Candidate', decrease_one_candidate_from_opportunity_path(org_id: @organisation.id), class: 'btn' %>
+            <% if @opportunity.number_of_tokens > 0 %>
+              <br><%= link_to 'Remove 1 Token from this Opportunity', decrease_one_candidate_from_opportunity_path(org_id: @organisation.id), class: 'btn' %>
             <% end %>
           <% end %>
 
@@ -247,33 +250,41 @@
           <% else %>
             <% hash.each_pair do |key, value| %> <!-- key is user id, value is skill name -->
               <% @candidate = Profile.find_by(user_id: key)%>
-              <br>
-                <strong><%= @candidate.name %></strong> (Profile ID: <%= @candidate.id %>)
-
-                <% @found = false %><!-- start with found is true -->
-                <% counter = 0 %>
-                <% value.each do |val| %>
-                  <br><%= val[0] %> - <%= val[1] %>
-
-                  <!-- This function is to find the top exact match, which currently doesn't work --------->
-                  <% @opportunity.opportunity_skills.each do |opportunity_skill| %>
-                    <!-- @found is false when ALL OF the opportunity skills are not matching with of the candidate's skills -->
-                    <!-- <%#= val[0]%> - <%#= val[1]%><br> -->
-                    <!-- <%#= opportunity_skill.skill.skill_category.name %> = <%#= val[0] %><br>
-                    <%#= opportunity_skill.skill.name %> = <%#= val[1] %><br><br> -->
-
-                    <%# if !(val.include?([opportunity_skill.skill.skill_category.name, opportunity_skill.skill.name]))%>
-                    <!-- <%#= opportunity_skill.skill.skill_category.name %> - <%#= opportunity_skill.skill.name %><br><br> -->
-                    <% if (val[0] == opportunity_skill.skill.skill_category.name) && (val[1] == opportunity_skill.skill.name) %>
-                      <% counter += 1 %> <!-- if an opportunity skill is not matching, @found become false -->
-                    <%# else %>
-                      <%# @found = true %>
+                <% if (current_user.has_role? :candidate) %>
+                  <% if (current_user.profile.id == @candidate.id ) %>
+                    <br><strong><%= current_user.profile.name %></strong> (Profile ID: <%= current_user.profile.id %>)
+                    <% value.each do |val| %>
+                      <br><%= val[0] %> - <%= val[1] %>
                     <% end %>
-                    <%# if !(val[0] == opportunity_skill.skill.skill_category.name)  && !(val[1] == opportunity_skill.skill.name) %>
-                      <%# @found = false %> <!-- if an opportunity skill is not matching, @found become false -->
-                    <%# end %>
-                  <% end %><!-- end of @opportunity.opportunity_skills -->
-                <% end %><!-- end of value.each loop -->
+                  <% end %>
+                <% else %>
+                  <br><strong><%= @candidate.name %></strong> (Profile ID: <%= @candidate.id %>)
+                  <%# @found = false %><!-- start with found is true -->
+                  <%# counter = 0 %>
+                  <% value.each do |val| %>
+                    <br><%= val[0] %> - <%= val[1] %>
+
+                    <!-- This function is to find the top exact match, which currently doesn't work --------->
+                    <%# @opportunity.opportunity_skills.each do |opportunity_skill| %>
+                      <!-- @found is false when ALL OF the opportunity skills are not matching with of the candidate's skills -->
+                      <!-- <%#= val[0]%> - <%#= val[1]%><br> -->
+                      <!-- <%#= opportunity_skill.skill.skill_category.name %> = <%#= val[0] %><br>
+                      <%#= opportunity_skill.skill.name %> = <%#= val[1] %><br><br> -->
+
+                      <%# if !(val.include?([opportunity_skill.skill.skill_category.name, opportunity_skill.skill.name]))%>
+                      <!-- <%#= opportunity_skill.skill.skill_category.name %> - <%#= opportunity_skill.skill.name %><br><br> -->
+                      <%# if (val[0] == opportunity_skill.skill.skill_category.name) && (val[1] == opportunity_skill.skill.name) %>
+                        <%# counter += 1 %> <!-- if an opportunity skill is not matching, @found become false -->
+                      <%# else %>
+                        <%# @found = true %>
+                      <%# end %>
+                      <%# if !(val[0] == opportunity_skill.skill.skill_category.name)  && !(val[1] == opportunity_skill.skill.name) %>
+                        <%# @found = false %> <!-- if an opportunity skill is not matching, @found become false -->
+                      <%# end %>
+                    <%# end %><!-- end of @opportunity.opportunity_skills -->
+
+                  <% end %><!-- end of value.each loop -->
+                <% end %><!-- end of if current_user.has_role? :candidate -->
               <%# if @found == true %><!-- when all opportunity skills are matching with cand. skills, then found value stays true. -->
                 <!-- <br>Exact match<br> -->
               <%# else %>
@@ -286,7 +297,7 @@
               <%= render 'engagement_links' %>
             <% end %><!-- end of hash1 loop -->
           <% end %><!-- end of if hash1.empty? -->
-          <br>
+          <br><br>
           <p>Display all candidate link for Admin and Host? </p>
           <%#= link_to 'View all candidates', profiles_path %>
         </div><!-- end of card-content -->
