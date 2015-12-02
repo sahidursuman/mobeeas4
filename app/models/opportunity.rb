@@ -22,7 +22,7 @@ class Opportunity < ActiveRecord::Base
   scope :draft, -> { where(opportunity_status: 'draft') }
   scope :listed, -> { where(opportunity_status: 'listed') }
   scope :active, -> { where(opportunity_status: 'active') }
-  scope :completed, -> { where(opportunity_status: 'complete') }
+  scope :completed, -> { where(opportunity_status: 'completed') }
 
 
 
