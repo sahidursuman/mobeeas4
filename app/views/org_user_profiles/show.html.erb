@@ -60,6 +60,7 @@
 
   <!-- if org user profile is the creator of this organisation, only then the new organisation form will appear-->
   <% if @org_user_profile.org_creator %>
+  
     <h4>ORGANISATION DETAILS:</h4>
     <br>
     <% @new_organisation = Organisation.new %>
