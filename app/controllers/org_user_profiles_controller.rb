@@ -28,15 +28,13 @@ class OrgUserProfilesController < ApplicationController
   def create
     @org_user_profile = OrgUserProfile.new(org_user_profile_params)
     @org_user_profile.user_id = current_user.id
+    current_user.add_role :host
 
     respond_to do |format|
       if @org_user_profile.save
         if params[:org_id].present?
           @organisation = Organisation.find(params[:org_id])
           @organisation.users << current_user
-          puts 'hello1'
-          current_user.add_role :host
-          puts 'hello2'
         end
         if params[:is_admin].present?
           if (params[:is_admin] == 'yes') # if params is_admin is true
