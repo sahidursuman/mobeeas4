@@ -1,0 +1,11 @@
+<h4>Congratulations! Your engagement in MOBEEAS Opportunity has been confirmed</h4>
+
+<p>
+  Dear <%= @profile.name %>,
+  <br>
+  <%= @opportunity.user.org_user_profile.name %> has confirmed your engagement in this Opportunity: <strong><%= @opportunity.title %></strong>.
+  <br>
+  Click on this <%= link_to "Opportunity Link", opportunity_url(@opportunity) %> to view this Opportunity details.
+  <br>
+</p>
+<p>Thank you from the MOBEEAS Team</p>

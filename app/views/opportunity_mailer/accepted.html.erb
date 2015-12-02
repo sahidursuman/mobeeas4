@@ -1,5 +1,11 @@
-<h1>OpportunityMailer#accepted</h1>
+<h4>A Candidate has accepted your invitation to participate in MOBEEAS opportunity</h4>
 
 <p>
-  <%= @greeting %>, find me in app/views/opportunity_mailer/accepted.html.erb
+  Dear <%= @opportunity.user.org_user_profile.name %>,
+  <br>
+  <%= @profile.name %> has accepted your invitation to participate in this Opportunity: <strong><%= @opportunity.title %></strong>.
+  <br>
+  Click on this <%= link_to "Opportunity Link", opportunity_url(@opportunity) %> to view this Opportunity details.
+  <br>
 </p>
+<p>Thank you from the MOBEEAS Team</p>

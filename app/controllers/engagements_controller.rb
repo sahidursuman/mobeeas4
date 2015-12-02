@@ -10,7 +10,7 @@ class EngagementsController < ApplicationController
 
   def invite
     @engagement.update_attributes(status: "invited")
-     @opportunity = Opportunity.find(params[:opportunity_id])
+    @opportunity = Opportunity.find(params[:opportunity_id])
     # @profile = Profile.find(params[:profile_id])
     OpportunityMailer.invited(params[:opportunity_id], params[:profile_id]).deliver_now
     redirect_to @opportunity
@@ -21,6 +21,7 @@ class EngagementsController < ApplicationController
     @opportunity = Opportunity.find(params[:opportunity_id])
     @opportunity.opportunity_status = 'active'
     @opportunity.save!
+    OpportunityMailer.accepted(params[:opportunity_id], params[:profile_id]).deliver_now
     redirect_to @opportunity
   end
 
@@ -32,6 +33,7 @@ class EngagementsController < ApplicationController
       @opportunity.opportunity_status = 'active'
     end
     @opportunity.save!
+    OpportunityMailer.assigned_a_token(params[:opportunity_id], params[:profile_id]).deliver_now
     redirect_to @opportunity
   end
 

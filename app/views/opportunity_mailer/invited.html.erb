@@ -1,11 +1,11 @@
-<h4>Congratulations! You have been invited to participate in MOBEEAS Opportunity</h4>
+<h4>You have been invited to participate in MOBEEAS Opportunity</h4>
 
 <p>
   Dear <%= @profile.name%>,
   <br>
-  You have been invited by <%= @opportunity.user.org_user_profile.name %> to participate in this Opportunity: <%= @opportunity.title %>.
+  You have been invited by <%= @opportunity.user.org_user_profile.name %> to participate in this Opportunity: <strong><%= @opportunity.title %></strong>.
   <br>
   Click on this <%= link_to "Opportunity Link", opportunity_url(@opportunity) %> to view this Opportunity details.
   <br>
-
 </p>
+<p>Thank you from the MOBEEAS Team</p>

@@ -17,8 +17,8 @@ class OpportunityMailerTest < ActionMailer::TestCase
     assert_match "Hi", mail.body.encoded
   end
 
-  test "assign_a_token" do
-    mail = OpportunityMailer.assign_a_token
+  test "assigned_a_token" do
+    mail = OpportunityMailer.assigned_a_token
     assert_equal "Assign a token", mail.subject
     assert_equal ["to@example.org"], mail.to
     assert_equal ["from@example.com"], mail.from
