@@ -16,7 +16,6 @@ class Opportunity < ActiveRecord::Base
   has_many :messages
 
   validates :title, :description, :commencement_date, :completion_date, presence: true
-  validates :number_of_candidates, numericality: { greater_than_equal: 0 }, presence: true
   validates :number_of_tokens, numericality: { greater_than_equal: 0 }, presence: true
 
   scope :draft, -> { where(opportunity_status: 'draft') }

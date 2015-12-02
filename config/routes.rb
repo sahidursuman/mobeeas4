@@ -33,7 +33,7 @@ Rails.application.routes.draw do
   resources :opportunity_applications
   resources :opportunities do
     member do
-      get :increase_one_candidate_into, :decrease_one_candidate_from
+      get :increase_one_token_into, :decrease_one_token_from, :status_draft, :status_listed, :status_completed
     end
   end
   resources :organisations do

@@ -1,9 +1,8 @@
 class OpportunitiesController < ApplicationController
-  before_action :set_opportunity, only: [:increase_one_candidate_into, :decrease_one_candidate_from, :show, :edit, :update, :destroy]
+  before_action :set_opportunity, only: [:increase_one_token_into, :decrease_one_token_from, :status_draft, :status_listed, :status_completed, :show, :edit, :update, :destroy]
 
 
-  def increase_one_candidate_into
-    @opportunity.number_of_candidates += 1
+  def increase_one_token_into
     @opportunity.number_of_tokens += 1
     @opportunity.save!
     @organisation = Organisation.find(params[:org_id])
@@ -12,13 +11,30 @@ class OpportunitiesController < ApplicationController
     redirect_to @opportunity
   end
 
-  def decrease_one_candidate_from
-    @opportunity.number_of_candidates -= 1
+  def decrease_one_token_from
     @opportunity.number_of_tokens -= 1
     @opportunity.save!
     @organisation = Organisation.find(params[:org_id])
     @organisation.number_of_tokens += 1
     @organisation.save!
+    redirect_to @opportunity
+  end
+
+  def status_draft
+    @opportunity.opportunity_status = 'draft'
+    @opportunity.save!
+    redirect_to @opportunity
+  end
+
+  def status_listed
+    @opportunity.opportunity_status = 'listed'
+    @opportunity.save!
+    redirect_to @opportunity
+  end
+
+  def status_completed
+    @opportunity.opportunity_status = 'completed'
+    @opportunity.save!
     redirect_to @opportunity
   end
 
@@ -108,6 +124,6 @@ class OpportunitiesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def opportunity_params
-      params.require(:opportunity).permit(:organisation_id, :user_id, :opportunity_status, :title, :description, :pay, :paid_engagement, :commencement_date, :completion_date, :experiences, :employment_terms, :number_of_candidates, :number_of_tokens, :school_year_ids => [])
+      params.require(:opportunity).permit(:organisation_id, :user_id, :opportunity_status, :title, :description, :pay, :paid_engagement, :commencement_date, :completion_date, :experiences, :employment_terms, :number_of_tokens, :school_year_ids => [])
     end
 end

@@ -6,46 +6,60 @@
     <!-- @candidate is the candidate/participants who has profile -->
     <% if engagement.profile_id == @candidate.id %>
       <% @engaged = true %><!-- if candidate id is matching, then there is already an engagement connection (true) -->
-      <% if engagement.status == 'pending' %>
+      <% if (engagement.status == 'pending') %>
         <p>Status: <strong>Pending</strong></p>
         <p>
-          <%= link_to 'Short list?', short_list_engagement_path(engagement, opportunity_id: @opportunity.id)%>  |
-          <%= link_to 'Decline', engagement_path(engagement, opportunity_id: @opportunity.id), method: :delete, data: { confirm: 'Are you sure?' } %> |
+          <% if !(@opportunity.opportunity_status == 'completed') %>
+            <%= link_to 'Short list?', short_list_engagement_path(engagement, opportunity_id: @opportunity.id)%>  |
+            <%= link_to 'Decline', engagement_path(engagement, opportunity_id: @opportunity.id), method: :delete, data: { confirm: 'Are you sure?' } %> |
+          <% end %>
 
       <% elsif (engagement.status == 'short_listed') %>
         <p>Status: <strong>Short listed</strong></p>
         <p>
-          <%= link_to 'Invite', invite_engagement_path(engagement, opportunity_id: @opportunity.id, profile_id: @candidate.id )%>  |
-          <%= link_to 'Decline', engagement_path(engagement, opportunity_id: @opportunity.id), method: :delete, data: { confirm: 'Are you sure?' } %> |
+          <% if !(@opportunity.opportunity_status == 'completed') %>
+            <%= link_to 'Invite', invite_engagement_path(engagement, opportunity_id: @opportunity.id, profile_id: @candidate.id )%>  |
+            <%= link_to 'Decline', engagement_path(engagement, opportunity_id: @opportunity.id), method: :delete, data: { confirm: 'Are you sure?' } %> |
+          <% end %>
 
       <% elsif (engagement.status == 'invited') %>
         <p>Status: <strong>Invited</strong> (pending acceptance)</p>
         <p>
-          <%= link_to 'Decline', engagement_path(engagement, opportunity_id: @opportunity.id), method: :delete, data: { confirm: 'Are you sure?' } %> |
+          <% if !(@opportunity.opportunity_status == 'completed') %>
+            <%= link_to 'Decline', engagement_path(engagement, opportunity_id: @opportunity.id), method: :delete, data: { confirm: 'Are you sure?' } %> |
+          <% end %>
+
       <% elsif (engagement.status == 'accepted') && (@opportunity.number_of_tokens <= 0) %>
         <p>
           <strong>Please add more token into this Opportunity.<strong></p>
         <p>
-          <%= link_to 'Decline', engagement_path(engagement, opportunity_id: @opportunity.id), method: :delete, data: { confirm: 'Are you sure?' } %> |
-
+          <% if !(@opportunity.opportunity_status == 'completed') %>
+            <%= link_to 'Decline', engagement_path(engagement, opportunity_id: @opportunity.id), method: :delete, data: { confirm: 'Are you sure?' } %> |
+          <% end %>
       <% elsif (engagement.status == 'accepted') && (@opportunity.number_of_tokens > 0) %>
         <p>Status: <strong>Accepted</strong> <span class="green-text"><i class="fa fa-check-circle"></i></span></p>
         <p>
-          <%= link_to 'Apply a token to this candidate', apply_a_token_to_engagement_path(engagement, opportunity_id: @opportunity.id, profile_id: @candidate.id)%> |
-          <%= link_to 'Decline', engagement_path(engagement, opportunity_id: @opportunity.id), method: :delete, data: { confirm: 'Are you sure?' } %> |
+          <% if !(@opportunity.opportunity_status == 'completed') %>
+            <%= link_to 'Apply a token to this candidate', apply_a_token_to_engagement_path(engagement, opportunity_id: @opportunity.id, profile_id: @candidate.id)%> |
+            <%= link_to 'Decline', engagement_path(engagement, opportunity_id: @opportunity.id), method: :delete, data: { confirm: 'Are you sure?' } %> |
+          <% end %>
 
       <% elsif (engagement.status == 'assigned a token') %>
         <p>Status: <strong>Assigned a token</strong> <span class="orange-text"><i class="fa fa-star"></i></span></p>
       <% end %>
 
+        <% if !(@opportunity.opportunity_status == 'completed') %>
           <%= link_to 'Contact ' + @candidate.first_name, new_message_path(from: @opportunity.user_id, to: @candidate.user.id, opportunity_id: @opportunity.id)  %>
+        <% end %>
         </p>
     <% end %><!-- end of if engagement.profile_id -->
   <% end %><!-- end of @opportunity.engagements loop -->
   <% if !(@engaged) %><!-- if candidate is not linked to this opportunity (false), then display link to start engagement -->
     <p>
-      <%= link_to 'Potential Candidate?', new_engagement_path(opp_id: @opportunity.id, profile_id: @candidate.id) %>  |
-      <%= link_to 'Contact ' + @candidate.first_name, new_message_path(from: @opportunity.user_id, to: @candidate.user.id, opportunity_id: @opportunity.id)  %>
+      <% if !(@opportunity.opportunity_status == 'completed') %>
+        <%= link_to 'Potential Candidate?', new_engagement_path(opp_id: @opportunity.id, profile_id: @candidate.id) %>  |
+        <%= link_to 'Contact ' + @candidate.first_name, new_message_path(from: @opportunity.user_id, to: @candidate.user.id, opportunity_id: @opportunity.id)  %>
+      <% end %>
     </p>
   <% end %>
 <% end %><!-- end of current_user.has_role? :host -->
