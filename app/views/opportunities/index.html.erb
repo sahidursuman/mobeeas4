@@ -11,6 +11,8 @@
       <h4>Active Opportunities</h4>
     <% elsif params[:status] == 'completed'%>
       <h4>Completed Opportunities</h4>
+    <% elsif params[:status] == 'archived'%>
+      <h4>Archived Opportunities</h4>
     <% end %>
       <% @opportunities.each do |opportunity| %>
         <div class="row">
@@ -39,15 +41,10 @@
                 <p><strong>Description: </strong><%= opportunity.description %></p>
                 <p><strong>Organisation: </strong><%= opportunity.organisation.name %></p>
                 <p><strong>Host Name: </strong><%= opportunity.user.org_user_profile.name %></p>
-                <p><strong>Opportunity Status: </strong><%= opportunity.opportunity_status %></p>
                 <p><strong>Start Date: </strong><%= opportunity.commencement_date %></p>
                 <p><strong>End Date: </strong><%= opportunity.completion_date %></p>
 
                 <p><strong></strong><%= link_to 'Show more...', opportunity %></p>
-                <% if (current_user.has_role? :host) && (current_user.id == opportunity.user_id) %>
-                  <p><strong></strong><%= link_to 'Edit', edit_opportunity_path(opportunity) %></p>
-                  <p><strong></strong><%= link_to 'Destroy', opportunity, method: :delete, data: { confirm: 'Are you sure?' } %></p>
-                <% end %>
               </div>
             </div>
           </div>

@@ -1,5 +1,5 @@
 class OpportunitiesController < ApplicationController
-  before_action :set_opportunity, only: [:increase_one_token_into, :decrease_one_token_from, :status_draft, :status_listed, :status_completed, :show, :edit, :update, :destroy]
+  before_action :set_opportunity, only: [:increase_one_token_into, :decrease_one_token_from, :status_draft, :status_listed, :status_completed, :status_archived, :show, :edit, :update, :destroy]
 
 
   def increase_one_token_into
@@ -38,6 +38,12 @@ class OpportunitiesController < ApplicationController
     redirect_to @opportunity
   end
 
+  def status_archived
+    @opportunity.archived = true
+    @opportunity.save!
+    redirect_to @opportunity
+  end
+
 
   # GET /opportunities
   # GET /opportunities.json
@@ -45,13 +51,15 @@ class OpportunitiesController < ApplicationController
     # @opportunities = Opportunity.all
 
     if params[:status] == 'draft'
-      @opportunities = Opportunity.draft
+      @opportunities = Opportunity.draft.not_archived
     elsif params[:status] == 'listed'
-      @opportunities = Opportunity.listed
+      @opportunities = Opportunity.listed.not_archived
     elsif params[:status] == 'active'
-      @opportunities = Opportunity.active
+      @opportunities = Opportunity.active.not_archived
     elsif params[:status] == 'completed'
-      @opportunities = Opportunity.completed
+      @opportunities = Opportunity.completed.not_archived
+    elsif params[:status] == 'archived'
+      @opportunities = Opportunity.archived
     end
   end
 

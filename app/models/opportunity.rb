@@ -22,6 +22,10 @@ class Opportunity < ActiveRecord::Base
   scope :listed, -> { where(opportunity_status: 'listed') }
   scope :active, -> { where(opportunity_status: 'active') }
   scope :completed, -> { where(opportunity_status: 'completed') }
+  scope :archived, -> { where(archived: true) }
+  scope :not_archived, -> { where(archived: false) }
+
+
 
 
 
