@@ -52,12 +52,16 @@ class OpportunitiesController < ApplicationController
 
     if params[:status] == 'draft'
       @opportunities = Opportunity.draft.not_archived
+
     elsif params[:status] == 'listed'
       @opportunities = Opportunity.listed.not_archived
+
     elsif params[:status] == 'active'
       @opportunities = Opportunity.active.not_archived
+
     elsif params[:status] == 'completed'
       @opportunities = Opportunity.completed.not_archived
+      
     elsif params[:status] == 'archived'
       @opportunities = Opportunity.archived
     end
