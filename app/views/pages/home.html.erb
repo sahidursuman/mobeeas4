@@ -28,7 +28,7 @@
                 <div class="col s12 m12 l12">
                   <% if user_signed_in? %>
                     <% if current_user.org_user_profile.present? %>
-                      <a class="waves-effect white btn margin-left-20px" href="/host_profile"><span class="palette2">Host Dashboard</span></a>
+                      <a class="waves-effect white btn margin-left-20px" href="/host_profile"><span class="palette2">My Host Dashboard</span></a>
                       <!-- In host dashboard the user will have distinction if he has a role as a Host or not. -->
                     <% else %>
                       <a class="waves-effect white btn margin-left-20px" href="/host_profile"><span class="palette2">Create Host Profile</span></a>
@@ -69,7 +69,7 @@
             <div class="card-action">
               <% if user_signed_in? %>
                 <% if current_user.profile.present? %>
-                  <a class="waves-effect white btn margin-left-20px" href="/candidate_profile"><span class="palette2">View My Profile</span></a>
+                  <a class="waves-effect white btn margin-left-20px" href="/candidate_profile"><span class="palette2">My Candidate Dashboard</span></a>
                 <% else %>
                   <a class="waves-effect white btn margin-left-20px" href="/profiles/new"><span class="palette2">Create Candidate Profile</span></a>
                 <% end %>
