@@ -47,7 +47,7 @@
         <% if !(current_user.org_users.find_by(organisation_id: @organisation.id).admin_status) && !(current_user.org_users.find_by(organisation_id: @organisation.id).verified_status) %>
         <div class="card #ffecb3 amber lighten-4">
           <div class="card-content">
-            Your request has been submitted to <%= @organisation.name %> Coordinator and waiting for approval.
+            Your request has been submitted to the  <%= @organisation.name %> Executive and is pending approval.
           </div>
         </div>
         <% end %>
