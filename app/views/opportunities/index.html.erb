@@ -5,14 +5,19 @@
     <p id="notice"><%= notice %></p>
     <% if params[:status] == 'draft'%>
       <h4>Draft Opportunities</h4>
+
     <% elsif params[:status] == 'listed'%>
       <h4>Listed Opportunities</h4>
+
     <% elsif params[:status] == 'active'%>
       <h4>Active Opportunities</h4>
-    <% elsif params[:status] == 'has_completed'%>
-      <h4>Completed Opportunities </h4>
+
+    <% elsif params[:status] == 'post_active'%>
+      <h4>Completed Opportunities</h4>
+
     <% elsif params[:status] == 'archived'%>
       <h4>Archived Opportunities</h4>
+      
     <% end %>
     <% if @opportunities.present? %>
       <% @opportunities.each do |opportunity| %>

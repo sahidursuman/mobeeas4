@@ -65,9 +65,9 @@
                | <%= link_to "Save as Archived", status_archived_opportunity_path(@opportunity) %>
                | <%= link_to "Edit", edit_opportunity_path(@opportunity) %>
             <% elsif @opportunity.opportunity_status == 'active' %>
-               - <%= link_to "Save as Completed", status_completed_opportunity_path(@opportunity), data: {confirm: "Are you sure you want to complete this opportunity? Changes will be permanent."} %>
+               - <%= link_to "Save as Completed", post_active_opportunity_path(@opportunity), data: {confirm: "Are you sure you want to complete this opportunity? Changes will be permanent."} %>
                | <%= link_to "Edit", edit_opportunity_path(@opportunity) %>
-            <% elsif @opportunity.opportunity_status == 'completed' %>
+            <% elsif @opportunity.opportunity_status == 'post_active' %>
                | <%= link_to "Save as Archived", status_archived_opportunity_path(@opportunity) %>
             <% end %>
           <% end %>
@@ -99,24 +99,24 @@
                 <% @opportunity.opportunity_times.each do |t|%>
                   <% if t.date_time.present? %>
                     <li class="list-style-disc"><%= t.date_time.strftime("%d/%m/%y %A") %> <%= t.time.strftime("%l:%M %P") %>
-                      <% if (current_user.has_role? :host) && (current_user.id == @opportunity.user_id) && !(@opportunity.opportunity_status == 'completed') && !(@opportunity.archived) %>
+                      <% if (current_user.has_role? :host) && (current_user.id == @opportunity.user_id) && !(@opportunity.opportunity_status == 'post_active') && !(@opportunity.archived) %>
                          - <%= link_to 'Delete',t , method: :delete, data: { confirm: 'Are you sure?' } %></li>
                       <% end %>
                   <% else %>
                     <li class="list-style-disc">--- /--- /---  <%= t.day %> <%= t.time.strftime("%l:%M %P") %> <%= t.frequency %>
-                      <% if (current_user.has_role? :host) && (current_user.id == @opportunity.user_id) && !(@opportunity.opportunity_status == 'completed') && !(@opportunity.archived) %>
+                      <% if (current_user.has_role? :host) && (current_user.id == @opportunity.user_id) && !(@opportunity.opportunity_status == 'post_active') && !(@opportunity.archived) %>
                          - <%= link_to 'Delete', t, method: :delete, data: { confirm: 'Are you sure?' } %></li>
                       <% end %>
                   <% end %>
                 <% end %>
               </ul>
-              <% if (current_user.has_role? :host) && (current_user.id == @opportunity.user_id) && !(@opportunity.opportunity_status == 'completed') && !(@opportunity.archived) %>
+              <% if (current_user.has_role? :host) && (current_user.id == @opportunity.user_id) && !(@opportunity.opportunity_status == 'post_active') && !(@opportunity.archived) %>
                 <a class="modal-trigger" href="#opportunity_schedule">Add Opportunity Dates and Times</a>
               <% end %>
             </p>
           <% else %><!-- else if opportunity time is not present -->
             <p>No specific dates, days and time setup yet.</p>
-            <% if (current_user.has_role? :host) && (current_user.id == @opportunity.user_id) && !(@opportunity.opportunity_status == 'completed') && !(@opportunity.archived)%>
+            <% if (current_user.has_role? :host) && (current_user.id == @opportunity.user_id) && !(@opportunity.opportunity_status == 'post_active') && !(@opportunity.archived)%>
               <a class="modal-trigger" href="#opportunity_schedule">Add Opportunity Dates and Times</a>
             <% end %>
           <% end %>
@@ -139,12 +139,12 @@
 
             <p>This opportunity currently holds: <strong><%= @opportunity.number_of_tokens %> <%= (@opportunity.number_of_tokens > 1) ? 'tokens' : 'token' %></strong></p>
 
-            <% if (@organisation.number_of_tokens > 0) && !(@opportunity.opportunity_status == 'completed') && !(@opportunity.archived) %>
+            <% if (@organisation.number_of_tokens > 0) && !(@opportunity.opportunity_status == 'post_active') && !(@opportunity.archived) %>
               <%= link_to 'Transfer 1 Token into this Opportunity', increase_one_token_into_opportunity_path(org_id: @organisation.id), class: 'btn' %>
             <% else %>
               <p>Not enough token held by organisation.</p>
             <% end %>
-            <% if (@opportunity.number_of_tokens > 0) && !(@opportunity.opportunity_status == 'completed') && !(@opportunity.archived) %>
+            <% if (@opportunity.number_of_tokens > 0) && !(@opportunity.opportunity_status == 'post_active') && !(@opportunity.archived) %>
               <br><%= link_to 'Remove 1 Token from this Opportunity', decrease_one_token_from_opportunity_path(org_id: @organisation.id), class: 'btn' %>
             <% end %>
           <% end %>
@@ -169,13 +169,13 @@
                   <li><%= skill.name %> (<%= skill.skill_category.name %>)</li>
                 <% end %>
               </ol>
-              <% if (current_user.has_role? :host) && (current_user.id == @opportunity.user_id) && !(@opportunity.opportunity_status == 'completed') && !(@opportunity.archived) %>
+              <% if (current_user.has_role? :host) && (current_user.id == @opportunity.user_id) && !(@opportunity.opportunity_status == 'post_active') && !(@opportunity.archived) %>
                 <%= link_to "Add/Remove Skills", required_skills_path(oppo_id: @opportunity.id)%>
               <% end %>
             <% else %>
               No skills is currently listed
               <br>
-              <% if (current_user.has_role? :host) && (current_user.id == @opportunity.user_id) && !(@opportunity.opportunity_status == 'completed') && !(@opportunity.archived) %>
+              <% if (current_user.has_role? :host) && (current_user.id == @opportunity.user_id) && !(@opportunity.opportunity_status == 'post_active') && !(@opportunity.archived) %>
                 <%= link_to "Add/Remove Skills", required_skills_path(oppo_id: @opportunity.id)%>
               <% end %>
               <br>
