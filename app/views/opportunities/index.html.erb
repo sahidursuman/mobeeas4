@@ -9,11 +9,12 @@
       <h4>Listed Opportunities</h4>
     <% elsif params[:status] == 'active'%>
       <h4>Active Opportunities</h4>
-    <% elsif params[:status] == 'completed'%>
+    <% elsif params[:status] == 'has_completed'%>
       <h4>Completed Opportunities </h4>
     <% elsif params[:status] == 'archived'%>
       <h4>Archived Opportunities</h4>
     <% end %>
+    <% if @opportunities.present? %>
       <% @opportunities.each do |opportunity| %>
         <div class="row">
           <div class="col s12">
@@ -50,7 +51,7 @@
           </div>
         </div>
       <% end %>
-
+    <% end %>
     <%#= link_to 'New Opportunity', new_opportunity_path %>
   </div>
 </div>

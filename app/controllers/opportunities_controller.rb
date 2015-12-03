@@ -60,8 +60,8 @@ class OpportunitiesController < ApplicationController
       @opportunities = Opportunity.active.not_archived
 
     elsif params[:status] == 'completed'
-      @opportunities = Opportunity.completed.not_archived
-      
+      @opportunities = Opportunity.has_completed.not_archived
+
     elsif params[:status] == 'archived'
       @opportunities = Opportunity.archived
     end
