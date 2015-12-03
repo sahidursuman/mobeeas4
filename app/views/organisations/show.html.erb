@@ -37,6 +37,24 @@
         </div>
       </div>
 
+
+  <!-- if current user has just applied for host admin or host and waiting for the approval of the organisation administrator, this message will appear -->
+  <% if (current_user.org_user_profile.present?) %>
+    <% current_user.org_users.each do |org_user| %>
+      <!-- if matching then this user has already a connection with this organisation -->
+      <% if org_user.organisation_id == @organisation.id %>
+        <!-- if current user has a connection to this organisation but has not been approved by the organisation user, then this card will appear -->
+        <% if !(current_user.org_users.find_by(organisation_id: @organisation.id).admin_status) && !(current_user.org_users.find_by(organisation_id: @organisation.id).verified_status) %>
+        <div class="card #ffecb3 amber lighten-4">
+          <div class="card-content">
+            Your request has been submitted to <%= @organisation.name %> Coordinator and waiting for approval.
+          </div>
+        </div>
+        <% end %>
+      <% end %><!-- end of if org_user.organisation_id == @organisation.id-->
+    <% end %>
+  <% end %>
+
   <!-- APPROVED ADMIN -->
   <div class="card">
     <div class="card-content">

@@ -57,9 +57,10 @@ class OrganisationsController < ApplicationController
   # POST /organisations.json
   def create
     @organisation = Organisation.new(organisation_params)
-    @organisation.users << current_user
     respond_to do |format|
       if @organisation.save
+        @organisation.users << current_user
+
         NewOrganisationMailer.notify(@organisation.id).deliver_now
         NewOrganisationMailer.register_admin(@organisation.id, current_user.id).deliver_now
         format.html { redirect_to @organisation, notice: 'Organisation was successfully created.' }
