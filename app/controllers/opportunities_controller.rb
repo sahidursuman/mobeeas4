@@ -59,7 +59,7 @@ class OpportunitiesController < ApplicationController
     elsif params[:status] == 'active'
       @opportunities = Opportunity.active.not_archived
 
-    elsif params[:status] == 'completed'
+    elsif params[:status] == 'has_completed'
       @opportunities = Opportunity.has_completed.not_archived
 
     elsif params[:status] == 'archived'
