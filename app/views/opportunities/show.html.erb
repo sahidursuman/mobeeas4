@@ -1,221 +1,224 @@
-  <!-- SPONSORSHIP ------------>
-  <div class="row">
-    <div class="col m11 offset-m1">
-      <div class="card">
-        <div class="card-content">
-          <p>Proudly sponsored by: </p>
-        </div>
-      </div><!-- end of card-content -->
-    </div><!-- end of card -->
-  </div>
+<!-- SPONSORSHIP ------------>
+<div class="row">
+  <div class="col m11 offset-m1">
+    <div class="card">
+      <div class="card-content">
+        <p>Proudly sponsored by: </p>
+      </div>
+    </div><!-- end of card-content -->
+  </div><!-- end of card -->
+</div>
 
 
-  <!-- OPPORTUNITY ------------>
-  <div class="row">
-    <div class="col m6 offset-m1">
-      <div class="card" style="margin-left: none;">
-        <div class="card-content">
-          <%= render 'layouts/sidebar' %>
-          <p id="notice"><%= notice %></p>
+<!-- OPPORTUNITY ------------>
+<div class="row">
+  <div class="col m6 offset-m1">
+    <div class="card" style="margin-left: none;">
+      <div class="card-content">
+        <%= render 'layouts/sidebar' %>
+        <p id="notice"><%= notice %></p>
 
-          <% @organisation = Organisation.find(@opportunity.organisation) %>
-          <div class="row">
-            <div class="col m2">
-              <div class="card-image waves-effect waves-block waves-light">
-                <% if @organisation.logo.present? %>
-                  <%= image_tag(@organisation.logo_url, class: 'img-responsive activator') %>
-                <% else %>
-                  <img src="<%= asset_path 'noPhoto-icon.png' %>" class='img-responsive activator'>
-                <% end %>
-              </div>
-            </div>
-            <div class="col m6">
-              <div class="card-image waves-effect waves-block waves-light">
-                <br><br>
-                <p><strong><%= @organisation.name %></strong></p>
-              </div>
-            </div>
-          </div><!-- end of row -->
-
-          <h5><%= @opportunity.title %></h5>
-          <p><strong><%= @opportunity.description %></strong></p><br>
-
-<!------------------------>
-          <!-- only the opportunity owner can edit the opportunity status -->
-          <p>
-            <!-- If opportunity has been archived -->
-            <% if (@opportunity.archived) %>
-              Status: <span class="purple-text"><strong>archived</strong></span>
-            <% else %>
-              <% if @opportunity.opportunity_status == 'active' %>
-                  Status: <span class="red-text"><strong><%= @opportunity.opportunity_status %></strong></span>
+        <% @organisation = Organisation.find(@opportunity.organisation) %>
+        <div class="row">
+          <div class="col m2">
+            <div class="card-image waves-effect waves-block waves-light">
+              <% if @organisation.logo.present? %>
+                <%= image_tag(@organisation.logo_url, class: 'img-responsive activator') %>
               <% else %>
-                  Status: <strong><%= @opportunity.opportunity_status %></strong>
+                <img src="<%= asset_path 'noPhoto-icon.png' %>" class='img-responsive activator'>
               <% end %>
-            <% end %>
-
-          <!-- only opportunity owner can edit the listing status and can edit the opportunity if not archived yet. -->
-          <% if (current_user.has_role? :host) && (current_user.id == @opportunity.user_id) && !(@opportunity.archived) %>
-            <% if @opportunity.opportunity_status == 'draft' %>
-               - <%= link_to "Save as Listed", status_listed_opportunity_path(@opportunity) %>
-               | <%= link_to "Save as Archived", status_archived_opportunity_path(@opportunity) %>
-               | <%= link_to "Edit", edit_opportunity_path(@opportunity) %>
-            <% elsif @opportunity.opportunity_status == 'listed' %>
-               - <%= link_to "Save as Draft", status_draft_opportunity_path(@opportunity) %>
-               | <%= link_to "Save as Archived", status_archived_opportunity_path(@opportunity) %>
-               | <%= link_to "Edit", edit_opportunity_path(@opportunity) %>
-            <% elsif @opportunity.opportunity_status == 'active' %>
-               - <%= link_to "Save as Completed", post_active_opportunity_path(@opportunity), data: {confirm: "Are you sure you want to complete this opportunity? Changes will be permanent."} %>
-               | <%= link_to "Edit", edit_opportunity_path(@opportunity) %>
-            <% elsif @opportunity.opportunity_status == 'post_active' %>
-               | <%= link_to "Save as Archived", status_archived_opportunity_path(@opportunity) %>
-            <% end %>
-          <% end %>
-
-
-          </p>
-
-          <% @host = User.find(@opportunity.user_id) %>
-          <p>
-            Host: <strong><%= @host.org_user_profile.name %></strong>
-            <!-- Do not display 'contact host' while the owner of this opportunity is viewing my own opportunity -->
-            <% if !(@host.id == current_user.id) && !(@opportunity.archived) %>
-               - <%= link_to 'Contact ' + @host.org_user_profile.first_name, new_message_path(from: current_user.id, to: @host.id, opportunity_id: @opportunity.id) %>
-            <% end %>
-          </p>
-
-          <p>
-            Start date: <strong><%= @opportunity.commencement_date.strftime("%A, %e %b %Y") %></strong>
-          </p>
-
-          <p>
-            End date: <strong><%= @opportunity.completion_date.strftime("%A, %e %b %Y") %></strong>
-          </p>
-
-          <!-- <p><%#= link_to "Add Schedule", new_opportunity_time_path(opportunity_id: @opportunity.id)%></p> -->
-          <% if @opportunity.opportunity_times.present? %>
-            <p>Required activity dates, days and times:
-              <ul class="list-style-disc">
-                <% @opportunity.opportunity_times.each do |t|%>
-                  <% if t.date_time.present? %>
-                    <li class="list-style-disc"><%= t.date_time.strftime("%d/%m/%y %A") %> <%= t.time.strftime("%l:%M %P") %>
-                      <% if (current_user.has_role? :host) && (current_user.id == @opportunity.user_id) && !(@opportunity.opportunity_status == 'post_active') && !(@opportunity.archived) %>
-                         - <%= link_to 'Delete',t , method: :delete, data: { confirm: 'Are you sure?' } %></li>
-                      <% end %>
-                  <% else %>
-                    <li class="list-style-disc">--- /--- /---  <%= t.day %> <%= t.time.strftime("%l:%M %P") %> <%= t.frequency %>
-                      <% if (current_user.has_role? :host) && (current_user.id == @opportunity.user_id) && !(@opportunity.opportunity_status == 'post_active') && !(@opportunity.archived) %>
-                         - <%= link_to 'Delete', t, method: :delete, data: { confirm: 'Are you sure?' } %></li>
-                      <% end %>
-                  <% end %>
-                <% end %>
-              </ul>
-              <% if (current_user.has_role? :host) && (current_user.id == @opportunity.user_id) && !(@opportunity.opportunity_status == 'post_active') && !(@opportunity.archived) %>
-                <a class="modal-trigger" href="#opportunity_schedule">Add Opportunity Dates and Times</a>
-              <% end %>
-            </p>
-          <% else %><!-- else if opportunity time is not present -->
-            <p>No specific dates, days and time setup yet.</p>
-            <% if (current_user.has_role? :host) && (current_user.id == @opportunity.user_id) && !(@opportunity.opportunity_status == 'post_active') && !(@opportunity.archived)%>
-              <a class="modal-trigger" href="#opportunity_schedule">Add Opportunity Dates and Times</a>
-            <% end %>
-          <% end %>
-
-          <!-- Modal Trigger -->
-
-          <!-- Modal Structure -->
-          <div id="opportunity_schedule" class="modal">
-            <div class="modal-content">
-              <%= render 'time_form'%>
-            </div>
-            <div class="modal-footer">
-              <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Close Without Saving</a>
             </div>
           </div>
+          <div class="col m6">
+            <div class="card-image waves-effect waves-block waves-light">
+              <br><br>
+              <p><strong><%= @organisation.name %></strong></p>
+            </div>
+          </div>
+        </div><!-- end of row -->
 
-          <!-- only opportunity owner can add/remove candidates and tokens -->
-          <% if (current_user.has_role? :host) && (current_user.id == @opportunity.user_id) %>
-            <p><br><%= @organisation.name%> currently holds: <strong><%= @organisation.number_of_tokens %> <%= (@organisation.number_of_tokens > 1) ? 'tokens' : 'token' %></strong></p>
+        <h5><%= @opportunity.title %></h5>
+        <p><strong><%= @opportunity.description %></strong></p><br>
 
-            <p>This opportunity currently holds: <strong><%= @opportunity.number_of_tokens %> <%= (@opportunity.number_of_tokens > 1) ? 'tokens' : 'token' %></strong></p>
-
-            <% if (@organisation.number_of_tokens > 0) && !(@opportunity.opportunity_status == 'post_active') && !(@opportunity.archived) %>
-              <%= link_to 'Transfer 1 Token into this Opportunity', increase_one_token_into_opportunity_path(org_id: @organisation.id), class: 'btn' %>
+        <!-- only the opportunity owner can edit the opportunity status -->
+        <p>
+          <!-- If opportunity has been archived -->
+          <% if (@opportunity.archived) %>
+            Status: <span class="purple-text"><strong>archived</strong></span>
+          <% else %>
+            <% if @opportunity.opportunity_status == 'active' %>
+              Status: <span class="red-text"><strong><%= @opportunity.opportunity_status %></strong></span>
+            <% elsif @opportunity.opportunity_status == 'post_active' %>
+              Status: <strong>completed</strong>
+              <!-- Note: when the opportunity status is post_active, the word to display is 'completed' -->
             <% else %>
-              <p>Not enough token held by organisation.</p>
-            <% end %>
-            <% if (@opportunity.number_of_tokens > 0) && !(@opportunity.opportunity_status == 'post_active') && !(@opportunity.archived) %>
-              <br><%= link_to 'Remove 1 Token from this Opportunity', decrease_one_token_from_opportunity_path(org_id: @organisation.id), class: 'btn' %>
+              Status: <strong><%= @opportunity.opportunity_status %></strong>
             <% end %>
           <% end %>
 
-          <% if @opportunity.school_years.present? %>
-            <p>
-              <br>Participants School Year level(s):
-              <ol>
-                <% @opportunity.school_years.each do |level| %>
-                  <li><%= level.name %></li>
+        <!-- only opportunity owner can edit the listing status and can edit the opportunity if not archived yet. -->
+        <% if (current_user.has_role? :host) && (current_user.id == @opportunity.user_id) && !(@opportunity.archived) %>
+          <% if @opportunity.opportunity_status == 'draft' %>
+             - <%= link_to "Save as Listed", status_listed_opportunity_path(@opportunity) %>
+             | <%= link_to "Save as Archived", status_archived_opportunity_path(@opportunity) %>
+             | <%= link_to "Edit", edit_opportunity_path(@opportunity) %>
+          <% elsif @opportunity.opportunity_status == 'listed' %>
+             - <%= link_to "Save as Draft", status_draft_opportunity_path(@opportunity) %>
+             | <%= link_to "Save as Archived", status_archived_opportunity_path(@opportunity) %>
+             | <%= link_to "Edit", edit_opportunity_path(@opportunity) %>
+          <% elsif @opportunity.opportunity_status == 'active' %>
+             - <%= link_to "Save as Completed", post_active_opportunity_path(@opportunity), data: {confirm: "Are you sure you want to complete this opportunity? Changes will be permanent."} %>
+             | <%= link_to "Edit", edit_opportunity_path(@opportunity) %>
+          <% elsif @opportunity.opportunity_status == 'post_active' %>
+             | <%= link_to "Save as Archived", status_archived_opportunity_path(@opportunity) %>
+          <% end %>
+        <% end %>
+
+
+        </p>
+
+        <% @host = User.find(@opportunity.user_id) %>
+        <p>
+          Host: <strong><%= @host.org_user_profile.name %></strong>
+          <!-- Do not display 'contact host' while the owner of this opportunity is viewing my own opportunity -->
+          <% if !(@host.id == current_user.id) && !(@opportunity.archived) %>
+             - <%= link_to 'Contact ' + @host.org_user_profile.first_name, new_message_path(from: current_user.id, to: @host.id, opportunity_id: @opportunity.id) %>
+          <% end %>
+        </p>
+
+        <p>
+          Start date: <strong><%= @opportunity.commencement_date.strftime("%A, %e %b %Y") %></strong>
+        </p>
+
+        <p>
+          End date: <strong><%= @opportunity.completion_date.strftime("%A, %e %b %Y") %></strong>
+        </p>
+
+        <!-- <p><%#= link_to "Add Schedule", new_opportunity_time_path(opportunity_id: @opportunity.id)%></p> -->
+        <% if @opportunity.opportunity_times.present? %>
+          <p>Required activity dates, days and times:
+            <ul class="list-style-disc">
+              <% @opportunity.opportunity_times.each do |t|%>
+                <% if t.date_time.present? %>
+                  <li class="list-style-disc"><%= t.date_time.strftime("%d/%m/%y %A") %> <%= t.time.strftime("%l:%M %P") %>
+                    <% if (current_user.has_role? :host) && (current_user.id == @opportunity.user_id) && !(@opportunity.opportunity_status == 'post_active') && !(@opportunity.archived) %>
+                       - <%= link_to 'Delete',t , method: :delete, data: { confirm: 'Are you sure?' } %></li>
+                    <% end %>
+                <% else %>
+                  <li class="list-style-disc">--- /--- /---  <%= t.day %> <%= t.time.strftime("%l:%M %P") %> <%= t.frequency %>
+                    <% if (current_user.has_role? :host) && (current_user.id == @opportunity.user_id) && !(@opportunity.opportunity_status == 'post_active') && !(@opportunity.archived) %>
+                       - <%= link_to 'Delete', t, method: :delete, data: { confirm: 'Are you sure?' } %></li>
+                    <% end %>
                 <% end %>
-              </ol>
-            </p>
+              <% end %>
+            </ul>
+            <% if (current_user.has_role? :host) && (current_user.id == @opportunity.user_id) && !(@opportunity.opportunity_status == 'post_active') && !(@opportunity.archived) %>
+              <a class="modal-trigger" href="#opportunity_schedule">Add Opportunity Dates and Times</a>
+            <% end %>
+          </p>
+        <% else %><!-- else if opportunity time is not present -->
+          <p>No specific dates, days and time setup yet.</p>
+          <% if (current_user.has_role? :host) && (current_user.id == @opportunity.user_id) && !(@opportunity.opportunity_status == 'post_active') && !(@opportunity.archived)%>
+            <a class="modal-trigger" href="#opportunity_schedule">Add Opportunity Dates and Times</a>
           <% end %>
+        <% end %>
 
+        <!-- Modal Trigger -->
 
-          <p><br>Skills Required of the MOBEEAS Candidate:</p>
+        <!-- Modal Structure -->
+        <div id="opportunity_schedule" class="modal">
+          <div class="modal-content">
+            <%= render 'time_form'%>
+          </div>
+          <div class="modal-footer">
+            <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Close Without Saving</a>
+          </div>
+        </div>
+
+        <!-- only opportunity owner can add/remove candidates and tokens -->
+        <% if (current_user.has_role? :host) && (current_user.id == @opportunity.user_id) %>
+          <p><br><%= @organisation.name%> currently holds: <strong><%= @organisation.number_of_tokens %> <%= (@organisation.number_of_tokens > 1) ? 'tokens' : 'token' %></strong></p>
+
+          <p>This opportunity currently holds: <strong><%= @opportunity.number_of_tokens %> <%= (@opportunity.number_of_tokens > 1) ? 'tokens' : 'token' %></strong></p>
+
+          <% if (@organisation.number_of_tokens > 0) && !(@opportunity.opportunity_status == 'post_active') && !(@opportunity.archived) %>
+            <%= link_to 'Transfer 1 Token into this Opportunity', increase_one_token_into_opportunity_path(org_id: @organisation.id), class: 'btn' %>
+          <% else %>
+            <p>Not enough token held by organisation.</p>
+          <% end %>
+          <% if (@opportunity.number_of_tokens > 0) && !(@opportunity.opportunity_status == 'post_active') && !(@opportunity.archived) %>
+            <br><%= link_to 'Remove 1 Token from this Opportunity', decrease_one_token_from_opportunity_path(org_id: @organisation.id), class: 'btn' %>
+          <% end %>
+        <% end %>
+
+        <% if @opportunity.school_years.present? %>
           <p>
-            <% if (@opportunity.skills.any?) %>
-              <ol>
-                <% @opportunity.skills.each do |skill| %>
-                  <li><%= skill.name %> (<%= skill.skill_category.name %>)</li>
-                <% end %>
-              </ol>
-              <% if (current_user.has_role? :host) && (current_user.id == @opportunity.user_id) && !(@opportunity.opportunity_status == 'post_active') && !(@opportunity.archived) %>
-                <%= link_to "Add/Remove Skills", required_skills_path(oppo_id: @opportunity.id)%>
+            <br>Participants School Year level(s):
+            <ol>
+              <% @opportunity.school_years.each do |level| %>
+                <li><%= level.name %></li>
               <% end %>
-            <% else %>
-              No skills is currently listed
-              <br>
-              <% if (current_user.has_role? :host) && (current_user.id == @opportunity.user_id) && !(@opportunity.opportunity_status == 'post_active') && !(@opportunity.archived) %>
-                <%= link_to "Add/Remove Skills", required_skills_path(oppo_id: @opportunity.id)%>
+            </ol>
+          </p>
+        <% end %>
+
+
+        <p><br>Skills Required of the MOBEEAS Candidate:</p>
+        <p>
+          <% if (@opportunity.skills.any?) %>
+            <ol>
+              <% @opportunity.skills.each do |skill| %>
+                <li><%= skill.name %> (<%= skill.skill_category.name %>)</li>
               <% end %>
-              <br>
+            </ol>
+            <% if (current_user.has_role? :host) && (current_user.id == @opportunity.user_id) && !(@opportunity.opportunity_status == 'post_active') && !(@opportunity.archived) %>
+              <%= link_to "Add/Remove Skills", required_skills_path(oppo_id: @opportunity.id)%>
             <% end %>
-          </p><br>
-
-          <p>Other advantageous experiences:
-            <strong><%= @opportunity.experiences %></strong>
-          </p><br>
-
-          <p>Is this a paid Engagement?
-            <% if @opportunity.paid_engagement %>
-              <p><strong>Yes, paid engagement.</strong></p>
-            <% else %>
-              <p><strong>No, Not paid engagement.</strong></p>
+          <% else %>
+            No skills is currently listed
+            <br>
+            <% if (current_user.has_role? :host) && (current_user.id == @opportunity.user_id) && !(@opportunity.opportunity_status == 'post_active') && !(@opportunity.archived) %>
+              <%= link_to "Add/Remove Skills", required_skills_path(oppo_id: @opportunity.id)%>
             <% end %>
-          </p><br>
+            <br>
+          <% end %>
+        </p><br>
 
-          <p>Hourly rate:
-            <strong><%= @opportunity.pay %></strong>
-          </p><br>
+        <p>Other advantageous experiences:
+          <strong><%= @opportunity.experiences %></strong>
+        </p><br>
 
-          <p>Remuneration or specific terms of employment:
-            <strong><%= @opportunity.employment_terms %></strong>
-          </p><br>
+        <p>Is this a paid Engagement?
+          <% if @opportunity.paid_engagement %>
+            <p><strong>Yes, paid engagement.</strong></p>
+          <% else %>
+            <p><strong>No, Not paid engagement.</strong></p>
+          <% end %>
+        </p><br>
+
+        <p>Hourly rate:
+          <strong><%= @opportunity.pay %></strong>
+        </p><br>
+
+        <p>Remuneration or specific terms of employment:
+          <strong><%= @opportunity.employment_terms %></strong>
+        </p><br>
 
 
 
-        </div><!-- end of card-content -->
-      </div><!-- end of card -->
-    </div> <!-- end of col m6 offset-m2-->
+      </div><!-- end of card-content -->
+    </div><!-- end of card -->
+  </div> <!-- end of col m6 offset-m2-->
 
-    <!-- The right side -->
-    <div class="col m5">
-      <div class="card">
-        <div class="card-content">
-
+  <!-- The right side -->
+  <div class="col m5">
+    <div class="card">
+      <div class="card-content">
+        <% if @opportunity.opportunity_status == 'draft' %>
+          <p>To display the list of Candidates with suitable skills, please change the Opportunity status from 'draft' to 'listed'.</p>
+        <% else %>
           <% hash = {} %>
           <% users = [] %>
-
           <p>Candidates with matching and verified skills:</p>
           <!-- First, set the hash keys with all matching candidates' user_id -->
           <% @opportunity.opportunity_skills.each do |opportunity_skill| %>
@@ -292,9 +295,10 @@
             <% end %><!-- end of hash1 loop -->
           <% end %><!-- end of if hash1.empty? -->
           <br><br>
-          <p>Display all candidate link for Admin and Host? </p>
+          <!-- <p>Display all candidate link for Admin and Host? </p> -->
           <%#= link_to 'View all candidates', profiles_path %>
-        </div><!-- end of card-content -->
-      </div><!-- end of card -->
-    </div><!-- end of col m2 -->
-  </div><!-- end of row -->
+        <% end %><!-- end of if the list status is still draft -->
+      </div><!-- end of card-content -->
+    </div><!-- end of card -->
+  </div><!-- end of col m2 -->
+</div><!-- end of row -->
