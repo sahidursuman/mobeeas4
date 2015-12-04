@@ -11,7 +11,9 @@
     <%= f.input :completion_date, as: :string, label: 'Anticipated End Date', input_html: { class: 'datetimepicker1'} %>
 
     <p>Choose School Year level(s):</p>
+    <!-- this is the template/original form association, do not delete -->
     <%#= f.association :school_years, collection: SchoolYear.all, as: :check_boxes %>
+    
     <% if @opportunity.new_record? %><!-- if creating a new opportunity -->
       <label class="check_boxes optional">School years</label>
       <%# @opportunity.school_years.each do |school_year| %>

@@ -1,0 +1,35 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  opportunity_id: 
+  type: 
+  relevant_knowledge: MyString
+  relevant_knowledge_comment: MyText
+  punctual: MyString
+  punctual_comment: MyText
+  communication: MyString
+  communication_comment: MyText
+  enthusiasm: MyString
+  enthusiasm_comment: MyText
+  professionalism: MyString
+  professionalism_comment: MyText
+  stength: MyText
+  further_dev: MyText
+  general_comments: MyText
+
+two:
+  opportunity_id: 
+  type: 
+  relevant_knowledge: MyString
+  relevant_knowledge_comment: MyText
+  punctual: MyString
+  punctual_comment: MyText
+  communication: MyString
+  communication_comment: MyText
+  enthusiasm: MyString
+  enthusiasm_comment: MyText
+  professionalism: MyString
+  professionalism_comment: MyText
+  stength: MyText
+  further_dev: MyText
+  general_comments: MyText

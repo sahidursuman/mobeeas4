@@ -59,18 +59,18 @@
         <!-- only opportunity owner can edit the listing status and can edit the opportunity if not archived yet. -->
         <% if (current_user.has_role? :host) && (current_user.id == @opportunity.user_id) && !(@opportunity.archived) %>
           <% if @opportunity.opportunity_status == 'draft' %>
-             - <%= link_to "Save as Listed", status_listed_opportunity_path(@opportunity) %>
-             | <%= link_to "Save as Archived", status_archived_opportunity_path(@opportunity) %>
+             - <%= link_to "List", status_listed_opportunity_path(@opportunity) %>
+             | <%= link_to "Archive", status_archived_opportunity_path(@opportunity) %>
              | <%= link_to "Edit", edit_opportunity_path(@opportunity) %>
           <% elsif @opportunity.opportunity_status == 'listed' %>
-             - <%= link_to "Save as Draft", status_draft_opportunity_path(@opportunity) %>
-             | <%= link_to "Save as Archived", status_archived_opportunity_path(@opportunity) %>
+             - <%= link_to "Draft", status_draft_opportunity_path(@opportunity) %>
+             | <%= link_to "Archive", status_archived_opportunity_path(@opportunity) %>
              | <%= link_to "Edit", edit_opportunity_path(@opportunity) %>
           <% elsif @opportunity.opportunity_status == 'active' %>
-             - <%= link_to "Save as Completed", post_active_opportunity_path(@opportunity), data: {confirm: "Are you sure you want to complete this opportunity? Changes will be permanent."} %>
+             - <%= link_to "Completed", post_active_opportunity_path(@opportunity), data: {confirm: "Are you sure you want to complete this opportunity? Changes will be permanent."} %>
              | <%= link_to "Edit", edit_opportunity_path(@opportunity) %>
           <% elsif @opportunity.opportunity_status == 'post_active' %>
-             | <%= link_to "Save as Archived", status_archived_opportunity_path(@opportunity) %>
+             | <%= link_to "Archive", status_archived_opportunity_path(@opportunity) %>
           <% end %>
         <% end %>
 
@@ -215,7 +215,7 @@
     <div class="card">
       <div class="card-content">
         <% if @opportunity.opportunity_status == 'draft' %>
-          <p>To display the list of Candidates with suitable skills, please change the Opportunity status from 'draft' to 'listed'.</p>
+          <p>A list of candidates with suitable skills will be displayed once this opportunity is listed.</p>
         <% else %>
           <% hash = {} %>
           <% users = [] %>

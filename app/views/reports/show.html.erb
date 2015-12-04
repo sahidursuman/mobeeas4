@@ -1,0 +1,107 @@
+<p id="notice"><%= notice %></p>
+
+
+<a href="/" class="brand-logo"><%= image_tag 'navlogo.jpg', class: 'img-responsive' %></a>
+
+<p>
+  <strong>Opportunity:</strong>
+  <%= @report.opportunity %>
+</p>
+
+<p>
+  <strong>Type:</strong>
+  <%= @report.type %>
+</p>
+
+<p>
+  <strong>Host Organisation:</strong>
+  <%= @report.opportunity.organisation.name %>
+</p>
+
+<p>
+  <strong>Host's Name:</strong>
+  <%= @report.opportunity.organisation.name %>
+</p>
+
+<p>
+  <strong>Host's Email:</strong>
+  <%= @report.opportunity.organisation.name %>
+</p>
+
+<p>
+  <strong>Host's Phone:</strong>
+  <%= @report.opportunity.organisation.name %>
+</p>
+
+<p>
+  <strong>Candidate's Name:</strong>
+  <%= @report.profile_id %>
+</p>
+
+<p>
+  <strong>Relevant knowledge:</strong>
+  <%= @report.relevant_knowledge %>
+</p>
+
+<p>
+  <strong>Relevant knowledge comment:</strong>
+  <%= @report.relevant_knowledge_comment %>
+</p>
+
+<p>
+  <strong>Punctual:</strong>
+  <%= @report.punctual %>
+</p>
+
+<p>
+  <strong>Punctual comment:</strong>
+  <%= @report.punctual_comment %>
+</p>
+
+<p>
+  <strong>Communication:</strong>
+  <%= @report.communication %>
+</p>
+
+<p>
+  <strong>Communication comment:</strong>
+  <%= @report.communication_comment %>
+</p>
+
+<p>
+  <strong>Enthusiasm:</strong>
+  <%= @report.enthusiasm %>
+</p>
+
+<p>
+  <strong>Enthusiasm comment:</strong>
+  <%= @report.enthusiasm_comment %>
+</p>
+
+<p>
+  <strong>Professionalism:</strong>
+  <%= @report.professionalism %>
+</p>
+
+<p>
+  <strong>Professionalism comment:</strong>
+  <%= @report.professionalism_comment %>
+</p>
+
+<p>
+  <strong>Stength:</strong>
+  <%= @report.stength %>
+</p>
+
+<p>
+  <strong>Further dev:</strong>
+  <%= @report.further_dev %>
+</p>
+
+<p>
+  <strong>General comments:</strong>
+  <%= @report.general_comments %>
+</p>
+
+<%= link_to 'Edit', edit_report_path(@report) %> |
+<%= link_to 'Back', reports_path %>

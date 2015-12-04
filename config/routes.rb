@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :reports
+  resources :achievement_levels
   resources :messages
   resources :engagements do
     member do

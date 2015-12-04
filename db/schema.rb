@@ -11,10 +11,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151202033427) do
+ActiveRecord::Schema.define(version: 20151204032016) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "achievement_levels", force: :cascade do |t|
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "agreements", force: :cascade do |t|
     t.integer  "user_id"
@@ -273,6 +279,39 @@ ActiveRecord::Schema.define(version: 20151202033427) do
   add_index "profiles", ["candidate_type_id"], name: "index_profiles_on_candidate_type_id", using: :btree
   add_index "profiles", ["user_id"], name: "index_profiles_on_user_id", using: :btree
 
+  create_table "report_achievement_levels", force: :cascade do |t|
+    t.integer  "report_id"
+    t.integer  "achievement_level_id"
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
+  end
+
+  add_index "report_achievement_levels", ["achievement_level_id"], name: "index_report_achievement_levels_on_achievement_level_id", using: :btree
+  add_index "report_achievement_levels", ["report_id"], name: "index_report_achievement_levels_on_report_id", using: :btree
+
+  create_table "reports", force: :cascade do |t|
+    t.integer  "opportunity_id"
+    t.string   "type"
+    t.string   "relevant_knowledge"
+    t.text     "relevant_knowledge_comment"
+    t.string   "punctual"
+    t.text     "punctual_comment"
+    t.string   "communication"
+    t.text     "communication_comment"
+    t.string   "enthusiasm"
+    t.text     "enthusiasm_comment"
+    t.string   "professionalism"
+    t.text     "professionalism_comment"
+    t.text     "stength"
+    t.text     "further_dev"
+    t.text     "general_comments"
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
+    t.integer  "profile_id"
+  end
+
+  add_index "reports", ["opportunity_id"], name: "index_reports_on_opportunity_id", using: :btree
+
   create_table "roles", force: :cascade do |t|
     t.string   "name"
     t.integer  "resource_id"
@@ -420,6 +459,9 @@ ActiveRecord::Schema.define(version: 20151202033427) do
   add_foreign_key "organisations", "organisation_types"
   add_foreign_key "profiles", "candidate_types"
   add_foreign_key "profiles", "users"
+  add_foreign_key "report_achievement_levels", "achievement_levels"
+  add_foreign_key "report_achievement_levels", "reports"
+  add_foreign_key "reports", "opportunities"
   add_foreign_key "school_year_opportunities", "opportunities"
   add_foreign_key "school_year_opportunities", "school_years"
   add_foreign_key "security_checks", "users"
