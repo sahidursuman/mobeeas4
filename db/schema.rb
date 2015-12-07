@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151207023709) do
+ActiveRecord::Schema.define(version: 20151207042034) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -294,7 +294,7 @@ ActiveRecord::Schema.define(version: 20151207023709) do
 
   create_table "reports", force: :cascade do |t|
     t.integer  "opportunity_id"
-    t.string   "type"
+    t.string   "report_type"
     t.string   "relevant_knowledge"
     t.text     "relevant_knowledge_comment"
     t.string   "punctual"
