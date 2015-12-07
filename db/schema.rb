@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151204032016) do
+ActiveRecord::Schema.define(version: 20151207023709) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -88,9 +88,11 @@ ActiveRecord::Schema.define(version: 20151204032016) do
   create_table "engagements", force: :cascade do |t|
     t.integer  "opportunity_id"
     t.integer  "profile_id"
-    t.string   "status",         default: "pending"
-    t.datetime "created_at",                         null: false
-    t.datetime "updated_at",                         null: false
+    t.string   "status",            default: "pending"
+    t.datetime "created_at",                            null: false
+    t.datetime "updated_at",                            null: false
+    t.datetime "progress_report"
+    t.datetime "completion_report"
   end
 
   add_index "engagements", ["opportunity_id"], name: "index_engagements_on_opportunity_id", using: :btree
@@ -282,8 +284,9 @@ ActiveRecord::Schema.define(version: 20151204032016) do
   create_table "report_achievement_levels", force: :cascade do |t|
     t.integer  "report_id"
     t.integer  "achievement_level_id"
-    t.datetime "created_at",           null: false
-    t.datetime "updated_at",           null: false
+    t.string   "performance_descriptor"
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
   end
 
   add_index "report_achievement_levels", ["achievement_level_id"], name: "index_report_achievement_levels_on_achievement_level_id", using: :btree

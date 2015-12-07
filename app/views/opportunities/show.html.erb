@@ -246,16 +246,16 @@
             <p>No matching candidate</p>
           <% else %>
             <% hash.each_pair do |key, value| %> <!-- key is user id, value is skill name -->
-              <% @candidate = Profile.find_by(user_id: key)%>
+              <% @profile = Profile.find_by(user_id: key)%>
                 <% if (current_user.has_role? :candidate) %>
-                  <% if (current_user.profile.id == @candidate.id ) %>
+                  <% if (current_user.profile.id == @profile.id ) %>
                     <br><strong><%= current_user.profile.name %></strong> (Profile ID: <%= current_user.profile.id %>)
                     <% value.each do |val| %>
                       <br><%= val[0] %> - <%= val[1] %>
                     <% end %>
                   <% end %>
                 <% else %>
-                  <br><strong><%= @candidate.name %></strong> (Profile ID: <%= @candidate.id %>)
+                  <br><strong><%= @profile.name %></strong> (Profile ID: <%= @profile.id %>)
                   <%# @found = false %><!-- start with found is true -->
                   <%# counter = 0 %>
                   <% value.each do |val| %>
@@ -281,7 +281,7 @@
                     <%# end %><!-- end of @opportunity.opportunity_skills -->
 
                   <% end %><!-- end of value.each loop -->
-                <% end %><!-- end of if current_user.has_role? :candidate -->
+                <% end %><!-- end of if current_user.has_role? :profile -->
               <%# if @found == true %><!-- when all opportunity skills are matching with cand. skills, then found value stays true. -->
                 <!-- <br>Exact match<br> -->
               <%# else %>

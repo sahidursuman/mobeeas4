@@ -3,7 +3,9 @@
 one:
   report_id: 
   achievement_level_id: 
+  performance_descriptor: MyString
 
 two:
   report_id: 
   achievement_level_id: 
+  performance_descriptor: MyString

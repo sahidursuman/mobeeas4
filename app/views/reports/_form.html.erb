@@ -2,18 +2,57 @@
   <%= f.error_notification %>
 
   <div class="form-inputs">
-    <%= f.association :opportunity %>
-    <%= f.input :type %>
-    <%= f.input :relevant_knowledge %>
-    <%= f.input :relevant_knowledge_comment %>
-    <%= f.input :punctual %>
-    <%= f.input :punctual_comment %>
-    <%= f.input :communication %>
-    <%= f.input :communication_comment %>
-    <%= f.input :enthusiasm %>
-    <%= f.input :enthusiasm_comment %>
-    <%= f.input :professionalism %>
-    <%= f.input :professionalism_comment %>
+    <%= f.association :opportunity, :as => :hidden, input_html: { value: @opportunity.id } %>
+    <% if params[:type] == 'progress' %>
+      <%= f.input :type, :as => :hidden, input_html: { value: 'progress' } %>
+    <% elsif params[:type] == 'completion' %>
+      <%= f.input :type, :as => :hidden, input_html: { value: 'completion' } %>
+    <% end %>
+    <div class='row'>
+      <div class='col l6'>
+        <%= f.input :relevant_knowledge %>
+      </div>
+      <div class='col l6'>
+        <%= f.input :relevant_knowledge_comment %>
+      </div>
+    </div>
+    <div class='row'>
+      <div class='col l6'>
+        <%= f.input :punctual %>
+      </div>
+      <div class='col l6'>
+        <%= f.input :punctual_comment %>
+      </div>
+    </div>
+
+    <div class='row'>
+      <div class='col l6'>
+        <%= f.input :communication %>
+      </div>
+      <div class='col l6'>
+        <%= f.input :communication_comment %>
+      </div>
+    </div>
+
+    <div class='row'>
+      <div class='col l6'>
+        <%= f.input :enthusiasm %>
+      </div>
+      <div class='col l6'>
+        <%= f.input :enthusiasm_comment %>
+      </div>
+    </div>
+
+    <div class='row'>
+      <div class='col l6'>
+        <%= f.input :professionalism %>
+      </div>
+      <div class='col l6'>
+        <%= f.input :professionalism_comment %>
+      </div>
+    </div>
+
+
     <%= f.input :stength %>
     <%= f.input :further_dev %>
     <%= f.input :general_comments %>

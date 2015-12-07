@@ -1,0 +1,13 @@
+<%= simple_form_for(@report_achievement_level) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="form-inputs">
+    <%= f.association :report %>
+    <%= f.association :achievement_level %>
+    <%= f.input :performance_descriptor %>
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>

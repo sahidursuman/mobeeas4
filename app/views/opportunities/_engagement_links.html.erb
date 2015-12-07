@@ -3,8 +3,8 @@
 <% if (current_user.has_role? :host) && (current_user.id == @opportunity.user_id) %>
   <% @engaged = false %><!-- starts with fact that a candidate is not engaged yet (false)-->
   <% @opportunity.engagements.each do |engagement| %>
-    <!-- @candidate is the candidate/participants who has profile -->
-    <% if engagement.profile_id == @candidate.id %>
+    <!-- @profile is the candidate who has candidate profile -->
+    <% if engagement.profile_id == @profile.id %>
       <% @engaged = true %><!-- if candidate id is matching, then there is already an engagement connection (true) -->
       <% if (engagement.status == 'pending') %>
         <p>Status: <strong>Pending</strong></p>
@@ -18,7 +18,7 @@
         <p>Status: <strong>Short listed</strong></p>
         <p>
           <% if !(@opportunity.opportunity_status == 'post_active') && !(@opportunity.archived) %>
-            <%= link_to 'Invite', invite_engagement_path(engagement, opportunity_id: @opportunity.id, profile_id: @candidate.id )%>  |
+            <%= link_to 'Invite', invite_engagement_path(engagement, opportunity_id: @opportunity.id, profile_id: @profile.id )%>  |
             <%= link_to 'Decline', engagement_path(engagement, opportunity_id: @opportunity.id), method: :delete, data: { confirm: 'Are you sure?' } %> |
           <% end %>
 
@@ -40,16 +40,19 @@
         <p>Status: <strong>Accepted</strong> <span class="green-text"><i class="fa fa-check-circle"></i></span></p>
         <p>
           <% if !(@opportunity.opportunity_status == 'post_active') && !(@opportunity.archived) %>
-            <%= link_to 'Apply a token to this candidate', apply_a_token_to_engagement_path(engagement, opportunity_id: @opportunity.id, profile_id: @candidate.id)%> |
+            <%= link_to 'Apply a token to this candidate', apply_a_token_to_engagement_path(engagement, opportunity_id: @opportunity.id, profile_id: @profile.id)%> |
             <%= link_to 'Decline', engagement_path(engagement, opportunity_id: @opportunity.id), method: :delete, data: { confirm: 'Are you sure?' } %> |
           <% end %>
 
-      <% elsif (engagement.status == 'assigned a token') %>
+      <% elsif (engagement.status == 'assigned a token') && (@opportunity.opportunity_status == 'active') %>
         <p>Status: <strong>Assigned a token</strong> <span class="orange-text"><i class="fa fa-star"></i></span></p>
+        <p><%= link_to "Create Progress Report", new_report_path(opportunity_id: @opportunity.id, profile_id: @profile.id, type: 'progress')%></p>
+
+
       <% end %>
 
         <% if !(@opportunity.opportunity_status == 'post_active') && !(@opportunity.archived) %>
-          <%= link_to 'Contact ' + @candidate.first_name, new_message_path(from: @opportunity.user_id, to: @candidate.user.id, opportunity_id: @opportunity.id)  %>
+          <%= link_to 'Contact ' + @profile.first_name, new_message_path(from: @opportunity.user_id, to: @profile.user.id, opportunity_id: @opportunity.id)  %>
         <% end %>
         </p>
     <% end %><!-- end of if engagement.profile_id -->
@@ -57,8 +60,8 @@
   <% if !(@engaged) %><!-- if candidate is not linked to this opportunity (false), then display link to start engagement -->
     <p>
       <% if !(@opportunity.opportunity_status == 'post_active') && !(@opportunity.archived) %>
-        <%= link_to 'Potential Candidate?', new_engagement_path(opp_id: @opportunity.id, profile_id: @candidate.id) %>  |
-        <%= link_to 'Contact ' + @candidate.first_name, new_message_path(from: @opportunity.user_id, to: @candidate.user.id, opportunity_id: @opportunity.id)  %>
+        <%= link_to 'Potential Candidate?', new_engagement_path(opp_id: @opportunity.id, profile_id: @profile.id) %>  |
+        <%= link_to 'Contact ' + @profile.first_name, new_message_path(from: @opportunity.user_id, to: @profile.user.id, opportunity_id: @opportunity.id)  %>
       <% end %>
     </p>
   <% end %>
@@ -68,29 +71,29 @@
 <!-- This part will appear on Candidate Dashboard -------------------------------------------->
 <!-- The accept button for the candidate that has the matching skill, at least one skill. -->
 <!-- @candidate is the candidate/participants who has profile -->
-<% if (@candidate.user.has_role? :candidate) && (@candidate.engagements.present?) %>
-  <% @candidate.engagements.each do |engagement| %>
+<% if (@profile.user.has_role? :candidate) && (@profile.engagements.present?) %>
+  <% @profile.engagements.each do |engagement| %>
     <!-- If the host invited this candidate, the candidate dashboard will have the link to accept the opportunity -->
-    <% if (engagement.status == 'invited') && (engagement.opportunity_id == @opportunity.id) && (engagement.profile_id == @candidate.id ) %>
+    <% if (engagement.status == 'invited') && (engagement.opportunity_id == @opportunity.id) && (engagement.profile_id == @profile.id ) %>
       <% if (current_user.profile.present?) && (current_user.profile.id == engagement.profile_id) %>
         <p>Status: <strong>Invited</strong></p>
         <% if !(@opportunity.opportunity_status == 'post_active') && !(@opportunity.archived) %>
-          <%= link_to 'Accept this opportunity', accept_engagement_path(engagement, opportunity_id: @opportunity.id, profile_id: @candidate.id), class: 'btn' %>
+          <%= link_to 'Accept this opportunity', accept_engagement_path(engagement, opportunity_id: @opportunity.id, profile_id: @profile.id), class: 'btn' %>
           <br>
         <% end %>
       <% end %>
     <% end %>
     <!-- If the candidate accepted the invitation, the candidate dashboard will display status: accepted. -->
-    <% if (engagement.status == 'accepted') && (engagement.opportunity_id == @opportunity.id) && (engagement.profile_id == @candidate.id ) %>
+    <% if (engagement.status == 'accepted') && (engagement.opportunity_id == @opportunity.id) && (engagement.profile_id == @profile.id ) %>
       <% if (current_user.profile.present?) && (current_user.profile.id == engagement.profile_id) %>
         <p>Status: <strong>Accepted</strong> <span class="green-text"><i class="fa fa-check-circle"></i></span></p>
       <% end %>
     <% end %>
     <!-- If the host assigned one token to this candidate, the candidate dashboard will display status: assigned a token. -->
-    <% if (engagement.status == 'assigned a token') && (engagement.opportunity_id == @opportunity.id) && (engagement.profile_id == @candidate.id ) %>
+    <% if (engagement.status == 'assigned a token') && (engagement.opportunity_id == @opportunity.id) && (engagement.profile_id == @profile.id ) %>
       <% if (current_user.profile.present?) && (current_user.profile.id == engagement.profile_id) %>
         <p>Status: <strong>Received a token</strong> <span class="orange-text"><i class="fa fa-star"></i></span></p>
       <% end %>
     <% end %>
-  <% end %><!-- end of @candidate.engagements loop -->
-<% end %><!-- end of if @candidate.has_role? :candidate -->
+  <% end %><!-- end of @profile.engagements loop -->
+<% end %><!-- end of if @profile.has_role? :candidate -->

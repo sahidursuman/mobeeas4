@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :report_achievement_levels
   resources :reports
   resources :achievement_levels
   resources :messages
