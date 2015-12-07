@@ -8,54 +8,7 @@
     <% elsif params[:type] == 'completion' %>
       <%= f.input :type, :as => :hidden, input_html: { value: 'completion' } %>
     <% end %>
-    <div class='row'>
-      <div class='col l6'>
-        <%= f.input :relevant_knowledge %>
-      </div>
-      <div class='col l6'>
-        <%= f.input :relevant_knowledge_comment %>
-      </div>
-    </div>
-    <div class='row'>
-      <div class='col l6'>
-        <%= f.input :punctual %>
-      </div>
-      <div class='col l6'>
-        <%= f.input :punctual_comment %>
-      </div>
-    </div>
-
-    <div class='row'>
-      <div class='col l6'>
-        <%= f.input :communication %>
-      </div>
-      <div class='col l6'>
-        <%= f.input :communication_comment %>
-      </div>
-    </div>
-
-    <div class='row'>
-      <div class='col l6'>
-        <%= f.input :enthusiasm %>
-      </div>
-      <div class='col l6'>
-        <%= f.input :enthusiasm_comment %>
-      </div>
-    </div>
-
-    <div class='row'>
-      <div class='col l6'>
-        <%= f.input :professionalism %>
-      </div>
-      <div class='col l6'>
-        <%= f.input :professionalism_comment %>
-      </div>
-    </div>
-
-
-    <%= f.input :stength %>
-    <%= f.input :further_dev %>
-    <%= f.input :general_comments %>
+    <%= f.association :profile_id, :as => :hidden, input_html: { value: @profile.id }%>
   </div>
 
   <div class="form-actions">

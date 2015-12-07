@@ -30,17 +30,7 @@ class ReportsController < ApplicationController
 
     respond_to do |format|
       if @report.save
-        @profile.engagements.each do |engagement|
-          if engagement.opportunity_id == @opportunity.id
-            if params[:type] == 'progress'
-              engagement.progress_report = DateTime.now
-              engagement.save!
-            elsif params[:type] == 'completion'
-              engagement.completion_report = DateTime.now
-              engagement.save!
-            end
-          end # end of if engagement.opportunity_id == @opportunity.id
-        end # end of loop @profile.engagements
+
 
         format.html { redirect_to @report, notice: 'Report was successfully created.' }
         format.json { render :show, status: :created, location: @report }
