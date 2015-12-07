@@ -13,6 +13,9 @@ class Opportunity < ActiveRecord::Base
   has_many :engagements
   has_many :profiles, through: :engagements
 
+  has_many :report_achievement_levels
+  has_many :reports, through: :report_achievement_levels
+
   has_many :messages
 
   validates :title, :description, :commencement_date, :completion_date, presence: true
