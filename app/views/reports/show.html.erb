@@ -1,43 +1,15 @@
 <p id="notice"><%= notice %></p>
 
+<% if @report.report_type == 'progress' %>
+  <h4>Progress Report</h4>
+<% elsif @report.report_type == 'completion' %>
+  <h4>Completion Report</h4>
+<% end %>
 
-<a href="/" class="brand-logo"><%= image_tag 'navlogo.jpg', class: 'img-responsive' %></a>
+<%= render 'report_header'%>
 
-<p>
-  <strong>Opportunity:</strong>
-  <%= @report.opportunity %>
-</p>
 
-<p>
-  <strong>Type:</strong>
-  <%= @report.type %>
-</p>
-
-<p>
-  <strong>Host Organisation:</strong>
-  <%= @report.opportunity.organisation.name %>
-</p>
-
-<p>
-  <strong>Host's Name:</strong>
-  <%= @report.opportunity.organisation.name %>
-</p>
-
-<p>
-  <strong>Host's Email:</strong>
-  <%= @report.opportunity.organisation.name %>
-</p>
-
-<p>
-  <strong>Host's Phone:</strong>
-  <%= @report.opportunity.organisation.name %>
-</p>
-
-<p>
-  <strong>Candidate's Name:</strong>
-  <%= @report.profile_id %>
-</p>
-
+<% end %>
 <p>
   <strong>Relevant knowledge:</strong>
   <%= @report.relevant_knowledge %>

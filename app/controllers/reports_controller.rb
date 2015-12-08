@@ -10,6 +10,8 @@ class ReportsController < ApplicationController
   # GET /reports/1
   # GET /reports/1.json
   def show
+    @opportunity = Opportunity.find(@report.opportunity_id)
+    @profile = Profile.find(@report.profile_id)
   end
 
   # GET /reports/new
@@ -73,6 +75,6 @@ class ReportsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def report_params
-      params.require(:report).permit(:opportunity_id, :type, :relevant_knowledge, :relevant_knowledge_comment, :punctual, :punctual_comment, :communication, :communication_comment, :enthusiasm, :enthusiasm_comment, :professionalism, :professionalism_comment, :stength, :further_dev, :general_comments, :profile_id)
+      params.require(:report).permit(:opportunity_id, :report_type, :relevant_knowledge, :relevant_knowledge_comment, :punctual, :punctual_comment, :communication, :communication_comment, :enthusiasm, :enthusiasm_comment, :professionalism, :professionalism_comment, :stength, :further_dev, :general_comments, :profile_id)
     end
 end

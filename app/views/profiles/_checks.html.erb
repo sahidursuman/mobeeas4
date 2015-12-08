@@ -1,7 +1,7 @@
 <div class="card-content">
       <span class="card-title blue-text"><i class="fa fa-child"></i> Your security checks <a href="#modal-checks" class="modal-trigger"><i class="material-icons">help</i></a></span>
 
-      <p><% if @user_security_checks.present? %><!-- instead of .any?-->
+      <p><% if @profile.user.security_checks.present? %><!-- instead of .any?-->
         <table>
           <thead><tr>
             <th>Type</th>
@@ -11,7 +11,7 @@
             <th class="right-align">Verified</th>
             </tr>
           </thead>
-        <% @user_security_checks.each do |check| %>
+        <% @profile.user.security_checks.each do |check| %>
           <tr>
             <td><%= check.name %></td>
             <td><%= check.state %></td>

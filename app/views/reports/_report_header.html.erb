@@ -1,0 +1,35 @@
+
+
+<table class="bordered">
+  <tbody>
+    <tr>
+      <td>Host Organisation:</td>
+      <td><%= @opportunity.organisation.name %></td>
+    </tr>
+    <tr>
+      <td>Host’s Name:</td>
+      <td><%= @opportunity.user.org_user_profile.name %></td>
+    </tr>
+    <tr>
+      <td>Host’s Email:</td>
+      <td><%= @opportunity.user.email %></td>
+    </tr>
+    <tr>
+      <td>Host’s Phone:</td>
+      <td><%= @opportunity.user.org_user_profile.phone %></td>
+    </tr>
+    <tr>
+      <td>Candidate’s Name:</td>
+      <td><%= @profile.name %></td>
+    </tr>
+    <tr>
+      <td>Engagement Start Date:</td>
+      <td><%= @opportunity.commencement_date.strftime("%A, %d %b %Y") %></td>
+    </tr>
+    <tr>
+      <td>Engagement Description:</td>
+      <td><%= @opportunity.description %></td>
+    </tr>
+  </tbody>
+</table>
+<br><br>
