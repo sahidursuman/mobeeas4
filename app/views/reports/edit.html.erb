@@ -1,5 +1,11 @@
-<h1>Editing Report</h1>
+<!-- EDITING PROGRESS OR COMPLETION REPORT -->
+<% if params[:report_type] == 'progress' %>
+  <h4>Progress Report</h4>
+<% elsif params[:report_type] == 'completion' %>
+  <h4>Completion Report</h4>
+<% end %>
 
+<%= render 'report_header'%>
 <%= render 'form' %>
 
 <%= link_to 'Show', @report %> |

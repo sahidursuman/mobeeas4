@@ -23,6 +23,8 @@ class ReportsController < ApplicationController
 
   # GET /reports/1/edit
   def edit
+    @opportunity = Opportunity.find(params[:opportunity_id])
+    @profile = Profile.find(params[:profile_id])
   end
 
   # POST /reports

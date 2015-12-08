@@ -8,58 +8,194 @@
 
 <%= render 'report_header'%>
 
-
-<% end %>
 <p>
-  <strong>Relevant knowledge:</strong>
-  <%= @report.relevant_knowledge %>
+  <strong>
+    <div class="row">
+      <div class="col l3">Performance Descriptor</div>
+      <div class="col l1">CC</div>
+      <div class="col l1">W</div>
+      <div class="col l1">A</div>
+      <div class="col l1">GB</div>
+      <div class="col l5">Comment</div>
+    </div>
+  </strong>
 </p>
 
-<p>
-  <strong>Relevant knowledge comment:</strong>
-  <%= @report.relevant_knowledge_comment %>
+<p class="border-bottom">
+  <div class="row">
+    <div class="col l3">Relevant Knowledge</div>
+    <div class="col l1">
+      <% if @report.relevant_knowledge.include?('CC') %>
+        <i class="fa fa-check"></i>
+      <% else %>
+        <p> </p><!-- must leave at least a space to claim its spot in the grid -->
+      <% end %>
+    </div>
+    <div class="col l1">
+      <% if @report.relevant_knowledge.include?('W') %>
+        <i class="fa fa-check"></i>
+      <% else %>
+        <p> </p>
+      <% end %>
+    </div>
+    <div class="col l1">
+      <% if @report.relevant_knowledge.include?('A') %>
+        <i class="fa fa-check"></i>
+      <% else %>
+        <p> </p>
+      <% end %>
+    </div>
+    <div class="col l1">
+      <% if @report.relevant_knowledge.include?('GB') %>
+        <i class="fa fa-check"></i>
+      <% else %>
+        <p> </p>
+      <% end %>
+    </div>
+    <div class="col l5"><%= @report.relevant_knowledge_comment %></div>
+  </div>
 </p>
 
-<p>
-  <strong>Punctual:</strong>
-  <%= @report.punctual %>
+<p class="border-bottom">
+  <div class="row">
+    <div class="col l3">Punctual</div>
+    <div class="col l1">
+      <% if @report.punctual.include?('CC') %>
+        <i class="fa fa-check"></i>
+      <% else %>
+        <p> </p><!-- must leave at least a space to claim its spot in the grid -->
+      <% end %>
+    </div>
+    <div class="col l1">
+      <% if @report.punctual.include?('W') %>
+        <i class="fa fa-check"></i>
+      <% else %>
+        <p> </p>
+      <% end %>
+    </div>
+    <div class="col l1">
+      <% if @report.punctual.include?('A') %>
+        <i class="fa fa-check"></i>
+      <% else %>
+        <p> </p>
+      <% end %>
+    </div>
+    <div class="col l1">
+      <% if @report.punctual.include?('GB') %>
+        <i class="fa fa-check"></i>
+      <% else %>
+        <p> </p>
+      <% end %>
+    </div>
+    <div class="col l5"><%= @report.punctual_comment %></div>
+  </div>
 </p>
 
-<p>
-  <strong>Punctual comment:</strong>
-  <%= @report.punctual_comment %>
+<p class="border-bottom">
+  <div class="row">
+    <div class="col l3">Communication</div>
+    <div class="col l1">
+      <% if @report.communication.include?('CC') %>
+        <i class="fa fa-check"></i>
+      <% else %>
+        <p> </p><!-- must leave at least a space to claim its spot in the grid -->
+      <% end %>
+    </div>
+    <div class="col l1">
+      <% if @report.communication.include?('W') %>
+        <i class="fa fa-check"></i>
+      <% else %>
+        <p> </p>
+      <% end %>
+    </div>
+    <div class="col l1">
+      <% if @report.communication.include?('A') %>
+        <i class="fa fa-check"></i>
+      <% else %>
+        <p> </p>
+      <% end %>
+    </div>
+    <div class="col l1">
+      <% if @report.communication.include?('GB') %>
+        <i class="fa fa-check"></i>
+      <% else %>
+        <p> </p>
+      <% end %>
+    </div>
+    <div class="col l5"><%= @report.communication_comment %></div>
+  </div>
 </p>
 
-<p>
-  <strong>Communication:</strong>
-  <%= @report.communication %>
+<p class="border-bottom">
+  <div class="row">
+    <div class="col l3">Enthusiasm</div>
+    <div class="col l1">
+      <% if @report.enthusiasm.include?('CC') %>
+        <i class="fa fa-check"></i>
+      <% else %>
+        <p> </p><!-- must leave at least a space to claim its spot in the grid -->
+      <% end %>
+    </div>
+    <div class="col l1">
+      <% if @report.enthusiasm.include?('W') %>
+        <i class="fa fa-check"></i>
+      <% else %>
+        <p> </p>
+      <% end %>
+    </div>
+    <div class="col l1">
+      <% if @report.enthusiasm.include?('A') %>
+        <i class="fa fa-check"></i>
+      <% else %>
+        <p> </p>
+      <% end %>
+    </div>
+    <div class="col l1">
+      <% if @report.enthusiasm.include?('GB') %>
+        <i class="fa fa-check"></i>
+      <% else %>
+        <p> </p>
+      <% end %>
+    </div>
+    <div class="col l5"><%= @report.enthusiasm_comment %></div>
+  </div>
 </p>
 
-<p>
-  <strong>Communication comment:</strong>
-  <%= @report.communication_comment %>
+<p class="border-bottom">
+  <div class="row">
+    <div class="col l3">Professionalism</div>
+    <div class="col l1">
+      <% if @report.professionalism.include?('CC') %>
+        <i class="fa fa-check"></i>
+      <% else %>
+        <p> </p><!-- must leave at least a space to claim its spot in the grid -->
+      <% end %>
+    </div>
+    <div class="col l1">
+      <% if @report.professionalism.include?('W') %>
+        <i class="fa fa-check"></i>
+      <% else %>
+        <p> </p>
+      <% end %>
+    </div>
+    <div class="col l1">
+      <% if @report.professionalism.include?('A') %>
+        <i class="fa fa-check"></i>
+      <% else %>
+        <p> </p>
+      <% end %>
+    </div>
+    <div class="col l1">
+      <% if @report.professionalism.include?('GB') %>
+        <i class="fa fa-check"></i>
+      <% else %>
+        <p> </p>
+      <% end %>
+    </div>
+    <div class="col l5"><%= @report.professionalism_comment %></div>
+  </div>
 </p>
-
-<p>
-  <strong>Enthusiasm:</strong>
-  <%= @report.enthusiasm %>
-</p>
-
-<p>
-  <strong>Enthusiasm comment:</strong>
-  <%= @report.enthusiasm_comment %>
-</p>
-
-<p>
-  <strong>Professionalism:</strong>
-  <%= @report.professionalism %>
-</p>
-
-<p>
-  <strong>Professionalism comment:</strong>
-  <%= @report.professionalism_comment %>
-</p>
-
+<br>
 <p>
   <strong>Stength:</strong>
   <%= @report.stength %>
@@ -75,5 +211,4 @@
   <%= @report.general_comments %>
 </p>
 
-<%= link_to 'Edit', edit_report_path(@report) %> |
-<%= link_to 'Back', reports_path %>
+<%= link_to 'Edit', edit_report_path(@report, opportunity_id: @report.opportunity_id, profile_id: @report.profile_id ) %>

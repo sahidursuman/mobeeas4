@@ -8,6 +8,134 @@
     <% elsif params[:report_type] == 'completion' %>
       <%= f.input :report_type, :as => :hidden, input_html: { value: "completion" } %>
     <% end %>
+    <p>
+      Please tick the appropriate standard achieved (CC) Causing Concern (W) Working towards (A) Achieved (GB) Going Beyond
+    </p>
+
+    <!-- Keep these as the template for relevant_knowledge -->
+    <%#= f.input :relevant_knowledge, collection: [ "CC", "W", "A", "GB"], as: :radio_buttons %>
+    <div class="row">
+      <div class="input radio_buttons optional report_relevant_knowledge">
+        <div class="col l2">
+          <label class="radio_buttons optional">Relevant knowledge</label>
+        </div>
+        <div class="col l2">
+          <input class="radio_buttons optional with-gap" type="radio" value="CC" name="report[relevant_knowledge]" id="report_relevant_knowledge_cc" <%= @report.relevant_knowledge.include?('CC') ? 'checked' : '' %>/><label for="report_relevant_knowledge_cc">CC</label>
+        </div>
+        <div class="col l2">
+          <input class="radio_buttons optional with-gap" type="radio" value="W" name="report[relevant_knowledge]" id="report_relevant_knowledge_w" <%= @report.relevant_knowledge.include?('W') ? 'checked' : '' %>/><label for="report_relevant_knowledge_w">W</label>
+        </div>
+        <div class="col l2">
+          <input class="radio_buttons optional with-gap" type="radio" value="A" name="report[relevant_knowledge]" id="report_relevant_knowledge_a" <%= @report.relevant_knowledge.include?('A') ? 'checked' : '' %>/><label for="report_relevant_knowledge_a">A</label>
+        </div>
+        <div class="col l2">
+          <input class="radio_buttons optional with-gap" type="radio" value="GB" name="report[relevant_knowledge]" id="report_relevant_knowledge_gb" <%= @report.relevant_knowledge.include?('GB') ? 'checked' : '' %>/><label for="report_relevant_knowledge_gb">GB</label>
+        </div>
+      </div>
+    </div>
+    <%= f.input :relevant_knowledge_comment, input_html: { maxlength: 100 } %>
+    <br>
+    <!-- Keep these as the template for punctual -->
+    <%#= f.input :punctual, collection: [ "CC", "W", "A", "GB"], as: :radio_buttons %>
+
+    <div class="row">
+      <div class="input radio_buttons optional report_punctual">
+        <div class="col l2">
+          <label class="radio_buttons optional">Punctual</label>
+        </div>
+        <div class="col l2">
+          <input class="radio_buttons optional with-gap" type="radio" value="CC" name="report[punctual]" id="report_punctual_cc" <%= @report.punctual.include?('CC') ? 'checked' : '' %>/><label for="report_punctual_cc">CC</label>
+        </div>
+        <div class="col l2">
+          <input class="radio_buttons optional with-gap" type="radio" value="W" name="report[punctual]" id="report_punctual_w" <%= @report.punctual.include?('W') ? 'checked' : '' %>/><label for="report_punctual_w">W</label>
+        </div>
+        <div class="col l2">
+          <input class="radio_buttons optional with-gap" type="radio" value="A" name="report[punctual]" id="report_punctual_a" <%= @report.punctual.include?('A') ? 'checked' : '' %>/><label for="report_punctual_a">A</label>
+        </div>
+        <div class="col l2">
+          <input class="radio_buttons optional with-gap" type="radio" value="GB" name="report[punctual]" id="report_punctual_gb" <%= @report.punctual.include?('GB') ? 'checked' : '' %>/><label for="report_punctual_gb">GB</label>
+        </div>
+      </div>
+    </div>
+    <%= f.input :punctual_comment, input_html: { maxlength: 100 } %>
+    <br>
+
+    <!-- Keep these as the template for communication -->
+    <%#= f.input :communication, collection: [ "CC", "W", "A", "GB"], as: :radio_buttons %>
+    <div class="row">
+      <div class="input radio_buttons optional report_communication">
+        <div class="col l2">
+          <label class="radio_buttons optional">Communication</label>
+        </div>
+        <div class="col l2">
+          <input class="radio_buttons optional with-gap" type="radio" value="CC" name="report[communication]" id="report_communication_cc" <%= @report.communication.include?('CC') ? 'checked' : '' %>/><label for="report_communication_cc">CC</label>
+        </div>
+        <div class="col l2">
+          <input class="radio_buttons optional with-gap" type="radio" value="W" name="report[communication]" id="report_communication_w" <%= @report.communication.include?('W') ? 'checked' : '' %>/><label for="report_communication_w">W</label>
+        </div>
+        <div class="col l2">
+          <input class="radio_buttons optional with-gap" type="radio" value="A" name="report[communication]" id="report_communication_a" <%= @report.communication.include?('A') ? 'checked' : '' %>/><label for="report_communication_a">A</label>
+        </div>
+        <div class="col l2">
+          <input class="radio_buttons optional with-gap" type="radio" value="GB" name="report[communication]" id="report_communication_gb" <%= @report.communication.include?('GB') ? 'checked' : '' %>/><label for="report_communication_gb">GB</label>
+        </div>
+      </div>
+    </div>
+    <%= f.input :communication_comment, input_html: { maxlength: 100 } %>
+    <br>
+
+    <!-- Keep these as the template for enthusiasm -->
+    <%#= f.input :enthusiasm, collection: [ "CC", "W", "A", "GB"], as: :radio_buttons %>
+    <div class="row">
+      <div class="input radio_buttons optional report_enthusiasm">
+        <div class="col l2">
+          <label class="radio_buttons optional">Enthusiasm</label>
+        </div>
+        <div class="col l2">
+          <input class="radio_buttons optional with-gap" type="radio" value="CC" name="report[enthusiasm]" id="report_enthusiasm_cc" <%= @report.enthusiasm.include?('CC') ? 'checked' : '' %>/><label for="report_enthusiasm_cc">CC</label>
+        </div>
+        <div class="col l2">
+          <input class="radio_buttons optional with-gap" type="radio" value="W" name="report[enthusiasm]" id="report_enthusiasm_w" <%= @report.enthusiasm.include?('W') ? 'checked' : '' %>/><label for="report_enthusiasm_w">W</label>
+        </div>
+        <div class="col l2">
+          <input class="radio_buttons optional with-gap" type="radio" value="A" name="report[enthusiasm]" id="report_enthusiasm_a" <%= @report.enthusiasm.include?('A') ? 'checked' : '' %>/><label for="report_enthusiasm_a">A</label>
+        </div>
+        <div class="col l2">
+          <input class="radio_buttons optional with-gap" type="radio" value="GB" name="report[enthusiasm]" id="report_enthusiasm_gb" <%= @report.enthusiasm.include?('GB') ? 'checked' : '' %>/><label for="report_enthusiasm_gb">GB</label>
+        </div>
+      </div>
+    </div>
+    <%= f.input :enthusiasm_comment, input_html: { maxlength: 100 } %>
+    <br>
+
+    <!-- Keep these as the template for professionalism -->
+    <%#= f.input :professionalism, collection: [ "CC", "W", "A", "GB"], as: :radio_buttons %>
+    <div class="row">
+      <div class="input radio_buttons optional report_professionalism">
+        <div class="col l2">
+          <label class="radio_buttons optional">Professionalism</label>
+        </div>
+        <div class="col l2">
+          <input class="radio_buttons optional with-gap" type="radio" value="CC" name="report[professionalism]" id="report_professionalism_cc" <%= @report.professionalism.include?('CC') ? 'checked' : '' %>/><label for="report_professionalism_cc">CC</label>
+        </div>
+        <div class="col l2">
+          <input class="radio_buttons optional with-gap" type="radio" value="W" name="report[professionalism]" id="report_professionalism_w" <%= @report.professionalism.include?('W') ? 'checked' : '' %>/><label for="report_professionalism_w">W</label>
+        </div>
+        <div class="col l2">
+          <input class="radio_buttons optional with-gap" type="radio" value="A" name="report[professionalism]" id="report_professionalism_a" <%= @report.professionalism.include?('A') ? 'checked' : '' %>/><label for="report_professionalism_a">A</label>
+        </div>
+        <div class="col l2">
+          <input class="radio_buttons optional with-gap" type="radio" value="GB" name="report[professionalism]" id="report_professionalism_gb" <%= @report.professionalism.include?('GB') ? 'checked' : '' %>/><label for="report_professionalism_gb">GB</label>
+        </div>
+      </div>
+    </div>
+    <%= f.input :professionalism_comment, input_html: { maxlength: 100 } %>
+    <br>
+
+    <%= f.input :stength, input_html: { maxlength: 200 } %>
+    <%= f.input :further_dev, input_html: { maxlength: 200 } %>
+    <%= f.input :general_comments, input_html: { maxlength: 200 } %>
+
     <%= f.input :profile_id, :as => :hidden, input_html: { value: @profile.id }  %>
 
   </div>

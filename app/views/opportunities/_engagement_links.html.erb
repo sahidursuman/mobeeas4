@@ -46,8 +46,8 @@
 
       <% elsif (engagement.status == 'assigned a token') && (@opportunity.opportunity_status == 'active') %>
         <p>Status: <strong>Assigned a token</strong> <span class="orange-text"><i class="fa fa-star"></i></span></p>
-        <p><%= render 'new_progress_report'%></p>
-        <!-- <p><%#= link_to "Create Progress Report", new_report_path(opportunity_id: @opportunity.id, profile_id: @profile.id, report_type: 'progress')%></p> -->
+        <p><%= link_to "Create Progress Report", new_report_path(opportunity_id: @opportunity.id, profile_id: @profile.id, report_type: 'progress')%></p>
+        <p><%#= link_to "View Progress Report", report_path()%></p><!-- fix it here -->
 
 
       <% end %>
