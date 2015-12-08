@@ -8,21 +8,23 @@
 
 <%= render 'report_header'%>
 
-<p>
-  <strong>
-    <div class="row">
+<div class="row">
+  <p>
+    <strong>
       <div class="col l3">Performance Descriptor</div>
       <div class="col l1">CC</div>
       <div class="col l1">W</div>
       <div class="col l1">A</div>
       <div class="col l1">GB</div>
       <div class="col l5">Comment</div>
-    </div>
-  </strong>
-</p>
+    </strong>
+  </p>
+</div>
 
-<p class="border-bottom">
-  <div class="row">
+
+
+<div class="row">
+  <p class="border-bottom">
     <div class="col l3">Relevant Knowledge</div>
     <div class="col l1">
       <% if @report.relevant_knowledge.include?('CC') %>
@@ -53,11 +55,12 @@
       <% end %>
     </div>
     <div class="col l5"><%= @report.relevant_knowledge_comment %></div>
-  </div>
-</p>
+  </p>
+</div>
 
-<p class="border-bottom">
-  <div class="row">
+
+<div class="row">
+  <p class="border-bottom">
     <div class="col l3">Punctual</div>
     <div class="col l1">
       <% if @report.punctual.include?('CC') %>
@@ -88,11 +91,11 @@
       <% end %>
     </div>
     <div class="col l5"><%= @report.punctual_comment %></div>
-  </div>
-</p>
+  </p>
+</div>
 
-<p class="border-bottom">
-  <div class="row">
+<div class="row">
+  <p class="border-bottom">
     <div class="col l3">Communication</div>
     <div class="col l1">
       <% if @report.communication.include?('CC') %>
@@ -123,11 +126,11 @@
       <% end %>
     </div>
     <div class="col l5"><%= @report.communication_comment %></div>
-  </div>
-</p>
+  </p>
+</div>
 
-<p class="border-bottom">
-  <div class="row">
+<div class="row">
+  <p class="border-bottom">
     <div class="col l3">Enthusiasm</div>
     <div class="col l1">
       <% if @report.enthusiasm.include?('CC') %>
@@ -158,11 +161,11 @@
       <% end %>
     </div>
     <div class="col l5"><%= @report.enthusiasm_comment %></div>
-  </div>
-</p>
+  </p>
+</div>
 
-<p class="border-bottom">
-  <div class="row">
+<div class="row">
+  <p class="border-bottom">
     <div class="col l3">Professionalism</div>
     <div class="col l1">
       <% if @report.professionalism.include?('CC') %>
@@ -193,8 +196,8 @@
       <% end %>
     </div>
     <div class="col l5"><%= @report.professionalism_comment %></div>
-  </div>
-</p>
+  </p>
+</div>
 <br>
 <p>
   <strong>Stength:</strong>
@@ -202,12 +205,12 @@
 </p>
 
 <p>
-  <strong>Further dev:</strong>
+  <strong>Further Development:</strong>
   <%= @report.further_dev %>
 </p>
 
 <p>
-  <strong>General comments:</strong>
+  <strong>General Comments:</strong>
   <%= @report.general_comments %>
 </p>
 

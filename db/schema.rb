@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151208105603) do
+ActiveRecord::Schema.define(version: 20151208235519) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -82,11 +82,11 @@ ActiveRecord::Schema.define(version: 20151208105603) do
   create_table "engagements", force: :cascade do |t|
     t.integer  "opportunity_id"
     t.integer  "profile_id"
-    t.string   "status",            default: "pending"
-    t.datetime "created_at",                            null: false
-    t.datetime "updated_at",                            null: false
-    t.datetime "progress_report"
-    t.datetime "completion_report"
+    t.string   "status",               default: "pending"
+    t.datetime "created_at",                               null: false
+    t.datetime "updated_at",                               null: false
+    t.datetime "progress_report_id"
+    t.datetime "completion_report_id"
   end
 
   add_index "engagements", ["opportunity_id"], name: "index_engagements_on_opportunity_id", using: :btree

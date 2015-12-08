@@ -1,35 +1,55 @@
+<div class="row">
+  <div class="col l3">
+    Host Organisation:
+  </div>
+  <div class="col l9">
+    <%= @opportunity.organisation.name %>
+  </div>
+</div>
 
+<div class="row">
+  <div class="col l3">
+    Host’s Name:
+  </div>
+  <div class="col l9">
+    <%= @opportunity.user.org_user_profile.name %>
+  </div>
+</div>
 
-<table class="bordered">
-  <tbody>
-    <tr>
-      <td>Host Organisation:</td>
-      <td><%= @opportunity.organisation.name %></td>
-    </tr>
-    <tr>
-      <td>Host’s Name:</td>
-      <td><%= @opportunity.user.org_user_profile.name %></td>
-    </tr>
-    <tr>
-      <td>Host’s Email:</td>
-      <td><%= @opportunity.user.email %></td>
-    </tr>
-    <tr>
-      <td>Host’s Phone:</td>
-      <td><%= @opportunity.user.org_user_profile.phone %></td>
-    </tr>
-    <tr>
-      <td>Candidate’s Name:</td>
-      <td><%= @profile.name %></td>
-    </tr>
-    <tr>
-      <td>Engagement Start Date:</td>
-      <td><%= @opportunity.commencement_date.strftime("%A, %d %b %Y") %></td>
-    </tr>
-    <tr>
-      <td>Engagement Description:</td>
-      <td><%= @opportunity.description %></td>
-    </tr>
-  </tbody>
-</table>
+<div class="row">
+  <div class="col l3">
+    Host’s Email:
+  </div>
+  <div class="col l9">
+    <%= @opportunity.user.email %>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col l3">
+    Host’s Phone:
+  </div>
+  <div class="col l9">
+    <%= @opportunity.user.org_user_profile.phone %>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col l3">
+    Candidate’s Name:
+  </div>
+  <div class="col l9">
+    <%= @profile.name %>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col l3">
+    Engagement Start Date:
+  </div>
+  <div class="col l9">
+    <%= @opportunity.commencement_date.strftime("%A, %d %b %Y") %>
+  </div>
+</div>
+
 <br><br>
