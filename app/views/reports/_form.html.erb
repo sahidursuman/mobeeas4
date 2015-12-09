@@ -209,7 +209,10 @@
 
     <%#= hidden_field_tag(:opportunity_id, params[:opportunity_id]) %>
     <%#= hidden_field_tag(:profile_id, params[:profile_id]) %>
-    engagemnt id <%= params[:engagement_id] %>
+    <%= hidden_field_tag(:report_type, params[:report_type]) %>
+    <%# @engagement = Engagement.find(params[:engagement_id])%>
+    <%#= hidden_field_tag(:engagement_id, @engagement.id) %>
+
     <%= hidden_field_tag(:engagement_id, params[:engagement_id]) %>
 
     <%= f.input :stength, input_html: { maxlength: 200 } %>

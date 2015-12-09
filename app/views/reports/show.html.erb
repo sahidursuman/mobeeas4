@@ -7,7 +7,6 @@
 <% end %>
 
 <%= render 'report_header'%>
-/////<%= @report.progress_report_id %>
 <div class="row">
   <p>
     <strong>
@@ -214,4 +213,8 @@
   <%= @report.general_comments %>
 </p>
 
-<%= link_to 'Edit', edit_report_path(@report, opportunity_id: @report.opportunity_id, profile_id: @report.profile_id ) %>
+<!-- Only the opportunity owner can edit the report -->
+<% if current_user.id == @report.opportunity.user_id %>
+  <%= link_to 'Edit', edit_report_path(@report, opportunity_id: @report.opportunity_id, profile_id: @report.profile_id ), class: 'btn' %>
+<% end %>
+<%= link_to 'Return to Opportunity Details', opportunity_path(@report.opportunity_id), class: 'btn' %>
