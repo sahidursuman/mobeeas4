@@ -33,12 +33,14 @@
         <p>
           <strong>Please add more token into this Opportunity.<strong></p>
         <p>
+          <!-- Decline action is for the opportunity that is not 'post_active' such as 'listed' or 'active' and also not archived -->
           <% if !(@opportunity.opportunity_status == 'post_active') && !(@opportunity.archived) %>
             <%= link_to 'Decline', engagement_path(engagement, opportunity_id: @opportunity.id), method: :delete, data: { confirm: 'Are you sure?' } %> |
           <% end %>
       <% elsif (engagement.status == 'accepted') && (@opportunity.number_of_tokens > 0) %>
         <p>Status: <strong>Accepted</strong> <span class="green-text"><i class="fa fa-check-circle"></i></span></p>
         <p>
+          <!-- Decline action and Apply a Token action are for the opportunity that is not 'post_active' such as 'listed' or 'active' and also not archived -->
           <% if !(@opportunity.opportunity_status == 'post_active') && !(@opportunity.archived) %>
             <%= link_to 'Apply a token to this candidate', apply_a_token_to_engagement_path(engagement, opportunity_id: @opportunity.id, profile_id: @profile.id)%> |
             <%= link_to 'Decline', engagement_path(engagement, opportunity_id: @opportunity.id), method: :delete, data: { confirm: 'Are you sure?' } %> |
@@ -46,17 +48,37 @@
 
       <% elsif (engagement.status == 'assigned a token') && (@opportunity.opportunity_status == 'active') %>
         <p>Status: <strong>Assigned a token</strong> <span class="orange-text"><i class="fa fa-star"></i></span></p>
-        <p><%= link_to "Create Progress Report", new_report_path(opportunity_id: @opportunity.id, profile_id: @profile.id, report_type: 'progress')%></p>
-        <p><%#= link_to "View Progress Report", report_path()%></p><!-- fix it here -->
 
+      <% elsif (engagement.status == 'assigned a token') && (@opportunity.opportunity_status == 'post_active') %>
+        <p>Status: <strong>Assigned a token</strong> <span class="orange-text"><i class="fa fa-star"></i></span></p>
 
       <% end %>
+
+      <!-- The progress report links -->
+      /////<%= engagement.progress_report_id %>
+      <% if engagement.progress_report_id.present? %>hiiiiii
+        <% @progress_report = Report.find(engagement.progress_report_id) %>
+        <%= link_to "View Progress Report for "+ @profile.first_name, report_path(@progress_report) %><br>
+      <!-- New Progress report link appears if the progress report is not present and if opportunity status is 'active' and if the opportunity is not archived -->
+      <% elsif !(engagement.progress_report_id.present?) && (@opportunity.opportunity_status == 'active') && !(@opportunity.archived) %>
+        <%= link_to "Create Progress Report", new_report_path(opportunity_id: @opportunity.id, profile_id: @profile.id, engagement_id: engagement.id, report_type: 'progress')%><br>
+      <% end %>
+
+      <!-- The completion report links -->
+      <% if engagement.completion_report_id.present? %>
+        <% @completion_report = Report.find(engagement.completion_report_id) %>
+        <%= link_to "View Completion Report for "+ @profile.first_name, report_path(@completion_report) %><br>
+      <!-- New Progress report link appears if the progress report is not present and if opportunity status is 'post_active' and if the opportunity is not archived -->
+      <% elsif !(engagement.completion_report_id.present?) && (@opportunity.opportunity_status == 'post_active') && !(@opportunity.archived) %>
+        <%= link_to "Create Completion Report", new_report_path(opportunity_id: @opportunity.id, profile_id: @profile.id, engagement_id: engagement.id, report_type: 'completion')%><br>
+      <% end %>
+
 
         <% if !(@opportunity.opportunity_status == 'post_active') && !(@opportunity.archived) %>
           <%= link_to 'Contact ' + @profile.first_name, new_message_path(from: @opportunity.user_id, to: @profile.user.id, opportunity_id: @opportunity.id)  %>
         <% end %>
         </p>
-    <% end %><!-- end of if engagement.profile_id -->
+    <% end %><!-- end of if engagement.profile_id == @profile.id -->
   <% end %><!-- end of @opportunity.engagements loop -->
   <% if !(@engaged) %><!-- if candidate is not linked to this opportunity (false), then display link to start engagement -->
     <p>

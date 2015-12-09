@@ -12,6 +12,8 @@ class ReportsController < ApplicationController
   def show
     @opportunity = Opportunity.find(@report.opportunity_id)
     @profile = Profile.find(@report.profile_id)
+    @engagement = Engagement.find(params[:engagement_id])
+
   end
 
   # GET /reports/new
@@ -19,6 +21,8 @@ class ReportsController < ApplicationController
     @report = Report.new
     @opportunity = Opportunity.find(params[:opportunity_id])
     @profile = Profile.find(params[:profile_id])
+    @profile.engagements.each do |engagement|
+    @engagement = Engagement.find(params[:engagement_id])
   end
 
   # GET /reports/1/edit
@@ -31,10 +35,20 @@ class ReportsController < ApplicationController
   # POST /reports.json
   def create
     @report = Report.new(report_params)
+    # @opportunity = Opportunity.find(params[:opportunity_id])
+    # @profile = Profile.find(params[:profile_id])
 
     respond_to do |format|
       if @report.save
-
+        # The new report id should be entered into the column in the engagements table
+        @engagement = Engagement.find(params[:engagement_id])
+        if params[:report_type] == 'progress'
+          @engagement.update_attributes(progress_report_id: @report.id)
+          @engagement.save!
+        elsif params[:report_type] == 'completion'
+          @engagement.update_attributes(completion_report_id: @report.id)
+          @engagement.save!
+        end
 
         format.html { redirect_to @report, notice: 'Report was successfully created.' }
         format.json { render :show, status: :created, location: @report }

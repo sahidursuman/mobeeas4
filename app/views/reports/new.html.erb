@@ -5,6 +5,10 @@
   <h4>Completion Report</h4>
 <% end %>
 
+<%# @opportunity = Opportunity.find(params[:opportunity_id]) %>
+<%# @profile = Profile.find(params[:profile_id]) %>
+<%# @engagement = Engagement.find(params[:engagement_id]) %>
+
 <%= render 'report_header'%>
 <%= render 'form' %>
 <%= link_to 'Back', reports_path %>
