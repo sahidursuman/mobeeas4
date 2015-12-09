@@ -107,7 +107,6 @@ class EngagementsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def engagement_params
-      params.require(:engagement).permit(:opportunity_id, :profile_id, :status)
-      # :progress_report_id, :completion_report_id ----use later
+      params.require(:engagement).permit(:opportunity_id, :profile_id, :status, :progress_report_id, :completion_report_id)
     end
 end
