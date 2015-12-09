@@ -1,0 +1,6 @@
+<li class="bold active"><%= link_to 'Sponsor Profile', sponsor_path %></li>
+<li class="bold"><%= link_to 'Draft Opportunities', opportunities_path(status: 'draft') %></li>
+<li class="bold"><%= link_to 'Listed Opportunities', opportunities_path(status: 'listed') %></li>
+<li class="bold"><%= link_to 'Active Opportunities', opportunities_path(status: 'active') %></li>
+<li class="bold"><%= link_to 'Completed Opportunities', opportunities_path(status: 'post_active') %></li>
+<li class="bold"><%= link_to 'Archived Opportunities', opportunities_path(status: 'archived') %></li>

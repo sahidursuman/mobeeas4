@@ -12,6 +12,15 @@ class PagesController < ApplicationController
     end
   end
 
+	def sponsor
+    if current_user.has_role? :admin
+      @users = User.includes(:profile)
+    else
+      redirect_to root_path
+    end
+  end
+
+
   def contact
   end
 
@@ -84,7 +93,7 @@ class PagesController < ApplicationController
 	end
 
 	def candidate_profile
-
 	end
+
 
 end

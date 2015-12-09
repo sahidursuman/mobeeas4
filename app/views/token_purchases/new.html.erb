@@ -1,4 +1,4 @@
-<h1>New Token Purchase</h1>
+<h4>New Token Purchase</h4>
 
 <h5>You are purchasing <%= @token_pack.name %> for <%= @organisation.name %>.</h5>
 
@@ -25,3 +25,5 @@
           data-amount="<%= (@token_pack.member_price * 100).to_int %>"
           data-locale="auto"></script>
 <% end %>
+
+<p>For further payment options, please email <strong>info@mobeeas.com</strong> </p>

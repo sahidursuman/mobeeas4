@@ -11,7 +11,21 @@
         </li>
       <%= render 'layouts/host_sidebar' %>
       </ul>
-	  <% end %>
+
+		<% elsif current_user.has_role? :admin %>
+			<ul id="slide-out" class="side-nav fixed margin-left-10px">
+				<li class="logo margin-top-20px margin-bottom-20px"><a href="/"><%= image_tag 'MOBEEAS.png', height: '122px', class: 'brand-logo responsive-img' %></a>
+				</li>
+			<%= render 'layouts/admin_sidebar' %>
+			</ul>
+
+		<% elsif current_user.has_role? :sponsor %>
+			<ul id="slide-out" class="side-nav fixed margin-left-10px">
+				<li class="logo margin-top-20px margin-bottom-20px"><a href="/"><%= image_tag 'MOBEEAS.png', height: '122px', class: 'brand-logo responsive-img' %></a>
+				</li>
+			<%= render 'layouts/sponsor_sidebar' %>
+			</ul>
+		<% end %>
   </ul>
   <!-- <a href="#" data-activates="slide-out" class="button-collapse"><i class="mdi-navigation-menu"></i></a> -->
   <a href="#" data-activates="nav-mobile" class="button-collapse top-nav full hide-on-large-only"><i class="mdi-navigation-menu"></i></a>
