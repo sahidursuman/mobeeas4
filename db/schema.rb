@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151210042501) do
+ActiveRecord::Schema.define(version: 20151210233408) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -311,16 +311,6 @@ ActiveRecord::Schema.define(version: 20151210042501) do
   add_index "roles", ["name", "resource_type", "resource_id"], name: "index_roles_on_name_and_resource_type_and_resource_id", using: :btree
   add_index "roles", ["name"], name: "index_roles_on_name", using: :btree
 
-  create_table "school_year_opportunities", force: :cascade do |t|
-    t.integer  "school_year_id"
-    t.integer  "opportunity_id"
-    t.datetime "created_at",     null: false
-    t.datetime "updated_at",     null: false
-  end
-
-  add_index "school_year_opportunities", ["opportunity_id"], name: "index_school_year_opportunities_on_opportunity_id", using: :btree
-  add_index "school_year_opportunities", ["school_year_id"], name: "index_school_year_opportunities_on_school_year_id", using: :btree
-
   create_table "school_years", force: :cascade do |t|
     t.string   "name"
     t.datetime "created_at", null: false
@@ -449,8 +439,6 @@ ActiveRecord::Schema.define(version: 20151210042501) do
   add_foreign_key "profiles", "users"
   add_foreign_key "reports", "engagements"
   add_foreign_key "reports", "opportunities"
-  add_foreign_key "school_year_opportunities", "opportunities"
-  add_foreign_key "school_year_opportunities", "school_years"
   add_foreign_key "security_checks", "users"
   add_foreign_key "skill_verifications", "users"
   add_foreign_key "skills", "skill_categories"

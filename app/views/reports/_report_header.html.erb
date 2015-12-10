@@ -1,11 +1,13 @@
-<div class="row">
-  <div class="col l6 align-right">
-    Report ID:
+<% if @report.id.present? %>
+  <div class="row">
+    <div class="col l6 align-right">
+      Report ID:
+    </div>
+    <div class="col l6">
+      <%= @report.id %>
+    </div>
   </div>
-  <div class="col l6">
-    <%= @report.id %>
-  </div>
-</div>
+<% end %>
 
 <div class="row">
   <div class="col l6 align-right">
