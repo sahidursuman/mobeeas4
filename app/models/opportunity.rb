@@ -14,6 +14,9 @@ class Opportunity < ActiveRecord::Base
 
   has_many :messages
 
+  has_many :opportunity_school_years
+  has_many :school_years, through: :opportunity_school_years
+
   validates :title, :description, :commencement_date, :completion_date, presence: true
   validates :number_of_tokens, numericality: { greater_than_equal: 0 }, presence: true
 

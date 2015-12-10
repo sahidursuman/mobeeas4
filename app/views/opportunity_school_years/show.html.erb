@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Opportunity:</strong>
+  <%= @opportunity_school_year.opportunity %>
+</p>
+
+<p>
+  <strong>School year:</strong>
+  <%= @opportunity_school_year.school_year %>
+</p>
+
+<p>
+  <strong>Number of students:</strong>
+  <%= @opportunity_school_year.number_of_students %>
+</p>
+
+<%= link_to 'Edit', edit_opportunity_school_year_path(@opportunity_school_year) %> |
+<%= link_to 'Back', opportunity_school_years_path %>

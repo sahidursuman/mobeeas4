@@ -1,0 +1,13 @@
+<%= simple_form_for(@opportunity_school_year) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="form-inputs">
+    <%= f.association :opportunity %>
+    <%= f.association :school_year %>
+    <%= f.input :number_of_students %>
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>

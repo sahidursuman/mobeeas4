@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :opportunity_school_years
   resources :reports
   resources :messages
   resources :engagements do
