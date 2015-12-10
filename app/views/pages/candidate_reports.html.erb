@@ -9,8 +9,8 @@
   <% @progress_reports = @engagement.progress_report_ids %>
   <ol>
     <% @progress_reports.each do |report| %>
-      <% @p_report = Report.find(report)%>
-      <li><%= link_to "View Progress Report ID: "+ report.to_s, report_path(@p_report, engagement_id: params[:engagement_id]) %></li>
+      <% @pr_report = Report.find(report)%>
+      <li><%= link_to "View Progress Report ID: "+ report.to_s, report_path(@pr_report, engagement_id: @pr_report.engagement_id) %></li>
     <% end %>
   </ol>
 <% else %>
@@ -21,9 +21,12 @@
 <% if @engagement.completion_report_ids.present? %>
   <p><strong> Completion Reports </strong></p>
   <% @completion_reports = @engagement.completion_report_ids %>
-  <% @completion_reports.each do |report| %>
-    <%= report %>
-  <% end %>
+  <ol>
+    <% @completion_reports.each do |report| %>
+      <% @cm_report = Report.find(report) %>
+      <li><%= link_to "View Completion Report ID: "+ report.to_s, report_path(@cm_report, engagement_id: @cm_report.engagement_id) %></li>
+    <% end %>
+  </ol>
 <% else %>
   <p> No Completion Reports </p>
 <% end %>
