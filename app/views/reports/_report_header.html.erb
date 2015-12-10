@@ -1,53 +1,53 @@
 <div class="row">
-  <div class="col l3">
+  <div class="col l6 align-right">
     Host Organisation:
   </div>
-  <div class="col l9">
+  <div class="col l6">
     <%= @opportunity.organisation.name %>
   </div>
 </div>
 
 <div class="row">
-  <div class="col l3">
+  <div class="col l6 align-right">
     Host’s Name:
   </div>
-  <div class="col l9">
+  <div class="col l6">
     <%= @opportunity.user.org_user_profile.name %>
   </div>
 </div>
 
 <div class="row">
-  <div class="col l3">
+  <div class="col l6 align-right">
     Host’s Email:
   </div>
-  <div class="col l9">
+  <div class="col l6">
     <%= @opportunity.user.email %>
   </div>
 </div>
 
 <div class="row">
-  <div class="col l3">
+  <div class="col l6 align-right">
     Host’s Phone:
   </div>
-  <div class="col l9">
+  <div class="col l6">
     <%= @opportunity.user.org_user_profile.phone %>
   </div>
 </div>
 
 <div class="row">
-  <div class="col l3">
+  <div class="col l6 align-right">
     Candidate’s Name:
   </div>
-  <div class="col l9">
+  <div class="col l6">
     <%= @profile.name %>
   </div>
 </div>
 
 <div class="row">
-  <div class="col l3">
+  <div class="col l6 align-right">
     Engagement Start Date:
   </div>
-  <div class="col l9">
+  <div class="col l6">
     <%= @opportunity.commencement_date.strftime("%A, %d %b %Y") %>
   </div>
 </div>

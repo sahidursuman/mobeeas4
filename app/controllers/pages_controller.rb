@@ -95,5 +95,8 @@ class PagesController < ApplicationController
 	def candidate_profile
 	end
 
+	def candidate_reports
+		@engagement = Engagement.find(params[:engagement_id])
+	end
 
 end

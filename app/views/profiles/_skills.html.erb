@@ -52,8 +52,8 @@
 </div><!-- end of card content -->
   <div class="card-action">
     <a href="/my_skills">Add skills</a>
-    <% if @user_skills.present? %>
-      <% if @user_skills.any? %>
+    <% if @profile.user.candidate_skills.present? %>
+      <% if @profile.user.candidate_skills.any? %>
         <%= link_to "Verify your skills", new_skill_verification_path, class: 'waves-effect waves-teal btn-flat' %>
       <% end %>
     <% end %>

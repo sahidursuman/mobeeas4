@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151210013423) do
+ActiveRecord::Schema.define(version: 20151210042501) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -294,8 +294,10 @@ ActiveRecord::Schema.define(version: 20151210013423) do
     t.datetime "created_at",                 null: false
     t.datetime "updated_at",                 null: false
     t.integer  "profile_id"
+    t.integer  "engagement_id"
   end
 
+  add_index "reports", ["engagement_id"], name: "index_reports_on_engagement_id", using: :btree
   add_index "reports", ["opportunity_id"], name: "index_reports_on_opportunity_id", using: :btree
 
   create_table "roles", force: :cascade do |t|
@@ -445,6 +447,7 @@ ActiveRecord::Schema.define(version: 20151210013423) do
   add_foreign_key "organisations", "organisation_types"
   add_foreign_key "profiles", "candidate_types"
   add_foreign_key "profiles", "users"
+  add_foreign_key "reports", "engagements"
   add_foreign_key "reports", "opportunities"
   add_foreign_key "school_year_opportunities", "opportunities"
   add_foreign_key "school_year_opportunities", "school_years"

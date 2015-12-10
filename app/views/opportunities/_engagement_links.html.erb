@@ -55,32 +55,32 @@
       <% end %>
 
       <!-- The progress report links -->
-      <% if engagement.progress_report_id.present? %>
-        <% @progress_report = Report.find(engagement.progress_report_id) %>
-        <%= link_to "View Progress Report for "+ @profile.first_name, report_path(@progress_report) %><br>
-      <!-- New Progress report link appears if the progress report is not present and if opportunity status is 'active' and if the opportunity is not archived -->
-      <% elsif !(engagement.progress_report_id.present?) && (@opportunity.opportunity_status == 'active') && !(@opportunity.archived) %>
+      <% if (engagement.progress_report_ids.present?) || (engagement.completion_report_ids.present?) %>
+        <%= link_to "View All Reports for "+ @profile.first_name, candidate_reports_path(engagement_id: engagement.id) %><br>
+      <% end %>
+
+      <!-- New Progress report link appears if:
+      1. the candidate has received a token and
+      2. opportunity status is 'active' and
+      3. if the opportunity is not archived.
+      Progress Report can be created repeatedly and the progress report ids will be entered in progress_report_ids column in engagements table -->
+      <% if (engagement.status == 'assigned a token') && (@opportunity.opportunity_status == 'active') && !(@opportunity.archived) %>
         <%= link_to "Create Progress Report", new_report_path(opportunity_id: @opportunity.id, profile_id: @profile.id, engagement_id: engagement.id, report_type: 'progress')%><br>
       <% end %>
 
-      <!-- The completion report links -->
-      <% if engagement.completion_report_id.present? %>
-        <% @completion_report = Report.find(engagement.completion_report_id) %>
-        <%= link_to "View Completion Report for "+ @profile.first_name, report_path(@completion_report) %><br>
-      <!-- New Progress report link appears if:
+      <!-- New Completion report link appears if:
       1. the candidate has received a token and
-      2. the progress report is not present and
-      3. if opportunity status is 'post_active' and
-      4. if the opportunity is not archived -->
-      <% elsif (engagement.status == 'assigned a token') && !(engagement.completion_report_id.present?) && (@opportunity.opportunity_status == 'post_active') && !(@opportunity.archived) %>
+      2. if opportunity status is 'post_active' and
+      3. if the opportunity is not archived
+      Completion reports can be created repeatedly -->
+      <% if (engagement.status == 'assigned a token') && (@opportunity.opportunity_status == 'post_active') && !(@opportunity.archived) %>
         <%= link_to "Create Completion Report", new_report_path(opportunity_id: @opportunity.id, profile_id: @profile.id, engagement_id: engagement.id, report_type: 'completion')%><br>
       <% end %>
 
-
-        <% if !(@opportunity.opportunity_status == 'post_active') && !(@opportunity.archived) %>
-          <%= link_to 'Contact ' + @profile.first_name, new_message_path(from: @opportunity.user_id, to: @profile.user.id, opportunity_id: @opportunity.id)  %>
-        <% end %>
-        </p>
+      <% if !(@opportunity.opportunity_status == 'post_active') && !(@opportunity.archived) %>
+        <%= link_to 'Contact ' + @profile.first_name, new_message_path(from: @opportunity.user_id, to: @profile.user.id, opportunity_id: @opportunity.id)  %>
+      <% end %>
+      </p>
     <% end %><!-- end of if engagement.profile_id == @profile.id -->
   <% end %><!-- end of @opportunity.engagements loop -->
   <% if !(@engaged) %><!-- if candidate is not linked to this opportunity (false), then display link to start engagement -->

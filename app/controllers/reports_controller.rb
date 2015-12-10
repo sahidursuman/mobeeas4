@@ -44,10 +44,10 @@ class ReportsController < ApplicationController
         puts "hello " + params[:engagement_id]
 
         if params[:report_type] == 'progress'
-          @engagement.update_attributes(progress_report_id: @report.id)
+          @engagement.progress_report_ids << @report.id
           @engagement.save!
         elsif params[:report_type] == 'completion'
-          @engagement.update_attributes(completion_report_id: @report.id)
+          @engagement.completion_report_ids << @report.id
           @engagement.save!
         end
 
@@ -92,6 +92,6 @@ class ReportsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def report_params
-      params.require(:report).permit(:opportunity_id, :report_type, :relevant_knowledge, :relevant_knowledge_comment, :punctual, :punctual_comment, :communication, :communication_comment, :enthusiasm, :enthusiasm_comment, :professionalism, :professionalism_comment, :stength, :further_dev, :general_comments, :profile_id)
+      params.require(:report).permit(:opportunity_id, :report_type, :relevant_knowledge, :relevant_knowledge_comment, :punctual, :punctual_comment, :communication, :communication_comment, :enthusiasm, :enthusiasm_comment, :professionalism, :professionalism_comment, :stength, :further_dev, :general_comments, :profile_id, :engagement_id)
     end
 end

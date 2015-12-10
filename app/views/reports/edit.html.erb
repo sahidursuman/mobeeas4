@@ -1,12 +1,18 @@
 <!-- EDITING PROGRESS OR COMPLETION REPORT -->
-<% if params[:report_type] == 'progress' %>
-  <h4>Progress Report</h4>
-<% elsif params[:report_type] == 'completion' %>
-  <h4>Completion Report</h4>
-<% end %>
-
-<%= render 'report_header'%>
-<%= render 'form' %>
-
-<%= link_to 'Show', @report %> |
-<%= link_to 'Back', reports_path %>
+<div class="row">
+  <div class="col s12 m12 l12">
+    <div class="card">
+      <div class="card-content">
+        <% if @report.report_type == 'progress' %>
+          <h4 class="align-center">PROGRESS REPORT</h4>
+        <% elsif @report.report_type == 'completion' %>
+          <h4 class="align-center">COMPLETION REPORT</h4>
+        <% end %>
+        <%= render 'report_header'%>
+        <%= render 'form' %>
+        <br>
+        <%= link_to 'Back to Report', @report, class: 'btn' %>
+      </div><!-- end of card-content-->
+    </div><!-- end of card -->
+  </div><!-- end of col -->
+</div><!-- end of row -->

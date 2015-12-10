@@ -74,7 +74,7 @@ Rails.application.routes.draw do
   get 'purchase_tokens', to: 'pages#purchase_tokens'
   get 'required_skills', to: 'pages#required_skills'
   get 'conversations', to: 'pages#conversations'
-
+  get 'candidate_reports', to: 'pages#candidate_reports'
 
 
 
