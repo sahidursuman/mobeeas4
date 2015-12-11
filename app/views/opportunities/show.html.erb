@@ -56,8 +56,11 @@
             <% end %>
           <% end %>
 
-        <!-- only opportunity owner can edit the listing status and can edit the opportunity if not archived yet. -->
-        <% if (current_user.has_role? :host) && (current_user.id == @opportunity.user_id) && !(@opportunity.archived) %>
+        <!-- The listing status can be edited if :
+            1. viewed by opportunity owner
+            2. if the opportunity is not archived.
+            3. if the opportunity is not closed.-->
+        <% if (current_user.has_role? :host) && (current_user.id == @opportunity.user_id) && !(@opportunity.archived) && !(@opportunity.opportunity_status == 'closed') %>
           <% if @opportunity.opportunity_status == 'draft' %>
              - <%= link_to "List", status_listed_opportunity_path(@opportunity) %>
              | <%= link_to "Archive", status_archived_opportunity_path(@opportunity) %>
@@ -142,24 +145,36 @@
           <p>This opportunity currently holds: <strong><%= @opportunity.number_of_tokens %> <%= (@opportunity.number_of_tokens > 1) ? 'tokens' : 'token' %></strong></p>
 
           <% if (@organisation.number_of_tokens > 0) && !(@opportunity.opportunity_status == 'post_active') && !(@opportunity.archived) %>
-            <%= link_to 'Transfer 1 Token into this Opportunity', increase_one_token_into_opportunity_path(org_id: @organisation.id), class: 'btn' %>
+            <p class="align-center"><%= link_to 'Transfer 1 Token into this Opportunity', increase_one_token_into_opportunity_path(org_id: @organisation.id), class: 'btn' %></p>
           <% else %>
             <p>Not enough token held by organisation.</p>
           <% end %>
           <% if (@opportunity.number_of_tokens > 0) && !(@opportunity.opportunity_status == 'post_active') && !(@opportunity.archived) %>
-            <br><%= link_to 'Remove 1 Token from this Opportunity', decrease_one_token_from_opportunity_path(org_id: @organisation.id), class: 'btn' %>
+            <p class="align-center"><%= link_to 'Remove 1 Token from this Opportunity', decrease_one_token_from_opportunity_path(org_id: @organisation.id), class: 'btn' %></p>
           <% end %>
         <% end %>
-
+        <br>
         <% if @opportunity.school_years.present? %>
           <p>
-            <br>Participants School Year level(s):
+            Participants School Year level(s):
             <ol>
               <% @opportunity.school_years.each do |level| %>
-                <li><%= level.name %></li>
+                <li>
+                  <%= level.name %>
+                  <% level.opportunity_school_years.each do |opportunity_school_year| %>
+                    <% if opportunity_school_year.opportunity_id == @opportunity.id %>
+                      - Number of students: <%= (opportunity_school_year.number_of_students == nil)? 0 : opportunity_school_year.number_of_students %>
+                    <% end %>
+                  <% end %>
+                </li>
               <% end %>
             </ol>
           </p>
+        <% else %>
+          <p>The school year level is not listed.
+          <% if (current_user.has_role? :host) && (current_user.id == @opportunity.user_id) && !(@opportunity.archived) && !(@opportunity.opportunity_status == 'closed') %>
+            Please go to <%= link_to "Edit", edit_opportunity_path(@opportunity) %> to list them.</p>
+          <% end %>
         <% end %>
 
 

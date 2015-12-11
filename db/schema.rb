@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151210233408) do
+ActiveRecord::Schema.define(version: 20151210235129) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -167,6 +167,17 @@ ActiveRecord::Schema.define(version: 20151210233408) do
 
   add_index "opportunity_applications", ["opportunity_id"], name: "index_opportunity_applications_on_opportunity_id", using: :btree
   add_index "opportunity_applications", ["user_id"], name: "index_opportunity_applications_on_user_id", using: :btree
+
+  create_table "opportunity_school_years", force: :cascade do |t|
+    t.integer  "opportunity_id"
+    t.integer  "school_year_id"
+    t.integer  "number_of_students"
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
+  end
+
+  add_index "opportunity_school_years", ["opportunity_id"], name: "index_opportunity_school_years_on_opportunity_id", using: :btree
+  add_index "opportunity_school_years", ["school_year_id"], name: "index_opportunity_school_years_on_school_year_id", using: :btree
 
   create_table "opportunity_skills", force: :cascade do |t|
     t.integer  "skill_id"
@@ -428,6 +439,8 @@ ActiveRecord::Schema.define(version: 20151210233408) do
   add_foreign_key "opportunities", "users"
   add_foreign_key "opportunity_applications", "opportunities"
   add_foreign_key "opportunity_applications", "users"
+  add_foreign_key "opportunity_school_years", "opportunities"
+  add_foreign_key "opportunity_school_years", "school_years"
   add_foreign_key "opportunity_skills", "opportunities"
   add_foreign_key "opportunity_skills", "skills"
   add_foreign_key "opportunity_times", "opportunities"
