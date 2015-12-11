@@ -122,11 +122,12 @@
         <% else %><!-- else if opportunity time is not present -->
           <p>No specific dates, days and time setup yet.</p>
           <% if (current_user.has_role? :host) && (current_user.id == @opportunity.user_id) && !(@opportunity.opportunity_status == 'post_active') && !(@opportunity.archived)%>
+            <!-- Modal Trigger -->
             <a class="modal-trigger" href="#opportunity_schedule">Add Opportunity Dates and Times</a>
           <% end %>
         <% end %>
 
-        <!-- Modal Trigger -->
+
 
         <!-- Modal Structure -->
         <div id="opportunity_schedule" class="modal">
@@ -164,6 +165,7 @@
                   <% level.opportunity_school_years.each do |opportunity_school_year| %>
                     <% if opportunity_school_year.opportunity_id == @opportunity.id %>
                       - Number of students: <%= (opportunity_school_year.number_of_students == nil)? 0 : opportunity_school_year.number_of_students %>
+                      -  <%= link_to 'Edit', edit_opportunity_school_year_path(opportunity_school_year) %>
                     <% end %>
                   <% end %>
                 </li>
@@ -173,10 +175,10 @@
         <% else %>
           <p>The school year level is not listed.
           <% if (current_user.has_role? :host) && (current_user.id == @opportunity.user_id) && !(@opportunity.archived) && !(@opportunity.opportunity_status == 'closed') %>
-            Please go to <%= link_to "Edit", edit_opportunity_path(@opportunity) %> to list them.</p>
+            <!-- Modal Trigger -->
+            Please click the <%= link_to 'Add', new_opportunity_school_year_path(opportunity_id: @opportunity.id)%> link to list them.</p>
           <% end %>
         <% end %>
-
 
         <p><br>Skills Required of the MOBEEAS Candidate:</p>
         <p>
