@@ -10,86 +10,87 @@
         <% end %>
         <br>
         <%= render 'report_header'%>
+        <p>
+          Please tick the appropriate standard achieved (CC) Causing Concern, (W) Working towards, (A) Achieved or (GB) Going Beyond
+        </p>
+        <br><br>
         <div class="row">
           <p>
             <strong>
               <div class="col l3">Performance Descriptor</div>
-              <div class="col l1">CC</div>
-              <div class="col l1">W</div>
-              <div class="col l1">A</div>
-              <div class="col l1">GB</div>
+              <div class="col l1 align-center">CC</div>
+              <div class="col l1 align-center">W</div>
+              <div class="col l1 align-center">A</div>
+              <div class="col l1 align-center">GB</div>
               <div class="col l5 align-center">Comment</div>
             </strong>
           </p>
         </div>
 
-
-
         <div class="row">
           <p class="border-bottom">
             <div class="col l3">Relevant Knowledge</div>
-            <div class="col l1">
+            <div class="col l1 align-center">
               <% if @report.relevant_knowledge.include?('CC') %>
                 <i class="fa fa-check"></i>
               <% else %>
-                <p> </p><!-- must leave at least a space to claim its spot in the grid -->
+                <p>-</p><!-- must leave at least a space to claim its spot in the grid -->
               <% end %>
             </div>
-            <div class="col l1">
+            <div class="col l1 align-center">
               <% if @report.relevant_knowledge.include?('W') %>
                 <i class="fa fa-check"></i>
               <% else %>
-                <p> </p>
+                <p>-</p>
               <% end %>
             </div>
-            <div class="col l1">
+            <div class="col l1 align-center">
               <% if @report.relevant_knowledge.include?('A') %>
                 <i class="fa fa-check"></i>
               <% else %>
-                <p> </p>
+                <p>-</p>
               <% end %>
             </div>
-            <div class="col l1">
+            <div class="col l1 align-center">
               <% if @report.relevant_knowledge.include?('GB') %>
                 <i class="fa fa-check"></i>
               <% else %>
-                <p> </p>
+                <p>-</p>
               <% end %>
             </div>
             <div class="col l5 align-center"><%= @report.relevant_knowledge_comment %></div>
           </p>
         </div>
 
-
         <div class="row">
           <p class="border-bottom">
             <div class="col l3">Punctual</div>
-            <div class="col l1">
+            <div class="col l1 align-center">
               <% if @report.punctual.include?('CC') %>
                 <i class="fa fa-check"></i>
               <% else %>
-                <p> </p><!-- must leave at least a space to claim its spot in the grid -->
+                <p>-</p><!-- must leave at least a space to claim its spot in the grid -->
               <% end %>
             </div>
-            <div class="col l1">
+            <div class="col l1 align-center">
               <% if @report.punctual.include?('W') %>
                 <i class="fa fa-check"></i>
               <% else %>
-                <p> </p>
+                <p>-</p>
               <% end %>
             </div>
-            <div class="col l1">
+            <div class="col l1 align-center">
               <% if @report.punctual.include?('A') %>
                 <i class="fa fa-check"></i>
               <% else %>
-                <p> </p>
+                <p>-</p>
               <% end %>
             </div>
-            <div class="col l1">
+            <div class="col l1 align-center">
               <% if @report.punctual.include?('GB') %>
                 <i class="fa fa-check"></i>
               <% else %>
-                <p> </p>
+                <p>-</p>
               <% end %>
             </div>
             <div class="col l5 align-center"><%= @report.punctual_comment %></div>
@@ -99,32 +100,32 @@
         <div class="row">
           <p class="border-bottom">
             <div class="col l3">Communication</div>
-            <div class="col l1">
+            <div class="col l1 align-center">
               <% if @report.communication.include?('CC') %>
                 <i class="fa fa-check"></i>
               <% else %>
-                <p> </p><!-- must leave at least a space to claim its spot in the grid -->
+                <p>-</p><!-- must leave at least a space to claim its spot in the grid -->
               <% end %>
             </div>
-            <div class="col l1">
+            <div class="col l1 align-center">
               <% if @report.communication.include?('W') %>
                 <i class="fa fa-check"></i>
               <% else %>
-                <p> </p>
+                <p>-</p>
               <% end %>
             </div>
-            <div class="col l1">
+            <div class="col l1 align-center">
               <% if @report.communication.include?('A') %>
                 <i class="fa fa-check"></i>
               <% else %>
-                <p> </p>
+                <p>-</p>
               <% end %>
             </div>
-            <div class="col l1">
+            <div class="col l1 align-center">
               <% if @report.communication.include?('GB') %>
                 <i class="fa fa-check"></i>
               <% else %>
-                <p> </p>
+                <p>-</p>
               <% end %>
             </div>
             <div class="col l5 align-center"><%= @report.communication_comment %></div>
@@ -134,32 +135,32 @@
         <div class="row">
           <p class="border-bottom">
             <div class="col l3">Enthusiasm</div>
-            <div class="col l1">
+            <div class="col l1 align-center">
               <% if @report.enthusiasm.include?('CC') %>
                 <i class="fa fa-check"></i>
               <% else %>
-                <p> </p><!-- must leave at least a space to claim its spot in the grid -->
+                <p>-</p><!-- must leave at least a space to claim its spot in the grid -->
               <% end %>
             </div>
-            <div class="col l1">
+            <div class="col l1 align-center">
               <% if @report.enthusiasm.include?('W') %>
                 <i class="fa fa-check"></i>
               <% else %>
-                <p> </p>
+                <p>-</p>
               <% end %>
             </div>
-            <div class="col l1">
+            <div class="col l1 align-center">
               <% if @report.enthusiasm.include?('A') %>
                 <i class="fa fa-check"></i>
               <% else %>
-                <p> </p>
+                <p>-</p>
               <% end %>
             </div>
-            <div class="col l1">
+            <div class="col l1 align-center">
               <% if @report.enthusiasm.include?('GB') %>
                 <i class="fa fa-check"></i>
               <% else %>
-                <p> </p>
+                <p>-</p>
               <% end %>
             </div>
             <div class="col l5 align-center"><%= @report.enthusiasm_comment %></div>
@@ -169,32 +170,32 @@
         <div class="row">
           <p class="border-bottom">
             <div class="col l3">Professionalism</div>
-            <div class="col l1">
+            <div class="col l1 align-center">
               <% if @report.professionalism.include?('CC') %>
                 <i class="fa fa-check"></i>
               <% else %>
-                <p> </p><!-- must leave at least a space to claim its spot in the grid -->
+                <p>-</p><!-- must leave at least a space to claim its spot in the grid -->
               <% end %>
             </div>
-            <div class="col l1">
+            <div class="col l1 align-center">
               <% if @report.professionalism.include?('W') %>
                 <i class="fa fa-check"></i>
               <% else %>
-                <p> </p>
+                <p>-</p>
               <% end %>
             </div>
-            <div class="col l1">
+            <div class="col l1 align-center">
               <% if @report.professionalism.include?('A') %>
                 <i class="fa fa-check"></i>
               <% else %>
-                <p> </p>
+                <p>-</p>
               <% end %>
             </div>
-            <div class="col l1">
+            <div class="col l1 align-center">
               <% if @report.professionalism.include?('GB') %>
                 <i class="fa fa-check"></i>
               <% else %>
-                <p> </p>
+                <p>-</p>
               <% end %>
             </div>
             <div class="col l5 align-center"><%= @report.professionalism_comment %></div>
