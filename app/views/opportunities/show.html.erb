@@ -169,6 +169,7 @@
                       3. if the opportunity is not closed.-->
                   <% if (current_user.has_role? :host) && (current_user.id == @opportunity.user_id) && !(@opportunity.archived) && !(@opportunity.opportunity_status == 'closed') %>
                     -  <%= link_to 'Edit', edit_opportunity_school_year_path(opportunity_school_year, opportunity_id: @opportunity.id) %>
+                     | <%= link_to 'Delete', opportunity_school_year_path(opportunity_school_year, opportunity_id: @opportunity.id), method: :delete, data: { confirm: 'Are you sure?' } %>
                   <% end %>
                 </li>
               <% end %>

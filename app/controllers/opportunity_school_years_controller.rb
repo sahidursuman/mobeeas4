@@ -65,9 +65,10 @@ class OpportunitySchoolYearsController < ApplicationController
   # DELETE /opportunity_school_years/1
   # DELETE /opportunity_school_years/1.json
   def destroy
+    @opportunity = Opportunity.find(params[:opportunity_id])
     @opportunity_school_year.destroy
     respond_to do |format|
-      format.html { redirect_to opportunity_school_years_url, notice: 'Opportunity school year was successfully destroyed.' }
+      format.html { redirect_to @opportunity, notice: 'Opportunity school year was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
