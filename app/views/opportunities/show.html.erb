@@ -159,28 +159,32 @@
           <p>
             Participants School Year level(s):
             <ol>
-              <% @opportunity.school_years.each do |level| %>
+              <% @opportunity.opportunity_school_years.each do |opportunity_school_year| %>
                 <li>
-                  <%= level.name %>
-                  <% level.opportunity_school_years.each do |opportunity_school_year| %>
-                    <% if opportunity_school_year.opportunity_id == @opportunity.id %>
-                      - Number of students: <%= (opportunity_school_year.number_of_students == nil)? 0 : opportunity_school_year.number_of_students %>
-                      -  <%= link_to 'Edit', edit_opportunity_school_year_path(opportunity_school_year) %>
-                    <% end %>
+                  <%= opportunity_school_year.school_year.name %> (number of students: <%= (opportunity_school_year.number_of_students > 0)? opportunity_school_year.number_of_students : 0 %>)
+
+                  <!-- The school year level can be edited if :
+                      1. viewed by opportunity owner
+                      2. if the opportunity is not archived.
+                      3. if the opportunity is not closed.-->
+                  <% if (current_user.has_role? :host) && (current_user.id == @opportunity.user_id) && !(@opportunity.archived) && !(@opportunity.opportunity_status == 'closed') %>
+                    -  <%= link_to 'Edit', edit_opportunity_school_year_path(opportunity_school_year, opportunity_id: @opportunity.id) %>
                   <% end %>
                 </li>
               <% end %>
             </ol>
+            <% if (current_user.has_role? :host) && (current_user.id == @opportunity.user_id) && !(@opportunity.archived) && !(@opportunity.opportunity_status == 'closed') %>
+              <%= link_to 'Add', new_opportunity_school_year_path(opportunity_id: @opportunity.id) %> new school year level.
+            <% end %>
           </p>
         <% else %>
           <p>The school year level is not listed.
           <% if (current_user.has_role? :host) && (current_user.id == @opportunity.user_id) && !(@opportunity.archived) && !(@opportunity.opportunity_status == 'closed') %>
-            <!-- Modal Trigger -->
             Please click the <%= link_to 'Add', new_opportunity_school_year_path(opportunity_id: @opportunity.id)%> link to list them.</p>
           <% end %>
         <% end %>
 
-        <p><br>Skills Required of the MOBEEAS Candidate:</p>
+        <p><br>Skills required of the MOBEEAS Candidate:</p>
         <p>
           <% if (@opportunity.skills.any?) %>
             <ol>

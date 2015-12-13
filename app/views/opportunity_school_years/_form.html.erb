@@ -2,9 +2,10 @@
   <%= f.error_notification %>
 
   <div class="form-inputs">
-    <%= f.association :opportunity %>
+    <%= f.association :opportunity, :as => :hidden, input_html: { value: params[:opportunity_id] } %>
     <%= f.association :school_year %>
     <%= f.input :number_of_students %>
+    <%= hidden_field_tag(:opportunity_id, params[:opportunity_id]) %>
   </div>
 
   <div class="form-actions">

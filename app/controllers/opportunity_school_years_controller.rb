@@ -25,10 +25,15 @@ class OpportunitySchoolYearsController < ApplicationController
   # POST /opportunity_school_years.json
   def create
     @opportunity_school_year = OpportunitySchoolYear.new(opportunity_school_year_params)
+    @opportunity = Opportunity.find(params[:opportunity_id])
+    # @opportunity_school_year.opportunity_id = @opportunity.id
 
     respond_to do |format|
       if @opportunity_school_year.save
-        format.html { redirect_to @opportunity_school_year, notice: 'Opportunity school year was successfully created.' }
+        # the original code
+        # format.html { redirect_to @opportunity_school_year, notice: 'Opportunity school year was successfully created.' }
+
+        format.html { redirect_to @opportunity, notice: 'Opportunity school year was successfully created.' }
         format.json { render :show, status: :created, location: @opportunity_school_year }
       else
         format.html { render :new }
@@ -40,9 +45,15 @@ class OpportunitySchoolYearsController < ApplicationController
   # PATCH/PUT /opportunity_school_years/1
   # PATCH/PUT /opportunity_school_years/1.json
   def update
+    @opportunity = Opportunity.find(params[:opportunity_id])
+    @opportunity_school_year.opportunity_id = @opportunity.id
+
     respond_to do |format|
       if @opportunity_school_year.update(opportunity_school_year_params)
-        format.html { redirect_to @opportunity_school_year, notice: 'Opportunity school year was successfully updated.' }
+        # the original code
+        # format.html { redirect_to @opportunity_school_year, notice: 'Opportunity school year was successfully updated.' }
+
+        format.html { redirect_to @opportunity, notice: 'Opportunity school year was successfully updated.' }
         format.json { render :show, status: :ok, location: @opportunity_school_year }
       else
         format.html { render :edit }

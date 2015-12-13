@@ -80,7 +80,8 @@ class OpportunitiesController < ApplicationController
   # GET /opportunities/new
   def new
     @opportunity = Opportunity.new
-    @school_years = SchoolYear.all
+    # @school_years = SchoolYear.all
+    @opportunity.school_years = SchoolYear.all
   end
 
   # GET /opportunities/1/edit
@@ -92,6 +93,9 @@ class OpportunitiesController < ApplicationController
   # POST /opportunities.json
   def create
     @opportunity = Opportunity.new(opportunity_params)
+    # @school_years = SchoolYear.all
+    # @opportunity.school_years = SchoolYear.new
+
 
     respond_to do |format|
       if @opportunity.save

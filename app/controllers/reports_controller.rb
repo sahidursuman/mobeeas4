@@ -41,8 +41,6 @@ class ReportsController < ApplicationController
     respond_to do |format|
       if @report.save
         # The new report id should be entered into the column in the engagements table
-        puts "hello " + params[:engagement_id]
-
         if params[:report_type] == 'progress'
           @engagement.progress_report_ids << @report.id
           @engagement.save!
