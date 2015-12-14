@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151214000733) do
+ActiveRecord::Schema.define(version: 20151214020641) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -397,6 +397,26 @@ ActiveRecord::Schema.define(version: 20151214000733) do
 
   add_index "skills", ["skill_category_id"], name: "index_skills_on_skill_category_id", using: :btree
 
+  create_table "sponsors", force: :cascade do |t|
+    t.string   "first_name"
+    t.string   "last_name"
+    t.string   "organisation"
+    t.string   "position"
+    t.string   "phone1"
+    t.string   "phone2"
+    t.string   "address"
+    t.string   "suburb"
+    t.string   "state"
+    t.string   "postcode"
+    t.string   "country"
+    t.string   "guid"
+    t.integer  "user_id"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+  end
+
+  add_index "sponsors", ["user_id"], name: "index_sponsors_on_user_id", using: :btree
+
   create_table "token_purchases", force: :cascade do |t|
     t.integer  "user_id"
     t.integer  "organisation_id"
@@ -472,6 +492,7 @@ ActiveRecord::Schema.define(version: 20151214000733) do
   add_foreign_key "security_checks", "users"
   add_foreign_key "skill_verifications", "users"
   add_foreign_key "skills", "skill_categories"
+  add_foreign_key "sponsors", "users"
   add_foreign_key "token_purchases", "organisations"
   add_foreign_key "token_purchases", "users"
 end

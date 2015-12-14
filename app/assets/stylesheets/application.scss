@@ -40,6 +40,12 @@ nav ul a {
   }
 // end of fixed html sidebar
 
+// This is to make sidebar items more tight, narrower
+.side-nav a {
+  height: 40px;
+  line-height: 40px;
+}
+
 .parallax-container {
       height: 400px;
     }

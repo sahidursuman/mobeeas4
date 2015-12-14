@@ -4,9 +4,11 @@ class PagesController < ApplicationController
   def home
   end
 
-  def admin
+  def admin_page
     if current_user.has_role? :admin
-      @users = User.includes(:profile)
+			if current_user.admins.present?
+	      @admin = Admin.find_by(user_id: current_user.id)
+			end
     else
       redirect_to root_path
     end

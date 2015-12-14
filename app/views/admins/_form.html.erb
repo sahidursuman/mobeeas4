@@ -5,12 +5,24 @@
     <%= f.input :first_name %>
     <%= f.input :last_name %>
     <%= f.input :phone %>
-    <%= f.input :address %>
-    <%= f.input :suburb %>
-    <%= f.input :state %>
-    <%= f.input :postcode %>
-    <%= f.input :guid %>
-    <%= f.association :user %>
+    <%=  %>
+    <div class="row">
+      <div class="col s6">
+        <%= f.input :address %>
+      </div>
+      <div class="col s6">
+        <%= f.input :suburb %>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col s6">
+        <%= f.input :state, priority: [ "NSW" ], collection: [ "NSW", "QLD", "SA", "TAS", "VIC", "ACT", "WA"] %>
+      </div>
+      <div class="col s6">
+        <%= f.input :postcode %>
+      </div>
+    </div>
+    <%= f.association :user, :as => :hidden %>
   </div>
 
   <div class="form-actions">

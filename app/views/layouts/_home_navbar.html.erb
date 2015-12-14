@@ -11,7 +11,7 @@
         <li><a href="/about"><i class="material-icons left">help_outline</i> About</a></li>
         <% if user_signed_in? %>
           <% if current_user.has_role? :admin %>
-            <li><%= link_to admin_path do %><i class="material-icons left">account_box</i> Admin<% end %></li>
+            <li><%= link_to admin_page_path do %><i class="material-icons left">account_box</i> Admin<% end %></li>
           <% elsif current_user.has_role? :sponsor %>
             <li><%= link_to sponsor_path do %><i class="material-icons left">account_box</i> Sponsor<% end %></li>
           <%# elsif current_user.profile and current_user.profile.id != nil %><!-- 1st version -->

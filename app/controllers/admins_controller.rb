@@ -25,6 +25,7 @@ class AdminsController < ApplicationController
   # POST /admins.json
   def create
     @admin = Admin.new(admin_params)
+    @admin.user_id = current_user.id
 
     respond_to do |format|
       if @admin.save
