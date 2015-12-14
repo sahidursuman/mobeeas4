@@ -25,10 +25,12 @@ class SponsorsController < ApplicationController
   # POST /sponsors.json
   def create
     @sponsor = Sponsor.new(sponsor_params)
+    @sponsor.user_id = current_user.id
 
     respond_to do |format|
       if @sponsor.save
-        format.html { redirect_to @sponsor, notice: 'Sponsor was successfully created.' }
+        current_user.add_role :sponsor
+        format.html { redirect_to sponsor_page_path, notice: 'Sponsor was successfully created.' }
         format.json { render :show, status: :created, location: @sponsor }
       else
         format.html { render :new }

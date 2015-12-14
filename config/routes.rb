@@ -61,7 +61,7 @@ Rails.application.routes.draw do
   end
   resources :profiles
   get 'admin_page', to: 'pages#admin_page'
-  get 'sponsor', to: 'pages#sponsor'
+  get 'sponsor_page', to: 'pages#sponsor_page'
   get 'contact', to: 'pages#contact'
   get 'welcome', to: 'pages#welcome'
   get 'find_organisation', to: 'pages#find_organisation'

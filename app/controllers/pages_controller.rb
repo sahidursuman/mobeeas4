@@ -14,9 +14,9 @@ class PagesController < ApplicationController
     end
   end
 
-	def sponsor
-    if current_user.has_role? :admin
-      @users = User.includes(:profile)
+	def sponsor_page
+    if current_user.has_role? :sponsor
+			@sponsor = Sponsor.find_by(user_id: current_user.id)
     else
       redirect_to root_path
     end

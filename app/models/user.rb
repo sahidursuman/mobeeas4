@@ -8,6 +8,7 @@ class User < ActiveRecord::Base
 	has_one :agreement
 	has_many :security_checks
 	has_many :admins
+	has_many :sponsors
 
 	has_many :candidate_skills, dependent: :destroy
 	has_many :skills, through: :candidate_skills

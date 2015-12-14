@@ -53,12 +53,13 @@
             </div>
             <div class="card-action">
               <% if user_signed_in? %>
-                <%# if current_user.sponsor.present? %>
-                  <!-- <a class="waves-effect white btn margin-left-20px" href="/sponsor/profile"><span class="palette2">My Sponsor Dashboard</span></a> -->
-                <%# else %>
-                  <!-- <a class="waves-effect white btn margin-left-20px" href="/sponsor/new"><span class="palette2">Create Sponsor Profile</span></a> -->
-                <%# end %> <!-- end of if current_user.sponsor.present? -->
-              <%# else %>
+                <% if current_user.sponsors.present? %>
+                  <% @sponsor = Sponsor.find_by(user_id: current_user.id) %>
+                  <a class="waves-effect white btn margin-left-20px" href="/sponsor_page"><span class="palette2">My Sponsor Dashboard</span></a>
+                <% else %>
+                  <a class="waves-effect white btn margin-left-20px" href="/sponsors/new"><span class="palette2">Create Sponsor Profile</span></a>
+                <% end %> <!-- end of if current_user.sponsor.present? -->
+              <% else %>
                 <a class="waves-effect white btn margin-left-20px" href="/users/sign_in"><span class="palette2">Register as a Sponsor</span></a>
               <% end %><!-- end of if user_signed_in? -->
 
