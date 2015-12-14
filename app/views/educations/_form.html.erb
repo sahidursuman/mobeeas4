@@ -1,17 +1,9 @@
 <%= simple_form_for(@education) do |f| %>
   <%= f.error_notification %>
-
-  <div class="input-field">
     <%= f.input :institution, label: 'High School/University/College', label_input: { class: 'active'} %>
-  </div>
-  <div class="input-field">
     <%= f.input :course, label: 'Course/Degree' %>
-  </div>
-  <div class="input-field">
     <%= f.input :year_completed, label: 'Year completed (past or future)' %>
-  </div><br>
-
-  <div class="input-field"><br><br>
+<br><br><br>
 
     <!-- <%#= f.input :achievement , label: "Evidences of Achievements"%><a href="#modal-achievements" class="modal-trigger"><i class="material-icons">help</i></a>
     <div id="modal-achievements" class="modal">
@@ -34,7 +26,7 @@
           <div class="modal-content">
             <p>
               Please upload any evidence of your educational achievements from this institution as a PDF file here.
-              Please combine multiple transcripts into a sinle PDF file per institution.
+              Please combine multiple transcripts into a single PDF file per institution.
             </p>
           </div>
           <div class="modal-footer">
@@ -44,13 +36,11 @@
       </div>
     </div>
 
-  </div>
   <% if @education.achievement.present? %>
     <p>Uploaded File:</p>
     <p><%= @education.achievement %></p>
   <% end %>
 
-  <br>
   <div class="form-actions">
     <% if @education.new_record? %>
       <button type="submit" class="btn light-blue">Add course</button>
