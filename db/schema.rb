@@ -11,10 +11,26 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151211021026) do
+ActiveRecord::Schema.define(version: 20151214000733) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "admins", force: :cascade do |t|
+    t.string   "first_name"
+    t.string   "last_name"
+    t.string   "phone"
+    t.string   "address"
+    t.string   "suburb"
+    t.string   "state"
+    t.string   "postcode"
+    t.string   "guid"
+    t.integer  "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "admins", ["user_id"], name: "index_admins_on_user_id", using: :btree
 
   create_table "agreements", force: :cascade do |t|
     t.integer  "user_id"
@@ -423,6 +439,7 @@ ActiveRecord::Schema.define(version: 20151211021026) do
 
   add_index "users_roles", ["user_id", "role_id"], name: "index_users_roles_on_user_id_and_role_id", using: :btree
 
+  add_foreign_key "admins", "users"
   add_foreign_key "agreements", "users"
   add_foreign_key "candidate_skill_verifications", "candidate_skills"
   add_foreign_key "candidate_skill_verifications", "skill_verifications"
