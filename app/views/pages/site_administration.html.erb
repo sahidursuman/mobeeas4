@@ -1,0 +1,19 @@
+<h4>Site Administration</h4>
+
+<p>Number of MOBEEAS Staff with Administration role: <%= @admins.count %></p>
+
+<p>List of all MOBEEAS Administrators:</p>
+
+<% @admins.each do |admin| %>
+  <p><strong>First name:</strong> <%= admin.first_name %></p>
+  <p><strong>Last name:</strong> <%= admin.last_name %></p>
+  <p><strong>Phone:</strong> <%= admin.phone %></p>
+  <p><strong>Address:</strong> <%= admin.address %></p>
+  <p><strong>Suburb:</strong> <%= admin.suburb %></p>
+  <p><strong>State:</strong> <%= admin.state %></p>
+  <p><strong>Postcode:</strong> <%= admin.postcode %></p>
+  <br>
+<% end %>
+
+<p>Creating a new Administration Staff</p>
+-- not ready

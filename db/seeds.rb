@@ -1,5 +1,8 @@
 user = User.create!(email: 'admin@example.com', password: '12345678')
 user.add_role :admin
+user.add_role :master_admin
+# the role master_admin can create or delete the user with role admin
+
 user2 = User.create!(email: 'candidate@example.com', password: '12345678')
 user2.add_role :candidate
 # Profile.create(user_id: user2.id, )

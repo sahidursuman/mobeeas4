@@ -2,7 +2,11 @@
   <div class="col s12 m11 offset-m1 l11 offset-l1">
 
 		<%= render 'layouts/sidebar' %>
-		<h4>Admin Profile</h4>
+    <% if current_user.has_role? :master_admin %>
+		  <h4>Master Admin Profile</h4>
+    <% else %>
+      <h4>Admin Profile</h4>
+    <% end %>
     <% if (user_signed_in?) && (current_user.has_role? :admin) %>
       <% if current_user.admins.present? %>
         <p><strong>First Name: </strong><%= @admin.first_name %></p>

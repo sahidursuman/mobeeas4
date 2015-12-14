@@ -101,4 +101,19 @@ class PagesController < ApplicationController
 		@engagement = Engagement.find(params[:engagement_id])
 	end
 
+	def site_administration
+		if current_user.has_role? :master_admin
+			@admins = Admin.all
+		else
+			redirect_to root_path
+		end
+	end
+
+	def admin_candidates
+	end
+	def admin_hosts
+	end
+	def admin_sponsors
+	end
+
 end
