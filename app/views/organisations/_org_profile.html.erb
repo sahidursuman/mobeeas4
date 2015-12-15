@@ -2,7 +2,7 @@
   <% if @organisation.logo.present? %>
     <%= image_tag(@organisation.logo_url, class: 'img-responsive activator') %>
   <% else %>
-    <img src="<%= asset_path 'noPhoto-icon.png' %>" class='img-responsive activator'>
+    <%= cl_image_tag("noPhoto-icon.png", class: 'img-responsive activator' ) %>
   <% end %>
 </div>
 

@@ -2,19 +2,36 @@
   <div class="col s12 m11 offset-m1 l11 offset-l1">
 
 		<%= render 'layouts/sidebar' %>
-		<h4>Sponsor Dashboard here</h4>
-    <p><strong>First Name: </strong><%= @sponsor.first_name %></p>
-    <p><strong>Last Name: </strong><%= @sponsor.last_name %></p>
-    <p><strong>Phone: </strong><%= @sponsor.organisation %></p>
-    <p><strong>Phone: </strong><%= @sponsor.position %></p>
-    <p><strong>Phone: </strong><%= @sponsor.phone1 %></p>
-    <p><strong>Phone: </strong><%= @sponsor.phone2 %></p>
-    <p><strong>Email: </strong><%= @sponsor.user.email %></p>
-    <p><strong>Address: </strong><%= @sponsor.address %></p>
-    <p><strong>Suburb: </strong><%= @sponsor.suburb %></p>
-    <p><strong>State: </strong><%= @sponsor.state %></p>
-    <p><strong>Postcode: </strong><%= @sponsor.postcode %></p>
-    <p><strong>Postcode: </strong><%= @sponsor.country %></p>
+    <br>
+    <div class = 'row'>
+      <div class = 'col l6'>
+    		<h4><%= @sponsor.organisation %></h4>
+        <p><strong>First Name: </strong><%= @sponsor.first_name %></p>
+        <p><strong>Last Name: </strong><%= @sponsor.last_name %></p>
+        <p><strong>Position: </strong><%= @sponsor.position %></p>
+        <p><strong>Phone Option 1: </strong><%= @sponsor.phone1 %></p>
+        <p><strong>Phone Option 2: </strong><%= @sponsor.phone2 %></p>
+        <p><strong>Email: </strong><%= @sponsor.user.email %></p>
+        <p><strong>Address: </strong><%= @sponsor.address %></p>
+        <p><strong>Suburb: </strong><%= @sponsor.suburb %></p>
+        <p><strong>State: </strong><%= @sponsor.state %></p>
+        <p><strong>Postcode: </strong><%= @sponsor.postcode %></p>
+        <p><strong>Country: </strong><%= @sponsor.country %></p>
+      </div>
+      <div class="col l6">
+        <% if @sponsor.logo.present? %>
+          <%= image_tag(@sponsor.logo_url, size: "300", class: 'img-responsive activator' ) %>
+        <% else %>
+          <%= cl_image_tag("noPhoto-icon.png", class: 'img-responsive activator' )  %>
+        <% end %>
+      </div>
+    </div><!-- end row -->
+
+
+    <% if (current_user.has_role? :sponsor) && (current_user.id == @sponsor.user.id) %>
+      <!-- <p>match</p> -->
+      <%= link_to "Edit", edit_sponsor_path(@sponsor)%>
+    <% end %>
 
 	</div>
 </div>

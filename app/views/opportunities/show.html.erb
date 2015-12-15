@@ -4,6 +4,9 @@
     <div class="card">
       <div class="card-content">
         <p>Proudly sponsored by: </p>
+        <% if current_user.has_role? :sponsor %>
+          <p>Would you like to sponsor this opportunity? You can express your interest to the MOBEEAS Admin. Yes, I am interested.</p>
+        <% end %>
       </div>
     </div><!-- end of card-content -->
   </div><!-- end of card -->
@@ -23,9 +26,9 @@
           <div class="col m2">
             <div class="card-image waves-effect waves-block waves-light">
               <% if @organisation.logo.present? %>
-                <%= image_tag(@organisation.logo_url, class: 'img-responsive activator') %>
+                <%= image_tag(@organisation.logo_url, class: 'img-responsive activator' ) %>
               <% else %>
-                <img src="<%= asset_path 'noPhoto-icon.png' %>" class='img-responsive activator'>
+                <%= cl_image_tag("noPhoto-icon.png", class: 'img-responsive activator' ) %>
               <% end %>
             </div>
           </div>

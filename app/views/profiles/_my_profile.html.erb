@@ -3,7 +3,7 @@
     <% if @profile.picture.present? %>
       <%= cl_image_tag(@profile.picture, class: 'img-responsive activator') %>
     <% else %>
-      <%= cl_image_tag("user.png", class: 'img-responsive activator') %>
+      <%= cl_image_tag("user.png", :opacity=>30, class: 'img-responsive activator') %>
     <% end %>
   <% end %>
 </div>

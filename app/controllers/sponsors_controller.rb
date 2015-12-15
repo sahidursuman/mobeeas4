@@ -44,7 +44,8 @@ class SponsorsController < ApplicationController
   def update
     respond_to do |format|
       if @sponsor.update(sponsor_params)
-        format.html { redirect_to @sponsor, notice: 'Sponsor was successfully updated.' }
+        # format.html { redirect_to @sponsor, notice: 'Sponsor was successfully updated.' }
+        format.html { redirect_to sponsor_page_path, notice: 'Sponsor was successfully updated.' }
         format.json { render :show, status: :ok, location: @sponsor }
       else
         format.html { render :edit }
@@ -71,6 +72,6 @@ class SponsorsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def sponsor_params
-      params.require(:sponsor).permit(:first_name, :last_name, :organisation, :position, :phone1, :phone2, :address, :suburb, :state, :postcode, :country, :guid, :user_id)
+      params.require(:sponsor).permit(:first_name, :last_name, :organisation, :position, :phone1, :phone2, :address, :suburb, :state, :postcode, :country, :guid, :user_id, :logo)
     end
 end
