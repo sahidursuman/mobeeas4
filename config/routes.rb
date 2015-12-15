@@ -56,7 +56,7 @@ Rails.application.routes.draw do
   resources :skill_categories
   resources :educations do
     member do
-      get :verify
+      get :verify_candidate
     end
   end
   resources :profiles
@@ -83,6 +83,8 @@ Rails.application.routes.draw do
   get 'admin_candidates', to: 'pages#admin_candidates'
   get 'admin_hosts', to: 'pages#admin_hosts'
   get 'admin_sponsors', to: 'pages#admin_sponsors'
+  get 'unverified_education', to: 'pages#unverified_education'
+
 
 
 

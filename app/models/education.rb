@@ -9,4 +9,12 @@ class Education < ActiveRecord::Base
   def current_enrolment?
   	year_completed >= Date.today.year.to_s
   end
+
+  scope :unverified, -> {where(verified: false)}
+
+  def verify
+    self.verified = true
+    self.save!
+  end
+
 end

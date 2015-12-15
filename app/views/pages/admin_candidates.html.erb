@@ -2,6 +2,8 @@
   <div class="col s12 m11 offset-m1 l11 offset-l1">
     <%= render 'layouts/sidebar' %>
     <h4>This is the list of MOBEEAS Candidates</h4>
-    <%= education_not_verified %>
+
+      <p>List of Candidates with unverified education</p>
+      <%= link_to 'View', unverified_education_path, class: 'btn' %>
   </div>
 </div>

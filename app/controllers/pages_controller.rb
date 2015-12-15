@@ -115,5 +115,9 @@ class PagesController < ApplicationController
 	end
 	def admin_sponsors
 	end
+	def unverified_education
+		@educations = Education.unverified
+	end
+
 
 end
