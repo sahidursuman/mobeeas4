@@ -1,6 +1,13 @@
 class SecurityChecksController < ApplicationController
-  before_action :set_security_check, only: [:show, :edit, :update, :destroy]
+  before_action :set_security_check, only: [:show, :edit, :update, :destroy, :verify_candidate]
   skip_before_action :check_admin, except: [:index, :show]
+
+
+  def verify_candidate
+    @security_check.verify(params[:checked_by])
+    redirect_to unverified_wwc_path
+  end
+
   # GET /security_checks
   # GET /security_checks.json
   def index

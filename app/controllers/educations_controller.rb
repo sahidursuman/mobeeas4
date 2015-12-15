@@ -1,14 +1,15 @@
 class EducationsController < ApplicationController
   before_action :set_education, only: [:show, :edit, :update, :destroy, :verify_candidate]
   skip_before_action :check_admin, except: [:index, :show]
-  # GET /educations
-  # GET /educations.json
+
 
   def verify_candidate
     @education.verify
     redirect_to unverified_education_path
   end
 
+  # GET /educations
+  # GET /educations.json
   def index
     @educations = Education.all
   end

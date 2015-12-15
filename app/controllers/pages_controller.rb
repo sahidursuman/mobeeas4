@@ -118,6 +118,8 @@ class PagesController < ApplicationController
 	def unverified_education
 		@educations = Education.unverified
 	end
-
+	def unverified_wwc
+		@security_checks = SecurityCheck.unverified
+	end
 
 end

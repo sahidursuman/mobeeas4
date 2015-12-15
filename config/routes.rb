@@ -47,7 +47,11 @@ Rails.application.routes.draw do
     end
   end
   resources :organisation_types
-  resources :security_checks
+  resources :security_checks do
+    member do
+      get :verify_candidate
+    end
+  end
   resources :skills do
     member do
       get :add_user, :remove_user, :add_required, :remove_required
@@ -84,8 +88,7 @@ Rails.application.routes.draw do
   get 'admin_hosts', to: 'pages#admin_hosts'
   get 'admin_sponsors', to: 'pages#admin_sponsors'
   get 'unverified_education', to: 'pages#unverified_education'
-
-
+  get 'unverified_wwc', to: 'pages#unverified_wwc'
 
 
   devise_for :users

@@ -1,0 +1,18 @@
+<div class="row">
+  <div class="col s12 m11 offset-m1 l11 offset-l1">
+    <%= render 'layouts/sidebar' %>
+    <h4>List of Candidates with unverified WWC</h4>
+    <% if @security_checks.present? %>
+      <p>There are <%= @security_checks.count %> WWC records that are not verified.</p>
+      <ol>
+        <% @security_checks.order("user_id ASC").each do |security_check| %>
+          <li>
+            WWC Number: <%= security_check.number %> (Expires <%= security_check.expiry_date.strftime("%e %b %Y") %>) - Name: <%= security_check.user.profile.name %> (Profile ID: <%= security_check.user.profile.id %>) - <%= link_to "Verify this Candidate", verify_candidate_security_check_path(security_check, checked_by: current_user.id) %>
+          </li>
+        <% end %><!-- end of @educations loop -->
+      </ol>
+    <% else %>
+      <p>There are no candidate.</p>
+    <% end %><!-- end of if @security_checks.present? -->
+  </div>
+</div>
