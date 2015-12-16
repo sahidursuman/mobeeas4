@@ -10,4 +10,7 @@ class SecurityCheck < ActiveRecord::Base
     self.save!
   end
 
+  validates :name, :state, :number, :expiry_date, presence: true
+
+
 end

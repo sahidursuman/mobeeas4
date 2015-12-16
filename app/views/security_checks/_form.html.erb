@@ -1,42 +1,17 @@
-<%= form_for(@security_check) do |f| %>
-  <%# f.error_notification %>
-    <p>Choose Check Type:
-      <%= f.select(:name, options_for_select(['Working with Children', 'Police Check']), class: 'browser-default') %>
-      <%= f.label 'Security check type' %>
-    </p>
-
-    <p>
-      Select State:
-      <select name="security_check[state]" id="security_check_state" class="browser-default" label="Select State">
-      <option value=""></option>
-      <option value="ACT">ACT</option>
-      <option value="NSW">NSW</option>
-      <option value="NT">NT</option>
-      <option value="QLD">QLD</option>
-      <option value="SA">SA</option>
-      <option value="TAS">TAS</option>
-      <option value="VIC">VIC</option>
-      <option value="WA">WA</option></select>
-    </p>
-    <div class="row">
-      <div class="col l6">
-        <br>
-        <p>Enter Check Number:
-          <%= f.text_field :number %>
-          <%#= f.label 'Clearance check number' %>
-        </p>
-      </div>
-      <div class="col l6">
-        <br>
-        <p>Expiry Date:
-          <%= f.date_field :expiry_date, as: :string, input_html: { class: 'datetimepicker1'}  %>
-          <%#= f.label 'Expiry date' %>
-        </p>
-      </div>
+<%= simple_form_for(@security_check) do |f| %>
+  <%= f.error_notification %>
+  <%= f.input :name, label: 'Choose Check Type', priority: [ "Working with Children"], collection: ["Working with Children", "Police Check"] %>
+  <%= f.input :state, label: 'State', priority: [ "NSW" ], collection: [ "NSW", "QLD", "SA", "TAS", "VIC", "ACT", "WA"] %>
+  <div class="row">
+    <div class="col l6">
+      <br>
+      <%= f.input :number, label: 'Check Number' %>
     </div>
-    <p></p>
-
-
+    <div class="col l6">
+      <br>
+      <%= f.input :expiry_date, label: 'Expiry Date', as: :string, input_html: { class: 'datetimepicker1'}  %>
+    </div>
+  </div>
   <div class="form-actions">
     <button type="submit" class="btn">Add Security Check</button>
   </div>
