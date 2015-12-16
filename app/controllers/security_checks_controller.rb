@@ -48,9 +48,19 @@ class SecurityChecksController < ApplicationController
   # PATCH/PUT /security_checks/1.json
   def update
     respond_to do |format|
-      if @security_check.update(security_check_params)
+      if params[:admin_check] # this is coming from unverified_wwc page
+        @security_check.update(security_check_params)
+        format.html { redirect_to unverified_wwc_path, notice: 'Security check was successfully updated.' }
+        format.json { render :show, status: :ok, location: @security_check }
+      elsif !(params[:admin_check].present?)
+        @security_check.update(security_check_params)
         format.html { redirect_to profile_path(current_user.profile), notice: 'Security check was successfully updated.' }
         format.json { render :show, status: :ok, location: @security_check }
+
+      # Original format -- DO NOT DELETE
+      # if @security_check.update(security_check_params)
+      #   format.html { redirect_to profile_path(current_user.profile), notice: 'Security check was successfully updated.' }
+      #   format.json { render :show, status: :ok, location: @security_check }
       else
         format.html { render :edit }
         format.json { render json: @security_check.errors, status: :unprocessable_entity }

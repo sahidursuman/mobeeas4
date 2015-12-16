@@ -9,9 +9,28 @@
             <% if security_check.expiry_date.present? %>
               Number: <strong><%= security_check.number %></strong> (Expires <%= security_check.expiry_date.strftime("%e %b %Y") %>) - Name: <%= security_check.user.profile.name %> (Profile ID: <%= security_check.user.profile.id %>)
               <br>
-              <%= link_to "Verify this Candidate", verify_candidate_security_check_path(security_check, checked_by: current_user.id) %>
+              Verification Code: <%= security_check.verification_code %>
+              <br><br>
+
+              <%= simple_form_for(security_check) do |f| %>
+                <%= f.error_notification %>
+                <div class="row">
+                  <div class="col l6">
+                    <%= f.input :verification_code, label: 'Type Verification Code' %>
+                    <%= hidden_field_tag(:admin_check, true) %>
+                  </div>
+                  <div class="col l6">
+                    <div class="form-actions">
+                      <button type="submit" class="btn">Update Verification Code</button>
+                    </div>
+                  </div>
+                </div>
+              <% end %>
+              <br>
+              <%= link_to "Verify this Candidate", verify_candidate_security_check_path(security_check, checked_by: current_user.id), class: 'btn' %>
             <% end %>
           </li>
+          <br><br>
         <% end %><!-- end of @educations loop -->
       </ol>
     <% else %>
