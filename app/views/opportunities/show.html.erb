@@ -272,48 +272,44 @@
           <% else %>
             <% hash.each_pair do |key, value| %> <!-- key is user id, value is skill name -->
               <% @profile = Profile.find_by(user_id: key)%>
+                <!-- The Candidate who logged in and view an opportunity will be able to see his own name and details in opportunity.
+                He won't be able to see other candidates listed in the same opportunity  -->
                 <% if (current_user.has_role? :candidate) %>
                   <% if (current_user.profile.id == @profile.id ) %>
                     <br><strong><%= current_user.profile.name %></strong> (Profile ID: <%= current_user.profile.id %>)
                     <% value.each do |val| %>
                       <br><%= val[0] %> - <%= val[1] %>
                     <% end %>
-                  <% end %>
+                    <p>Location: <%= @profile.suburb %>, <%= @profile.state %></p>
+                    <% @profile.user.security_checks.each do |security_check| %>
+                      <%= security_check.name %>
+                      <% if security_check.verified %>
+                        <span class="green-text"><i class="fa fa-check-circle"></i></span>
+                      <% else %>
+                        <span class="red-text"><i class="fa fa-times"></i></span>
+                      <% end %>
+                      <br>
+                    <% end %><!-- end of @profile.user.security_checks loop -->
+                  <% end %><!-- end if current_user.profile.id == @profile.id -->
+                <!-- The user with roles other than candidate can view the details of all candidates in an opportunity -->
                 <% else %>
                   <br><strong><%= @profile.name %></strong> (Profile ID: <%= @profile.id %>)
                   <%# @found = false %><!-- start with found is true -->
                   <%# counter = 0 %>
                   <% value.each do |val| %>
                     <br><%= val[0] %> - <%= val[1] %>
-
-                    <!-- This function is to find the top exact match, which currently doesn't work --------->
-                    <%# @opportunity.opportunity_skills.each do |opportunity_skill| %>
-                      <!-- @found is false when ALL OF the opportunity skills are not matching with of the candidate's skills -->
-                      <!-- <%#= val[0]%> - <%#= val[1]%><br> -->
-                      <!-- <%#= opportunity_skill.skill.skill_category.name %> = <%#= val[0] %><br>
-                      <%#= opportunity_skill.skill.name %> = <%#= val[1] %><br><br> -->
-
-                      <%# if !(val.include?([opportunity_skill.skill.skill_category.name, opportunity_skill.skill.name]))%>
-                      <!-- <%#= opportunity_skill.skill.skill_category.name %> - <%#= opportunity_skill.skill.name %><br><br> -->
-                      <%# if (val[0] == opportunity_skill.skill.skill_category.name) && (val[1] == opportunity_skill.skill.name) %>
-                        <%# counter += 1 %> <!-- if an opportunity skill is not matching, @found become false -->
-                      <%# else %>
-                        <%# @found = true %>
-                      <%# end %>
-                      <%# if !(val[0] == opportunity_skill.skill.skill_category.name)  && !(val[1] == opportunity_skill.skill.name) %>
-                        <%# @found = false %> <!-- if an opportunity skill is not matching, @found become false -->
-                      <%# end %>
-                    <%# end %><!-- end of @opportunity.opportunity_skills -->
-
                   <% end %><!-- end of value.each loop -->
+                  <p>Location: <%= @profile.suburb %>, <%= @profile.state %></p>
+                  <% @profile.user.security_checks.each do |security_check| %>
+                    <%= security_check.name %>
+                    <% if security_check.verified %>
+                      <span class="green-text"><i class="fa fa-check-circle"></i></span>
+                    <% else %>
+                      <span class="red-text"><i class="fa fa-times"></i></span>
+                    <% end %>
+                    <br>
+                  <% end %><!-- end of @profile.user.security_checks loop -->
                 <% end %><!-- end of if current_user.has_role? :profile -->
-              <%# if @found == true %><!-- when all opportunity skills are matching with cand. skills, then found value stays true. -->
-                <!-- <br>Exact match<br> -->
-              <%# else %>
-                <!-- <br>Close match<br> -->
-              <%# end %>
-
-              <!-- End of searching Exact or Close match function, currently doesn't work --------------->
 
               <!-- <p>Number of matching skills: <%#= counter%></p> -->
               <%= render 'engagement_links' %>
