@@ -76,6 +76,6 @@ class SecurityChecksController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def security_check_params
-      params.require(:security_check).permit(:name, :state, :number, :expiry_date, :checked, :checked_by, :user_id)
+      params.require(:security_check).permit(:name, :state, :number, :expiry_date, :checked, :checked_by, :user_id, :verification_code)
     end
 end

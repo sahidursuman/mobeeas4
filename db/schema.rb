@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151215032608) do
+ActiveRecord::Schema.define(version: 20151216022818) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -351,9 +351,10 @@ ActiveRecord::Schema.define(version: 20151215032608) do
     t.date     "expiry_date"
     t.integer  "checked_by"
     t.integer  "user_id"
-    t.datetime "created_at",                  null: false
-    t.datetime "updated_at",                  null: false
-    t.boolean  "verified",    default: false
+    t.datetime "created_at",                                 null: false
+    t.datetime "updated_at",                                 null: false
+    t.boolean  "verified",          default: false
+    t.string   "verification_code", default: "not verified"
   end
 
   add_index "security_checks", ["user_id"], name: "index_security_checks_on_user_id", using: :btree
