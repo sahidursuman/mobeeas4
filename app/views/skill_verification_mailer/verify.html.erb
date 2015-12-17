@@ -19,15 +19,15 @@
 <%# @skill_verification = SkillVerification.find_by(guid: '2919ab1d-4527-40a9-8e7f-64e9d90f325e') %>
 
 <p><%= link_to 'Reference Form', skill_verification_url(@skill_verification.id) %></p>
-<%#= @skill_verification.id %><br>
-<%#= @skill_verification.user_id %><br>
-<%#= @skill_verification.referree_name %><br>
-<%#= @skill_verification.referree_email %><br>
-<%#= @skill_verification.referree_phone %><br>
-<%#= @skill_verification.referree_relationship %><br>
-<%#= @skill_verification.time_known %><br>
-<%#= @skill_verification.work_ethic %><br>
-<%#= @skill_verification.communication %><br>
+id <%= @skill_verification.id %><br>
+user_id <%= @skill_verification.user_id %><br>
+referree_name <%= @skill_verification.referree_name %><br>
+referree_email <%= @skill_verification.referree_email %><br>
+referree_phone <%= @skill_verification.referree_phone %><br>
+referree_relationship <%= @skill_verification.referree_relationship %><br>
+time_known <%= @skill_verification.time_known %><br>
+work_ethic <%= @skill_verification.work_ethic %><br>
+communication <%= @skill_verification.communication %><br>
 
 <p>Thank you for taking the time to provide me with a reference and for your verification of my skills.</p>
 
