@@ -7,9 +7,9 @@ class SkillVerification < ActiveRecord::Base
 
   validates :referree_name, :referree_email, presence: true
 
-  # before_create :set_guid
-  #
-  # def set_guid
-  # 	self.guid = SecureRandom.uuid
-  # end
+  before_create :set_guid
+
+  def set_guid
+  	self.guid = SecureRandom.uuid
+  end
 end

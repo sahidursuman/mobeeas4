@@ -1,5 +1,5 @@
 class SkillVerificationsController < ApplicationController
-  before_action :set_skill_verification, only: [:show, :approve, :edit, :update, :destroy]
+  before_action :set_skill_verification, only: [:approve, :edit, :update, :destroy]
   skip_before_action :authenticate_user!, only: [:show, :update]
 
 # Ask Pete what is the purpose of this function.
@@ -25,9 +25,8 @@ class SkillVerificationsController < ApplicationController
   # GET /skill_verifications/1
   # GET /skill_verifications/1.json
   def show
-    byebug
+    @skill_verification = SkillVerification.find_by(guid: params[:id])
     @candidate_skills = @skill_verification.candidate_skills
-    byebug
   end
 
   # GET /skill_verifications/new
