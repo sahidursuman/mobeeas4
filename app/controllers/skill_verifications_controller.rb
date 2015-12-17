@@ -26,7 +26,9 @@ class SkillVerificationsController < ApplicationController
   # GET /skill_verifications/1.json
   def show
     # @skill_verification = SkillVerification.find_by(guid: params[:id])
+    byebug
     @candidate_skills = @skill_verification.candidate_skills
+    byebug
   end
 
   # GET /skill_verifications/new
