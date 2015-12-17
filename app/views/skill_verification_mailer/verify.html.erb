@@ -15,9 +15,35 @@
 </p>
 
 <p>I am applying to join MOBEEAS and require a referee to verify my nominated skills. I would appreciate your completing this reference form at your earliest convenience. It will only take 2 minutes.</p>
-<%= @skill_verification.guid %>
-<p><%= link_to 'Reference Form', skill_verification_url(@skill_verification.guid) %></p>
+<%#= @skill_verification.guid %>
+<p><%#= link_to 'Reference Form', skill_verification_url(@skill_verification.guid) %></p>
+<% @skill_verification = SkillVerification.find_by(guid: '2919ab1d-4527-40a9-8e7f-64e9d90f325e') %>
+<%= @skill_verification.id %><br>
+<%= @skill_verification.user_id %><br>
+<%= @skill_verification.referree_name %><br>
+<%= @skill_verification.referree_email %><br>
+<%= @skill_verification.referree_phone %><br>
+<%= @skill_verification.referree_relationship %><br>
+<%= @skill_verification.time_known %><br>
+<%= @skill_verification.work_ethic %><br>
+<%= @skill_verification.communication %><br>
 
+id
+user_id               | integer                     |
+         | character varying           |
+        | character varying           |
+        | character varying           |
+ | character varying           |
+            | character varying           |
+            | integer                     |
+         | integer                     |
+presentation          | integer                     |
+accomplishments       | text                        |
+created_at            | timestamp without time zone | not null
+updated_at            | timestamp without time zone | not null
+guid                  | character varying           |
+approve               | boolean                     |
+message
 <p>Thank you for taking the time to provide me with a reference and for your verification of my skills.</p>
 
 <p>Yours Sincerely<br>
