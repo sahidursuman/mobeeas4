@@ -18,7 +18,9 @@
 <%#= @skill_verification.guid %>
 <%# @skill_verification = SkillVerification.find_by(guid: '2919ab1d-4527-40a9-8e7f-64e9d90f325e') %>
 
-<p><%= link_to 'Reference Form', skill_verification_url(@skill_verification.id) %></p>
+<p><%= link_to 'Open Reference Form', skill_verification_url(@skill_verification.id) %></p>
+
+<!-- <a href='/skill_verifications/<%#= @skill_verification.id %>'>Click Form Here</a><br> -->
 id <%= @skill_verification.id %><br>
 user_id <%= @skill_verification.user_id %><br>
 referree_name <%= @skill_verification.referree_name %><br>
