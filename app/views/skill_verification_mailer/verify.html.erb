@@ -13,23 +13,8 @@
   <a href="http://mobeeas.com">MOBEEAS</a> (Managed Opportunities Between Employers, Educators and Students)
   gives undergraduates, academics and professionals the opportunity to share their expertise with school students and teachers in collaborative learning experiences.
 </p>
-
 <p>I am applying to join MOBEEAS and require a referee to verify my nominated skills. I would appreciate your completing this reference form at your earliest convenience. It will only take 2 minutes.</p>
-<%#= @skill_verification.guid %>
-<%# @skill_verification = SkillVerification.find_by(guid: '2919ab1d-4527-40a9-8e7f-64e9d90f325e') %>
-
-<p><%= link_to 'Open Reference Form', skill_verification_url(@skill_verification.id) %></p>
-
-<!-- <a href='/skill_verifications/<%#= @skill_verification.id %>'>Click Form Here</a><br> -->
-id <%= @skill_verification.id %><br>
-user_id <%= @skill_verification.user_id %><br>
-referree_name <%= @skill_verification.referree_name %><br>
-referree_email <%= @skill_verification.referree_email %><br>
-referree_phone <%= @skill_verification.referree_phone %><br>
-referree_relationship <%= @skill_verification.referree_relationship %><br>
-time_known <%= @skill_verification.time_known %><br>
-work_ethic <%= @skill_verification.work_ethic %><br>
-communication <%= @skill_verification.communication %><br>
+<p><%= link_to 'Open Reference Form', skill_verification_url(@skill_verification.guid) %></p>
 
 <p>Thank you for taking the time to provide me with a reference and for your verification of my skills.</p>
 
