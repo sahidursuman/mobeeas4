@@ -10,29 +10,29 @@
       <% @receiver = @receiver_user.org_user_profile %>
     <% end %>
 
-    <!-- Check the contacts from all messages to see if contact id is new and will be added into the connections list -->
+    <%# Check the contacts from all messages to see if contact id is new and will be added into the connections list %>
     <% @messages.each do |message| %>
-      <!-- just find messages that are from me or to me only -->
+      <%# just find messages that are from me or to me only %>
       <% if (message.from == params[:my_id].to_i) || (message.to == params[:my_id].to_i) %>
-        <!-- save the new contact that send me the message -->
+        <%# save the new contact that send me the message %>
         <% if (message.from != current_user.id) && !(@receiver.connections.include?(message.from))%>
-          <!-- do not save my own id into my connections list AND -->
-          <!-- add receiver user id if it is a new connection -->
+          <%# do not save my own id into my connections list AND %>
+          <%# add receiver user id if it is a new connection %>
           <% @receiver.connections << message.from %>
           <% @receiver.save! %>
         <% end %>
-        <!-- save the new contact that I send the message to -->
+        <%# save the new contact that I send the message to %>
         <% if (message.to != current_user.id) && !(@receiver.connections.include?(message.to))%>
-          <!-- do not save my own id into my connections list AND -->
-          <!-- add receiver user id if it is a new connection -->
+          <%# do not save my own id into my connections list AND %>
+          <%# add receiver user id if it is a new connection %>
           <% @receiver.connections << message.to %>
           <% @receiver.save! %>
         <% end %>
       <% end %>
-    <% end %><!-- end of @messages loop -->
+    <% end %><%# end of @messages loop %>
 
 
-    <ol><!-- list all messages from each connection -->
+    <ol><%# list all messages from each connection %>
       <% @receiver.connections.each do |connection|%>
         <p>
         <% @sender_user = User.find(connection)%>
@@ -41,7 +41,7 @@
           <li>
             <%= link_to @sender.name, conversations_path(my_id: current_user.id, contact: @sender_user.id) %>
             <% if Message.count_new_messages(params[:my_id], @sender_user.id) > 0 %>
-              (<%= Message.count_new_messages(params[:my_id], @sender_user.id)%>)<!-- shows the number of unread messages -->
+              (<%= Message.count_new_messages(params[:my_id], @sender_user.id)%>)<%# shows the number of unread messages %>
             <% end %>
           </li>
         <% elsif @sender_user.has_role? :host %>
@@ -49,30 +49,13 @@
           <li>
             <%= link_to @sender.name, conversations_path(my_id: current_user.id, contact: @sender_user.id) %>
             <% if Message.count_new_messages(params[:my_id], @sender_user.id) > 0 %>
-              (<%= Message.count_new_messages(params[:my_id], @sender_user.id)%>)<!-- shows the number of unread messages -->
+              (<%= Message.count_new_messages(params[:my_id], @sender_user.id)%>)<%# shows the number of unread messages %>
             <% end %>
           </li>
         <% end %>
         </p>
-      <% end %><!-- end of @receiver loop -->
+      <% end %><%# end of @receiver loop %>
     </ol>
-
-    <!--
-    <%# @messages.each do |message| %>
-      <tr>
-        user id: <td><%#= message.user.id %></td>
-        title: <td><%#= message.opportunity.title %></td>
-        from: <td><%#= message.from %></td>
-        to: <td><%#= message.to %></td>
-        <td><%#= message.message_text %></td>
-        <td><%#= message.status %></td>
-        <td><%#= message.attachment %></td>
-        <td><%#= link_to 'Show', message %></td>
-        <td><%#= link_to 'Edit', edit_message_path(message) %></td>
-        <td><%#= link_to 'Destroy', message, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <%# end %>
-    <br> -->
 
     <%#= link_to 'New Message', new_message_path %>
   </div>

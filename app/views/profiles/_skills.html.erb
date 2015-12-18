@@ -8,10 +8,10 @@
           <tr>
             <th>Category</th>
             <th>Skill</th>
-            <!-- only appears if just created a new skill which needs to be approved by MOBEEAS admin-->
+            <%# only appears if just created a new skill which needs to be approved by MOBEEAS admin%>
             <% @profile.user.candidate_skills.each do |candidate_skill| %>
               <%# if !(candidate_skill.skill.approved) %>
-                <!-- <th class="right-align">Approved</th> -->
+                <%# <th class="right-align">Approved</th> %>
               <%# end %>
 
                 <%# candidate_skill.each do |cs| %>
@@ -26,12 +26,12 @@
           <tr>
             <td><%= candidate_skill.skill.skill_category.name if candidate_skill.skill %></td>
             <td><%= candidate_skill.skill.name if candidate_skill.skill %></td>
-            <!-- only appears if just created a new skill which needs to be approved by MOBEEAS admin-->
-            <!-- <%# if !(candidate_skill.skill.approved) %>
-              <td class="right-align">
+            <%# only appears if just created a new skill which needs to be approved by MOBEEAS admin%>
+            <%# if !(candidate_skill.skill.approved) %>
+              <%#<td class="right-align">
                 <span class="red-text"><i class="fa fa-times"></i></span>
-              </td>
-            <%# end %> -->
+              </td> %>
+            <%# end %>
             <td class="right-align">
               <% if candidate_skill.skill_level %>
                 <span class="bold teal-text"><%= candidate_skill.skill_level %></span>
@@ -40,16 +40,16 @@
               <% end %>
             </td>
           </tr>
-        <% end %><!-- end of @candidate_skills loop -->
+        <% end %><%# end of @candidate_skills loop %>
         </tbody>
       </table>
 
     <% else %>
       No skills listed.
-    <% end %><!-- end of if @user_skills.any? -->
+    <% end %><%# end of if @user_skills.any? %>
   </p>
-  <% end %><!-- end of if @user_skills.present? -->
-</div><!-- end of card content -->
+  <% end %><%# end of if @user_skills.present? %>
+</div><%# end of card content %>
   <div class="card-action">
     <a href="/my_skills">Add skills</a>
     <% if @profile.user.candidate_skills.present? %>

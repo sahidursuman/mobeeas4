@@ -3,7 +3,7 @@
 <% @progress_reports = [] %>
 <% @completion_reports = [] %>
 
-<!-- Printing the list of progress reports -->
+<%# Printing the list of progress reports %>
 <% if @engagement.progress_report_ids.present? %>
   <p><strong> Progress Reports </strong></p>
   <% @progress_reports = @engagement.progress_report_ids %>
@@ -17,7 +17,7 @@
   <p> No Progress Reports </p>
 <% end %>
 <br><br>
-<!-- Printing the list of completion reports -->
+<%# Printing the list of completion reports %>
 <% if @engagement.completion_report_ids.present? %>
   <p><strong> Completion Reports </strong></p>
   <% @completion_reports = @engagement.completion_report_ids %>

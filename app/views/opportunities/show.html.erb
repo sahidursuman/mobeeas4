@@ -1,4 +1,4 @@
-<!-- SPONSORSHIP ------------>
+<%# SPONSORSHIP ----------%>
 <div class="row">
   <div class="col m11 offset-m1">
     <div class="card">
@@ -8,12 +8,12 @@
           <p>Would you like to sponsor this opportunity? You can express your interest to the MOBEEAS Admin. Yes, I am interested.</p>
         <% end %>
       </div>
-    </div><!-- end of card-content -->
-  </div><!-- end of card -->
+    </div><%# end of card-content %>
+  </div><%# end of card %>
 </div>
 
 
-<!-- OPPORTUNITY ------------>
+<%# OPPORTUNITY ----------%>
 <div class="row">
   <div class="col m6 offset-m1">
     <div class="card" style="margin-left: none;">
@@ -38,14 +38,14 @@
               <p><strong><%= @organisation.name %></strong></p>
             </div>
           </div>
-        </div><!-- end of row -->
+        </div><%# end of row %>
 
         <h5><%= @opportunity.title %></h5>
         <p><strong><%= @opportunity.description %></strong></p><br>
 
-        <!-- only the opportunity owner can edit the opportunity status -->
+        <%# only the opportunity owner can edit the opportunity status %>
         <p>
-          <!-- If opportunity has been archived -->
+          <%# If opportunity has been archived %>
           <% if (@opportunity.archived) %>
             Status: <span class="purple-text"><strong>archived</strong></span>
           <% else %>
@@ -53,16 +53,16 @@
               Status: <span class="red-text"><strong><%= @opportunity.opportunity_status %></strong></span>
             <% elsif @opportunity.opportunity_status == 'post_active' %>
               Status: <strong>completed</strong>
-              <!-- Note: when the opportunity status is post_active, the word to display is 'completed' -->
+              <%# Note: when the opportunity status is post_active, the word to display is 'completed' %>
             <% else %>
               Status: <strong><%= @opportunity.opportunity_status %></strong>
             <% end %>
           <% end %>
 
-        <!-- The listing status can be edited if :
+        <%# The listing status can be edited if :
             1. viewed by opportunity owner
             2. if the opportunity is not archived.
-            3. if the opportunity is not closed.-->
+            3. if the opportunity is not closed.%>
         <% if (current_user.has_role? :host) && (current_user.id == @opportunity.user_id) && !(@opportunity.archived) && !(@opportunity.opportunity_status == 'closed') %>
           <% if @opportunity.opportunity_status == 'draft' %>
              - <%= link_to "List", status_listed_opportunity_path(@opportunity) %>
@@ -86,7 +86,7 @@
         <% @host = User.find(@opportunity.user_id) %>
         <p>
           Host: <strong><%= @host.org_user_profile.name %></strong>
-          <!-- Do not display 'contact host' while the owner of this opportunity is viewing my own opportunity -->
+          <%# Do not display 'contact host' while the owner of this opportunity is viewing my own opportunity %>
           <% if !(@host.id == current_user.id) && !(@opportunity.archived) %>
              - <%= link_to 'Contact ' + @host.org_user_profile.first_name, new_message_path(from: current_user.id, to: @host.id, opportunity_id: @opportunity.id) %>
           <% end %>
@@ -100,7 +100,7 @@
           End date: <strong><%= @opportunity.completion_date.strftime("%A, %e %b %Y") %></strong>
         </p>
 
-        <!-- <p><%#= link_to "Add Schedule", new_opportunity_time_path(opportunity_id: @opportunity.id)%></p> -->
+        <%# <p><%#= link_to "Add Schedule", new_opportunity_time_path(opportunity_id: @opportunity.id)%></p> %>
         <% if @opportunity.opportunity_times.present? %>
           <p>Required activity dates, days and times:
             <ul class="list-style-disc">
@@ -122,17 +122,17 @@
               <a class="modal-trigger" href="#opportunity_schedule">Add Opportunity Dates and Times</a>
             <% end %>
           </p>
-        <% else %><!-- else if opportunity time is not present -->
+        <% else %><%# else if opportunity time is not present %>
           <p>No specific dates, days and time setup yet.</p>
           <% if (current_user.has_role? :host) && (current_user.id == @opportunity.user_id) && !(@opportunity.opportunity_status == 'post_active') && !(@opportunity.archived)%>
-            <!-- Modal Trigger -->
+            <%# Modal Trigger %>
             <a class="modal-trigger" href="#opportunity_schedule">Add Opportunity Dates and Times</a>
           <% end %>
         <% end %>
 
 
 
-        <!-- Modal Structure -->
+        <%# Modal Structure %>
         <div id="opportunity_schedule" class="modal">
           <div class="modal-content">
             <%= render 'time_form'%>
@@ -142,7 +142,7 @@
           </div>
         </div>
 
-        <!-- only opportunity owner can add/remove candidates and tokens -->
+        <%# only opportunity owner can add/remove candidates and tokens %>
         <% if (current_user.has_role? :host) && (current_user.id == @opportunity.user_id) %>
           <p><br><%= @organisation.name%> currently holds: <strong><%= @organisation.number_of_tokens %> <%= (@organisation.number_of_tokens > 1) ? 'tokens' : 'token' %></strong></p>
 
@@ -166,10 +166,10 @@
                 <li>
                   <%= opportunity_school_year.school_year.name %> (number of students: <%= (opportunity_school_year.number_of_students > 0)? opportunity_school_year.number_of_students : 0 %>)
 
-                  <!-- The school year level can be edited if :
+                  <%# The school year level can be edited if :
                       1. viewed by opportunity owner
                       2. if the opportunity is not archived.
-                      3. if the opportunity is not closed.-->
+                      3. if the opportunity is not closed.%>
                   <% if (current_user.has_role? :host) && (current_user.id == @opportunity.user_id) && !(@opportunity.archived) && !(@opportunity.opportunity_status == 'closed') %>
                     -  <%= link_to 'Edit', edit_opportunity_school_year_path(opportunity_school_year, opportunity_id: @opportunity.id) %>
                      | <%= link_to 'Delete', opportunity_school_year_path(opportunity_school_year, opportunity_id: @opportunity.id), method: :delete, data: { confirm: 'Are you sure?' } %>
@@ -229,13 +229,11 @@
           <strong><%= @opportunity.employment_terms %></strong>
         </p><br>
 
+      </div><%# end of card-content %>
+    </div><%# end of card %>
+  </div> <%# end of col m6 offset-m2%>
 
-
-      </div><!-- end of card-content -->
-    </div><!-- end of card -->
-  </div> <!-- end of col m6 offset-m2-->
-
-  <!-- The right side -->
+  <%# The right side %>
   <div class="col m5">
     <div class="card">
       <div class="card-content">
@@ -245,35 +243,35 @@
           <% hash = {} %>
           <% users = [] %>
           <p>Candidates with matching and verified skills:</p>
-          <!-- First, set the hash keys with all matching candidates' user_id -->
+          <%# First, set the hash keys with all matching candidates' user_id %>
           <% @opportunity.opportunity_skills.each do |opportunity_skill| %>
             <% @candidate_skills.each do |candidate_skill| %>
               <% if (candidate_skill.skill_id == opportunity_skill.skill.id) && (candidate_skill.verified) %>
-                  <% hash[candidate_skill.user_id] = [] %> <!-- create a hash of array, key is skill name, value is user id -->
+                  <% hash[candidate_skill.user_id] = [] %> <%# create a hash of array, key is skill name, value is user id %>
               <% end %>
-            <% end %><!-- end of candidate skill loop -->
-          <% end %><!-- end of opportunity loop -->
+            <% end %><%# end of candidate skill loop %>
+          <% end %><%# end of opportunity loop %>
 
-          <!-- Second, fill the hash value with array of skill_set according to the user_id in the hash key -->
+          <%# Second, fill the hash value with array of skill_set according to the user_id in the hash key %>
           <% @opportunity.opportunity_skills.each do |opportunity_skill| %>
             <% @candidate_skills.each do |candidate_skill| %>
               <% if (candidate_skill.skill_id == opportunity_skill.skill.id) && (candidate_skill.verified) %>
                 <% hash[candidate_skill.user_id] << [candidate_skill.skill.skill_category.name, candidate_skill.skill.name] %>
               <% end %>
-            <% end %><!-- end of @candidate_skills loop -->
+            <% end %><%# end of @candidate_skills loop %>
           <% end %>
-          <%#= hash %><!-- print hash -->
-          <!-- hash[key] is the user_id
-          hash[value] is the array of [skill_category, skill] -->
-          <!-- e.g. {2=>[["Digital Technologies", "Robotics"], ["Design & Technology", "3D Printing"], ["English", "Secondary-Extension 1"], ["Mathematics", "Secondary-Extension 1"]] -->
+          <%#= hash %><%# print hash %>
+          <%# hash[key] is the user_id
+          hash[value] is the array of [skill_category, skill] %>
+          <%# e.g. {2=>[["Digital Technologies", "Robotics"], ["Design & Technology", "3D Printing"], ["English", "Secondary-Extension 1"], ["Mathematics", "Secondary-Extension 1"]] %>
 
           <% if hash.empty? %>
             <p>No matching candidate</p>
           <% else %>
-            <% hash.each_pair do |key, value| %> <!-- key is user id, value is skill name -->
+            <% hash.each_pair do |key, value| %> <%# key is user id, value is skill name %>
               <% @profile = Profile.find_by(user_id: key)%>
-                <!-- The Candidate who logged in and view an opportunity will be able to see his own name and details in opportunity.
-                He won't be able to see other candidates listed in the same opportunity  -->
+                <%# The Candidate who logged in and view an opportunity will be able to see his own name and details in opportunity.
+                He won't be able to see other candidates listed in the same opportunity  %>
                 <% if (current_user.has_role? :candidate) %>
                   <% if (current_user.profile.id == @profile.id ) %>
                     <br><strong><%= current_user.profile.name %></strong> (Profile ID: <%= current_user.profile.id %>)
@@ -289,16 +287,16 @@
                         <span class="red-text"><i class="fa fa-times"></i></span>
                       <% end %>
                       <br>
-                    <% end %><!-- end of @profile.user.security_checks loop -->
-                  <% end %><!-- end if current_user.profile.id == @profile.id -->
-                <!-- The user with roles other than candidate can view the details of all candidates in an opportunity -->
+                    <% end %><%# end of @profile.user.security_checks loop %>
+                  <% end %><%# end if current_user.profile.id == @profile.id %>
+                <%# The user with roles other than candidate can view the details of all candidates in an opportunity %>
                 <% else %>
                   <br><strong><%= @profile.name %></strong> (Profile ID: <%= @profile.id %>)
-                  <%# @found = false %><!-- start with found is true -->
+                  <%# @found = false %><%# start with found is true %>
                   <%# counter = 0 %>
                   <% value.each do |val| %>
                     <br><%= val[0] %> - <%= val[1] %>
-                  <% end %><!-- end of value.each loop -->
+                  <% end %><%# end of value.each loop %>
                   <p>Location: <%= @profile.suburb %>, <%= @profile.state %></p>
                   <% @profile.user.security_checks.each do |security_check| %>
                     <%= security_check.name %>
@@ -308,18 +306,17 @@
                       <span class="red-text"><i class="fa fa-times"></i></span>
                     <% end %>
                     <br>
-                  <% end %><!-- end of @profile.user.security_checks loop -->
-                <% end %><!-- end of if current_user.has_role? :profile -->
+                  <% end %><%# end of @profile.user.security_checks loop %>
+                <% end %><%# end of if current_user.has_role? :profile %>
 
-              <!-- <p>Number of matching skills: <%#= counter%></p> -->
               <%= render 'engagement_links' %>
-            <% end %><!-- end of hash1 loop -->
-          <% end %><!-- end of if hash1.empty? -->
+            <% end %><%# end of hash1 loop %>
+          <% end %><%# end of if hash1.empty? %>
           <br><br>
-          <!-- <p>Display all candidate link for Admin and Host? </p> -->
+          <%# <p>Display all candidate link for Admin and Host? </p> %>
           <%#= link_to 'View all candidates', profiles_path %>
-        <% end %><!-- end of if the list status is still draft -->
-      </div><!-- end of card-content -->
-    </div><!-- end of card -->
-  </div><!-- end of col m2 -->
-</div><!-- end of row -->
+        <% end %><%# end of if the list status is still draft %>
+      </div><%# end of card-content %>
+    </div><%# end of card %>
+  </div><%# end of col m2 %>
+</div><%# end of row %>

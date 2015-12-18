@@ -12,13 +12,13 @@
 
     <%= f.input :experiences, label: 'Other experience that would be advantageous (max 1000 characters)', input_html: { maxlength: 1000} %>
 
-    <!-- Keep this as the templae for paid engagement. -->
+    <%# Keep this as the template for paid engagement. %>
     <%#= f.input_field :paid_engagement, as: :radio_buttons %>
     <p>Is this a paid engagement?</p>
-    <% if @opportunity.paid_engagement %><!-- if true, yes is selected in the edit form -->
+    <% if @opportunity.paid_engagement %><%# if true, yes is selected in the edit form %>
       <input class="with-gap" type="radio" value="true" name="opportunity[paid_engagement]" id="opportunity_paid_engagement_true"  checked="checked"/><label for="opportunity_paid_engagement_true">Yes</label>
       <input class="with-gap" type="radio" value="false" name="opportunity[paid_engagement]" id="opportunity_paid_engagement_false" /><label for="opportunity_paid_engagement_false">No</label>
-    <% else %><!-- if true, no is selected in the edit form-->
+    <% else %><%# if true, no is selected in the edit form%>
       <input class="with-gap" type="radio" value="true" name="opportunity[paid_engagement]" id="opportunity_paid_engagement_true" /><label for="opportunity_paid_engagement_true">Yes</label>
       <input class="with-gap" type="radio" value="false" checked="checked" name="opportunity[paid_engagement]" id="opportunity_paid_engagement_false" /><label for="opportunity_paid_engagement_false">No</label>
     <% end %>

@@ -24,7 +24,7 @@
           Your Admin Profile has not been created. Please create your profile below.
         </p>
         <%= link_to 'Create Admin Profile', new_admin_path(user_id: current_user.id) %>
-      <% end %> <!-- end of if current_user.admins.present?-->
-    <% end %><!-- end of if (user_signed_in?) && (current_user.has_role? :admin) -->
+      <% end %> <%# end of if current_user.admins.present?%>
+    <% end %><%# end of if (user_signed_in?) && (current_user.has_role? :admin) %>
 	</div>
 </div>

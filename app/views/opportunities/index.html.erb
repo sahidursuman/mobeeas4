@@ -25,7 +25,7 @@
           <div class="col s12">
             <div class="card">
               <div class="card-content">
-                <!-- Check if the current user has engagement with this opportunity -->
+                <%# Check if the current user has engagement with this opportunity %>
                 <% if opportunity.engagements.present? %>
                   <% opportunity.engagements.each do |engagement| %>
                     <% if (current_user.has_role? :candidate) && (current_user.profile.present?) && (current_user.profile.id == engagement.profile_id)%>
@@ -39,10 +39,10 @@
                         <span class="red-text"><p>You have received a token from the host and now engaged to this opportunity.</p></span>
                       <% else %>
                         <p>You are not engaged to this opportunity.</p>
-                      <% end %><!-- end of engagement status types -->
+                      <% end %><%# end of engagement status types %>
                     <% end %>
-                  <% end %><!-- end of opportunity.engagements loop -->
-                <% end %><!-- end of if opportunity.engagements.present? -->
+                  <% end %><%# end of opportunity.engagements loop %>
+                <% end %><%# end of if opportunity.engagements.present? %>
                 <h5><strong></strong><%= opportunity.title %></h5>
                 <p><strong>Description: </strong><%= opportunity.description %></p>
                 <p><strong>Organisation: </strong><%= opportunity.organisation.name %></p>

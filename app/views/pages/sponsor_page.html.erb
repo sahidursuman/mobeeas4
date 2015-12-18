@@ -25,11 +25,11 @@
           <%= cl_image_tag("noPhoto-icon.png", class: 'img-responsive activator' )  %>
         <% end %>
       </div>
-    </div><!-- end row -->
+    </div><%# end row %>
 
 
     <% if (current_user.has_role? :sponsor) && (current_user.id == @sponsor.user.id) %>
-      <!-- <p>match</p> -->
+      <%# <p>match</p> %>
       <%= link_to "Edit", edit_sponsor_path(@sponsor)%>
     <% end %>
 

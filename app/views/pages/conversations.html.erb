@@ -3,15 +3,15 @@
 <% if @messages.present? %>
   <%= will_paginate @messages %>
     <% @messages.each do |message| %>
-      <!-- messages for me from the contact person -->
+      <%# messages for me from the contact person %>
       <% if (message.to == params[:my_id].to_i) && (message.from == params[:contact].to_i) %>
-      <!-- the function to change from unread to read status, ONLY for messages for me -->
+      <%# the function to change from unread to read status, ONLY for messages for me %>
         <% message.status_read %>
         <p>
           <div style="font-weight: bold; color: blue;">
             <%= message.message_text %><br>
           </div>
-          <!-- Find the opportunity recorded in this message -->
+          <%# Find the opportunity recorded in this message %>
           <% if message.opportunity_id.present? %>
             <% @opportunity = Opportunity.find(message.opportunity_id) %>
             Opportunity Title: <%= @opportunity.title %><br>
@@ -20,13 +20,13 @@
         </p>
       <% end %>
 
-      <!-- messages to the contact person from me -->
+      <%# messages to the contact person from me %>
       <% if (message.to == params[:contact].to_i) && (message.from == params[:my_id].to_i) %>
         <p>
           <div style="font-style: italic; font-weight: bold;">
             <%= message.message_text %><br>
           </div>
-          <!-- Find the opportunity recorded in this message -->
+          <%# Find the opportunity recorded in this message %>
           <% if message.opportunity_id.present? %>
             <% @opportunity = Opportunity.find(message.opportunity_id) %>
             Opportunity Title: <%= @opportunity.title %><br>
@@ -34,7 +34,7 @@
           <%= message.created_at.getlocal.strftime("%e %b %Y %I:%M:%S%p") %>
         </p>
       <% end %>
-    <% end %><!-- end of @messages loop -->
+    <% end %><%# end of @messages loop %>
   <%= will_paginate @messages %><br>
 
 <%= link_to 'Reply to ' + @contact.first_name, new_message_path(to: @contact_user, from: params[:my_id], class: 'waves-effect waves-light btn palette4-bg' %>

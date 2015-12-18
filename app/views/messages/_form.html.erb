@@ -1,4 +1,4 @@
-<!-- opportunity_id1:   <% params[:opportunity_id]%> -->
+<%# opportunity_id1: %>   <%# params[:opportunity_id]%>
 
 <%= simple_form_for(@message) do |f| %>
   <%= f.error_notification %>
@@ -11,8 +11,8 @@
     <%= f.input :from, as: :hidden, input_html: { value: params[:from]} %>
     <%= f.input :to, as: :hidden, input_html: { value: params[:to]} %>
     <%= f.input :message_text, label: 'Message', input_html: { maxlength: 1000 } %>
-    <%#= f.input :status %><!-- hide this because by default it is unread -->
-    <%#= f.input :attachment %><!-- not tested yet -->
+    <%#= f.input :status %><%# hide this because by default it is unread %>
+    <%#= f.input :attachment %><%# not tested yet %>
   </div>
 
   <div class="form-actions">

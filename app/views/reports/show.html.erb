@@ -34,7 +34,7 @@
               <% if @report.relevant_knowledge.include?('CC') %>
                 <i class="fa fa-check"></i>
               <% else %>
-                <p>-</p><!-- must leave at least a space to claim its spot in the grid -->
+                <p>-</p><%# must leave at least a space to claim its spot in the grid %>
               <% end %>
             </div>
             <div class="col l1 align-center">
@@ -69,7 +69,7 @@
               <% if @report.punctual.include?('CC') %>
                 <i class="fa fa-check"></i>
               <% else %>
-                <p>-</p><!-- must leave at least a space to claim its spot in the grid -->
+                <p>-</p><%# must leave at least a space to claim its spot in the grid %>
               <% end %>
             </div>
             <div class="col l1 align-center">
@@ -104,7 +104,7 @@
               <% if @report.communication.include?('CC') %>
                 <i class="fa fa-check"></i>
               <% else %>
-                <p>-</p><!-- must leave at least a space to claim its spot in the grid -->
+                <p>-</p><%# must leave at least a space to claim its spot in the grid %>
               <% end %>
             </div>
             <div class="col l1 align-center">
@@ -139,7 +139,7 @@
               <% if @report.enthusiasm.include?('CC') %>
                 <i class="fa fa-check"></i>
               <% else %>
-                <p>-</p><!-- must leave at least a space to claim its spot in the grid -->
+                <p>-</p><%# must leave at least a space to claim its spot in the grid %>
               <% end %>
             </div>
             <div class="col l1 align-center">
@@ -174,7 +174,7 @@
               <% if @report.professionalism.include?('CC') %>
                 <i class="fa fa-check"></i>
               <% else %>
-                <p>-</p><!-- must leave at least a space to claim its spot in the grid -->
+                <p>-</p><%# must leave at least a space to claim its spot in the grid %>
               <% end %>
             </div>
             <div class="col l1 align-center">
@@ -217,13 +217,13 @@
           <%= @report.general_comments %>
         </p>
         <br>
-        <!-- Only the opportunity owner can edit the report -->
+        <%# Only the opportunity owner can edit the report %>
         <% if current_user.id == @report.opportunity.user_id %>
           <%= link_to 'Edit Report', edit_report_path(@report, opportunity_id: @report.opportunity_id, profile_id: @report.profile_id ), class: 'btn' %><br><br>
         <% end %>
         <%= link_to 'View Opportunity Details', opportunity_path(@report.opportunity_id), class: 'btn' %><br><br>
         <%= link_to 'View Reports Index', candidate_reports_path(engagement_id: @report.engagement_id), class: 'btn' %>
-      </div><!-- end of card-content-->
-    </div><!-- end of card -->
-  </div><!-- end of col -->
-</div><!-- end of row -->
+      </div><%# end of card-content%>
+    </div><%# end of card %>
+  </div><%# end of col %>
+</div><%# end of row %>

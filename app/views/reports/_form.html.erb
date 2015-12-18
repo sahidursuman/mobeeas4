@@ -13,14 +13,14 @@
   Please tick the appropriate standard achieved (CC) Causing Concern, (W) Working towards, (A) Achieved or (GB) Going Beyond
 </p>
 <br>
-<!-- Keep these as the template for relevant_knowledge -->
+<%# Keep these as the template for relevant_knowledge %>
 <%#= f.input :relevant_knowledge, collection: [ "CC", "W", "A", "GB"], as: :radio_buttons %>
 <div class="row">
   <div class="input radio_buttons optional report_relevant_knowledge">
     <div class="col l2">
       <label class="radio_buttons optional">Relevant knowledge</label>
     </div>
-    <% if @report.new_record? %><!-- if this is a new record, then all the radio buttons should be all blank, not selected -->
+    <% if @report.new_record? %><%# if this is a new record, then all the radio buttons should be all blank, not selected %>
       <div class="col l2">
         <input class="radio_buttons optional with-gap" type="radio" value="CC" name="report[relevant_knowledge]" id="report_relevant_knowledge_cc" /><label for="report_relevant_knowledge_cc">CC</label>
       </div>
@@ -33,7 +33,7 @@
       <div class="col l2">
         <input class="radio_buttons optional with-gap" type="radio" value="GB" name="report[relevant_knowledge]" id="report_relevant_knowledge_gb" /><label for="report_relevant_knowledge_gb">GB</label>
       </div>
-    <% else %><!-- if you are editing, some radio buttons might have already been selected -->
+    <% else %><%# if you are editing, some radio buttons might have already been selected %>
       <div class="col l2">
         <input class="radio_buttons optional with-gap" type="radio" value="CC" name="report[relevant_knowledge]" id="report_relevant_knowledge_cc" <%= @report.relevant_knowledge.include?('CC') ? 'checked' : '' %>/><label for="report_relevant_knowledge_cc">CC</label>
       </div>
@@ -51,7 +51,7 @@
 </div>
 <%= f.input :relevant_knowledge_comment, input_html: { maxlength: 100 } %>
 <br><br><br>
-<!-- Keep these as the template for punctual -->
+<%# Keep these as the template for punctual %>
 <%#= f.input :punctual, collection: [ "CC", "W", "A", "GB"], as: :radio_buttons %>
 
 <div class="row">
@@ -59,7 +59,7 @@
     <div class="col l2">
       <label class="radio_buttons optional">Punctual</label>
     </div>
-    <% if @report.new_record? %><!-- if this is a new record, then all the radio buttons should be all blank, not selected -->
+    <% if @report.new_record? %><%# if this is a new record, then all the radio buttons should be all blank, not selected %>
       <div class="col l2">
         <input class="radio_buttons optional with-gap" type="radio" value="CC" name="report[punctual]" id="report_punctual_cc" /><label for="report_punctual_cc">CC</label>
       </div>
@@ -72,7 +72,7 @@
       <div class="col l2">
         <input class="radio_buttons optional with-gap" type="radio" value="GB" name="report[punctual]" id="report_punctual_gb" /><label for="report_punctual_gb">GB</label>
       </div>
-    <% else %><!-- if you are editing, some radio buttons might have already been selected -->
+    <% else %><%# if you are editing, some radio buttons might have already been selected %>
       <div class="col l2">
         <input class="radio_buttons optional with-gap" type="radio" value="CC" name="report[punctual]" id="report_punctual_cc" <%= @report.punctual.include?('CC') ? 'checked' : '' %>/><label for="report_punctual_cc">CC</label>
       </div>
@@ -91,14 +91,14 @@
 <%= f.input :punctual_comment, input_html: { maxlength: 100 } %>
 <br><br><br>
 
-<!-- Keep these as the template for communication -->
+<%# Keep these as the template for communication %>
 <%#= f.input :communication, collection: [ "CC", "W", "A", "GB"], as: :radio_buttons %>
 <div class="row">
   <div class="input radio_buttons optional report_communication">
     <div class="col l2">
       <label class="radio_buttons optional">Communication</label>
     </div>
-    <% if @report.new_record? %><!-- if this is a new record, then all the radio buttons should be all blank, not selected -->
+    <% if @report.new_record? %><%# if this is a new record, then all the radio buttons should be all blank, not selected %>
       <div class="col l2">
         <input class="radio_buttons optional with-gap" type="radio" value="CC" name="report[communication]" id="report_communication_cc" /><label for="report_communication_cc">CC</label>
       </div>
@@ -111,7 +111,7 @@
       <div class="col l2">
         <input class="radio_buttons optional with-gap" type="radio" value="GB" name="report[communication]" id="report_communication_gb" /><label for="report_communication_gb">GB</label>
       </div>
-    <% else %><!-- if you are editing, some radio buttons might have already been selected -->
+    <% else %><%# if you are editing, some radio buttons might have already been selected %>
       <div class="col l2">
         <input class="radio_buttons optional with-gap" type="radio" value="CC" name="report[communication]" id="report_communication_cc" <%= @report.communication.include?('CC') ? 'checked' : '' %>/><label for="report_communication_cc">CC</label>
       </div>
@@ -130,14 +130,14 @@
 <%= f.input :communication_comment, input_html: { maxlength: 100 } %>
 <br><br><br>
 
-<!-- Keep these as the template for enthusiasm -->
+<%# Keep these as the template for enthusiasm %>
 <%#= f.input :enthusiasm, collection: [ "CC", "W", "A", "GB"], as: :radio_buttons %>
 <div class="row">
   <div class="input radio_buttons optional report_enthusiasm">
     <div class="col l2">
       <label class="radio_buttons optional">Enthusiasm</label>
     </div>
-    <% if @report.new_record? %><!-- if this is a new record, then all the radio buttons should be all blank, not selected -->
+    <% if @report.new_record? %><%# if this is a new record, then all the radio buttons should be all blank, not selected %>
       <div class="col l2">
         <input class="radio_buttons optional with-gap" type="radio" value="CC" name="report[enthusiasm]" id="report_enthusiasm_cc" /><label for="report_enthusiasm_cc">CC</label>
       </div>
@@ -150,7 +150,7 @@
       <div class="col l2">
         <input class="radio_buttons optional with-gap" type="radio" value="GB" name="report[enthusiasm]" id="report_enthusiasm_gb" /><label for="report_enthusiasm_gb">GB</label>
       </div>
-    <% else %><!-- if you are editing, some radio buttons might have already been selected -->
+    <% else %><%# if you are editing, some radio buttons might have already been selected %>
       <div class="col l2">
         <input class="radio_buttons optional with-gap" type="radio" value="CC" name="report[enthusiasm]" id="report_enthusiasm_cc" <%= @report.enthusiasm.include?('CC') ? 'checked' : '' %>/><label for="report_enthusiasm_cc">CC</label>
       </div>
@@ -169,14 +169,14 @@
 <%= f.input :enthusiasm_comment, input_html: { maxlength: 100 } %>
 <br><br><br>
 
-<!-- Keep these as the template for professionalism -->
+<%# Keep these as the template for professionalism %>
 <%#= f.input :professionalism, collection: [ "CC", "W", "A", "GB"], as: :radio_buttons %>
 <div class="row">
   <div class="input radio_buttons optional report_professionalism">
     <div class="col l2">
       <label class="radio_buttons optional">Professionalism</label>
     </div>
-    <% if @report.new_record? %><!-- if this is a new record, then all the radio buttons should be all blank, not selected -->
+    <% if @report.new_record? %><%# if this is a new record, then all the radio buttons should be all blank, not selected %>
       <div class="col l2">
         <input class="radio_buttons optional with-gap" type="radio" value="CC" name="report[professionalism]" id="report_professionalism_cc" /><label for="report_professionalism_cc">CC</label>
       </div>
@@ -189,7 +189,7 @@
       <div class="col l2">
         <input class="radio_buttons optional with-gap" type="radio" value="GB" name="report[professionalism]" id="report_professionalism_gb" /><label for="report_professionalism_gb">GB</label>
       </div>
-    <% else %><!-- if you are editing, some radio buttons might have already been selected -->
+    <% else %><%# if you are editing, some radio buttons might have already been selected %>
       <div class="col l2">
         <input class="radio_buttons optional with-gap" type="radio" value="CC" name="report[professionalism]" id="report_professionalism_cc" <%= @report.professionalism.include?('CC') ? 'checked' : '' %>/><label for="report_professionalism_cc">CC</label>
       </div>

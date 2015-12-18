@@ -5,7 +5,7 @@
 
       <% if current_user.organisations.present? %>
         <p>Currently you are connected with these organisations:</p>
-          <!-- only admin host can see the purchase token button -->
+          <%# only admin host can see the purchase token button %>
         <ol>
           <% current_user.org_users.each do |org_user| %>
             <li>
@@ -19,10 +19,10 @@
                     <%= button_label(pack, org_user.organisation) %><br>
                   <% end %>
                   <br>
-                <% end %><!-- end of loop @engagement_token_packs -->
-              <% end %><!-- end of if org_user.admin_status && org_user.verified_status -->
+                <% end %><%# end of loop @engagement_token_packs %>
+              <% end %><%# end of if org_user.admin_status && org_user.verified_status %>
             </li>
-          <% end %><!-- end of loop current_user.org_users -->
+          <% end %><%# end of loop current_user.org_users %>
         </ol>
       <% else %>
         <p>You are currently not linked to any organisations. Please select one of the organisations below to join as the host.</p>

@@ -109,7 +109,7 @@
 
               <input type="hidden" value="<%= candidate_skill.id %>" name="skill_verification[candidate_skills_attributes][<%= index %>][id]" id="skill_verification_candidate_skills_attributes_<%= index %>_id" />
               <br><br>
-            <% end %><!-- end of @candidate_skills loop -->
+            <% end %><%# end of @candidate_skills loop %>
           <% else %>
             <p>The Candidate does not have a recod of skill.</p>
           <% end %>
@@ -120,7 +120,7 @@
             </textarea>
           </p>
           <button type="submit" class="waves-effect waves-light btn light-blue">Confirm skill verification</button>
-        <% end %><!-- end of simple_form -->
+        <% end %><%# end of simple_form %>
       </div>
     </div>
   </div>

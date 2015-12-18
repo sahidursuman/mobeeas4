@@ -63,7 +63,12 @@ Rails.application.routes.draw do
       get :verify_candidate
     end
   end
-  resources :profiles
+  resources :profiles do
+    member do
+      get :approve, :prohibit
+    end
+  end
+
   get 'admin_page', to: 'pages#admin_page'
   get 'sponsor_page', to: 'pages#sponsor_page'
   get 'contact', to: 'pages#contact'

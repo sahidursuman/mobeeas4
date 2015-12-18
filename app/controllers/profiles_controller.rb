@@ -1,6 +1,20 @@
 class ProfilesController < ApplicationController
-  before_action :set_profile, only: [:show]
+  before_action :set_profile, only: [:show, :approve, :prohibit]
   before_action :current_user_profile, only: [:edit, :update, :destroy]
+
+  # This function is for admin user only, to approve a candidate to appear in MOBEEAS website
+  def approve
+    @profile.approved = true
+    @profile.save!
+    redirect_to profiles_path(status: 'approved')
+  end
+
+  # This function is for admin user only, to prohibit a candidate to appear in MOBEEAS website
+  def prohibit
+    @profile.approved = false
+    @profile.save!
+    redirect_to profiles_path(status: 'prohibited')
+  end
 
   # GET /profiles
   # GET /profiles.json

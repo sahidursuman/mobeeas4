@@ -7,33 +7,33 @@
         <% if @profiles.approved.present? %>
           <h4>Approved Candidates</h4>
           <ol>
-            <% @profiles.approved.each do |profile| %>
+            <% @profiles.approved.order("id ASC").each do |profile| %>
               <li>
                 Profile ID: <%= profile.id %> - <strong><%= profile.name %></strong> of <%= profile.suburb %>, <%= profile.state %> <%= profile.country %>
                 - <%= link_to 'View', candidate_profile_path(profile_id: profile.id, viewer: 'admin') %>
+                 | <%= link_to 'Prohibit '+ profile.first_name, prohibit_profile_path(profile) %>
               </li>
             <% end %>
           </ol>
         <% else %>
           <p>There is no approved candidate.</p>
-        <% end %><!-- end if @profiles.approved.present? -->
+        <% end %><%# end if @profiles.approved.present? %>
       <% elsif (params[:status] == 'prohibited') %>
         <% if @profiles.not_approved.present? %>
           <h4>Prohibited Candidates</h4>
           <ol>
-            <% @profiles.not_approved.each do |profile| %>
+            <% @profiles.not_approved.order("id ASC").each do |profile| %>
               <li>
                 Profile ID: <%= profile.id %> - <strong><%= profile.name %></strong> of <%= profile.suburb %>, <%= profile.state %> <%= profile.country %>
-                 <!-- - <%#= link_to 'View', profile_path(profile) %> -->
                  - <%= link_to 'View', candidate_profile_path(profile_id: profile.id, viewer: 'admin') %>
-
+                 | <%= link_to 'Approve '+ profile.first_name, approve_profile_path(profile) %>
               </li>
             <% end %>
           </ol>
         <% else %>
           <p>There is no prohibited candidate.</p>
-        <% end %><!-- end if @profiles.approved.present? -->
-      <% end %><!-- end if (params[:approved]) -->
+        <% end %><%# end if @profiles.approved.present? %>
+      <% end %><%# end if (params[:approved]) %>
 
   </div>
 </div>

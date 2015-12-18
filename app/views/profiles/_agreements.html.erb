@@ -11,7 +11,7 @@
           <tbody>
             <% if @profile.user.agreement.present? %>
             <tr>
-              <!-- <td><%#= link_to Statement of Ethics, render "profiles/ethics_agreement"%></td> -->
+              <%# <td> %><%#= link_to Statement of Ethics, render "profiles/ethics_agreement"%><%#</td> %>
               <td><a href="#modal-ethics" class="modal-trigger">Statement of Ethics</a></td>
               <td class="right-align">
                 <% if @profile.user.agreement.ethics %>
@@ -33,7 +33,7 @@
             </tr>
 
             <tr>
-              <td><a href="#modal-terms-cond" class="modal-trigger">Terms & Conditions</a></td>
+              <td><a href="#modal-terms-cond" class="modal-trigger">Terms And Conditions</a></td>
               <td class="right-align">
                 <% if @profile.user.agreement.terms %>
                   <span class="green-text"><i class="fa fa-check-circle"></i></span>

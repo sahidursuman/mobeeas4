@@ -10,11 +10,11 @@
           <li>
             Profile ID: <%= education.user.profile.id %> - <strong><%= education.user.profile.name %></strong>, institution: <%= education.institution %> - <%= link_to "Verify this Candidate", verify_candidate_education_path(education)%>
           </li>
-        <% end %><!-- end of @educations loop -->
+        <% end %><%# end of @educations loop %>
       </ol>
     <% else %>
       <p>There are no candidate.</p>
-    <% end %><!-- end of if @education.present? -->
+    <% end %><%# end of if @education.present? %>
 
   </div>
 </div>

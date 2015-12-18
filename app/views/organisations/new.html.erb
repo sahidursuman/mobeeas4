@@ -1,12 +1,12 @@
 
 <h5>New Organisation</h5>
-<% if params[:subs_type] == 'new_host_new_org' %><!-- if the current user is creating a new host and organisation -->
+<% if params[:subs_type] == 'new_host_new_org' %><%# if the current user is creating a new host and organisation %>
   <p>
     Before you can create a new organisation, FIRST you need to enter your profile details first.
   </p>
 
-  <!-- ORG USER PROFILE -->
-  <!-- The user who creates a new organisation will have role as a host -->
+  <%# ORG USER PROFILE %>
+  <%# The user who creates a new organisation will have role as a host %>
   <% @new_org_user_profile = OrgUserProfile.new %>
   <% @new_org_user_profile.user_id = current_user.id %>
   <% @new_org_user_profile.org_creator = true %>
@@ -33,7 +33,7 @@
   <% end %>
 
   <br><br>
-<% elsif params[:subs_type] == 'new_org' %><!-- if the current user is not creating a new host profile, render form -->
+<% elsif params[:subs_type] == 'new_org' %><%# if the current user is not creating a new host profile, render form %>
   <%= render 'form' %>
 <% end %>
 

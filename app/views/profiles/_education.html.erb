@@ -22,7 +22,7 @@
                 <% else %>
                   <td>No file  <%= link_to edit_education_path(user_education) do %><i class="material-icons tiny  ">mode_edit</i><% end %></td>
                 <% end %>
-                <!-- <td><%#= user_education.achievement_url %> <%#= link_to edit_education_path(user_education) do %><i class="material-icons tiny  ">mode_edit</i><%# end %></td> -->
+                <%# <td> %><%#= user_education.achievement_url %> <%#= link_to edit_education_path(user_education) do %><%#<i class="material-icons tiny  ">mode_edit</i>%><%# end %><%#</td> %>
 
                 <td class="right-align">
                   <% if user_education.verified %>
@@ -38,7 +38,7 @@
       <% else %>
         No education listed.
       <% end %></p>
-    <% end %> <!-- end of if @user_educations.present? -->
+    <% end %> <%# end of if @user_educations.present? %>
     </div>
     <div class="card-action">
       <a href="/educations/new">Add education</a>

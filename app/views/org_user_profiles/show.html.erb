@@ -27,24 +27,7 @@
   <%= @org_user_profile.position %>
   </p>
 
-<!-- DO NOT USE THIS BUT KEEP THIS PERHAPS WILL BE USEFUL IN THE FUTURE
-<p>
-<strong>Direct Supervisor:</strong>
-<%#= @org_user_profile.user.organisations.find_by(params[:org_id]).contact_name %>
-</p>
-
-<p>
-<strong>Supervisor Email:</strong>
-<%#= @org_user_profile.user.organisations.find_by(params[:org_id]).contact_email %>
-</p>
-
-<p>
-<strong>Supervisor Phone:</strong>
-<%#= @org_user_profile.user.organisations.find_by(params[:org_id]).contact_phone %>
-</p>
--->
-
-<!-- Search for all organisations linked to this host -->
+<%# Search for all organisations linked to this host %>
 <% @user = User.find(@org_user_profile.user_id)%>
 <% if (@user.organisations.present?) %>
   <p>Currently you are connected with these organisations:</p>
@@ -56,16 +39,14 @@
 
 <% else %>
 
-
-
-  <!-- if org user profile is the creator of this organisation, only then the new organisation form will appear-->
+  <%# if org user profile is the creator of this organisation, only then the new organisation form will appear%>
   <% if @org_user_profile.org_creator %>
-  
+
     <h4>ORGANISATION DETAILS:</h4>
     <br>
     <% @new_organisation = Organisation.new %>
 
-    <!-- ORGANISATION-->
+    <%# ORGANISATION%>
     <%= simple_form_for(@new_organisation) do |f| %>
       <%= f.error_notification %>
 
@@ -89,7 +70,6 @@
             <%= f.input :country, priority: [ "Australia" ], :include_blank => false %>
           </div>
         </div>
-
         <%= f.input :contact_name, label: 'Executive of this Organisation: ' ' <a href="#modal_org_executive" class="modal-trigger"><i class="material-icons">help</i></a>'.html_safe %>
         <%= f.input :contact_email %>
         <%= f.input :contact_phone %>
@@ -97,9 +77,6 @@
         <%= f.input :website %>
         <%= f.input :acara_school_id %>
         <%= f.input :school_type %>
-
-
-
       </div>
 
       <div class="form-actions">
@@ -107,7 +84,7 @@
       </div>
     <% end %>
 
-    <!-- Modal Structure -->
+    <%# Modal Structure %>
     <div id="modal_org_executive" class="modal">
       <div class="modal-content">
         <h4>Executive of this Organisation</h4>
@@ -117,13 +94,5 @@
         <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">X</a>
       </div>
     </div>
-
-
-  <% end %> <!-- end if the org user profile is not an organisation creator -->
-
+  <% end %> <%# end if the org user profile is not an organisation creator %>
 <% end %>
-
-<!-- DO NOT USE THIS
-<%#= link_to 'Edit', edit_org_user_profile_path(@org_user_profile) %> |
-<%#= link_to 'Back', org_user_profiles_path %>
--->
