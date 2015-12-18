@@ -3,7 +3,6 @@
     <%= f.error_notification %>
 
     <div class="input-field">
-
       <select class="select optional browser-default" name="profile[candidate_type_id]" id="profile_candidate_type_id">
       <% if @profile.new_record? %>
           <option value="" disabled selected>Which best describes you?</option>
@@ -16,10 +15,10 @@
       <option value="3">Academic</option></select>
     </div>
     <div class="row">
-      <div class="input-field col s6">
+      <div class="col s6">
         <%= f.input :first_name %>
       </div>
-      <div class="input-field col s6">
+      <div class="col s6">
         <%= f.input :last_name %>
       </div>
     </div>
@@ -33,7 +32,7 @@
       </div>
     </div>
     <div class="row">
-      <div class="input-field col s12">
+      <div class="col s12">
         <%= f.input :bio %>
       </div>
     </div>
@@ -47,15 +46,15 @@
       </div>
     <% end %>
     <div class="row">
-      <div class="input-field col s12">
+      <div class="col s12">
         <%= f.input :address %>
       </div>
     </div>
       <div class="row">
-        <div class="input-field col s4">
+        <div class="col s4">
           <%= f.input :suburb %>
         </div>
-        <div class="input-field col s4">
+        <div class="col s4">
         <select class="select required browser-default" name="profile[state]" id="profile_state">
         <% if @profile.new_record? %>
           <option value="" disabled selected>* State</option>
@@ -72,15 +71,15 @@
         <option value="WA">WA</option></select>
 
         </div>
-        <div class="input-field col s4">
+        <div class="col s4">
           <%= f.input :postcode %>
         </div>
       </div>
       <div class="row">
-        <div class="input-field col s6">
+        <div class="col s6">
           <%= f.input :phone %>
         </div>
-        <div class="input-field col s6">
+        <div class="col s6">
           <%= f.input :website %>
         </div>
       </div>
