@@ -14,23 +14,17 @@
 
               <%= simple_form_for(security_check) do |f| %>
                 <%= f.error_notification %>
-                <div class="row">
-                  <div class="col l6">
-                    <%= f.input :verification_code, label: 'Type Verification Code' %>
-                    <%= hidden_field_tag(:admin_check, true) %>
-                  </div>
-                  <div class="col l6">
-                    <div class="form-actions">
-                      <button type="submit" class="btn">Update Verification Code</button>
-                    </div>
-                  </div>
+                <%= f.input :verification_code, label: 'Type Verification Code' %>
+                <%= hidden_field_tag(:admin_check, true) %>
+                <div class="form-actions">
+                  <button type="submit" class="btn">Update Verification Code</button>
                 </div>
               <% end %>
-              <br>
-              <%= link_to "Verify this Candidate", verify_candidate_security_check_path(security_check, checked_by: current_user.id), class: 'btn' %>
+              <div class="margin-top-5px">
+                <%= link_to "Verify this Candidate", verify_candidate_security_check_path(security_check, checked_by: current_user.id), class: 'btn' %>
+              </div>
             <% end %>
-          </li>
-          <br><br>
+          </li><br><br>
         <% end %><!-- end of @educations loop -->
       </ol>
     <% else %>
