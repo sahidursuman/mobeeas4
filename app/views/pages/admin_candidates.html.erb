@@ -6,6 +6,9 @@
       <br><br>
       <%= link_to 'View Candidates with unverified Security Check', unverified_wwc_path, class: 'btn'%>
       <br><br>
-      <%= link_to 'View All Approved Candidates', profiles_path(approved: true), class: 'btn'%>
+      <%= link_to 'View All Approved Candidates', profiles_path(status: 'approved'), class: 'btn'%>
+      <br><br>
+      <%= link_to 'View All Prohibited Candidates', profiles_path(status: 'prohibited'), class: 'btn'%>
+
   </div>
 </div>

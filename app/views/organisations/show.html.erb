@@ -45,7 +45,7 @@
       <% if org_user.organisation_id == @organisation.id %>
         <!-- if current user has a connection to this organisation but has not been approved by the organisation user, then this card will appear -->
         <% if !(current_user.org_users.find_by(organisation_id: @organisation.id).admin_status) && !(current_user.org_users.find_by(organisation_id: @organisation.id).verified_status) %>
-        <div class="card #ffecb3 amber lighten-4">
+        <div class="card light-amber">
           <div class="card-content">
             Your request has been submitted to the  <%= @organisation.name %> Executive and is pending approval.
           </div>

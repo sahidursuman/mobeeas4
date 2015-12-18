@@ -3,11 +3,37 @@
     <%= render 'layouts/sidebar' %>
       <p id="notice"><%= notice %></p>
 
-      <h4>Listing Profiles</h4>
+      <% if (params[:status] == 'approved') %>
+        <% if @profiles.approved.present? %>
+          <h4>Approved Candidates</h4>
+          <ol>
+            <% @profiles.approved.each do |profile| %>
+              <li>
+                Profile ID: <%= profile.id %> - <strong><%= profile.name %></strong> of <%= profile.suburb %>, <%= profile.state %> <%= profile.country %>
+                - <%= link_to 'View', candidate_profile_path(profile_id: profile.id, viewer: 'admin') %>
+              </li>
+            <% end %>
+          </ol>
+        <% else %>
+          <p>There is no approved candidate.</p>
+        <% end %><!-- end if @profiles.approved.present? -->
+      <% elsif (params[:status] == 'prohibited') %>
+        <% if @profiles.not_approved.present? %>
+          <h4>Prohibited Candidates</h4>
+          <ol>
+            <% @profiles.not_approved.each do |profile| %>
+              <li>
+                Profile ID: <%= profile.id %> - <strong><%= profile.name %></strong> of <%= profile.suburb %>, <%= profile.state %> <%= profile.country %>
+                 <!-- - <%#= link_to 'View', profile_path(profile) %> -->
+                 - <%= link_to 'View', candidate_profile_path(profile_id: profile.id, viewer: 'admin') %>
 
-      <%# if (params[approved]) %>
-
-      <%# end %>
+              </li>
+            <% end %>
+          </ol>
+        <% else %>
+          <p>There is no prohibited candidate.</p>
+        <% end %><!-- end if @profiles.approved.present? -->
+      <% end %><!-- end if (params[:approved]) -->
 
   </div>
 </div>

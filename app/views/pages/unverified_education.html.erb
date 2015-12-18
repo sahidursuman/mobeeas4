@@ -8,7 +8,7 @@
       <ol>
         <% @educations.order("user_id ASC").each do |education| %>
           <li>
-            <%= education.institution %> - Candidate's Name: <%= education.user.profile.name %> (Profile ID: <%= education.user.profile.id %>) - <%= link_to "Verify this Candidate", verify_candidate_education_path(education)%>
+            Profile ID: <%= education.user.profile.id %> - <strong><%= education.user.profile.name %></strong>, institution: <%= education.institution %> - <%= link_to "Verify this Candidate", verify_candidate_education_path(education)%>
           </li>
         <% end %><!-- end of @educations loop -->
       </ol>

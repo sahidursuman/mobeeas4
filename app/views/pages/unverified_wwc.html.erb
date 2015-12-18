@@ -7,7 +7,7 @@
         <% @security_checks.order("user_id ASC").each do |security_check| %>
           <li>
             <% if security_check.expiry_date.present? %>
-              Number: <strong><%= security_check.number %></strong> (Expires <%= security_check.expiry_date.strftime("%e %b %Y") %>) - Name: <%= security_check.user.profile.name %> (Profile ID: <%= security_check.user.profile.id %>)
+              Profile ID: <%= security_check.user.profile.id %> - <strong><%= security_check.user.profile.name %></strong>,  check number: <strong><%= security_check.number %></strong>, expiry date: <%= security_check.expiry_date.strftime("%e %b %Y") %>  
               <br>
               Verification Code: <%= security_check.verification_code %>
               <br><br>

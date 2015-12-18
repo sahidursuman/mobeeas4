@@ -11,9 +11,10 @@
 <!-- RIGHT COLUMN -->
   <div class="col m8">
     <!-- WELCOME BUTTON-->
-    <a class="waves-effect waves-light btn modal-trigger" href="#modal-welcome"><i class="fa fa-comment"></i>  Getting Started</a>
-    <a class="waves-effect waves-light btn modal-trigger" href="/messages?my_id=<%= current_user.id %>"><i class="fa fa-envelope"></i>  Mailbox</a>
-
+    <p>
+      <a class="waves-effect waves-light btn modal-trigger" href="#modal-welcome"><i class="fa fa-comment"></i>  Getting Started</a>
+      <a class="waves-effect waves-light btn modal-trigger" href="/messages?my_id=<%= current_user.id %>"><i class="fa fa-envelope"></i>  Mailbox</a>
+    </p>
       <div id="modal-welcome" class="modal">
         <div class="modal-content">
           <%= render 'profiles/welcome' %>
@@ -22,6 +23,18 @@
           <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Close</a>
         </div>
       </div>
+  <% if !(@profile.approved) %>
+    <!-- appears only if the candidate status is not approved by admin therefore the candidate's profile will not appear in MOBEEAS website -->
+    <div class="card light-amber">
+      <div class="card-content">
+        <p>
+          Your Profile detail is incomplete or not approved, therefore currently is not available to participate in any MOBEEAS opportunity.
+          <br>
+          Please contact MOBEEAS Admin on <strong>info@mobeeas.com</strong> for further information.</p>
+      </div>
+    </div>
+    <%# if cu%>
+  <% end %><!-- end if !(@profile.approved) -->
 
   <!-- AGREEMENTS -->
   <div class="card">
