@@ -27,4 +27,8 @@ class Profile < ActiveRecord::Base
 	def profile_data
 		[address, suburb, state, postcode, country].compact.join(', ')
 	end
+
+  scope :not_approved, -> {where(approved: false)}
+  scope :approved, -> {where(approved: true)}
+
 end
