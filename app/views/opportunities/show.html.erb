@@ -100,7 +100,6 @@
           End date: <strong><%= @opportunity.completion_date.strftime("%A, %e %b %Y") %></strong>
         </p>
 
-        <%# <p><%#= link_to "Add Schedule", new_opportunity_time_path(opportunity_id: @opportunity.id)%></p> %>
         <% if @opportunity.opportunity_times.present? %>
           <p>Required activity dates, days and times:
             <ul class="list-style-disc">
@@ -233,7 +232,7 @@
     </div><%# end of card %>
   </div> <%# end of col m6 offset-m2%>
 
-  <%# The right side %>
+  <%# The right side of Opportunity Page %>
   <div class="col m5">
     <div class="card">
       <div class="card-content">
@@ -243,26 +242,43 @@
           <% hash = {} %>
           <% users = [] %>
           <p>Candidates with matching and verified skills:</p>
+          <%# Remember: Hash[key]=value %>
+          <%# We want to build this Hash:
+              hash[key] = the user_id
+              hash[value] = the array of [skill_category, skill] %>
           <%# First, set the hash keys with all matching candidates' user_id %>
           <% @opportunity.opportunity_skills.each do |opportunity_skill| %>
             <% @candidate_skills.each do |candidate_skill| %>
-              <% if (candidate_skill.skill_id == opportunity_skill.skill.id) && (candidate_skill.verified) %>
+              <%# Only these candidates will be included in the sorting result:
+                1. candidates that has the matching skill id and
+                2. his skill has been verified and
+                3. his profile has been approved by admin
+              %>
+              <% if (candidate_skill.skill_id == opportunity_skill.skill.id) && (candidate_skill.verified)  && (candidate_skill.user.profile.approved) %>
+              <%#= (candidate_skill.user.profile.name) %>
+              <%#= (candidate_skill.user.profile.approved) %>
                   <% hash[candidate_skill.user_id] = [] %> <%# create a hash of array, key is skill name, value is user id %>
               <% end %>
             <% end %><%# end of candidate skill loop %>
           <% end %><%# end of opportunity loop %>
 
-          <%# Second, fill the hash value with array of skill_set according to the user_id in the hash key %>
+          <%# Second, fill the hash value with array of skill_set according to the user_id already in the hash key %>
           <% @opportunity.opportunity_skills.each do |opportunity_skill| %>
             <% @candidate_skills.each do |candidate_skill| %>
-              <% if (candidate_skill.skill_id == opportunity_skill.skill.id) && (candidate_skill.verified) %>
+              <%# Only these candidates will be included in the sorting result:
+                1. candidates that has the matching skill id and
+                2. his skill has been verified and
+                3. his profile has been approved by admin
+              %>
+              <% if (candidate_skill.skill_id == opportunity_skill.skill.id) && (candidate_skill.verified)  && (candidate_skill.user.profile.approved) %>
                 <% hash[candidate_skill.user_id] << [candidate_skill.skill.skill_category.name, candidate_skill.skill.name] %>
               <% end %>
             <% end %><%# end of @candidate_skills loop %>
           <% end %>
           <%#= hash %><%# print hash %>
-          <%# hash[key] is the user_id
-          hash[value] is the array of [skill_category, skill] %>
+          <%# At this line the Hash has been built and filled  with this type:
+            hash[key] = the user_id
+            hash[value] = the array of [skill_category, skill] %>
           <%# e.g. {2=>[["Digital Technologies", "Robotics"], ["Design & Technology", "3D Printing"], ["English", "Secondary-Extension 1"], ["Mathematics", "Secondary-Extension 1"]] %>
 
           <% if hash.empty? %>
