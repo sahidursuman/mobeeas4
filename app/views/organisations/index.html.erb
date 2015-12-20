@@ -34,14 +34,13 @@
 
       <%# Only the user with role as Host can add a new organisation %>
       <% if current_user.has_role? :host %>
-        <% if current_user.org_user_profile.present? %>present
+        <%# if current_user.org_user_profile.present? %>present
           <%# if host profile already exist, just create a new organisation %>
           <%= link_to 'Register New Organisation', new_organisation_path(subs_type: 'new_org'), class: 'btn' %>
-        <% else %>
-          <%# if host profile does not exist, create both host and organisation %>
-          <%= link_to 'Register New Organisation', new_organisation_path(subs_type: 'new_host_new_org'), class: 'btn' %>
-        <% end %>
-
+        <%# end %>
+      <% else %>
+        <%# if host profile does not exist, create both host and organisation %>
+        <%= link_to 'Register New Organisation', new_organisation_path(subs_type: 'new_host_new_org'), class: 'btn' %>
       <% end %>
     <% end %>
   </div>
