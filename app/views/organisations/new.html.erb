@@ -8,23 +8,20 @@
   <%# ORG USER PROFILE %>
   <%# The user who creates a new organisation will have role as a host %>
   <% @new_org_user_profile = OrgUserProfile.new %>
-  <% @new_org_user_profile.user_id = current_user.id %>
-  <% @new_org_user_profile.org_creator = true %>
-  <% current_user.add_role :host %>
-  <% current_user.save! %>
-  <% @new_org_user_profile.save!%>
-
+  <%# current_user.add_role :host %>
+  <%# current_user.save! %>
 
   <%= simple_form_for(@new_org_user_profile) do |f| %>
     <%= f.error_notification %>
+    <%= f.association :user, :as => :hidden, input_html: { value: current_user.id }%>
 
+    <%= f.input :org_creator, :as => :hidden, input_html: { value: true } %>
     <div class="form-inputs">
       <%= f.input :first_name %>
       <%= f.input :last_name %>
       <%= f.input :phone %>
       <%= f.input :position %>
       <%#= f.input :guid %>
-      <%#= f.association :user, :as => :hidden %>
     </div>
 
     <div class="form-actions">

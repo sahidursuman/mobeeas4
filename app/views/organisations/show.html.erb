@@ -58,11 +58,11 @@
   <%# APPROVED ADMIN %>
   <div class="card">
     <div class="card-content">
-      <h5>Approved Admin</h5>
-      <p>Approved Admin will have the ability to purchase and apply organisation tokens.</p>
+      <h5>Approved Administrator</h5>
+      <p>Approved Administrator will have the ability to purchase and apply organisation tokens.</p>
 
       <% if @organisation.org_users.admin_user.present? %>
-        <p>List of approved admin:</p>
+        <p>List of Approved Administrator:</p>
         <ol>
           <% @organisation.users.each do |user| %>
             <% if user.org_users.present? %>

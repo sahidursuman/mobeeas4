@@ -3,8 +3,9 @@
   <div class="col m11 offset-m1">
     <div class="card">
       <div class="card-content">
-        <p>Proudly sponsored by: </p>
-        <% if current_user.has_role? :sponsor %>
+        <% if (current_user.has_role? :host) || (current_user.has_role? :candidate) || (current_user.has_role? :admin) %>
+          <p>Proudly sponsored by: </p>
+        <% elsif current_user.has_role? :sponsor %>
           <p>Would you like to sponsor this opportunity? You can express your interest to the MOBEEAS Admin. Yes, I am interested.</p>
         <% end %>
       </div>
@@ -224,7 +225,7 @@
           <strong><%= @opportunity.pay %></strong>
         </p><br>
 
-        <p>Remuneration or specific terms of employment:
+        <p>Any specific terms or conditions of employment?
           <strong><%= @opportunity.employment_terms %></strong>
         </p><br>
 
