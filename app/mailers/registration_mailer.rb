@@ -7,8 +7,7 @@ class RegistrationMailer < ApplicationMailer
 
   def new_user_notification(resource_id)
     @user = User.find(resource_id)
-    # mail(to: "info@mobeeas.com", subject: 'An new user has been created')
-    mail(to: "kfatiguso@gmail.com", subject: 'An new user has been created')
+    mail(to: "info@mobeeas.com", subject: 'An new user has been created')
 
   end
 
