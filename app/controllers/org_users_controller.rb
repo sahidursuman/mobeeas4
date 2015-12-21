@@ -4,12 +4,14 @@ class OrgUsersController < ApplicationController
 
   def verified_and_admin_approved
     @org_user.update_attributes(admin_status: true, verified_status: true)
+    @org_user.save!
     @organisation = Organisation.find(params[:org_id])
     redirect_to thanks2_url
   end
 
   def verified_host
     @org_user.update_attributes(admin_status: false, verified_status: true)
+    @org_user.save!
     @organisation = Organisation.find(params[:org_id])
     redirect_to thanks2_url
   end
