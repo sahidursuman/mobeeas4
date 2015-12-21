@@ -3,5 +3,8 @@ class Sponsor < ActiveRecord::Base
 
   mount_uploader :logo, PictureUploader
 
+  def name
+		[first_name, last_name].compact.join(' ')
+	end
 
 end

@@ -1,0 +1,25 @@
+<h4>Dear MOBEEAS Team</h4>
+
+<p>
+  A new user has been created, please view the profile here:
+</p>
+<% if @user.org_user_profile.present? %>
+  <p>
+    New user type: Host.<br>
+    Name: <%= @user.org_user_profile.name %><br>
+  </p>
+<% elsif @user.profile.present? %>
+  <p>
+    New user type: Candidate.<br>
+    Name: <%= @user.profile.name %><br>
+    Location: <%= @user.profile.suburb %>, <%= @user.profile.state %>
+  </p>
+
+<% elsif @user.sponsor.present? %>
+  <p>
+    New user type: Sponsor.<br>
+    Name: <%= @user.sponsor.name %><br>
+    Organisation: <%= @user.organisation %>
+  </p>
+
+<% end %>

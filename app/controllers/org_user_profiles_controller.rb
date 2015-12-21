@@ -52,7 +52,8 @@ class OrgUserProfilesController < ApplicationController
           current_user.save!
         end # end if params[:is_admin].present?
 
-
+        # Send notification to MOBEEAS Admin that a new candidate user has been created
+        RegistrationMailer.new_user_notification(@org_user_profile.user.id).deliver_now
 
         format.html { redirect_to @org_user_profile, notice: 'Organisation host was successfully created.' }
         # format.html { redirect_to :back, notice: 'Org user profile was successfully created.' }

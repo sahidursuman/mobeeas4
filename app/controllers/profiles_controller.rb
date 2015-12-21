@@ -3,17 +3,19 @@ class ProfilesController < ApplicationController
   before_action :current_user_profile, only: [:edit, :update, :destroy]
 
   # This function is for admin user only, to approve a candidate to appear in MOBEEAS website
+  # This function is called from the prohibited candidates page and will redirect to the same page after a candidate is approved.
   def approve
     @profile.approved = true
     @profile.save!
-    redirect_to profiles_path(status: 'approved')
+    redirect_to profiles_path(status: 'prohibited')
   end
 
   # This function is for admin user only, to prohibit a candidate to appear in MOBEEAS website
+  # This function is called from the list of approved candidates page and will redirect to the same page after a candidate is prohibited.
   def prohibit
     @profile.approved = false
     @profile.save!
-    redirect_to profiles_path(status: 'prohibited')
+    redirect_to profiles_path(status: 'approved')
   end
 
   # GET /profiles
@@ -63,6 +65,9 @@ class ProfilesController < ApplicationController
     respond_to do |format|
       if @profile.save
         current_user.add_role :candidate
+
+        # Send notification to MOBEEAS Admin that a new candidate user has been created
+        RegistrationMailer.new_user_notification(@profile.user.id).deliver_now
 
         format.html { redirect_to @profile, notice: 'Profile was successfully created.' }
         format.json { render :show, status: :created, location: @profile }
