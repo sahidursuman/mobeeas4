@@ -14,12 +14,11 @@
     Name: <%= @user.profile.name %><br>
     Location: <%= @user.profile.suburb %>, <%= @user.profile.state %>
   </p>
-
 <% elsif @user.sponsor.present? %>
   <p>
     New user type: Sponsor.<br>
     Name: <%= @user.sponsor.name %><br>
-    Organisation: <%= @user.organisation %>
+    Organisation: <%= @user.sponsor.organisation %>
   </p>
 
 <% end %>
