@@ -30,6 +30,9 @@ class SponsorsController < ApplicationController
     respond_to do |format|
       if @sponsor.save
         current_user.add_role :sponsor
+        # Send notification to the new user that his sponsor account has been created.
+        RegistrationMailer.registration(@sponsor.user.id).deliver_now
+
         # Send notification to MOBEEAS Admin that a new sponsor user has been created
         RegistrationMailer.new_user_notification(@sponsor.user.id).deliver_now
 

@@ -65,6 +65,8 @@ class ProfilesController < ApplicationController
     respond_to do |format|
       if @profile.save
         current_user.add_role :candidate
+        # Send notification to new user that his candidate profile has been created
+        RegistrationMailer.registration(@profile.user.id).deliver_now
 
         # Send notification to MOBEEAS Admin that a new candidate user has been created
         RegistrationMailer.new_user_notification(@profile.user.id).deliver_now

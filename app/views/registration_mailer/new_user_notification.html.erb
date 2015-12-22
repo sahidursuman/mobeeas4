@@ -6,18 +6,18 @@
 <% if @user.org_user_profile.present? %>
   <p>
     New user type: Host.<br>
-    Name: <%= @user.org_user_profile.name %><br>
+    Name: <%= link_to @user.org_user_profile.name, org_user_profile_url(@user.org_user_profile.id) %>
   </p>
 <% elsif @user.profile.present? %>
   <p>
     New user type: Candidate.<br>
-    Name: <%= @user.profile.name %><br>
+    Name: <%= link_to @user.profile.name, profile_url(@user.profile) %><br>
     Location: <%= @user.profile.suburb %>, <%= @user.profile.state %>
   </p>
 <% elsif @user.sponsor.present? %>
   <p>
     New user type: Sponsor.<br>
-    Name: <%= @user.sponsor.name %><br>
+    Name: <%= link_to @user.sponsor.name, sponsor_url(@user.sponsor.id) %><br>
     Organisation: <%= @user.sponsor.organisation %>
   </p>
 

@@ -6,6 +6,7 @@ class OrgUsersController < ApplicationController
     @org_user.update_attributes(admin_status: true, verified_status: true)
     @org_user.save!
     @organisation = Organisation.find(params[:org_id])
+    # Maybe create a mailer trigger here for the new host that he has been approved
     redirect_to thanks2_url
   end
 
@@ -13,6 +14,7 @@ class OrgUsersController < ApplicationController
     @org_user.update_attributes(admin_status: false, verified_status: true)
     @org_user.save!
     @organisation = Organisation.find(params[:org_id])
+    # Maybe create a mailer trigger here for the new host that he has been approved
     redirect_to thanks2_url
   end
 

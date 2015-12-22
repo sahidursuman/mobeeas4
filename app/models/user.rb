@@ -23,10 +23,11 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
 
-  after_create :send_registration_mailer
-
-  def send_registration_mailer
-  	RegistrationMailer.registration(self.id).deliver_now
-  end
+	# These code block below has been moved to Controller pages for Candidate Create function and Sponsor Create
+  # after_create :send_registration_mailer
+	#
+  # def send_registration_mailer
+  # 	RegistrationMailer.registration(self.id).deliver_now
+  # end
 
 end
