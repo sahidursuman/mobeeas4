@@ -72,10 +72,10 @@
       <%= render 'profiles/ethics_agreement' %>
     </div>
 
-    <% if @agreement.present? %>
-      <% if !@agreement.ethics %>
+    <% if @profile.user.agreement.present? %>--------------
+      <% if !@profile.user.agreement.ethics %>
         <div class="modal-footer">
-          <%= link_to 'I Agree', agree_to_agreement_path(@agreement, agreement_type: 'ethics'), class: "modal-action modal-close waves-effect waves-green btn-flat" %>
+          <%= link_to 'I Agree', agree_to_agreement_path(@profile.user.agreement.id, agreement_type: 'ethics'), class: "modal-action modal-close waves-effect waves-green btn-flat" %>
           <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">I Disagree</a>
         </div>
       <% else %>
@@ -92,10 +92,10 @@
       <%= render 'profiles/code_of_conduct_agreement' %>
     </div>
 
-    <% if @agreement.present? %>
-      <% if !@agreement.code_of_conduct %>
+    <% if @profile.user.agreement.present? %>
+      <% if !@profile.user.agreement.code_of_conduct %>
         <div class="modal-footer">
-          <%= link_to 'I Agree', agree_to_agreement_path(@agreement, agreement_type: 'code_of_conduct'), class: "modal-action modal-close waves-effect waves-green btn-flat" %>
+          <%= link_to 'I Agree', agree_to_agreement_path(@profile.user.agreement.id, agreement_type: 'code_of_conduct'), class: "modal-action modal-close waves-effect waves-green btn-flat" %>
           <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">I Disagree</a>
         </div>
         <% else %>
@@ -113,10 +113,10 @@
       <%= render 'profiles/terms_agreement' %>
     </div>
 
-    <% if @agreement.present? %>
-      <% if !@agreement.terms %>
+    <% if @profile.user.agreement.present? %>
+      <% if !@profile.user.agreement.terms %>
         <div class="modal-footer">
-          <%= link_to 'I Agree', agree_to_agreement_path(@agreement, agreement_type: 'terms'), class: "modal-action modal-close waves-effect waves-green btn-flat" %>
+          <%= link_to 'I Agree', agree_to_agreement_path(@profile.user.agreement.id, agreement_type: 'terms'), class: "modal-action modal-close waves-effect waves-green btn-flat" %>
           <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">I Disagree</a>
         </div>
         <% else %>
