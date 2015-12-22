@@ -6,8 +6,8 @@ class AgreementsController < ApplicationController
       @agreement.update_attributes(ethics: true)
     elsif params[:agreement_type] == 'code_of_conduct'
       @agreement.update_attributes(code_of_conduct: true)
-    elsif params[:agreement_type] == 'terms'
-      @agreement.update_attributes(terms: true)
+    elsif params[:agreement_type] == 'candidate_terms'
+      @agreement.update_attributes(candidate_terms: true)
     end
     redirect_to :back
   end
@@ -79,6 +79,6 @@ class AgreementsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def agreement_params
-      params.require(:agreement).permit(:user_id, :ethics, :code_of_conduct, :terms)
+      params.require(:agreement).permit(:user_id, :ethics, :code_of_conduct, :candidate_terms)
     end
 end

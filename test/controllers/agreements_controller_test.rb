@@ -18,7 +18,7 @@ class AgreementsControllerTest < ActionController::TestCase
 
   test "should create agreement" do
     assert_difference('Agreement.count') do
-      post :create, agreement: { code_of_conduct: @agreement.code_of_conduct, ethics: @agreement.ethics, terms: @agreement.terms, user_id: @agreement.user_id }
+      post :create, agreement: { code_of_conduct: @agreement.code_of_conduct, ethics: @agreement.ethics, candidate_terms: @agreement.candidate_terms, user_id: @agreement.user_id }
     end
 
     assert_redirected_to agreement_path(assigns(:agreement))
@@ -35,7 +35,7 @@ class AgreementsControllerTest < ActionController::TestCase
   end
 
   test "should update agreement" do
-    patch :update, id: @agreement, agreement: { code_of_conduct: @agreement.code_of_conduct, ethics: @agreement.ethics, terms: @agreement.terms, user_id: @agreement.user_id }
+    patch :update, id: @agreement, agreement: { code_of_conduct: @agreement.code_of_conduct, ethics: @agreement.ethics, candidate_terms: @agreement.candidate_terms, user_id: @agreement.user_id }
     assert_redirected_to agreement_path(assigns(:agreement))
   end
 

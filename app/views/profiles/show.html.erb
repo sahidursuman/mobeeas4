@@ -116,9 +116,9 @@
     </div>
 
     <% if @profile.user.agreement.present? %>
-      <% if !@profile.user.agreement.terms %>
+      <% if !@profile.user.agreement.candidate_terms %>
         <div class="modal-footer">
-          <%= link_to 'I Agree', agree_to_agreement_path(@profile.user.agreement.id, agreement_type: 'terms'), class: "modal-action modal-close waves-effect waves-green btn-flat" %>
+          <%= link_to 'I Agree', agree_to_agreement_path(@profile.user.agreement.id, agreement_type: 'candidate_terms'), class: "modal-action modal-close waves-effect waves-green btn-flat" %>
           <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">I Disagree</a>
         </div>
         <% else %>

@@ -35,7 +35,7 @@
             <tr>
               <td><a href="#modal-terms-cond" class="modal-trigger">Terms And Conditions</a></td>
               <td class="right-align">
-                <% if @profile.user.agreement.terms %>
+                <% if @profile.user.agreement.candidate_terms %>
                   <span class="green-text"><i class="fa fa-check-circle"></i></span>
                 <% else %>
                   <a href="#modal-terms-cond" class="modal-trigger">Read and agree</a>
