@@ -274,8 +274,7 @@
                           <%= link_to edit_org_user_profile_path(user.org_user_profile, org_id: @organisation.id) do %><i class="material-icons tiny">mode_edit</i><% end %>
                           <%= link_to 'Disconnect', remove_host_from_organisation_path(@organisation, user_id: user.id), data: {confirm: "Are you sure to remove the connection?"}%>
                         <% end %><%# end of org_user.user_id == current_user.id %>
-                      <%# <%# else %>
-                        (Not Verified) %>
+
                       </p></li>
                     <% elsif !(org_user.admin_status) && !(org_user.verified_status) %>
                       <li><p>

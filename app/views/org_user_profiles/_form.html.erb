@@ -6,6 +6,7 @@
     <%= f.input :last_name %>
     <%= f.input :phone %>
     <%= f.input :position %>
+
     <%= hidden_field_tag(:org_id, params[:org_id]) %>
     <% if params[:is_admin].present? %>
       <%= hidden_field_tag(:is_admin, params[:is_admin]) %>
@@ -13,8 +14,13 @@
     <%#= f.input :guid %>
     <%= f.association :user, :as => :hidden %>
   </div>
+  <br>
 
-  <div class="form-actions">
+  <% if !(@accepts) %>false
+    <p><strong>Sorry, you can register only if you accept the agreement.</strong></p>
+  <% else %>true
+    <div class="form-actions">
     <%= f.button :submit, "Update Host Profile"%>
-  </div>
+    </div>
+  <% end %>
 <% end %>
