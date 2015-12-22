@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151222084222) do
+ActiveRecord::Schema.define(version: 20151222092208) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -39,6 +39,8 @@ ActiveRecord::Schema.define(version: 20151222084222) do
     t.boolean  "candidate_terms", default: false
     t.datetime "created_at",                      null: false
     t.datetime "updated_at",                      null: false
+    t.boolean  "host_terms",      default: false
+    t.boolean  "sponsor_terms",   default: false
   end
 
   add_index "agreements", ["user_id"], name: "index_agreements_on_user_id", using: :btree

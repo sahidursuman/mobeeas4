@@ -79,6 +79,6 @@ class AgreementsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def agreement_params
-      params.require(:agreement).permit(:user_id, :ethics, :code_of_conduct, :candidate_terms)
+      params.require(:agreement).permit(:user_id, :ethics, :code_of_conduct, :candidate_terms, :host_terms, :sponsor_terms)
     end
 end
