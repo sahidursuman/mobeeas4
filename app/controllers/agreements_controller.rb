@@ -8,6 +8,10 @@ class AgreementsController < ApplicationController
       @agreement.update_attributes(code_of_conduct: true)
     elsif params[:agreement_type] == 'candidate_terms'
       @agreement.update_attributes(candidate_terms: true)
+    elsif params[:agreement_type] == 'host_terms'
+      @agreement.update_attributes(host_terms: true)
+    elsif params[:agreement_type] == 'sponsor_terms'
+      @agreement.update_attributes(sponsor_terms: true)
     end
     redirect_to :back
   end

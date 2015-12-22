@@ -15,14 +15,14 @@
       <a class="waves-effect waves-light btn modal-trigger" href="#modal-welcome"><i class="fa fa-comment"></i>  Getting Started</a>
       <a class="waves-effect waves-light btn modal-trigger" href="/messages?my_id=<%= current_user.id %>"><i class="fa fa-envelope"></i>  Mailbox</a>
     </p>
-      <div id="modal-welcome" class="modal">
-        <div class="modal-content">
-          <%= render 'profiles/welcome' %>
-        </div>
-        <div class="modal-footer">
-          <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Close</a>
-        </div><br>
+    <div id="modal-welcome" class="modal">
+      <div class="modal-content">
+        <%= render 'profiles/welcome' %>
       </div>
+      <div class="modal-footer">
+        <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Close</a>
+      </div><br>
+    </div>
   <% if !(@profile.approved) %>
     <%# appears only if the candidate status is not approved by admin therefore the candidate's profile will not appear in MOBEEAS website %>
     <div class="card light-amber">
@@ -74,7 +74,7 @@
       <%= render 'profiles/ethics_agreement' %>
     </div>
 
-    <% if @profile.user.agreement.present? %>--------------
+    <% if @profile.user.agreement.present? %>
       <% if !@profile.user.agreement.ethics %>
         <div class="modal-footer">
           <%= link_to 'I Agree', agree_to_agreement_path(@profile.user.agreement.id, agreement_type: 'ethics'), class: "modal-action modal-close waves-effect waves-green btn-flat" %>

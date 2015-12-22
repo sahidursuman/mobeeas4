@@ -15,12 +15,7 @@
     <%= f.association :user, :as => :hidden %>
   </div>
   <br>
-
-  <% if !(@accepts) %>false
-    <p><strong>Sorry, you can register only if you accept the agreement.</strong></p>
-  <% else %>true
-    <div class="form-actions">
-    <%= f.button :submit, "Update Host Profile"%>
-    </div>
-  <% end %>
+  <div class="form-actions">
+  <%= f.button :submit, "Update Host Profile"%>
+  </div>
 <% end %>

@@ -1,98 +1,185 @@
-<p id="notice"><%= notice %></p>
+<br>
+<%# THE LEFT COLUMN FOR HOST DETAILS ------------------%>
+<div class="row">
+  <div class="col s12 m6">
+    <div class="card">
+      <div class="card-content">
+        <p id="notice"><%= notice %></p>
+        <p>
+        <strong>First name:</strong>
+        <%= @org_user_profile.first_name %>
+        </p>
 
-  <p>
-  <strong>First name:</strong>
-  <%= @org_user_profile.first_name %>
-  </p>
+        <p>
+        <strong>Last name:</strong>
+        <%= @org_user_profile.last_name %>
+        </p>
 
-  <p>
-  <strong>Last name:</strong>
-  <%= @org_user_profile.last_name %>
-  </p>
+        <%  if current_user.id == @org_user_profile.user_id %>
+          <p>
+          <strong>Phone:</strong>
+          <%= @org_user_profile.phone %>
+          </p>
 
-  <%  if current_user.id == @org_user_profile.user_id %>
-    <p>
-    <strong>Phone:</strong>
-    <%= @org_user_profile.phone %>
-    </p>
+          <p>
+          <strong>Email:</strong>
+          <%= @org_user_profile.user.email %>
+          </p>
+        <% end %>
 
-    <p>
-    <strong>Email:</strong>
-    <%= @org_user_profile.user.email %>
-    </p>
-  <% end %>
+        <p>
+        <strong>Position:</strong>
+        <%= @org_user_profile.position %>
+        </p>
+        <% if current_user.id == @org_user_profile.user_id %>
+          <%= link_to 'Edit My Profile', edit_org_user_profile_path(current_user.org_user_profile)%>
+        <% end %>
 
-  <p>
-  <strong>Position:</strong>
-  <%= @org_user_profile.position %>
-  </p>
+        <%# Search for all organisations linked to this host %>
+        <% @user = User.find(@org_user_profile.user_id)%>
+        <% if (@user.organisations.present?) %>
+          <p>Currently you are connected with these organisations:</p>
+          <ol>
+            <% @user.organisations.each do |organisation| %>
+              <li><%= link_to organisation.name, organisation_path(organisation.id) %></li>
+            <% end %>
+          </ol>
 
-<%# Search for all organisations linked to this host %>
-<% @user = User.find(@org_user_profile.user_id)%>
-<% if (@user.organisations.present?) %>
-  <p>Currently you are connected with these organisations:</p>
-  <ol>
-    <% @user.organisations.each do |organisation| %>
-      <li><%= link_to organisation.name, organisation_path(organisation.id) %></li>
-    <% end %>
-  </ol>
+        <% else %>
 
-<% else %>
+          <%# if org user profile is the creator of this organisation, only then the new organisation form will appear%>
+          <% if @org_user_profile.org_creator %>
 
-  <%# if org user profile is the creator of this organisation, only then the new organisation form will appear%>
-  <% if @org_user_profile.org_creator %>
+            <h4>ORGANISATION DETAILS:</h4>
+            <br>
+            <% @new_organisation = Organisation.new %>
 
-    <h4>ORGANISATION DETAILS:</h4>
-    <br>
-    <% @new_organisation = Organisation.new %>
+            <%# ORGANISATION%>
+            <%= simple_form_for(@new_organisation) do |f| %>
+              <%= f.error_notification %>
 
-    <%# ORGANISATION%>
-    <%= simple_form_for(@new_organisation) do |f| %>
-      <%= f.error_notification %>
+              <div class="form-inputs">
+                <%= f.association :organisation_type, :include_blank => false  %>
+                <%= f.input :name, label: 'Organisation name' %>
+                <%= f.input :address, label: 'Street Address' %>
+                <div class="row">
+                  <div class="col s6">
+                    <%= f.input :suburb %>
+                  </div>
+                  <div class="col s6" style="list-style-type: none;">
+                    <%= f.input :state, priority: [ "NSW" ], collection: [ "NSW", "QLD", "SA", "TAS", "VIC", "ACT", "WA"], :include_blank => false %>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col s6">
+                    <%= f.input :postcode %>
+                  </div>
+                  <div class="col s6">
+                    <%= f.input :country, priority: [ "Australia" ], :include_blank => false %>
+                  </div>
+                </div>
+                <%= f.input :contact_name, label: 'Executive of this Organisation: ' ' <a href="#modal_org_executive" class="modal-trigger"><i class="material-icons">help</i></a>'.html_safe %>
+                <%= f.input :contact_email %>
+                <%= f.input :contact_phone %>
+                <%= f.input :logo %>
+                <%= f.input :website %>
+                <%= f.input :acara_school_id %>
+                <%= f.input :school_type %>
+              </div>
 
-      <div class="form-inputs">
-        <%= f.association :organisation_type, :include_blank => false  %>
-        <%= f.input :name, label: 'Organisation name' %>
-        <%= f.input :address, label: 'Street Address' %>
-        <div class="row">
-          <div class="col s6">
-            <%= f.input :suburb %>
-          </div>
-          <div class="col s6" style="list-style-type: none;">
-            <%= f.input :state, priority: [ "NSW" ], collection: [ "NSW", "QLD", "SA", "TAS", "VIC", "ACT", "WA"], :include_blank => false %>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col s6">
-            <%= f.input :postcode %>
-          </div>
-          <div class="col s6">
-            <%= f.input :country, priority: [ "Australia" ], :include_blank => false %>
-          </div>
-        </div>
-        <%= f.input :contact_name, label: 'Executive of this Organisation: ' ' <a href="#modal_org_executive" class="modal-trigger"><i class="material-icons">help</i></a>'.html_safe %>
-        <%= f.input :contact_email %>
-        <%= f.input :contact_phone %>
-        <%= f.input :logo %>
-        <%= f.input :website %>
-        <%= f.input :acara_school_id %>
-        <%= f.input :school_type %>
-      </div>
+              <div class="form-actions">
+                <%= f.button :submit %>
+              </div>
+            <% end %>
 
-      <div class="form-actions">
-        <%= f.button :submit %>
-      </div>
-    <% end %>
+            <%# Modal Structure %>
+            <div id="modal_org_executive" class="modal">
+              <div class="modal-content">
+                <h4>Executive of this Organisation</h4>
+                <p>Enter the name and contact details for an Executive of this Organisation who will be able to authorise the listing of this new organisation in MOBEEAS.</p>
+              </div>
+              <div class="modal-footer">
+                <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">X</a>
+              </div>
+            </div>
+          <% end %> <%# end if the org user profile is not an organisation creator %>
+        <% end %>
 
-    <%# Modal Structure %>
-    <div id="modal_org_executive" class="modal">
-      <div class="modal-content">
-        <h4>Executive of this Organisation</h4>
-        <p>Enter the name and contact details for an Executive of this Organisation who will be able to authorise the listing of this new organisation in MOBEEAS.</p>
-      </div>
-      <div class="modal-footer">
-        <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">X</a>
-      </div>
+      </div><%# card-content %>
+    </div><%# card %>
+  </div><%# col s12 m6 %>
+
+
+<%# THE RIGHT COLUMN FOR AGREEMENTS ----------------%>
+  <div class="col s12 m6">
+    <div class="card">
+      <div class="card-content">
+        <%= render 'org_user_profiles/agreements' %>
+      </div><%# card-content %>
+    </div><%# card %>
+  </div><%# col s12 m6 %>
+</div><%# end of row %>
+
+<%# AGREEMENTS MODALS %>
+  <%# ETHICS %>
+  <div id="modal-ethics" class="modal modal-fixed-footer">
+    <div class="modal-content">
+      <%# This ethics_agreement document is coming from inside the profiles forder, in the partial file _ethics_agreement.html.erb %>
+      <%= render 'profiles/ethics_agreement' %>
     </div>
-  <% end %> <%# end if the org user profile is not an organisation creator %>
-<% end %>
+
+    <% if @org_user_profile.user.agreement.present? %>
+      <% if !@org_user_profile.user.agreement.ethics %>
+        <div class="modal-footer">
+          <%= link_to 'I Agree', agree_to_agreement_path(@org_user_profile.user.agreement.id, agreement_type: 'ethics'), class: "modal-action modal-close waves-effect waves-green btn-flat" %>
+          <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">I Disagree</a>
+        </div>
+      <% else %>
+        <div class="modal-footer">
+          <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Close</a>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
+
+  <%# CODE OF CONDUCT %>
+  <div id="modal-conduct" class="modal modal-fixed-footer">
+    <div class="modal-content">
+      <%# This code_of_conduct_agreement document is coming from inside the profiles forder, in the partial file _code_of_conduct_agreement.html.erb %>
+      <%= render 'profiles/code_of_conduct_agreement' %>
+    </div>
+
+    <% if @org_user_profile.user.agreement.present? %>
+      <% if !@org_user_profile.user.agreement.code_of_conduct %>
+        <div class="modal-footer">
+          <%= link_to 'I Agree', agree_to_agreement_path(@org_user_profile.user.agreement.id, agreement_type: 'code_of_conduct'), class: "modal-action modal-close waves-effect waves-green btn-flat" %>
+          <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">I Disagree</a>
+        </div>
+        <% else %>
+          <div class="modal-footer">
+            <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Close</a>
+          </div>
+      <% end %>
+    <% end %>
+  </div>
+
+
+  <%# TERMS & CONDITIONS %>
+  <div id="modal-terms-cond" class="modal modal-fixed-footer">
+    <div class="modal-content">
+      <%= render 'org_user_profiles/terms_agreement' %>
+    </div>
+
+    <% if @org_user_profile.user.agreement.present? %>
+      <% if !@org_user_profile.user.agreement.host_terms %>
+        <div class="modal-footer">
+          <%= link_to 'I Agree', agree_to_agreement_path(@org_user_profile.user.agreement.id, agreement_type: 'host_terms'), class: "modal-action modal-close waves-effect waves-green btn-flat" %>
+          <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">I Disagree</a>
+        </div>
+        <% else %>
+          <div class="modal-footer">
+            <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Close</a>
+          </div>
+      <% end %>
+    <% end %>
+  </div>
