@@ -19,4 +19,5 @@ class OrgUserProfile < ActiveRecord::Base
 		Agreement.create!(user_id: self.user.id)
 	end
 
+
 end

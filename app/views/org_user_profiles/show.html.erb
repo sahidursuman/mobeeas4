@@ -40,8 +40,25 @@
         <% if (@user.organisations.present?) %>
           <p>Currently you are connected with these organisations:</p>
           <ol>
+            <%# This is the static value that will change from TRUE to FALSE if there at least one organisation executive that did not validate this host. %>
+            <% @validated = true %>
+            <%# Find the name of each organisation %>
             <% @user.organisations.each do |organisation| %>
-              <li><%= link_to organisation.name, organisation_path(organisation.id) %></li>
+              <li>
+                <%= link_to organisation.name, organisation_path(organisation.id) %>
+                <%# Find the record in org_users join table of that user and that organisation, check the verification status %>
+                <% organisation.org_users.each do |org_user| %>
+                  <% if org_user.user_id == @user.id %>
+                    <% if org_user.verified_status %>
+                       - Verified
+                    <% else %>
+                       - Not Verified
+                       <% @validated = false %>
+                    <% end %>
+                  <% end %>
+                <% end %>
+              </li>
+
             <% end %>
           </ol>
 
@@ -112,6 +129,22 @@
 
 <%# THE RIGHT COLUMN FOR AGREEMENTS ----------------%>
   <div class="col s12 m6">
+
+  <%#  If not all three agreements are accepted or @validated value from line 56 above is false, then this card will appear %>
+    <% if !(@org_user_profile.user.agreement.host_all_agreed) || !(@validated) %>
+      <% @org_user_profile.user.org_users.each do |org_user| %>
+        <div class="card light-amber">
+          <div class="card-content">
+            <p>
+              Please make sure all the agreements have been accepted.
+              <br>
+              An Executive will need to verify your registration.
+            </p>
+          </div><%# card %>
+        </div><%# col s12 m6 %>
+      <% end %>
+    <% end %>
+
     <div class="card">
       <div class="card-content">
         <%= render 'org_user_profiles/agreements' %>
