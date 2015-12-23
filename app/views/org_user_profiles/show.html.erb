@@ -34,6 +34,7 @@
         <% if current_user.id == @org_user_profile.user_id %>
           <%= link_to 'Edit My Profile', edit_org_user_profile_path(current_user.org_user_profile)%>
         <% end %>
+        <br><br>
 
         <%# Search for all organisations linked to this host %>
         <% @user = User.find(@org_user_profile.user_id)%>
@@ -132,7 +133,6 @@
 
   <%#  If not all three agreements are accepted or @validated value from line 56 above is false, then this card will appear %>
     <% if !(@org_user_profile.user.agreement.host_all_agreed) || !(@validated) %>
-      <% @org_user_profile.user.org_users.each do |org_user| %>
         <div class="card light-amber">
           <div class="card-content">
             <p>
@@ -142,7 +142,6 @@
             </p>
           </div><%# card %>
         </div><%# col s12 m6 %>
-      <% end %>
     <% end %>
 
     <div class="card">
