@@ -20,16 +20,22 @@
         <% end %><%# end if @profiles.approved.present? %>
       <% elsif (params[:status] == 'prohibited') %>
         <% if @profiles.not_approved.present? %>
+        <div class="card light-amber">
+          <div class="card-content">
+            Warning! Before approving, please check that each candidate security check is not empty or not verified.
+          </div>
+        </div>
           <h4>Prohibited Candidates</h4>
-          <ol>
-            <% @profiles.not_approved.order("id ASC").each do |profile| %>
-              <li>
-                Profile ID: <%= profile.id %> - <strong><%= profile.name %></strong> of <%= profile.suburb %>, <%= profile.state %> <%= profile.country %>
-                 - <%= link_to 'View', candidate_profile_path(profile_id: profile.id, viewer: 'admin') %>
-                 | <%= link_to 'Approve '+ profile.first_name, approve_profile_path(profile) %>
-              </li>
-            <% end %>
-          </ol>
+              <ol>
+                <% @profiles.not_approved.order("id ASC").each do |profile| %>
+                  <li>
+                    Profile ID: <%= profile.id %> - <strong><%= profile.name %></strong> of <%= profile.suburb %>, <%= profile.state %> <%= profile.country %>
+                     - <%= link_to 'View', candidate_profile_path(profile_id: profile.id, viewer: 'admin') %>
+                     | <%= link_to 'Approve '+ profile.first_name, approve_profile_path(profile) %>
+                  </li>
+                <% end %>
+              </ol>
+
         <% else %>
           <p>There is no prohibited candidate.</p>
         <% end %><%# end if @profiles.approved.present? %>

@@ -1,13 +1,13 @@
 <div class="row">
   <div class="col s12 m11 offset-m1 l11 offset-l1">
     <%= render 'layouts/sidebar' %>
-    <h4>List of Candidates with unverified Security Check</h4>
     <% if @security_checks.present? %>
+    <h4>List of Candidates with unverified Security Check</h4>
       <ol>
         <% @security_checks.order("user_id ASC").each do |security_check| %>
           <li>
             <% if security_check.expiry_date.present? %>
-              Profile ID: <%= security_check.user.profile.id %> - <strong><%= security_check.user.profile.name %></strong>,  check number: <strong><%= security_check.number %></strong>, expiry date: <%= security_check.expiry_date.strftime("%e %b %Y") %>  
+              Profile ID: <%= security_check.user.profile.id %> - <strong><%= security_check.user.profile.name %></strong>,  check number: <strong><%= security_check.number %></strong>, expiry date: <%= security_check.expiry_date.strftime("%e %b %Y") %>
               <br>
               Verification Code: <%= security_check.verification_code %>
               <br><br>
@@ -30,6 +30,5 @@
     <% else %>
       <p>There are no candidate.</p>
     <% end %><%# end of if @security_checks.present? %>
-
   </div>
 </div>

@@ -3,11 +3,15 @@
     <%= render 'layouts/sidebar' %>
 
     <h5>New Opportunity</h5>
-
-    <% if current_user.organisations.present?%>
-      <%= render 'form' %>
+    <%# A Host can create a new opportunity if the Host has agreed the three points from his dashboard %>
+    <% if current_user.agreement.host_all_agreed %>
+      <% if current_user.organisations.present? %>
+        <%= render 'form' %>
+      <% else %>
+        <p>You need to associate with at least an organisation first, please view all organisations here.</p>
+      <% end %>
     <% else %>
-      <p>You need to associate with at least an organisation first, please view all organisations here.</p>
+      <p>Please make sure you have accepted all of the MOBEEAS Agreements.</p>
     <% end %>
   </div>
 </div>
