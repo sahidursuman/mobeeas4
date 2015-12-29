@@ -32,106 +32,104 @@
         <%= @org_user_profile.position %>
         </p>
         <% if current_user.id == @org_user_profile.user_id %>
-          <%= link_to 'Edit My Profile', edit_org_user_profile_path(current_user.org_user_profile)%>
+          <%= link_to 'Edit My Profile', edit_org_user_profile_path(current_user.org_user_profile), class: 'btn' %>
         <% end %>
         <br><br>
-
-        <%# Search for all organisations linked to this host %>
-        <% @user = User.find(@org_user_profile.user_id)%>
-        <% if (@user.organisations.present?) %>
-          <p>Currently you are connected with these organisations:</p>
-          <ol>
-            <%# This is the static value that will change from TRUE to FALSE if there at least one organisation executive that did not validate this host. %>
-            <% @validated = true %>
-            <%# Find the name of each organisation %>
-            <% @user.organisations.each do |organisation| %>
-              <li>
-                <%= link_to organisation.name, organisation_path(organisation.id) %>
-                <%# Find the record in org_users join table of that user and that organisation, check the verification status %>
-                <% organisation.org_users.each do |org_user| %>
-                  <% if org_user.user_id == @user.id %>
-                    <% if org_user.verified_status %>
-                       - Verified
-                    <% else %>
-                       - Not Verified
-                       <% @validated = false %>
-                    <% end %>
-                  <% end %>
-                <% end %>
-              </li>
-
-            <% end %>
-          </ol>
-
-        <% else %>
-
-          <%# if org user profile is the creator of this organisation, only then the new organisation form will appear%>
-          <% if @org_user_profile.org_creator %>
-
-            <h4>ORGANISATION DETAILS:</h4>
-            <br>
-            <% @new_organisation = Organisation.new %>
-
-            <%# ORGANISATION%>
-            <%= simple_form_for(@new_organisation) do |f| %>
-              <%= f.error_notification %>
-
-              <div class="form-inputs">
-                <%= f.association :organisation_type, :include_blank => false  %>
-                <%= f.input :name, label: 'Organisation name' %>
-                <%= f.input :address, label: 'Street Address' %>
-                <div class="row">
-                  <div class="col s6">
-                    <%= f.input :suburb %>
-                  </div>
-                  <div class="col s6" style="list-style-type: none;">
-                    <%= f.input :state, priority: [ "NSW" ], collection: [ "NSW", "QLD", "SA", "TAS", "VIC", "ACT", "WA"], :include_blank => false %>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col s6">
-                    <%= f.input :postcode %>
-                  </div>
-                  <div class="col s6">
-                    <%= f.input :country, priority: [ "Australia" ], :include_blank => false %>
-                  </div>
-                </div>
-                <%= f.input :contact_name, label: 'Executive of this Organisation: ' ' <a href="#modal_org_executive" class="modal-trigger"><i class="material-icons">help</i></a>'.html_safe %>
-                <%= f.input :contact_email %>
-                <%= f.input :contact_phone %>
-                <%= f.input :logo %>
-                <%= f.input :website %>
-                <%= f.input :acara_school_id %>
-                <%= f.input :school_type %>
-              </div>
-
-              <div class="form-actions">
-                <%= f.button :submit %>
-              </div>
-            <% end %>
-
-            <%# Modal Structure %>
-            <div id="modal_org_executive" class="modal">
-              <div class="modal-content">
-                <h4>Executive of this Organisation</h4>
-                <p>Enter the name and contact details for an Executive of this Organisation who will be able to authorise the listing of this new organisation in MOBEEAS.</p>
-              </div>
-              <div class="modal-footer">
-                <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">X</a>
-              </div>
-            </div>
-          <% end %> <%# end if the org user profile is not an organisation creator %>
-        <% end %>
-
       </div><%# card-content %>
     </div><%# card %>
-  </div><%# col s12 m6 %>
 
+    <%# Search for all organisations linked to this host %>
+    <% @user = User.find(@org_user_profile.user_id) %>
+    <% if (@user.organisations.present?) %>
+      <%# This is the static value that will change from TRUE to FALSE if there at least one organisation executive that did not validate this host. %>
+      <% @validated = true %>
+      <%# Find the name of each organisation %>
+      <% @user.organisations.each do |organisation| %>
+          <div class="card">
+            <div class="card-content">
+
+            <%# Find the record in org_users join table of that user and that organisation, check the verification status %>
+            <% organisation.org_users.each do |org_user| %>
+              <% if org_user.user_id == @user.id %>
+                <% if org_user.verified_status %>
+                  <p>Your connection with <strong> <%= link_to organisation.name, organisation_path(organisation.id) %></strong> has been verified.</p>
+                  <%# create a link to create a new opportunity here %>
+                  <%= link_to 'Create a new Opportunity', new_opportunity_path(org_id: organisation.id), class: 'btn' %>
+                <% else %>
+                  <p>Your connection with <strong><%= link_to organisation.name, organisation_path(organisation.id) %></strong> has not been verified.</p>
+                  <a class="btn disabled">Create a new Opportunity</a>
+                   <% @validated = false %>
+                <% end %>
+              <% end %>
+            <% end %>
+          </div><%# card-content %>
+        </div><%# card %>
+      <% end %>
+    <% else %>
+    <%# if org user profile is the creator of this organisation, only then the new organisation form will appear%>
+    <% if @org_user_profile.org_creator %>
+
+      <h4>ORGANISATION DETAILS:</h4>
+      <br>
+      <% @new_organisation = Organisation.new %>
+
+      <%# ORGANISATION%>
+      <%= simple_form_for(@new_organisation) do |f| %>
+        <%= f.error_notification %>
+
+        <div class="form-inputs">
+          <%= f.association :organisation_type, :include_blank => false  %>
+          <%= f.input :name, label: 'Organisation name' %>
+          <%= f.input :address, label: 'Street Address' %>
+          <div class="row">
+            <div class="col s6">
+              <%= f.input :suburb %>
+            </div>
+            <div class="col s6" style="list-style-type: none;">
+              <%= f.input :state, priority: [ "NSW" ], collection: [ "NSW", "QLD", "SA", "TAS", "VIC", "ACT", "WA"], :include_blank => false %>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col s6">
+              <%= f.input :postcode %>
+            </div>
+            <div class="col s6">
+              <%= f.input :country, priority: [ "Australia" ], :include_blank => false %>
+            </div>
+          </div>
+          <%= f.input :contact_name, label: 'Executive of this Organisation: ' ' <a href="#modal_org_executive" class="modal-trigger"><i class="material-icons">help</i></a>'.html_safe %>
+          <%= f.input :contact_email %>
+          <%= f.input :contact_phone %>
+          <%= f.input :logo %>
+          <%= f.input :website %>
+          <%= f.input :acara_school_id %>
+          <%= f.input :school_type %>
+        </div>
+
+        <div class="form-actions">
+          <%= f.button :submit %>
+        </div>
+      <% end %>
+
+      <%# Modal Structure %>
+      <div id="modal_org_executive" class="modal">
+        <div class="modal-content">
+          <h4>Executive of this Organisation</h4>
+          <p>Enter the name and contact details for an Executive of this Organisation who will be able to authorise the listing of this new organisation in MOBEEAS.</p>
+        </div>
+        <div class="modal-footer">
+          <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">X</a>
+        </div>
+      </div>
+    <% end %> <%# end if the org user profile is not an organisation creator %>
+  <% end %><%# if (@user.organisations.present?) %>
+
+
+  </div><%# col s12 m6 %>
 
 <%# THE RIGHT COLUMN FOR AGREEMENTS ----------------%>
   <div class="col s12 m6">
-
-  <%#  If not all three agreements are accepted or @validated value from line 56 above is false, then this card will appear %>
+    <%#  If not all three agreements are accepted or @validated value from line 56 above is false, then this card will appear %>
     <% if !(@org_user_profile.user.agreement.host_all_agreed) || !(@validated) %>
         <div class="card light-amber">
           <div class="card-content">
@@ -140,8 +138,8 @@
               <br>
               An Executive will need to verify your registration.
             </p>
-          </div><%# card %>
-        </div><%# col s12 m6 %>
+          </div><%# card-content %>
+        </div><%# card light-amber %>
     <% end %>
 
     <div class="card">
@@ -149,8 +147,12 @@
         <%= render 'org_user_profiles/agreements' %>
       </div><%# card-content %>
     </div><%# card %>
+
   </div><%# col s12 m6 %>
 </div><%# end of row %>
+
+
+<%# ------------ %>
 
 <%# AGREEMENTS MODALS %>
   <%# ETHICS %>

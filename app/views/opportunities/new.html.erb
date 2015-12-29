@@ -1,8 +1,8 @@
 <div class="row">
   <div class="col c12 m8 offset-m2 l8 offset-l2">
     <%= render 'layouts/sidebar' %>
-
-    <h5>New Opportunity</h5>
+    <% @organisation = Organisation.find(params[:org_id])%>
+    <h5>New Opportunity for <%= @organisation.name %></h5>
     <%# A Host can create a new opportunity if the Host has agreed the three points from his dashboard %>
     <% if current_user.agreement.host_all_agreed %>
       <% if current_user.organisations.present? %>
