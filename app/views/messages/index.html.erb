@@ -1,8 +1,9 @@
 <div class="row">
-  <div class="col c12 m8 offset-m2 l8 offset-l2">
+
+  <div class="col c12 m11 offset-m1 l11 offset-l1">
+    <h4>View My Contacts</h4>
     <p id="notice"><%= notice %></p>
     <%= render 'layouts/sidebar' %>
-    <h5>View My Contacts</h5>
     <% @receiver_user = User.find(params[:my_id]) %>
     <% if @receiver_user.has_role? :candidate %>
       <% @receiver = @receiver_user.profile %>

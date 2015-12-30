@@ -3,9 +3,23 @@
     <% if current_user.has_role? :host %>
       <% if current_user.org_user_profile.present? %>
         <%= render 'layouts/sidebar' %>
+        <h4>Host Profile</h4>
         <%# Please note: render org_user_profiles/show below is rendering the partial file called '_show.html.erb',
         which then will be rendering the template 'show.html.erb' %>
         <%= render 'org_user_profiles/show' %>
+        <div class="row">
+          <div class="col s12 m6">
+            <div class="card">
+              <div class="card-content">
+                <p>
+                  Click here to view all Organisations:
+                  <br>
+                  <%= link_to 'Organisations Index', organisations_host_path(state: 'show_organisations'), class: 'btn' %>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
       <% else %> <%# else if current_user's profile hasn't been created yet %>
         <p>Your host profile is not created. Please go to <%= link_to 'Organisations Index', organisations_host_path %> and select one of the organisations as the first step to create your host profile.</p>
       <% end %>

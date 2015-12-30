@@ -1,8 +1,8 @@
 <li class="bold active"><%= link_to 'Host Profile', host_profile_path %></li>
 <li class="bold"><%= link_to 'Mailbox', messages_path(my_id: current_user.id) %></li>
-<li class="bold"><%= link_to 'Organisations Index', organisations_host_path %></li>
+<li class="bold"><%= link_to 'Organisations Index', organisations_host_path(state: 'show_organisations') %></li>
 <li class="bold"><%= link_to 'Purchase Tokens', purchase_tokens_path %></li>
-<li class="bold"><%= link_to 'Create Opportunity', new_opportunity_path %></li>
+<li class="bold"><%= link_to 'Create Opportunity', organisations_host_path(state: 'show_opportunities') %></li>
 <li class="bold"><%= link_to 'Draft Opportunities', opportunities_path(status: 'draft') %></li>
 <li class="bold"><%= link_to 'Listed Opportunities', opportunities_path(status: 'listed') %></li>
 <li class="bold"><%= link_to 'Active Opportunities', opportunities_path(status: 'active') %></li>

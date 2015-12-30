@@ -95,7 +95,6 @@ Rails.application.routes.draw do
   get 'unverified_education', to: 'pages#unverified_education'
   get 'unverified_wwc', to: 'pages#unverified_wwc'
 
-
   devise_for :users
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

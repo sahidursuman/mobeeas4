@@ -2,12 +2,12 @@
   <div class="col c12 m8 offset-m2 l8 offset-l2">
     <p id="notice"><%= notice %></p>
 
-    <h3>Listing Organisations</h3>
+    <h3>Registered Organisations</h3>
 
     <%# Only the user with role as Host can add a new organisation %>
     <% if current_user.has_role? :host%>
       <p>
-        Before adding a new organisation/school, please search first to check if it is available already.
+        Before adding a new organisation, please search first to check if it is already registered.
       </p>
     <% end %>
 

@@ -1,0 +1,39 @@
+<%# This file is rendered in the pages/organisations_host.html.erb %>
+<div class="row">
+  <div class="col l12">
+  <%# Find the name of each organisation %>
+  <% current_user.organisations.each do |organisation| %>
+    <%# Find the record in org_users join table of that user and that organisation, check the verification status %>
+    <!-- <div class="row"> -->
+    <% organisation.org_users.each do |org_user| %>
+      <% if org_user.user_id == current_user.id %>
+        <% if org_user.verified_status %>
+          <div class="card">
+            <div class="card-content">
+              <div class="col l8">
+                <p>Your connection with <strong> <%= link_to organisation.name, organisation_path(organisation.id) %></strong> has been verified.</p>
+              </div>
+              <div class="col l4 margin-bottom-20px">
+                <%# if verified, host can create a new opportunity here %>
+                <%= link_to 'New Opportunity', new_opportunity_path(org_id: organisation.id), class: 'btn' %>
+              </div>
+            </div>
+          </div>
+        <% else %>
+          <div class="card">
+            <div class="card-content">
+              <div class="col l8">
+                <p>Your connection with <strong><%= link_to organisation.name, organisation_path(organisation.id) %></strong> has not been verified.</p>
+              </div>
+              <div class="col l4 margin-bottom-20px">
+                <%# if not verified, host can not create a new opportunity here %>
+                <a class="btn disabled">New Opportunity</a>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      <% end %>
+    <% end %><%# end of organisation.org_users loop %>
+  <% end %>
+</div>
+</div>

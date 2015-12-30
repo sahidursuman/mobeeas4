@@ -1,21 +1,26 @@
 <div class="row">
-  <div class="col s12 m8 offset-m2 l8 offset-l2">
+  <div class="col s12 m11 offset-m1 l11 offset-l1">
     <%= render 'layouts/sidebar' %>
+
+    <% if params[:state] == 'show_opportunities' %>
+      <h4>Create New Opportunity</h4>
+    <% elsif params[:state] == 'show_organisations' %>
+      <h4>My Organisations Connections</h4>
+    <% end %>
 
     <%# Search for all organisations linked to this host %>
     <%# @user = User.find(@org_user_profile.user_id)%>
     <% if current_user.organisations.present? %>
       <p>Currently you are connected with these organisations:</p>
-      <ol>
-        <% current_user.organisations.each do |organisation| %>
-          <li><%= link_to organisation.name, organisation_path(organisation.id) %></li>
-        <% end %>
-      </ol>
+      <%= render 'opportunities/organisations_new_opportunity' %>
     <% else %>
       <p>You are currently not linked to any organisations. Please select one of the organisations below to join as the host.</p>
     <% end %>
+
   </div>
-</div>
+  <% if params[:state] == 'show_organisations' %>
     <% if @organisations.present? %>
       <%= render template: "organisations/index" %>
     <% end %>
+  <% end %>
+</div>
