@@ -7,14 +7,19 @@
     <%#= f.association :organisation, collection: @organisations, :include_blank => false %>
     <%= f.association :organisation, :as => :hidden, input_html: { value: params[:org_id] } %>
     <%= f.association :user, :as => :hidden, input_html: { value: current_user.id } %>
-    <p>Give your collaborative learning experience a title.</p>
-    <%= f.input :title %>
 
-    <p>Tell us a little about what you would like to accomplish by creating this collaborative learning experience</p>
-    <%= f.input :description, label: 'Description (max 1000 characters)', input_html: { maxlength: 1000} %>
-    <%#= f.input :commencement_date, as: :string, label: 'Anticipated Start Date', input_html: { class: 'datetimepicker1'} %>
-    <%#= f.input :completion_date, as: :string, label: 'Anticipated End Date', input_html: { class: 'datetimepicker1'} %>
+    <% if params[:object] == 'title' %>
+      <p>Give your collaborative learning experience a title.</p>
+      <%= f.input :title %>
 
+      <p>Tell us a little about what you would like to accomplish by creating this collaborative learning experience</p>
+      <%= f.input :description, label: 'Description (max 1000 characters)', input_html: { maxlength: 1000} %>
+    <% end %>
+
+    <% if params[:object] == 'dates' %>
+      <%= f.input :commencement_date, as: :string, label: 'Anticipated Start Date', input_html: { class: 'datetimepicker1'} %>
+      <%= f.input :completion_date, as: :string, label: 'Anticipated End Date', input_html: { class: 'datetimepicker1'} %>
+    <% end %>
     <%#= f.input :experiences, label: 'Other experience that would be advantageous (max 1000 characters)', input_html: { maxlength: 1000} %>
 
     <%# Keep this as the template for paid engagement. %>

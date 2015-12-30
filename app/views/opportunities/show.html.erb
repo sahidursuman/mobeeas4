@@ -28,6 +28,7 @@
 <%# ORGANISATION NAME AND LOGO ===========================================%>
     <div class="card" style="margin-left: none;">
       <div class="card-content">
+        <span class="card-title blue-text"><i class="fa fa-building-o"></i> Organisation</span>
         <%= render 'layouts/sidebar' %>
         <p id="notice"><%= notice %></p>
         <div class="row">
@@ -59,18 +60,23 @@
     <%# OPPORTUNITY TITLE & DESCRIPTION ===========================================%>
     <div class="card" style="margin-left: none;">
       <div class="card-content">
-        <h5>Title:</h5>
+        <span class="card-title blue-text"><i class="fa fa-list"></i> Title:</span>
         <h5><%= @opportunity.title %></h5>
         <br>
-        <h5>Description:</h5>
+        <span class="card-title blue-text"><i class="fa fa-list"></i> Description:</span>
         <h5><%= @opportunity.description %></h5>
+        <br>
+        <div class="col l1 offset-l11">
+          <%= link_to edit_opportunity_path(@opportunity.id, object: 'title') do %><i class="fa fa-pencil-square-o"></i><% end %>
+        </div>
       </div>
     </div>
 
-    <%# SCHOOL YEAR LEVEL AND THE NUMBER OF STUDENTS REQUIRED %>
+
+    <%# SCHOOL YEAR LEVEL AND THE NUMBER OF STUDENTS REQUIRED =========================================== %>
     <div class="card" style="margin-left: none;">
       <div class="card-content">
-        <h5>School Students Involved</h5>
+        <span class="card-title blue-text"><i class="fa fa-users"></i> School Students Involved</span>
         <p>Please let us know how many students will be involved in this opportunity and their year/stage:</p>
         <br>
         <% if @opportunity.school_years.present? %>
@@ -110,7 +116,7 @@
     <%# OPPORTUNITY DATES, DAYS AND TIMES ===========================================%>
     <div class="card" style="margin-left: none;">
       <div class="card-content">
-        <h5>Opportunity Dates, Days and Times</h5>
+        <span class="card-title blue-text"><i class="fa fa-calendar"></i> Dates, Days and Times</span>
         <p>When would you like this collaborative learning experience to happen?</p>
         <p>
           <% if @opportunity.commencement_date.present? %>
@@ -179,10 +185,11 @@
       </div>
     </div>
 
-    <%# CANDIDATE SKILLS AND REMUNERATION ===========================================%>
+    <%# CANDIDATE SKILLS =========================================== %>
     <div class="card" style="margin-left: none;">
       <div class="card-content">
-        <h5>Candidate Skills and Remuneration</h5>
+
+        <span class="card-title blue-text"><i class="fa fa-sliders"></i> Candidate Skills</span>
         <p>What skills would you like your collaborative learning candidate to have?</p>
         <p>
           <% if (@opportunity.skills.any?) %>
@@ -202,8 +209,14 @@
             <% end %>
             <br>
           <% end %>
-        </p><br>
+        </p>
+      </div>
+    </div>
 
+    <%# REMUNERATION =========================================== %>
+    <div class="card" style="margin-left: none;">
+      <div class="card-content">
+        <span class="card-title blue-text"><i class="fa fa-usd"></i> Remuneration</span>
         <p>Is this a paid Engagement?
           <% if @opportunity.paid_engagement %>
             <p><strong>Yes, paid engagement.</strong></p>
@@ -234,6 +247,7 @@
     <%# OPPORTUNITY STATUS ===========================================%>
     <div class="card" style="margin-left: none;">
       <div class="card-content">
+        <span class="card-title blue-text"><i class="fa fa-puzzle-piece"></i> Other Requirements</span>
       ￼￼  <h5>Anything else candidate might like to know about this Opportunity?</h5>
         <p>Please describe any other requirements you have of potential candidates here:</p>
         <% if  @opportunity.experiences %>
@@ -249,6 +263,7 @@
     <%# TOKENS ALLOCATIONS ===========================================%>
     <div class="card" style="margin-left: none;">
       <div class="card-content">
+        <span class="card-title blue-text"><i class="fa fa-certificate"></i> Tokens</span>
         <h5>Allocate Tokens so that Candidates can be engaged</h5>
         <p>You will need to allocate one token for each candidate you would like to engage in this collaborative learning experience.</p>
 
@@ -277,7 +292,7 @@
   <div class="card" style="margin-left: none;">
     <div class="card-content">
       <%# only the opportunity owner can edit the opportunity status %>
-      <h5>Opportunity Status</h5>
+      <span class="card-title blue-text"><i class="fa fa-play"></i> Opportunity Status</span>
       <p>
         <%# If opportunity has been archived %>
         <% if (@opportunity.archived) %>
