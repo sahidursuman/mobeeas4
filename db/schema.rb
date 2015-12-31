@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151231011828) do
+ActiveRecord::Schema.define(version: 20151231015759) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -211,6 +211,10 @@ ActiveRecord::Schema.define(version: 20151231011828) do
     t.integer  "opportunity_id"
     t.datetime "created_at",     null: false
     t.datetime "updated_at",     null: false
+    t.date     "start_date"
+    t.date     "end_date"
+    t.time     "start_time"
+    t.time     "end_time"
   end
 
   add_index "opportunity_times", ["opportunity_id"], name: "index_opportunity_times_on_opportunity_id", using: :btree
