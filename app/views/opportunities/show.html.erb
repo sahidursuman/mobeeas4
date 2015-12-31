@@ -67,7 +67,9 @@
         <h5><%= @opportunity.description %></h5>
         <br>
         <div class="col l1 offset-l11">
-          <%= link_to edit_opportunity_path(@opportunity.id, object: 'title') do %><i class="fa fa-pencil-square-o"></i><% end %>
+          <% if (current_user.has_role? :host) && (current_user.id == @opportunity.user_id) && !(@opportunity.opportunity_status == 'post_active') && !(@opportunity.archived) %>
+            <%= link_to edit_opportunity_path(@opportunity.id, object: 'title') do %><i class="fa fa-pencil-square-o"></i><% end %>
+          <% end %>
         </div>
       </div>
     </div>
@@ -123,50 +125,39 @@
         <% if @opportunity.opportunity_times.present? %>
           <p>Required activity dates, days and times:
             <ul class="list-style-disc">
-              <%# the whole block below is to be modified, remove the time and date_time columns %>
               <% @opportunity.opportunity_times.each do |opportunity_time|%>
-                <% if opportunity_time.date_time.present? %>
-                  <li class="list-style-disc"><%= opportunity_time.date_time.strftime("%d/%m/%y %A") %> <%= opportunity_time.time %><%#= opportunity_time.time.strftime("%l:%M %P") %>
-                    <% if (current_user.has_role? :host) && (current_user.id == @opportunity.user_id) && !(@opportunity.opportunity_status == 'post_active') && !(@opportunity.archived) %>
+                <li class="list-style-disc">
+                  <% if opportunity_time.frequency == "once" %>
+                    On <%= opportunity_time.start_date %>, <%= opportunity_time.day %> at <%= opportunity_time.start_time %> to <%= opportunity_time.end_time %>.
                     <br>
+                    <% if (current_user.has_role? :host) && (current_user.id == @opportunity.user_id) && !(@opportunity.opportunity_status == 'post_active') && !(@opportunity.archived) %>
                       <%= link_to 'Delete',opportunity_time , method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn' %></li>
                     <% end %>
-                <% else %>
-                  <% if opportunity_time.time.present? %>
-                    <%#<li class="list-style-disc">--- /--- /---  %><%#= opportunity_time.day %> <%#= opportunity_time.time.strftime("%l:%M %P") %> <%#= opportunity_time.frequency %>
-                    <li class="list-style-disc">--- /--- /---  <%= opportunity_time.day %> <%= opportunity_time.time %> <%= opportunity_time.frequency %>
-
-                    <% if (current_user.has_role? :host) && (current_user.id == @opportunity.user_id) && !(@opportunity.opportunity_status == 'post_active') && !(@opportunity.archived) %>
+                  <% else %>
+                    From <%= opportunity_time.start_date %> on <%= opportunity_time.day %> at <%= opportunity_time.start_time %> to <%= opportunity_time.end_time %> <%= opportunity_time.frequency %> until <%= opportunity_time.end_date %>.
                     <br>
+                    <% if (current_user.has_role? :host) && (current_user.id == @opportunity.user_id) && !(@opportunity.opportunity_status == 'post_active') && !(@opportunity.archived) %>
                       <%= link_to 'Delete',opportunity_time , method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn' %></li>
                     <% end %>
                   <% end %>
-                <% end %>
+                  <br>
+                </li>
                 <br>
-              <% end %>
+              <% end %><%# end of @opportunity.opportunity_times loop %>
             </ul>
             <br>
             <% if (current_user.has_role? :host) && (current_user.id == @opportunity.user_id) && !(@opportunity.opportunity_status == 'post_active') && !(@opportunity.archived) %>
-              <a class="modal-trigger btn" href="#opportunity_schedule">Add Opportunity Dates and Times</a>
+              <%= link_to 'Add Opportunity Schedule', new_opportunity_time_path(opportunity_id: @opportunity.id), class: 'btn' %>
+
+              <%# <a class="modal-trigger btn" href="#opportunity_schedule">Add Opportunity Dates and Times</a> %>
             <% end %>
           </p>
         <% else %><%# else if opportunity time is not present %>
           <p>No specific dates, days and time setup yet.</p>
           <% if (current_user.has_role? :host) && (current_user.id == @opportunity.user_id) && !(@opportunity.opportunity_status == 'post_active') && !(@opportunity.archived)%>
-            <%# Modal Trigger %>
-            <a class="modal-trigger btn" href="#opportunity_schedule">Add Opportunity Dates and Times</a>
+            <%= link_to 'Add Opportunity Schedule', new_opportunity_time_path(opportunity_id: @opportunity.id), class: 'btn' %>
           <% end %>
         <% end %>
-      </div>
-    </div>
-
-    <%# Modal Structure ===========================================%>
-    <div id="opportunity_schedule" class="modal">
-      <div class="modal-content">
-        <%= render 'time_form'%>
-      </div>
-      <div class="modal-footer">
-        <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Close Without Saving</a>
       </div>
     </div>
 
@@ -205,26 +196,29 @@
         <p>Is this a paid Engagement?
           <% if @opportunity.paid_engagement %>
             <p><strong>Yes, paid engagement.</strong></p>
-            Edit engagement here...
           <% else %>
             <p><strong>No, Not paid engagement.</strong></p>
-            Edit engagement here...
           <% end %>
         </p><br>
 
         <p>Hourly rate:
           <% if @opportunity.pay.present? %>
-            <strong><%= @opportunity.pay %></strong><br>
-            Edit 'Hourly rate'
+            <strong>$ <%= @opportunity.pay %></strong><br>
           <% else %>
             Hourly rate not present<br>
-            Edit 'Hourly rate'
           <% end %>
         </p><br>
 
         <p>Any specific terms or conditions of employment?
           <strong><%= @opportunity.employment_terms %></strong>
         </p><br>
+
+        <div class="col l1 offset-l11">
+          <% if (current_user.has_role? :host) && (current_user.id == @opportunity.user_id) && !(@opportunity.opportunity_status == 'post_active') && !(@opportunity.archived) %>
+            <%= link_to edit_opportunity_path(@opportunity.id, org_id: @opportunity.organisation_id, object: 'rate') do %><i class="fa fa-pencil-square-o"></i><% end %>
+          <% end %>
+        </div>
+
       </div>
     </div>
 
@@ -239,8 +233,14 @@
           <strong><%= @opportunity.experiences %></strong>
         <% else %>
           <p>Not present</p>
-          Edit 'advantageous experiences'
         <% end %>
+
+        <div class="col l1 offset-l11">
+          <% if (current_user.has_role? :host) && (current_user.id == @opportunity.user_id) && !(@opportunity.opportunity_status == 'post_active') && !(@opportunity.archived) %>
+            <%= link_to edit_opportunity_path(@opportunity.id, org_id: @opportunity.organisation_id, object: 'requirement') do %><i class="fa fa-pencil-square-o"></i><% end %>
+          <% end %>
+        </div>
+
       </div>
     </div>
 

@@ -79,6 +79,6 @@ class OpportunityTimesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def opportunity_time_params
-      params.require(:opportunity_time).permit(:day, :frequency, :opportunity_id)
+      params.require(:opportunity_time).permit(:day, :frequency, :opportunity_id, :start_date, :end_date, :start_time, :end_time)
     end
 end

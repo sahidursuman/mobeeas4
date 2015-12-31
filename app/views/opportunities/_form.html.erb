@@ -16,25 +16,34 @@
       <%= f.input :description, label: 'Description (max 1000 characters)', input_html: { maxlength: 1000} %>
     <% end %>
 
-    <%#= f.input :experiences, label: 'Other experience that would be advantageous (max 1000 characters)', input_html: { maxlength: 1000} %>
+    <% if params[:object] == 'rate' %>
+      <%# Keep this as the template for paid engagement. %>
+      <%#= f.input_field :paid_engagement, as: :radio_buttons %>
+      <div class="row">
+        <div class="col l6">
+          <p>Is this a paid engagement?</p>
+          <% if @opportunity.paid_engagement %><%# if true, YES is selected in the edit form %>
 
-    <%# Keep this as the template for paid engagement. %>
-    <%#= f.input_field :paid_engagement, as: :radio_buttons %>
-    <%#<p>Is this a paid engagement?</p> %>
-    <%# if @opportunity.paid_engagement %><%# if true, YES is selected in the edit form %>
-    <%#
-      <input class="with-gap" type="radio" value="true" checked="checked" name="opportunity[paid_engagement]" id="opportunity_paid_engagement_true" /><label for="opportunity_paid_engagement_true">Yes</label>
-      <input class="with-gap" type="radio" value="false" name="opportunity[paid_engagement]" id="opportunity_paid_engagement_false" /><label for="opportunity_paid_engagement_false">No</label>
-    %>
-    <%# else %><%# if true, NO is selected in the edit form%>
-    <%#
-      <input class="with-gap" type="radio" value="true" name="opportunity[paid_engagement]" id="opportunity_paid_engagement_true" /><label for="opportunity_paid_engagement_true">Yes</label>
-      <input class="with-gap" type="radio" value="false" checked="checked" name="opportunity[paid_engagement]" id="opportunity_paid_engagement_false" /><label for="opportunity_paid_engagement_false">No</label>
-    %>
-    <%# end %>
+            <input class="with-gap" type="radio" value="true" checked="checked" name="opportunity[paid_engagement]" id="opportunity_paid_engagement_true" /><label for="opportunity_paid_engagement_true">Yes</label>
+            <input class="with-gap" type="radio" value="false" name="opportunity[paid_engagement]" id="opportunity_paid_engagement_false" /><label for="opportunity_paid_engagement_false">No</label>
 
-    <%#= f.input :pay, label: 'Payment per hour (if applicable)' %>
-    <%#= f.input :employment_terms, label: 'Renumeration or terms of employment (max 1000 characters)', input_html: { maxlength: 1000 } %>
+          <% else %><%# if true, NO is selected in the edit form%>
+
+            <input class="with-gap" type="radio" value="true" name="opportunity[paid_engagement]" id="opportunity_paid_engagement_true" /><label for="opportunity_paid_engagement_true">Yes</label>
+            <input class="with-gap" type="radio" value="false" checked="checked" name="opportunity[paid_engagement]" id="opportunity_paid_engagement_false" /><label for="opportunity_paid_engagement_false">No</label>
+
+          <% end %>
+        </div>
+        <div class="col l6"><br>
+          <%= f.input :pay, label: 'Payment per hour (if applicable)' %>
+        </div>
+      </div>
+      <%= f.input :employment_terms, label: 'Specific terms of employment (max 1000 characters)', input_html: { maxlength: 1000 } %>
+    <% end %><%# end of if params[:object] == 'rate' %>
+
+    <% if params[:object] == 'requirement' %>
+      <%= f.input :experiences, label: 'Other experience that would be advantageous (max 1000 characters)', input_html: { maxlength: 1000} %>
+    <% end %>
   </div>
 
   <div class="form-actions">

@@ -1,60 +1,48 @@
-
 <%= simple_form_for(@opportunity_time) do |f| %>
   <%= f.error_notification %>
-
   <div class="form-inputs">
     <div class="row">
-      <div class="col s3 m3 l3">
-        <p>Start Time</p>
-        <div class="border-top">
-          <%# change the line below to refer to opportunity_times table %>
-          <%#= f.input :time, as: :string, label: 'Time', input_html: { class: 'datetimepicker2'}  %>
-        </div>
-      </div>
 
-      <div class="col s3 m3 l3">
-        <p>End Time</p>
-        <div class="border-top">
-          <%# change the line below to refer to opportunity_times table %>
-          <%#= f.input :time, as: :string, label: 'Time', input_html: { class: 'datetimepicker2'}  %>
+        <div class="col s6 m6 l6">
+          <%= f.input :start_date, as: :string, label: 'Start Date:', input_html: { class: 'datetimepicker1', :format => "%d/%m/%Y  %I:%m %p"} %>
         </div>
-      </div>
+        <div class="col s6 m6 offset-s6 l6 offset-l6">
 
-      <div class="col s6 m6 l6">
-        <p>Schedule</p>
-          <div class="border-top">
-          <div class="col s6 m6 l6">
-            <%= f.input :day, collection: [ "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday" ] %>
-          </div>
-          <div class="col s6 m6 l6">
-            <%= f.input :frequency, collection: [ "Daily", "Weekly", "Fortnightly", "Monthly"] %>
-          </div>
         </div>
-      </div>
 
-      <div class="col s3 m3 l3">
-        <p>Start Date</p>
-        <div class="border-top">
-          <%# change the line below to refer to opportunity_times table %>
-          <%#= f.input :date_time, as: :string, label: 'Date:', input_html: { class: 'datetimepicker1', :format => "%d/%m/%Y  %I:%m %p"} %>
+        <div class="col s6 m3 l3">
+          <%= f.input :start_time, as: :string, label: 'Start Time', input_html: { class: 'datetimepicker2'}  %>
         </div>
-      </div>
+        <div class="col s6 m3 l3">
+          <%= f.input :end_time, as: :string, label: 'End Time', input_html: { class: 'datetimepicker2'}  %>
+        </div>
 
-      <div class="col s3 m3 l3">
-        <p>End Date</p>
-        <div class="border-top">
-          <%# change the line below to refer to opportunity_times table %>
-          <%#= f.input :date_time, as: :string, label: 'Date:', input_html: { class: 'datetimepicker1', :format => "%d/%m/%Y  %I:%m %p"} %>
+        <div class="col s6 m3 l3">
+          <%= f.input :day, collection: [ "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday" ]  %>
         </div>
-      </div>
+        <div class="col s6 m3 l3">
+          <%= f.input :frequency, collection: [ "once", "daily", "weekly", "fortnightly", "monthly" ], value: [ "daily weekdays", "weekly", "fortnightly", "monthly" ] %>
+        </div>
+        <% if @opportunity_time.new_record? %>
+          <% if @opportunity_time.frequency == "once" %>
+            yes, once
+          <% end %>
+        <% end %>
+
+        <div class="col s6 m6 offset-s6 l6 offset-l6col s6 m6 l6">
+          <%= f.input :end_date, as: :string, label: 'End Date:', input_html: { class: 'datetimepicker1', :format => "%d/%m/%Y  %I:%m %p"} %>
+        </div>
+        <div class="col s6 m6 l6">
+
+        </div>
 
     </div><%# end of row %>
 
-    <%= hidden_field_tag(:opportunity_id, @opportunity.id)%>
-      <%= f.association :opportunity, :as => :hidden, input_html: { value: @opportunity.id }  %>
+      <%= hidden_field_tag(:opportunity_id, @opportunity.id)%>
+      <%= f.association :opportunity, :as => :hidden, input_html: { value: params[:opportunity_id] }, class: 'right'  %>
   </div>
-
+<%# The submit button below will appear in the modal button instead. %>
   <div class="form-actions">
-    <%= f.button :submit %>
+    <%= f.button :submit, "Save This Schedule" %>
   </div>
 <% end %>
