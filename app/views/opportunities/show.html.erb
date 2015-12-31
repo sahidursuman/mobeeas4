@@ -118,23 +118,7 @@
       <div class="card-content">
         <span class="card-title blue-text"><i class="fa fa-calendar"></i> Dates, Days and Times</span>
         <p>When would you like this collaborative learning experience to happen?</p>
-        <p>
-          <% if @opportunity.commencement_date.present? %>
-            Start date: <strong><%= @opportunity.commencement_date.strftime("%A, %e %b %Y") %></strong>
-          <% else %>
-            <p>Opportunity Start date is not setup yet.</p>
-            Edit here...
-          <% end %>
-        </p>
-        <br>
-        <p>
-          <% if @opportunity.completion_date.present? %>
-            End date: <strong><%= @opportunity.completion_date.strftime("%A, %e %b %Y") %></strong>
-          <% else %>
-            <p>Opportunity End date is not setup yet.</p>
-            Edit here...
-          <% end %>
-        </p>
+        <%# something to display the start time and end time here %>
         <br>
         <% if @opportunity.opportunity_times.present? %>
           <p>Required activity dates, days and times:

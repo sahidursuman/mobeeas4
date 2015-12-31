@@ -59,7 +59,8 @@
     Engagement Start Date:
   </div>
   <div class="col l6">
-    <%= @opportunity.commencement_date.strftime("%A, %d %b %Y") %>
+    <%#= @opportunity.commencement_date.strftime("%A, %d %b %Y") %>
+    <%# after the opportunity_times table has the start_time and end_time, change the line above to get the time from the data from the opportunity_times table %>
   </div>
 </div>
 
