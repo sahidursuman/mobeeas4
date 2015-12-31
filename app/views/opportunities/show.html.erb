@@ -123,6 +123,7 @@
         <% if @opportunity.opportunity_times.present? %>
           <p>Required activity dates, days and times:
             <ul class="list-style-disc">
+              <%# the whole block below is to be modified, remove the time and date_time columns %>
               <% @opportunity.opportunity_times.each do |opportunity_time|%>
                 <% if opportunity_time.date_time.present? %>
                   <li class="list-style-disc"><%= opportunity_time.date_time.strftime("%d/%m/%y %A") %> <%= opportunity_time.time %><%#= opportunity_time.time.strftime("%l:%M %P") %>

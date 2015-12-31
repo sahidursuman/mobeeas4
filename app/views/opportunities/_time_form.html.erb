@@ -8,9 +8,16 @@
   <div class="form-inputs">
     <div class="row">
       <div class="col s3 m3 l3">
-        <p>Time</p>
+        <p>Start Time</p>
+        <%# fix the start_time from the opportunity_times table %>
         <div class="border-top">
-          <%= f.input :time, as: :string, label: 'Time', input_html: { class: 'datetimepicker2'}  %>
+          <%#= f.input :time, as: :string, label: 'Time', input_html: { class: 'datetimepicker2'}  %>
+        </div>
+      </div>
+      <p>End Time</p>
+      <%# fix the end_time from the opportunity_times table %>
+        <div class="border-top">
+          <%#= f.input :time, as: :string, label: 'Time', input_html: { class: 'datetimepicker2'}  %>
         </div>
       </div>
 
@@ -27,9 +34,10 @@
         </div>
 
       <div class="col s3 m3 l3">
-          <p>or Date</p>
+          <p>Start Date (and end_date here too)</p>
+          <%# fix this to get the start_date AND end_date data from opportunity_times table %>
           <div class="border-top">
-            <%= f.input :date_time, as: :string, label: 'Date:', input_html: { class: 'datetimepicker1', :format => "%d/%m/%Y  %I:%m %p"} %>
+            <%#= f.input :date_time, as: :string, label: 'Date:', input_html: { class: 'datetimepicker1', :format => "%d/%m/%Y  %I:%m %p"} %>
           </div>
       </div>
 

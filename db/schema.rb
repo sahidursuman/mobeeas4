@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151231004227) do
+ActiveRecord::Schema.define(version: 20151231011828) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -206,8 +206,6 @@ ActiveRecord::Schema.define(version: 20151231004227) do
   add_index "opportunity_skills", ["skill_id"], name: "index_opportunity_skills_on_skill_id", using: :btree
 
   create_table "opportunity_times", force: :cascade do |t|
-    t.time     "time"
-    t.date     "date_time"
     t.string   "day"
     t.string   "frequency"
     t.integer  "opportunity_id"

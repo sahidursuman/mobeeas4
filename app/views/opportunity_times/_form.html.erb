@@ -5,29 +5,47 @@
   <div class="form-inputs">
     <div class="row">
       <div class="col s3 m3 l3">
-        <p>Time</p>
+        <p>Start Time</p>
         <div class="border-top">
-          <%= f.input :time, as: :string, label: 'Time', input_html: { class: 'datetimepicker2'}  %>
+          <%# change the line below to refer to opportunity_times table %>
+          <%#= f.input :time, as: :string, label: 'Time', input_html: { class: 'datetimepicker2'}  %>
         </div>
       </div>
 
-        <div class="col s6 m6 l6">
-          <p>Schedule</p>
-            <div class="border-top">
-            <div class="col s6 m6 l6">
-              <%= f.input :day, collection: [ "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday" ] %>
-            </div>
-            <div class="col s6 m6 l6">
-              <%= f.input :frequency, collection: [ "Daily", "Weekly", "Fortnightly", "Monthly"] %>
-            </div>
+      <div class="col s3 m3 l3">
+        <p>End Time</p>
+        <div class="border-top">
+          <%# change the line below to refer to opportunity_times table %>
+          <%#= f.input :time, as: :string, label: 'Time', input_html: { class: 'datetimepicker2'}  %>
+        </div>
+      </div>
+
+      <div class="col s6 m6 l6">
+        <p>Schedule</p>
+          <div class="border-top">
+          <div class="col s6 m6 l6">
+            <%= f.input :day, collection: [ "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday" ] %>
+          </div>
+          <div class="col s6 m6 l6">
+            <%= f.input :frequency, collection: [ "Daily", "Weekly", "Fortnightly", "Monthly"] %>
           </div>
         </div>
+      </div>
 
       <div class="col s3 m3 l3">
-          <p>or Date</p>
-          <div class="border-top">
-            <%= f.input :date_time, as: :string, label: 'Date:', input_html: { class: 'datetimepicker1', :format => "%d/%m/%Y  %I:%m %p"} %>
-          </div>
+        <p>Start Date</p>
+        <div class="border-top">
+          <%# change the line below to refer to opportunity_times table %>
+          <%#= f.input :date_time, as: :string, label: 'Date:', input_html: { class: 'datetimepicker1', :format => "%d/%m/%Y  %I:%m %p"} %>
+        </div>
+      </div>
+
+      <div class="col s3 m3 l3">
+        <p>End Date</p>
+        <div class="border-top">
+          <%# change the line below to refer to opportunity_times table %>
+          <%#= f.input :date_time, as: :string, label: 'Date:', input_html: { class: 'datetimepicker1', :format => "%d/%m/%Y  %I:%m %p"} %>
+        </div>
       </div>
 
     </div><%# end of row %>

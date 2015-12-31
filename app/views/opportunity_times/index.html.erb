@@ -5,8 +5,6 @@
 <table>
   <thead>
     <tr>
-      <th>Time</th>
-      <th>Date</th>
       <th>Day</th>
       <th>Frequency</th>
       <th>Opportunity</th>
@@ -17,8 +15,6 @@
   <tbody>
     <% @opportunity_times.each do |opportunity_time| %>
       <tr>
-        <td><%= opportunity_time.time %></td>
-        <td><%= opportunity_time.date_time %></td>
         <td><%= opportunity_time.day %></td>
         <td><%= opportunity_time.frequency %></td>
         <td><%= opportunity_time.opportunity %></td>
