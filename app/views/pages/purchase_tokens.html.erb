@@ -8,18 +8,26 @@
           <%# only admin host can see the purchase token button %>
         <ol>
           <% current_user.org_users.each do |org_user| %>
+            <%#= org_user.id %>
             <li>
               <p>
                 <strong><%= link_to org_user.organisation.name, organisation_path(org_user.organisation.id) %></strong>
-                  - has <%= pluralize(org_user.organisation.number_of_tokens, 'token') %>
+                  - has <%= org_user.organisation.number_of_tokens %> <%= (org_user.organisation.number_of_tokens > 1) ? 'tokens' : 'token' %>
               </p>
+              <%# if the host is an admin host and is verified, then he can see purchase buttons %>
               <% if (org_user.admin_status) && (org_user.verified_status) %>
                 <% @engagement_token_packs.each do |pack| %>
-                  <%= link_to new_token_purchase_path(org: org_user.organisation.id, token_pack: pack.id), class: 'btn btn-flat' do %>
+                  <%= link_to new_token_purchase_path(org: org_user.organisation.id, token_pack: pack.id), class: 'btn' do %>
                     <%= button_label(pack, org_user.organisation) %><br>
                   <% end %>
-                  <br>
+                  <br><br>
                 <% end %><%# end of loop @engagement_token_packs %>
+
+              <%# if the host is not an admin host and is verified, then he can see the list of admin host names for that organisation %>
+              <% elsif !(org_user.admin_status) && (org_user.verified_status) %>
+                <p>You can contact these Admin Host to purchase more tokens:</p>
+                <%#= org_user.users %>
+
               <% end %><%# end of if org_user.admin_status && org_user.verified_status %>
             </li>
           <% end %><%# end of loop current_user.org_users %>

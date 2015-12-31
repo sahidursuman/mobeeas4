@@ -173,13 +173,13 @@
               <% @opportunity.skills.each do |skill| %>
                 <li><%= skill.name %> (<%= skill.skill_category.name %>)</li>
               <% end %>
-            </ol>
+            </ol><br>
             <% if (current_user.has_role? :host) && (current_user.id == @opportunity.user_id) && !(@opportunity.opportunity_status == 'post_active') && !(@opportunity.archived) %>
               <%= link_to "Add/Remove Skills", required_skills_path(oppo_id: @opportunity.id), class: 'btn' %>
             <% end %>
           <% else %>
             No skills is currently listed
-            <br>
+            <br><br>
             <% if (current_user.has_role? :host) && (current_user.id == @opportunity.user_id) && !(@opportunity.opportunity_status == 'post_active') && !(@opportunity.archived) %>
               <%= link_to "Add/Remove Skills", required_skills_path(oppo_id: @opportunity.id), class: 'btn' %>
             <% end %>
@@ -260,7 +260,6 @@
             <p><%= link_to 'Transfer 1 Token into this Opportunity', increase_one_token_into_opportunity_path(org_id: @organisation.id), class: 'btn' %></p>
           <% else %>
             <p>Not enough token held by organisation.</p>
-            ======
           <% end %>
 
           <% if (@opportunity.number_of_tokens > 0) && !(@opportunity.opportunity_status == 'post_active') && !(@opportunity.archived) %>
@@ -288,13 +287,21 @@
           <% elsif @opportunity.opportunity_status == 'post_active' %>
             Current Opportunity Status: <strong>completed</strong>
             <%# Note: when the opportunity status is post_active, the word to display is 'completed' %>
-          <% else %>
-            Current Opportunity Status: <strong><%= @opportunity.opportunity_status %></strong>
+          <% elsif @opportunity.opportunity_status == 'listed' %>
+            <p>
+              Current Opportunity Status: <strong><%= @opportunity.opportunity_status %></strong>
+              <br>
+              The status will change to <strong>active</strong> once you allocate a token to a suitable candidate.
+            </p>
+          <% elsif @opportunity.opportunity_status == 'draft' %>
+            <p>
+              Current Opportunity Status: <strong><%= @opportunity.opportunity_status %></strong>
+              Please LIST this opportunity once tokens have been allocated and you are ready to proceed.
+            </p>
           <% end %>
         <% end %>
         <br>
-        <p>Please LIST this opportunity once tokens have been allocated and you are ready to proceed.</p>
-
+        <br>
       <%# The listing status can be edited if :
           1. viewed by opportunity owner
           2. if the opportunity is not archived.
