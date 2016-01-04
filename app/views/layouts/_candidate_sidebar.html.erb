@@ -1,5 +1,4 @@
 <li class="bold active"><%= link_to 'Candidate Profile', candidate_profile_path(profile_id: current_user.profile.id) %></li>
-<li class="bold"><%= link_to 'Mailbox', messages_path(my_id: current_user.id) %></li>
 <li class="bold"><%= link_to 'Organisations Index', organisations_candidate_path %></li>
 <li class="bold"><%= link_to 'Listed Opportunity', opportunities_path(status: 'listed') %></li>
 <li class="bold"><%= link_to 'Active Opportunity', opportunities_path(status: 'active') %></li>

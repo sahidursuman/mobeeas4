@@ -37,8 +37,8 @@ class OpportunityMailer < ApplicationMailer
   def purchase_more_tokens(opportunity_id, user_id)
     @opportunity = Opportunity.find(opportunity_id)
     @user = User.find(user_id)
-    mail(to: "kfatiguso@gmail.com", subject: 'Request to purchase MOBEEAS Tokens')
-    # mail(to: @user.email, subject: 'Request to purchase MOBEEAS Tokens')
+    @requester = User.find(@opportunity.user_id)
+    mail(to: [@user.email, @requester.email] , subject: 'Request to purchase MOBEEAS Tokens')
 
   end
 
