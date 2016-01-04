@@ -1,0 +1,11 @@
+<p>
+  Dear <%= @user.org_user_profile.first_name %>,
+  <br>
+  <%= @opportunity.user.org_user_profile.name %> would like to purchase more tokens for this MOBEEAS Opportunity: <strong><%= @opportunity.title %></strong>.
+  <br>
+  Click on this <%= link_to "Purchase Tokens Link", purchase_tokens_url %> to purchase more tokens.
+  <br><br>
+  Click on this <%= link_to "Opportunity Link", opportunity_url(@opportunity) %> to view this the opportunity details.
+  <br>
+</p>
+<p>Thank you from the MOBEEAS Team</p>

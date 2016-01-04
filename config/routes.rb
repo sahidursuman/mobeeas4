@@ -38,7 +38,7 @@ Rails.application.routes.draw do
   resources :opportunity_applications
   resources :opportunities do
     member do
-      get :increase_one_token_into, :decrease_one_token_from, :status_draft, :status_listed, :post_active, :status_archived
+      get :increase_one_token_into, :decrease_one_token_from, :status_draft, :status_listed, :post_active, :status_archived, :purchase_more_tokens_for
     end
   end
   resources :organisations do

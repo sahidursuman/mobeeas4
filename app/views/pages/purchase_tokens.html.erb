@@ -26,8 +26,24 @@
               <%# if the host is not an admin host and is verified, then he can see the list of admin host names for that organisation %>
               <% elsif !(org_user.admin_status) && (org_user.verified_status) %>
                 <p>You can contact these Admin Host to purchase more tokens:</p>
-                <%#= org_user.users %>
-
+                <% @organisation = Organisation.find(org_user.organisation.id) %>
+                <ul>
+                <% @organisation.users.each do |user| %>
+                  <% if user.org_users.present? %>
+                    <% user.org_users.each do |org_user| %>
+                    <%# just show the profile that is linked to this organisation %>
+                      <% if org_user.organisation_id == @organisation.id %>
+                        <% if (org_user.admin_status) && (org_user.verified_status) %>
+                          <li class="list-style-disc"><p>
+                          <strong><%= user.org_user_profile.name %> not ready...<%#= link_to "Send message to" + user.org_user_profile.name, purchase_more_tokens_url(opportunity_id, profile_id) %></strong>
+                          (Verified)
+                          </li>
+                        <% end %><%# end of if (org_user.admin_status) %>
+                      <% end %><%# end of org_user.organisation_id == %>
+                    <% end %><%# end of user.org_users loop %>
+                  <% end %><%# end of if user.org_users %>
+                <% end %><%#  end of loop @organisation.users %>
+                </ul>
               <% end %><%# end of if org_user.admin_status && org_user.verified_status %>
             </li>
           <% end %><%# end of loop current_user.org_users %>

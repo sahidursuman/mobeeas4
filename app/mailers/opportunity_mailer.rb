@@ -32,4 +32,14 @@ class OpportunityMailer < ApplicationMailer
     @profile = Profile.find(profile_id)
     mail(to: "info@mobeeas.com", subject: 'Your engagement in MOBEEAS Opportunity has been confirmed')
   end
+
+  # This mailer is sent from opportunity by the opp. owner to request purchasing more tokens to the admin host email.
+  def purchase_more_tokens(opportunity_id, user_id)
+    @opportunity = Opportunity.find(opportunity_id)
+    @user = User.find(user_id)
+    mail(to: "kfatiguso@gmail.com", subject: 'Request to purchase MOBEEAS Tokens')
+    # mail(to: @user.email, subject: 'Request to purchase MOBEEAS Tokens')
+
+  end
+
 end

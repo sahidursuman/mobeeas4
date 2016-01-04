@@ -17,7 +17,10 @@
                 <% if @org_user_profile.user.agreement.ethics %>
                   <span class="green-text"><i class="fa fa-check-circle"></i></span>
                 <% else %>
-                  <a href="#modal-ethics" class="modal-trigger">Read and agree</a>
+                  <%# link is available if the current user is the actual host %>
+                  <% if current_user.id == @org_user_profile.user_id %>
+                    <a href="#modal-ethics" class="modal-trigger">Read and agree</a>
+                  <% end %>
                 <% end %>
               </td>
             </tr>
@@ -27,7 +30,10 @@
                 <% if @org_user_profile.user.agreement.code_of_conduct %>
                   <span class="green-text"><i class="fa fa-check-circle"></i></span>
                 <% else %>
-                  <a href="#modal-conduct" class="modal-trigger">Read and agree</a>
+                  <%# link is available if the current user is the actual host %>
+                  <% if current_user.id == @org_user_profile.user_id %>
+                    <a href="#modal-conduct" class="modal-trigger">Read and agree</a>
+                  <% end %>
                 <% end %>
               </td>
             </tr>
@@ -38,7 +44,10 @@
                 <% if @org_user_profile.user.agreement.host_terms %>
                   <span class="green-text"><i class="fa fa-check-circle"></i></span>
                 <% else %>
-                  <a href="#modal-terms-cond" class="modal-trigger">Read and agree</a>
+                  <%# link is available if the current user is the actual host %>
+                  <% if current_user.id == @org_user_profile.user_id %>
+                    <a href="#modal-terms-cond" class="modal-trigger">Read and agree</a>
+                  <% end %>
                 <% end %>
               </td>
             </tr>

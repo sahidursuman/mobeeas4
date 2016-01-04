@@ -258,8 +258,49 @@
           <p>This opportunity currently holds: <strong><%= @opportunity.number_of_tokens %> <%= (@opportunity.number_of_tokens > 1) ? 'tokens' : 'token' %></strong></p>
           <% if (@organisation.number_of_tokens > 0) && !(@opportunity.opportunity_status == 'post_active') && !(@opportunity.archived) %>
             <p><%= link_to 'Transfer 1 Token into this Opportunity', increase_one_token_into_opportunity_path(org_id: @organisation.id), class: 'btn' %></p>
-          <% else %>
+          <% elsif (@organisation.number_of_tokens == 0) && !(@opportunity.opportunity_status == 'post_active') && !(@opportunity.archived) %>
             <p>Not enough token held by organisation.</p>
+
+            <%# =========== %>
+            <% current_user.org_users.each do |org_user| %>
+              <%# search for the organisations linked to this user and find the one that is matching to this opportunity %>
+              <% if  org_user.organisation_id == @organisation.id %>
+                <%# if the host is an admin host and is verified, then he can see purchase buttons %>
+                <% if (org_user.admin_status) && (org_user.verified_status) %>
+                  <% @engagement_token_packs.each do |pack| %>
+                    <%= link_to new_token_purchase_path(org: org_user.organisation.id, token_pack: pack.id), class: 'btn' do %>
+                      <%= button_label(pack, org_user.organisation) %><br>
+                    <% end %>
+                    <br><br>
+                  <% end %><%# end of loop @engagement_token_packs %>
+
+                <%# elsif the host is not an admin host and is verified, then he can see the list of admin host names for that organisation %>
+                <% elsif !(org_user.admin_status) && (org_user.verified_status) %>
+                  <p>You can contact these Admin Host to purchase more tokens:</p>
+                  <% @organisation = Organisation.find(org_user.organisation.id) %>
+                  <ul>
+                  <% @organisation.users.each do |user| %>
+                    <% if user.org_users.present? %>
+                      <% user.org_users.each do |org_user| %>
+                      <%# just show the profile that is linked to this organisation %>
+                        <% if org_user.organisation_id == @organisation.id %>
+                          <% if (org_user.admin_status) && (org_user.verified_status) %>
+                            <li class="list-style-disc"><p>
+                            <strong><%#= user.org_user_profile.id %><%= link_to "Send message to " + user.org_user_profile.name, purchase_more_tokens_for_opportunity_path(@opportunity.id, user_id: user.id) %></strong>
+                            (Verified)
+                            </li>
+                          <% end %><%# end of if (org_user.admin_status) %>
+                        <% end %><%# end of org_user.organisation_id == %>
+                      <% end %><%# end of user.org_users loop %>
+                    <% end %><%# end of if user.org_users %>
+                  <% end %><%#  end of loop @organisation.users %>
+                  </ul>
+                <% end %><%# end of if org_user.admin_status && org_user.verified_status %>
+              <% end %><%# end of if  org_user.organisation_id == @organisation.id%>
+            <% end %><%# end of loop current_user.org_users %>
+      <%# =========== %>
+
+
           <% end %>
 
           <% if (@opportunity.number_of_tokens > 0) && !(@opportunity.opportunity_status == 'post_active') && !(@opportunity.archived) %>

@@ -1,5 +1,5 @@
 class OpportunitiesController < ApplicationController
-  before_action :set_opportunity, only: [:increase_one_token_into, :decrease_one_token_from, :status_draft, :status_listed, :post_active, :status_archived, :show, :edit, :update, :destroy]
+  before_action :set_opportunity, only: [:increase_one_token_into, :decrease_one_token_from, :status_draft, :status_listed, :post_active, :status_archived, :purchase_more_tokens_for, :show, :edit, :update, :destroy]
 
 
   def increase_one_token_into
@@ -44,6 +44,12 @@ class OpportunitiesController < ApplicationController
     redirect_to @opportunity
   end
 
+  def purchase_more_tokens_for
+    @user = User.find(params[:user_id])
+    OpportunityMailer.purchase_more_tokens(@opportunity.id, @user.id).deliver_now
+    redirect_to @opportunity
+  end
+
 
   # GET /opportunities
   # GET /opportunities.json
@@ -75,6 +81,7 @@ class OpportunitiesController < ApplicationController
   # GET /opportunities/1.json
   def show
     @candidate_skills = CandidateSkill.all
+		@engagement_token_packs = EngagementTokenPack.order(member_price: :asc)
   end
 
   # GET /opportunities/new
