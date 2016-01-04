@@ -102,8 +102,8 @@
           <%= f.input :contact_phone %>
           <%= f.input :logo %>
           <%= f.input :website %>
-          <%= f.input :acara_school_id %>
-          <%= f.input :school_type %>
+          <%#= f.input :acara_school_id %>
+          <%= f.input :school_type, collection: [ "Pre-School", "K-12", "Primary", "Secondary", "Tertiary", "Other"] %>
         </div>
 
         <div class="form-actions">

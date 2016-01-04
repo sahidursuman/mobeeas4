@@ -1,8 +1,13 @@
 <div class="card ">
   <div class="card-content black-text">
-
-    <h5>Thank you for taking the time to provide a reference for this MOBEEAS candidate.</h5>
-    <br>
-    <p><a href="/">Home</a></p>
+    <% if params[:type] == 'enquiry' %>
+      <h5>Thank you for your enquiry. We will be in touch shortly.</h5>
+      <br>
+      <p><a href="/">Home</a></p>
+    <% elsif params[:type] == 'skill-verification' %>
+      <h5>Thank you for taking the time to provide a reference for this MOBEEAS candidate.</h5>
+      <br>
+      <p><a href="/">Home</a></p>
+    <% end %>
   </div>
 </div>

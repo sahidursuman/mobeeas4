@@ -61,10 +61,10 @@
     <div class="card" style="margin-left: none;">
       <div class="card-content">
         <span class="card-title blue-text"><i class="fa fa-list"></i> Title:</span>
-        <h5><%= @opportunity.title %></h5>
+        <p><%= @opportunity.title %></p>
         <br>
         <span class="card-title blue-text"><i class="fa fa-list"></i> Description:</span>
-        <h5><%= @opportunity.description %></h5>
+        <p><%= @opportunity.description %></p>
         <br>
         <div class="col l1 offset-l11">
           <% if (current_user.has_role? :host) && (current_user.id == @opportunity.user_id) && !(@opportunity.opportunity_status == 'post_active') && !(@opportunity.archived) %>
@@ -102,14 +102,14 @@
             </ol>
             <br>
             <% if (current_user.has_role? :host) && (current_user.id == @opportunity.user_id) && !(@opportunity.archived) && !(@opportunity.opportunity_status == 'closed') %>
-              <%= link_to 'Add School Level', new_opportunity_school_year_path(opportunity_id: @opportunity.id), class: 'btn' %>
+              <%= link_to 'Add Participant Details', new_opportunity_school_year_path(opportunity_id: @opportunity.id), class: 'btn' %>
             <% end %>
           </p>
         <% else %>
-          <p>The school year level is not listed.
+          <p>No participant details entered yet.</p>
           <% if (current_user.has_role? :host) && (current_user.id == @opportunity.user_id) && !(@opportunity.archived) && !(@opportunity.opportunity_status == 'closed') %>
-            Please click the Add button below to list them.</p>
-            <%= link_to 'Add', new_opportunity_school_year_path(opportunity_id: @opportunity.id), class: 'btn'%>
+            <p>Please click the Add button below to list them.</p>
+            <%= link_to 'Add Participant Details', new_opportunity_school_year_path(opportunity_id: @opportunity.id), class: 'btn'%>
           <% end %>
         <% end %>
       </div>
@@ -178,7 +178,7 @@
               <%= link_to "Add/Remove Skills", required_skills_path(oppo_id: @opportunity.id), class: 'btn' %>
             <% end %>
           <% else %>
-            No skills is currently listed
+            No skills are currently listed
             <br><br>
             <% if (current_user.has_role? :host) && (current_user.id == @opportunity.user_id) && !(@opportunity.opportunity_status == 'post_active') && !(@opportunity.archived) %>
               <%= link_to "Add/Remove Skills", required_skills_path(oppo_id: @opportunity.id), class: 'btn' %>
@@ -227,7 +227,6 @@
     <div class="card" style="margin-left: none;">
       <div class="card-content">
         <span class="card-title blue-text"><i class="fa fa-puzzle-piece"></i> Other Requirements</span>
-      ￼￼  <h5>Anything else candidate might like to know about this Opportunity?</h5>
         <p>Please describe any other requirements you have of potential candidates here:</p>
         <% if  @opportunity.experiences %>
           <strong><%= @opportunity.experiences %></strong>
@@ -249,18 +248,17 @@
     <div class="card" style="margin-left: none;">
       <div class="card-content">
         <span class="card-title blue-text"><i class="fa fa-certificate"></i> Tokens</span>
-        <h5>Allocate Tokens so that Candidates can be engaged</h5>
         <p>You will need to allocate one token for each candidate you would like to engage in this collaborative learning experience.</p>
 
         <%# only opportunity owner can add/remove candidates and tokens %>
         <% if (current_user.has_role? :host) && (current_user.id == @opportunity.user_id) %>
-          <p><br><%= @organisation.name%> currently holds: <strong><%= @organisation.number_of_tokens %> <%= (@organisation.number_of_tokens > 1) ? 'tokens' : 'token' %></strong></p>
+          <p><br><%= @organisation.name %> currently holds: <strong><%= @organisation.number_of_tokens %> <%= (@organisation.number_of_tokens > 1) ? 'tokens' : 'token' %></strong></p>
           <p>This opportunity currently holds: <strong><%= @opportunity.number_of_tokens %> <%= (@opportunity.number_of_tokens > 1) ? 'tokens' : 'token' %></strong></p>
           <% if (@organisation.number_of_tokens > 0) && !(@opportunity.opportunity_status == 'post_active') && !(@opportunity.archived) %>
             <p><%= link_to 'Transfer 1 Token into this Opportunity', increase_one_token_into_opportunity_path(org_id: @organisation.id), class: 'btn' %></p>
           <% elsif (@organisation.number_of_tokens == 0) && !(@opportunity.opportunity_status == 'post_active') && !(@opportunity.archived) %>
-            <p>Not enough token held by organisation.</p>
-
+            <p>There are not enough tokens held by your organisation.</p>
+            <br>
             <%# =========== %>
             <% current_user.org_users.each do |org_user| %>
               <%# search for the organisations linked to this user and find the one that is matching to this opportunity %>
@@ -276,7 +274,7 @@
 
                 <%# elsif the host is not an admin host and is verified, then he can see the list of admin host names for that organisation %>
                 <% elsif !(org_user.admin_status) && (org_user.verified_status) %>
-                  <p>You can contact these Admin Host to purchase more tokens:</p>
+                  <p>Please contact your Administrator(s) to purchase more tokens:</p>
                   <% @organisation = Organisation.find(org_user.organisation.id) %>
                   <ul>
                   <% @organisation.users.each do |user| %>
@@ -337,6 +335,7 @@
           <% elsif @opportunity.opportunity_status == 'draft' %>
             <p>
               Current Opportunity Status: <strong><%= @opportunity.opportunity_status %></strong>
+              <br>
               Please LIST this opportunity once tokens have been allocated and you are ready to proceed.
             </p>
           <% end %>

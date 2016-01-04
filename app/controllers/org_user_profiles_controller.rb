@@ -67,7 +67,7 @@ class OrgUserProfilesController < ApplicationController
   def update
     respond_to do |format|
       if @org_user_profile.update(org_user_profile_params)
-        format.html { redirect_to @org_user_profile, notice: 'Org user profile was successfully updated.' }
+        format.html { redirect_to @org_user_profile }
         format.json { render :show, status: :ok, location: @org_user_profile }
       else
         format.html { render :edit }
@@ -94,6 +94,6 @@ class OrgUserProfilesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def org_user_profile_params
-      params.require(:org_user_profile).permit(:first_name, :last_name, :phone, :position, :guid, :user_id, :org_creator, :connections)
+      params.require(:org_user_profile).permit(:first_name, :last_name, :phone, :position, :guid, :user_id, :org_creator, :connections, :agency)
     end
 end

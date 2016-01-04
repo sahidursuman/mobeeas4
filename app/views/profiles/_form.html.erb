@@ -4,15 +4,19 @@
 
     <div class="input-field">
       <select class="select optional browser-default" name="profile[candidate_type_id]" id="profile_candidate_type_id">
-      <% if @profile.new_record? %>
-          <option value="" disabled selected>Which best describes you?</option>
-        <% else %>
-          <option value="<%= @profile.candidate_type_id %>" disabled selected><%= @profile.candidate_type.name if @profile.candidate_type %></option>
-        <% end %>
+        <% if @profile.new_record? %>
+            <option value="" disabled selected>Which best describes you?</option>
+          <% else %>
+            <option value="<%= @profile.candidate_type_id %>" disabled selected><%= @profile.candidate_type.name if @profile.candidate_type %></option>
+          <% end %>
 
-      <option value="1">University Student</option>
-      <option value="2">Industry Expert</option>
-      <option value="3">Academic</option></select>
+        <option value="1">University Student</option>
+        <option value="2">Industry Expert</option>
+        <option value="3">Academic</option>
+        <option value="4">Professional</option>
+        <option value="5">Teacher</option>
+        <option value="6">Enthusiast</option>
+      </select>
     </div>
     <div class="row">
       <div class="col s6">

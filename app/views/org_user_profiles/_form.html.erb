@@ -2,17 +2,31 @@
   <%= f.error_notification %>
 
   <div class="form-inputs">
-    <%= f.input :first_name %>
-    <%= f.input :last_name %>
-    <%= f.input :phone %>
-    <%= f.input :position %>
+    <div class="row">
+      <div class="col l6">
+        <%= f.input :first_name %>
+      </div>
+      <div class="col l6">
+        <%= f.input :last_name %>
+      </div>
 
-    <%= hidden_field_tag(:org_id, params[:org_id]) %>
-    <% if params[:is_admin].present? %>
-      <%= hidden_field_tag(:is_admin, params[:is_admin]) %>
-    <% end %>
-    <%#= f.input :guid %>
-    <%= f.association :user, :as => :hidden %>
+      <div class="col l6">
+        <%= f.input :phone %>
+      </div>
+      <div class="col l6">
+        <%= f.input :position %>
+      </div>
+
+      <div class="col l6">
+        <%= f.input :agency, collection: [ "I am an Independent", "I represent an Organisation" ] %>
+      </div>
+      <%= hidden_field_tag(:org_id, params[:org_id]) %>
+      <% if params[:is_admin].present? %>
+        <%= hidden_field_tag(:is_admin, params[:is_admin]) %>
+      <% end %>
+      <%#= f.input :guid %>
+      <%= f.association :user, :as => :hidden %>
+    </div>
   </div>
   <br>
   <div class="form-actions">
