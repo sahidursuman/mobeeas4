@@ -1,0 +1,43 @@
+<h5>MOBEEAS Email</h1>
+
+<% if @user_to.has_role? :host %>
+  <% @host_to = @user_to.org_user_profile %>
+  <p>
+    Hi <%= @host_to.first_name %>,
+  </p>
+<% elsif @user_to.has_role? :candidate %>
+  <% @candidate_to = @user_to.profile %>
+  <p>
+    Hi <%= @candidate_to.first_name %>,
+  </p>
+<% elsif @user_to.has_role? :sponsor %>
+  <% @sponsor_to = @user_to.sponsor %>
+  <p>
+    Hi <%= @sponsor_to.first_name %>,
+  </p>
+<% end %>
+
+<br>
+
+<% if @user_from.has_role? :host %>
+  <% @host_from = @user_from.org_user_profile %>
+  <p>
+    You have received a new MOBEEAS email from <%= @host_from.first_name %>, please see the message below:
+  </p>
+<% elsif @user_from.has_role? :candidate %>
+  <% @candidate_from = @user_from.profile %>
+  <p>
+    You have received a new MOBEEAS email from <%= @candidate_from.first_name %>, please see the message below:
+  </p>
+<% elsif @user_from.has_role? :sponsor %>
+  <% @sponsor_from = @user_from.sponsor %>
+  <p>
+    You have received a new MOBEEAS email from <%= @sponsor_from.first_name %>, please see the message below:
+  </p>
+<% end %>
+
+<p>
+  <%= @message.message_text %>
+</p>
+
+<p><%= link_to 'Reply' , new_message_url(from: @user_to.id, to: @user_from.id) %></p>

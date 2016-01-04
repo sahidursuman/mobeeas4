@@ -4,5 +4,3 @@
   <h4>Send message to <%= @receiver.org_user_profile.name %></h4>
 <% end %>
 <%= render 'form' %>
-
-<%= link_to 'Back', messages_path(my_id: current_user.id) %>
