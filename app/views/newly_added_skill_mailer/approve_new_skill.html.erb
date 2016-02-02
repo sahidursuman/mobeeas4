@@ -1,0 +1,17 @@
+<h1>New Skill Has Been Created.</h1>
+
+<p>
+  Hello Admin,<br><br>
+  A new skill has been created.<br>
+  Please click the link below to approve it.<br>
+  Skill Name: <%= @skill.name %><br>
+  Skill Category: <%= @skill.skill_category.name %><br>
+  Created by User ID: <%= @user.id %><br>
+  <% if @user.has_role? :host %>
+    Name: <%= @user.org_user_profile.name %>
+  <% elsif @user.has_role? :candidate %>
+    Name: <%=  @user.profile.name %>
+  <% end %>
+</p>
+
+<p><%= link_to "Approve this new skill", admin_approves_new_skill_url(@skill.id, user_id: @user.id) %></p>

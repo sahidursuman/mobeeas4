@@ -17,9 +17,9 @@
         <%= f.input :position %>
       </div>
 
-      <div class="col l6">
-        <%= f.input :agency, collection: [ "I am an Independent", "I represent an Organisation" ] %>
-      </div>
+      <%#<div class="col l6">%>
+        <%#= f.input :agency, collection: [ "I am an Independent", "I represent an Organisation" ] %>
+      <%#</div>%>
       <%= hidden_field_tag(:org_id, params[:org_id]) %>
       <% if params[:is_admin].present? %>
         <%= hidden_field_tag(:is_admin, params[:is_admin]) %>

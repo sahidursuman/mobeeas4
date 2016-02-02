@@ -1,5 +1,5 @@
 class OpportunitiesController < ApplicationController
-  before_action :set_opportunity, only: [:increase_one_token_into, :decrease_one_token_from, :status_draft, :status_listed, :post_active, :status_archived, :purchase_more_tokens_for, :show, :edit, :update, :destroy]
+  before_action :set_opportunity, only: [:increase_one_token_into, :decrease_one_token_from, :increase_one_token_into_independent, :decrease_one_token_from_independent, :status_draft, :status_listed, :post_active, :status_archived, :purchase_more_tokens_for, :show, :edit, :update, :destroy]
 
 
   def increase_one_token_into
@@ -17,6 +17,26 @@ class OpportunitiesController < ApplicationController
     @organisation = Organisation.find(params[:org_id])
     @organisation.number_of_tokens += 1
     @organisation.save!
+    redirect_to @opportunity
+  end
+
+  def increase_one_token_into_independent
+    @opportunity.number_of_tokens += 1
+    @opportunity.save!
+    @user = User.find(@opportunity.user_id)
+    @oup = @user.org_user_profile
+    @oup.number_of_tokens_for_independent -= 1
+    @oup.save!
+    redirect_to @opportunity
+  end
+
+  def decrease_one_token_from_independent
+    @opportunity.number_of_tokens -= 1
+    @opportunity.save!
+    @user = User.find(@opportunity.user_id)
+    @oup = @user.org_user_profile
+    @oup.number_of_tokens_for_independent += 1
+    @oup.save!
     redirect_to @opportunity
   end
 

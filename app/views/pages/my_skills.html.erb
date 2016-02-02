@@ -1,4 +1,10 @@
-<h2>Add/Edit your skills</h2>
+<%#
+  There is another similar file just like below but it is for the Required Skill
+  in the Opportunity and it is available to view from the Host Dashboard.
+  It is located in: app/views/pages/required_skills.html.erb
+  If you edit the code below, please also edit the other similar file.
+%>
+<h2>Add/Edit Your Skills</h2>
 
 <div class="row">
   <div class="col m8">
@@ -12,16 +18,20 @@
           <div class="collapsible-body">
           	<% skill_category.skills.each do |skill| %>
     				<% unless skill.users.include?(current_user) %>
-    					<%= link_to skill.name, add_user_skill_path(skill), class: 'waves-effect waves-teal btn-flat' %>
-    				<% end %>
+              <% if skill.approved %><%# appears only if admin approved the skill %>
+			          <%= link_to skill.name, add_user_skill_path(skill), class: 'waves-effect waves-teal btn-flat' %>
+              <% end %>
+            <% end %>
     			<% end %>
           <%# Add a new other skill: %>
           <div class="row">
             <div class="col s6 m6 l6">
-              <p>Other Skill (subject to MOBEEAS approval): </p>
+              <p>
+                Other Skill: <br>
+                (subject to MOBEEAS approval, you will receive an email when the new skill has been approved.)
+              </p>
             </div>
             <div class="col s6 m6 l6">
-              <%# I have just added new skill 'singing' %>
               <% @other_skill = Skill.new %>
               <%= simple_form_for(@other_skill) do |f| %>
                 <%= f.error_notification %>
@@ -39,9 +49,7 @@
             </div>
           </div>  <%# end of row %>
 
-
-
-          </div>
+        </div><%# end of collapsible-body %>
         </li>
       <% end %>
     </ul>
@@ -52,7 +60,9 @@
       <div class="card-content" id="my-skills">
         <% if @my_skills.present? %>
           <% @my_skills.each do |my_skill| %>
-            <p><%= my_skill.name %> <%= link_to 'remove', remove_user_skill_path(my_skill) %></p>
+            <% if my_skill.approved %><%# only skills approved by admin can appear in the list %>
+              <p><%= my_skill.name %> (<%= my_skill.skill_category.name %>) <%= link_to 'remove', remove_user_skill_path(my_skill) %></p>
+            <% end %>
           <% end %>
         <% end %>
       </div>

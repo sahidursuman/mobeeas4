@@ -122,4 +122,7 @@ class PagesController < ApplicationController
 		@security_checks = SecurityCheck.unverified
 	end
 
+	def independent_host
+	end
+
 end

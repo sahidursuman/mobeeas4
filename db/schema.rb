@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160104063233) do
+ActiveRecord::Schema.define(version: 20160129015628) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -226,11 +226,12 @@ ActiveRecord::Schema.define(version: 20160104063233) do
     t.string   "position"
     t.string   "guid"
     t.integer  "user_id"
-    t.datetime "created_at",                  null: false
-    t.datetime "updated_at",                  null: false
-    t.boolean  "org_creator", default: false
-    t.integer  "connections", default: [],                 array: true
+    t.datetime "created_at",                                       null: false
+    t.datetime "updated_at",                                       null: false
+    t.boolean  "org_creator",                      default: false
+    t.integer  "connections",                      default: [],                 array: true
     t.string   "agency"
+    t.integer  "number_of_tokens_for_independent", default: 0
   end
 
   add_index "org_user_profiles", ["guid"], name: "index_org_user_profiles_on_guid", using: :btree

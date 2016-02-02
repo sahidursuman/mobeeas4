@@ -6,6 +6,12 @@ class Skill < ActiveRecord::Base
   has_many :candidate_skills, dependent: :destroy
   has_many :users, through: :candidate_skills
 
+  # after_create :send_new_skill_mailer
+  #
+  # def send_new_skill_mailer
+  #   NewlyAddedSkillMailer.approve_new_skill(self.id).deliver_now
+  # end
+
   def self.alphabetical
   	order(name: :asc)
   end

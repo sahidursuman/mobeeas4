@@ -18,7 +18,8 @@
               <% if (org_user.admin_status) && (org_user.verified_status) %>
                 <% @engagement_token_packs.each do |pack| %>
                   <%= link_to new_token_purchase_path(org: org_user.organisation.id, token_pack: pack.id), class: 'btn' do %>
-                    <%= button_label(pack, org_user.organisation) %><br>
+                    <%= button_label(pack) %><br>
+
                   <% end %>
                   <br><br>
                 <% end %><%# end of loop @engagement_token_packs %>
@@ -48,8 +49,24 @@
             </li>
           <% end %><%# end of loop current_user.org_users %>
         </ol>
-      <% else %>
-        <p>You are currently not linked to any organisations. Please select one of the organisations below to join as the host.</p>
+      <% else %> <%# else if NOT current_user.organisations.present? %>
+        <% if current_user.org_user_profile.agency == "I represent an Organisation" %>
+          <p>You are currently not linked to any organisations. Please select one of the organisations below to join as the host.</p>
+          <%= link_to 'Organisations Index', organisations_host_path(state: 'show_organisations'), class: 'btn' %>
+        <% elsif current_user.org_user_profile.agency == "I am an Independent" %>
+          <p>
+            Number of tokens you have: <%= current_user.org_user_profile.number_of_tokens_for_independent %>
+            <br><br>
+            Puchase more tokens:
+            <br>
+            <% @engagement_token_packs.each do |pack| %>
+              <%= link_to new_token_purchase_path(token_pack: pack.id), class: 'btn' do %>
+                <%= button_label(pack) %><br>
+              <% end %>
+              <br><br>
+            <% end %><%# end of loop @engagement_token_packs %>
+          </p>
+        <% end %>
       <% end %>
 
   </div>

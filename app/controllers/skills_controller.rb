@@ -1,6 +1,6 @@
 class SkillsController < ApplicationController
-  before_action :set_skill, only: [:add_user, :remove_user, :add_required, :remove_required, :show, :edit, :update, :destroy]
-  skip_before_action :check_admin, only: [:add_user, :remove_user]
+  before_action :set_skill, only: [:add_user, :remove_user, :add_required, :remove_required, :admin_approves_new, :show, :edit, :update, :destroy]
+  skip_before_action :check_admin, only: [:add_user, :remove_user, :admin_approves_new]
 
   def add_user
     @skill.users << current_user
@@ -22,6 +22,16 @@ class SkillsController < ApplicationController
     @opportunity = Opportunity.find(params[:opportunity_id])
     @skill.opportunities.delete(@opportunity)
     redirect_to :back
+  end
+
+  def admin_approves_new
+    @skill.approved = true
+    @user = User.find(params[:user_id])
+
+    if @skill.save!
+      NewlyAddedSkillMailer.notification_of_approved_new_skill(@skill.id, @user.id).deliver_now
+      redirect_to thanks_path(type: 'approved_new_skill', skill_id: @skill.id, user_id: @user.id)
+    end
   end
 
   # GET /skills
@@ -52,7 +62,8 @@ class SkillsController < ApplicationController
     respond_to do |format|
       if @skill.save
         @candidate_skill = CandidateSkill.create(user_id: current_user.id, skill_id: @skill.id)
-        @candidate_skill.save
+        @candidate_skill.save!
+        NewlyAddedSkillMailer.approve_new_skill(@skill.id, current_user.id).deliver_now
 
         # format.html { redirect_to @skill, notice: 'Skill was successfully created.' }
         format.html { redirect_to my_skills_path, notice: 'Skill was successfully created.' }

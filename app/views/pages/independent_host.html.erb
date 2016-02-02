@@ -1,0 +1,27 @@
+<%#
+INDEPENDENT HOST
+- not associated to an Organisation
+- representing themselves (eg. parents, individuals, etc.)
+- by default the org_creator value is false and agency value is 'I am an Independent'
+%>
+<p>
+  Please create your profile:
+</p>
+<% @new_org_user_profile = OrgUserProfile.new %>
+<%= simple_form_for(@new_org_user_profile) do |f| %>
+  <%= f.error_notification %>
+  <%= f.association :user, :as => :hidden, input_html: { value: current_user.id }%>
+
+  <div class="form-inputs">
+    <%= f.input :first_name %>
+    <%= f.input :last_name %>
+    <%= f.input :phone %>
+    <%= f.input :position %>
+    <%= f.input :agency, :as => :hidden, input_html: { value: 'I am an Independent' } %>
+    <%#= f.input :guid %>
+  </div>
+
+  <div class="form-actions">
+      <%= f.button :submit, "Create My Profile" %>
+  </div>
+<% end %>

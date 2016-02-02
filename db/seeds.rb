@@ -163,7 +163,7 @@ end
 def create_subcategories(parent, categories)
   skill_category = SkillCategory.find_by(name: parent)
   categories.each do |category|
-    skill_category.skills << Skill.create!(name: category)
+    skill_category.skills << Skill.create!(name: category, approved: true)
     # top.skills << Skill.create!(name: category)
   end
 end

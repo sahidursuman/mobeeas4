@@ -1,0 +1,23 @@
+<h1>Your New Skill Has Been Approved by MOBEEAS Admin.</h1>
+
+<p>
+  Created by User ID: <%= @user.id %><br>
+  <% if @user.has_role? :host %>
+    Hello <%= @user.org_user_profile.name %>,<br>
+    Your new skill has been approved by MOBEEAS admin:<br>
+    Skill Name: <%= @skill.name %><br>
+    Skill Category: <%= @skill.skill_category.name %><br>
+    Please proceed with the last activity in your MOBEEAS Opportunity listing.<br><br>
+    Thank you,<br>
+    MOBEEAS Team<br>
+
+  <% elsif @user.has_role? :candidate %>
+    Hello <%=  @user.profile.name %>,<br>
+    Your new skill has been approved by MOBEEAS admin:<br>
+    Skill Name: <%= @skill.name %><br>
+    Skill Category: <%= @skill.skill_category.name %><br>
+    Please open your MOBEEAS profile and verify your skill to your Referee.<br><br>
+    Thank you,<br>
+    MOBEEAS Team<br>
+  <% end %>
+</p>

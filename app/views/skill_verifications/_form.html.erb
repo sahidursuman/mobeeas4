@@ -23,15 +23,16 @@
 
   </div>
   <p>Choose which skills this referee can verify.</p>
-  <%# f.association :candidate_skills, as: :check_boxes %>
-
+  <%# f.association :candidate_skills, as: :check_boxes %> <%# keep as template %>
   <% current_user.candidate_skills.each do |candidate_skill| %>
     <% if candidate_skill.skill %>
-    <input class="check_boxes optional" type="checkbox" value="<%= candidate_skill.id %>" name="skill_verification[candidate_skill_ids][]" id="skill_verification_candidate_skill_ids_<%= candidate_skill.id %>" />
-    <label for="skill_verification_candidate_skill_ids_<%= candidate_skill.id %>">
-      <%= candidate_skill.skill.skill_category.name %>: <%= candidate_skill.skill.name %>
-    </label>
-    <br>
+      <% if candidate_skill.skill.approved %><%# the skill will appear if it has been approved by Admin %>
+        <input class="check_boxes optional" type="checkbox" value="<%= candidate_skill.id %>" name="skill_verification[candidate_skill_ids][]" id="skill_verification_candidate_skill_ids_<%= candidate_skill.id %>" />
+        <label for="skill_verification_candidate_skill_ids_<%= candidate_skill.id %>">
+          <%= candidate_skill.skill.skill_category.name %>: <%= candidate_skill.skill.name %>
+        </label>
+        <br>
+      <% end %>
     <% end %>
   <% end %>
     <br>

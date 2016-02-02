@@ -1,7 +1,6 @@
 <%#= params[:org_id]%>
 <%= simple_form_for(@opportunity) do |f| %>
   <%= f.error_notification %>
-
   <div class="form-inputs">
     <% @organisations = current_user.organisations %>
     <%#= f.association :organisation, collection: @organisations, :include_blank => false %>
@@ -43,6 +42,16 @@
 
     <% if params[:object] == 'requirement' %>
       <%= f.input :experiences, label: 'Other experience that would be advantageous (max 1000 characters)', input_html: { maxlength: 1000} %>
+    <% end %>
+
+    <% if params[:object] == 'independent'%>
+      <%= f.association :user, :as => :hidden, input_html: { value: current_user.id } %>
+      <p>Give your collaborative learning experience a title.</p>
+      <%= f.input :title %>
+
+      <p>Tell us a little about what you would like to accomplish by creating this collaborative learning experience</p>
+      <%= f.input :description, label: 'Description (max 1000 characters)', input_html: { maxlength: 1000} %>
+
     <% end %>
   </div>
 

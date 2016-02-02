@@ -38,7 +38,7 @@ Rails.application.routes.draw do
   resources :opportunity_applications
   resources :opportunities do
     member do
-      get :increase_one_token_into, :decrease_one_token_from, :status_draft, :status_listed, :post_active, :status_archived, :purchase_more_tokens_for
+      get :increase_one_token_into, :decrease_one_token_from, :increase_one_token_into_independent, :decrease_one_token_from_independent, :status_draft, :status_listed, :post_active, :status_archived, :purchase_more_tokens_for
     end
   end
   resources :organisations do
@@ -54,7 +54,7 @@ Rails.application.routes.draw do
   end
   resources :skills do
     member do
-      get :add_user, :remove_user, :add_required, :remove_required
+      get :add_user, :remove_user, :add_required, :remove_required, :admin_approves_new
     end
   end
   resources :skill_categories
@@ -94,6 +94,7 @@ Rails.application.routes.draw do
   get 'admin_sponsors', to: 'pages#admin_sponsors'
   get 'unverified_education', to: 'pages#unverified_education'
   get 'unverified_wwc', to: 'pages#unverified_wwc'
+  get 'independent_host', to: 'pages#independent_host'
 
   devise_for :users
   # The priority is based upon order of creation: first created -> highest priority.

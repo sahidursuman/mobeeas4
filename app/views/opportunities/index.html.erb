@@ -28,7 +28,9 @@
                 <%# Check if the current user has engagement with this opportunity %>
                   <h5><strong></strong><%= opportunity.title %></h5>
                   <p><strong>Description: </strong><%= opportunity.description %></p>
-                  <p><strong>Organisation: </strong><%= opportunity.organisation.name %></p>
+                  <% if opportunity.organisation.present? %>
+                    <p><strong>Organisation: </strong><%= opportunity.organisation.name %></p>
+                  <% end %>
                   <p><strong>Host Name: </strong><%= opportunity.user.org_user_profile.name %></p>
 
                   <p><strong></strong><%= link_to 'Show more...', opportunity %></p>

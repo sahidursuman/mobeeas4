@@ -14,13 +14,16 @@
   <%= simple_form_for(@new_org_user_profile) do |f| %>
     <%= f.error_notification %>
     <%= f.association :user, :as => :hidden, input_html: { value: current_user.id }%>
-
+    <%# org_creator is the host who created the organisation profile, not all hosts are organisation profile creators,
+    some host are just associated with some organisations %>
     <%= f.input :org_creator, :as => :hidden, input_html: { value: true } %>
     <div class="form-inputs">
       <%= f.input :first_name %>
       <%= f.input :last_name %>
       <%= f.input :phone %>
       <%= f.input :position %>
+      <%= f.input :agency, :as => :hidden, input_html: { value: 'I represent an Organisation' } %>
+
       <%#= f.input :guid %>
     </div>
 
