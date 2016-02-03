@@ -1,67 +1,92 @@
 <% if @report.id.present? %>
   <div class="row">
-    <div class="col l6 align-right">
+    <div class="col l3">
       Report ID:
     </div>
-    <div class="col l6">
+    <div class="col l8">
       <%= @report.id %>
     </div>
   </div>
 <% end %>
 
-<div class="row">
-  <div class="col l6 align-right">
-    Host Organisation:
+<% if @opportunity.organisation_id.present? %>
+  <div class="row">
+    <div class="col l3">
+      Host Organisation:
+    </div>
+    <div class="col l8">
+      <%= @opportunity.organisation.name %>
+    </div>
   </div>
-  <div class="col l6">
-    <%= @opportunity.organisation.name %>
-  </div>
-</div>
+<% end %>
 
 <div class="row">
-  <div class="col l6 align-right">
+  <div class="col l3">
     Host’s Name:
   </div>
-  <div class="col l6">
+  <div class="col l8">
     <%= @opportunity.user.org_user_profile.name %>
   </div>
 </div>
 
 <div class="row">
-  <div class="col l6 align-right">
+  <div class="col l3">
     Host’s Email:
   </div>
-  <div class="col l6">
+  <div class="col l8">
     <%= @opportunity.user.email %>
   </div>
 </div>
 
 <div class="row">
-  <div class="col l6 align-right">
+  <div class="col l3">
     Host’s Phone:
   </div>
-  <div class="col l6">
+  <div class="col l8">
     <%= @opportunity.user.org_user_profile.phone %>
   </div>
 </div>
 
 <div class="row">
-  <div class="col l6 align-right">
+  <div class="col l3">
     Candidate’s Name:
   </div>
-  <div class="col l6">
+  <div class="col l8">
     <%= @profile.name %>
   </div>
 </div>
 
-<div class="row">
-  <div class="col l6 align-right">
-    Engagement Start Date:
+<% if @report.engagement_start_date.present? %>
+  <div class="row">
+    <div class="col l3">
+      Engagement Start Date:
+    </div>
+    <div class="col l8">
+      <%= @report.engagement_start_date.strftime('%e %B %Y ') %>
+    </div>
   </div>
-  <div class="col l6">
-    <%#= @opportunity.commencement_date.strftime("%A, %d %b %Y") %>
-    <%# after the opportunity_times table has the start_time and end_time, change the line above to get the time from the data from the opportunity_times table %>
+<% end %>
+
+<% if @report.engagement_end_date.present? %>
+  <div class="row">
+    <div class="col l3">
+      Engagement End Date:
+    </div>
+    <div class="col l8">
+      <%= @report.engagement_end_date.strftime('%e %B %Y ') %>
+    </div>
   </div>
-</div>
+<% end %>
+
+<% if @report.updated_at.present? %>
+  <div class="row">
+    <div class="col l3">
+      Report Date:
+    </div>
+    <div class="col l8">
+      <%= @report.updated_at.strftime('%e %B %Y ') %>
+    </div>
+  </div>
+<% end %>
 
 <br><br>

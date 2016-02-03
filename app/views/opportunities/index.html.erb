@@ -20,24 +20,47 @@
 
     <% end %>
     <% if @opportunities.present? %>
+    <%# The Host can not see all of the other host's opportunity EXCEPT the other host's DRAFT opportunity. %>
       <% @opportunities.each do |opportunity| %>
-        <div class="row">
-          <div class="col s12">
-            <div class="card">
-              <div class="card-content">
-                <%# Check if the current user has engagement with this opportunity %>
-                  <h5><strong></strong><%= opportunity.title %></h5>
-                  <p><strong>Description: </strong><%= opportunity.description %></p>
-                  <% if opportunity.organisation.present? %>
-                    <p><strong>Organisation: </strong><%= opportunity.organisation.name %></p>
-                  <% end %>
-                  <p><strong>Host Name: </strong><%= opportunity.user.org_user_profile.name %></p>
+        <% if opportunity.opportunity_status == 'draft' %>
+          <% if current_user.id == opportunity.user_id %>
+            <div class="row">
+              <div class="col s12">
+                <div class="card">
+                  <div class="card-content">
+                    <%# Check if the current user has engagement with this opportunity %>
+                      <h5><strong></strong><%= opportunity.title %></h5>
+                      <p><strong>Description: </strong><%= opportunity.description %></p>
+                      <% if opportunity.organisation.present? %>
+                        <p><strong>Organisation: </strong><%= opportunity.organisation.name %></p>
+                      <% end %>
+                      <p><strong>Host Name: </strong><%= opportunity.user.org_user_profile.name %></p>
 
-                  <p><strong></strong><%= link_to 'Show more...', opportunity %></p>
+                      <p><strong></strong><%= link_to 'Show more...', opportunity %></p>
+                  </div>
+                </div>
+              </div>
+            </div><%# end of row %>
+          <% end %>
+        <% else %> <%# all other opportunities that do not have status DRAFT are visible to all Hosts %>
+          <div class="row">
+            <div class="col s12">
+              <div class="card">
+                <div class="card-content">
+                  <%# Check if the current user has engagement with this opportunity %>
+                    <h5><strong></strong><%= opportunity.title %></h5>
+                    <p><strong>Description: </strong><%= opportunity.description %></p>
+                    <% if opportunity.organisation.present? %>
+                      <p><strong>Organisation: </strong><%= opportunity.organisation.name %></p>
+                    <% end %>
+                    <p><strong>Host Name: </strong><%= opportunity.user.org_user_profile.name %></p>
+
+                    <p><strong></strong><%= link_to 'Show more...', opportunity %></p>
+                </div>
               </div>
             </div>
-          </div>
-        </div>
+          </div><%# end of row %>
+        <% end %>
       <% end %><%# end of @opportunities loop %>
     <% end %><%# end of if @opportunities.present %>
     <%#= link_to 'New Opportunity', new_opportunity_path %>

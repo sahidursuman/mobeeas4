@@ -3,12 +3,29 @@
 
 <div class="form-inputs">
 <%= f.association :opportunity, :as => :hidden, input_html: { value: @opportunity.id } %>
-<%= f.association :engagement, as: :hidden, input_html: { value: params[:engagement_id] } %>
+<%# the engagement id value should be entered only in the new @report creation only
+    do not remove the line "if @report.new_record?" to wrap around the "f.association :engagement"
+    or else the @report.engagement_id will be overriden to nil and you can not click the "View Reports Index" button
+    in the show page.
+%>
+<% if @report.new_record? %>
+  <%= f.association :engagement, as: :hidden, input_html: { value: params[:engagement_id] } %>
+<% end %>
 <% if params[:report_type] == 'progress' %>
   <%= f.input :report_type, :as => :hidden, input_html: { value: "progress" } %>
 <% elsif params[:report_type] == 'completion' %>
   <%= f.input :report_type, :as => :hidden, input_html: { value: "completion" } %>
 <% end %>
+
+<div class="row">
+  <div class="col l6">
+    <%= f.date_field :engagement_start_date, as: :string, label: 'Engagement Start Date:', input_html: { class: 'datetimepicker', :format => "%d/%m/%Y  %I:%m %p"} %>
+  </div>
+  <div class="col l6">
+    <%= f.date_field :engagement_end_date, as: :string, label: 'Engagement End Date:', input_html: { class: 'datetimepicker', :format => "%d/%m/%Y  %I:%m %p"} %>
+  </div>
+</div>
+
 <p>
   Please tick the appropriate standard achieved (CC) Causing Concern, (W) Working towards, (A) Achieved or (GB) Going Beyond
 </p>

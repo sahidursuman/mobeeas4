@@ -34,9 +34,10 @@ class ReportsController < ApplicationController
   # POST /reports.json
   def create
     @report = Report.new(report_params)
+    @engagement = Engagement.find(@report.engagement_id)
     # @opportunity = Opportunity.find(params[:opportunity_id])
     # @profile = Profile.find(params[:profile_id])
-    @engagement = Engagement.find(params[:engagement_id])
+    # @engagement = Engagement.find(params[:engagement_id])
 
     respond_to do |format|
       if @report.save
@@ -90,6 +91,6 @@ class ReportsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def report_params
-      params.require(:report).permit(:opportunity_id, :report_type, :relevant_knowledge, :relevant_knowledge_comment, :punctual, :punctual_comment, :communication, :communication_comment, :enthusiasm, :enthusiasm_comment, :professionalism, :professionalism_comment, :stength, :further_dev, :general_comments, :profile_id, :engagement_id)
+      params.require(:report).permit(:opportunity_id, :report_type, :relevant_knowledge, :relevant_knowledge_comment, :punctual, :punctual_comment, :communication, :communication_comment, :enthusiasm, :enthusiasm_comment, :professionalism, :professionalism_comment, :stength, :further_dev, :general_comments, :profile_id, :engagement_id, :engagement_start_date, :engagement_end_date)
     end
 end
