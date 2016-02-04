@@ -7,21 +7,7 @@
         <%# Please note: render org_user_profiles/show below is rendering the partial file called '_show.html.erb',
         which then will be rendering the template 'show.html.erb' %>
         <%= render 'org_user_profiles/show' %>
-        <% if current_user.org_user_profile.agency == 'I represent an Organisation'%>
-        <div class="row">
-          <div class="col s12 m">
-            <div class="card">
-              <div class="card-content">
-                <p>
-                  Click here to view all Organisations:
-                  <br><br>
-                  <%= link_to 'Organisations Index', organisations_host_path(state: 'show_organisations'), class: 'btn' %>
-                </p>
-              </div>
-            </div>
-          </div>
-        </div><%# end of row %>
-        <% end %>
+        <%#-----------%>
       <% else %> <%# else if current_user's profile hasn't been created yet %>
         <p>Your host profile is not created. Please go to <%= link_to 'Organisations Index', organisations_host_path %> and select one of the organisations as the first step to create your host profile.</p>
       <% end %>
@@ -38,7 +24,7 @@
       <br>
       <%= link_to "View all Organisations registered in MOBEEAS", organisations_path, class: 'btn' %>
       <br><br>
-      But if you are not representing an organisation and would like to register as an independent host, please click on the button below.
+      If you are not representing an organisation and would like to register as an independent host, please click on the button below.
       <%= link_to "Register as an Independent Host", independent_host_path, class: 'btn' %>
 
     </p>

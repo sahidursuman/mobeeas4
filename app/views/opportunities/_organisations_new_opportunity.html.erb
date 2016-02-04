@@ -11,7 +11,9 @@
           <div class="card">
             <div class="card-content">
               <div class="col l8">
-                <p>Your connection with <strong> <%= link_to organisation.name, organisation_path(organisation.id) %></strong> has been verified.</p>
+                <p>
+                  Your connection with <b><%= link_to organisation.name, organisation_path(organisation.id) %></b> has been verified.
+                </p>
               </div>
               <div class="col l4 margin-bottom-20px">
                 <%# if verified, host can create a new opportunity here %>
@@ -23,7 +25,9 @@
           <div class="card">
             <div class="card-content">
               <div class="col l8">
-                <p>Your connection with <strong><%= link_to organisation.name, organisation_path(organisation.id) %></strong> has not been verified.</p>
+                <p>
+                  Your connection with: <b><%= link_to organisation.name, organisation_path(organisation.id) %></b> has not been verified.
+                </p>
               </div>
               <div class="col l4 margin-bottom-20px">
                 <%# if not verified, host can not create a new opportunity here %>

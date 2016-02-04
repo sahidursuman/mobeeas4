@@ -35,8 +35,13 @@ class SecurityChecksController < ApplicationController
     @security_check.user = current_user
     respond_to do |format|
       if @security_check.save
-        format.html { redirect_to profile_path(current_user.profile), notice: 'Security check was successfully created.' }
-        format.json { render :show, status: :created, location: @security_check }
+        if current_user.has_role? :host
+          format.html { redirect_to org_user_profile_path(current_user.org_user_profile), notice: 'Security check was successfully created.' }
+          format.json { render :show, status: :created, location: @security_check }
+        elsif current_user.has_role? :candidate
+          format.html { redirect_to profile_path(current_user.profile), notice: 'Security check was successfully created.' }
+          format.json { render :show, status: :created, location: @security_check }
+        end
       else
         format.html { render :new }
         format.json { render json: @security_check.errors, status: :unprocessable_entity }

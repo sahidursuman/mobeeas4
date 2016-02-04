@@ -212,7 +212,7 @@
     <div class="card" style="margin-left: none;">
       <div class="card-content">
         <div class="font-16px palette1"><i class="fa fa-usd"></i> Remuneration</div>
-        <p>Is this a paid Engagement?
+        <p>Is this a paid engagement?
           <% if @opportunity.paid_engagement %>
             <b>Yes, paid engagement.</b>
           <% else %>
@@ -329,7 +329,7 @@
               <% end %>
           <%# =========== %>
 
-          <%# This is the token function for independent host, not representing an organisation %>
+          <%# This is the token function for Independent host, not representing an organisation %>
           <% elsif (current_user.org_user_profile.agency == "I am an Independent") %>
             <%# if the host has enough token, he can transfer it to this opportunity %>
             <% if (current_user.org_user_profile.number_of_tokens_for_independent > 0) && !(@opportunity.opportunity_status == 'post_active') && !(@opportunity.archived) %>
@@ -343,6 +343,8 @@
                 You do not have any tokens. Please purchase a token for each candidate you would like to engage.
               </p>
               <p>This opportunity currently holds: <b><%= @opportunity.number_of_tokens %> <%= (@opportunity.number_of_tokens > 1) ? 'tokens' : 'token' %></b></p>
+              <%#------- buttons to buy more tokens for independent host here %>
+
             <% end %>
             <%# if this opportunity holds at least one token, the host can choose to transfer it back to his host profile %>
             <% if (@opportunity.number_of_tokens > 0) && !(@opportunity.opportunity_status == 'post_active') && !(@opportunity.archived) %>

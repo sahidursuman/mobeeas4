@@ -1,0 +1,39 @@
+<span class="card-title blue-text"><i class="fa fa-child"></i> Your security checks <a href="#modal-checks" class="modal-trigger"><i class="material-icons">help</i></a></span>
+
+<p>
+  <% if @org_user_profile.user.security_checks.present? %>
+  <table>
+    <thead><tr>
+      <th>Type</th>
+      <th>State</th>
+      <th>Expires</th>
+      <th>Number</th>
+      <th class="right-align">Verified</th>
+      </tr>
+    </thead>
+    <% @org_user_profile.user.security_checks.each do |check| %>
+      <tr>
+        <td><%= check.name %></td>
+        <td><%= check.state %></td>
+        <% if check.expiry_date.present? %>
+          <td><%= check.expiry_date.strftime('%d %b %y') %></td>
+        <% end %>
+        <td> <%= check.number %></td>
+        <td class="right-align">
+          <% if check.verified %>
+            <span class="green-text"><i class="fa fa-check-circle"></i></span>
+          <% else %>
+            <span class="red-text"><i class="fa fa-times"></i></span>
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </table>
+  <% else %>
+    No security checks listed.
+  <% end %>
+</p>
+
+<div class="card-action">
+<a href="/security_checks/new">Add a security check</a>
+</div>
