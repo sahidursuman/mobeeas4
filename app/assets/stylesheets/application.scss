@@ -4,6 +4,10 @@ $primary-color: color("teal", "lighten-1") !default;
 @import 'datetimepicker';
 @import 'form';
 
+html {
+  font-family: Helvetica, Arial, Calibri, sans-serif;
+}
+
 body {
     background: #EEE;
     display: flex;
@@ -89,6 +93,14 @@ nav ul a {
 
 .font-24px {
   font-size: 24px;
+}
+
+.font-16px {
+  font-size: 16px;
+}
+.default-response-text {
+  margin-left: 20px;
+  color: #a23ee5;
 }
 
 .margin-0px {
