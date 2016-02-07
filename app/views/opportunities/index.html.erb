@@ -23,7 +23,8 @@
     <%# The Host can not see all of the other host's opportunity EXCEPT the other host's DRAFT opportunity. %>
       <% @opportunities.each do |opportunity| %>
         <% if opportunity.opportunity_status == 'draft' %>
-          <% if current_user.id == opportunity.user_id %>
+          <%# Only the owner of the opportunity or the Admin user can view draft opportunities %>
+          <% if (current_user.id == opportunity.user_id) || (current_user.has_role? :admin) %>
             <div class="row">
               <div class="col s12">
                 <div class="card">

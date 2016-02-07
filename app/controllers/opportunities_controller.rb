@@ -102,6 +102,10 @@ class OpportunitiesController < ApplicationController
   def show
     @candidate_skills = CandidateSkill.all
 		@engagement_token_packs = EngagementTokenPack.order(member_price: :asc)
+    @host = User.find(@opportunity.user_id)
+    if @opportunity.organisation_id.present?
+      @organisation = Organisation.find(@opportunity.organisation_id)
+    end
   end
 
   # GET /opportunities/new

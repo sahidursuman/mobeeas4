@@ -4,11 +4,10 @@
   <div class="col l11 offset-l1">
     <p>
       <% if @opportunity.organisation.present? %>
-        <% @organisation = Organisation.find(@opportunity.organisation) %>
         <% @name = @organisation.name %>
       <% else %>
-        <% @user = User.find(@opportunity.user_id) %>
-        <% @name = @user.org_user_profile.name %>
+        <%# @user = User.find(@opportunity.user_id) %>
+        <% @name = @host.org_user_profile.name %>
       <% end %>
       <h5 class="align-center margin-top-20px margin-bottom-20px">
         <% if @opportunity.archived %>
@@ -48,7 +47,12 @@
 <%# ORGANISATION NAME AND LOGO ===========================================%>
     <div class="card" style="margin-left: none;">
       <div class="card-content">
-        <div class="font-16px palette1"><i class="fa fa-building-o"></i> Organisation</div>
+        <% @host.org_user_profile.name %>
+        <% if @host.org_user_profile.agency == "I represent an Organisation" %>
+          <div class="font-16px palette1"><i class="fa fa-building-o"></i> Organisation</div>
+        <% elsif @host.org_user_profile.agency == "I am an Independent" %>
+          <div class="font-16px palette1"><i class="fa fa-building-o"></i> Independent</div>
+        <% end %>
         <%= render 'layouts/sidebar' %>
         <p id="notice"><%= notice %></p>
         <% if @organisation.present? %><%# logo only appears for organisation %>
@@ -422,8 +426,10 @@
           <%# Remember: Hash[key]=value %>
           <%# We want to build this Hash:
               hash[key] = the user_id
-              hash[value] = the array of [skill_category, skill] %>
-          <%# First, set the hash keys with all matching candidates' user_id %>
+              hash[value] = the array of [skill_category, skill]
+              This will involve two steps
+          %>
+          <%# First step, set the hash keys with all matching candidates' user_id %>
           <% @opportunity.opportunity_skills.each do |opportunity_skill| %>
             <% @candidate_skills.each do |candidate_skill| %>
               <%# Only these candidates will be included in the sorting result:
@@ -431,15 +437,15 @@
                 2. his skill has been verified and
                 3. his profile has been approved by admin
               %>
-              <% if (candidate_skill.skill_id == opportunity_skill.skill.id) && (candidate_skill.verified)  && (candidate_skill.user.profile.approved) %>
-              <%#= (candidate_skill.user.profile.name) %>
-              <%#= (candidate_skill.user.profile.approved) %>
-                  <% hash[candidate_skill.user_id] = [] %> <%# create a hash of array, key is skill name, value is user id %>
+              <% if (candidate_skill.skill_id == opportunity_skill.skill.id) && (candidate_skill.verified) && (candidate_skill.user.profile.approved) %>
+              <%# what does candidate_skill.user.profile.approved mean? %>
+              <%# It means that the Admin has clicked the 'approve' function in the Prohibited Candidate list which calls the approve function in profiles_controller.rb file %>
+                <% hash[candidate_skill.user_id] = [] %> <%# create a hash of array, key is skill name, value is user id %>
               <% end %>
             <% end %><%# end of candidate skill loop %>
           <% end %><%# end of opportunity loop %>
 
-          <%# Second, fill the hash value with array of skill_set according to the user_id already in the hash key %>
+          <%# Second step, fill the hash value with array of skill_set according to the user_id already in the hash key %>
           <% @opportunity.opportunity_skills.each do |opportunity_skill| %>
             <% @candidate_skills.each do |candidate_skill| %>
               <%# Only these candidates will be included in the sorting result:
@@ -453,7 +459,7 @@
             <% end %><%# end of @candidate_skills loop %>
           <% end %>
           <%#= hash %><%# print hash %>
-          <%# At this line the Hash has been built and filled  with this type:
+          <%# At this point the Hash has been built and filled  with this type:
             hash[key] = the user_id
             hash[value] = the array of [skill_category, skill] %>
           <%# e.g. {2=>[["Digital Technologies", "Robotics"], ["Design & Technology", "3D Printing"], ["English", "Secondary-Extension 1"], ["Mathematics", "Secondary-Extension 1"]] %>

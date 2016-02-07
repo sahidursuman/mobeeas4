@@ -1,7 +1,7 @@
 <div class="row">
   <div class="col c12 m8 offset-m2 l8 offset-l2">
     <%= render 'layouts/sidebar' %>
-    <%# If the current user is creating opportunity associated to an organisation %>
+    <%# If the current user is a Host representing an Organisation and is creating opportunity for his organisation %>
     <% if params[:org_id].present? %>
       <% @organisation = Organisation.find(params[:org_id])%>
 
@@ -16,7 +16,7 @@
       <% else %>
         <p>Please make sure you have accepted all of the MOBEEAS Agreements.</p>
       <% end %>
-    <%# Else if the current user is and independent host %>
+    <%# Else if the current user is an Independent host %>
     <% else %>
       <% if current_user.agreement.host_all_agreed %>
         <%= render 'form' %>

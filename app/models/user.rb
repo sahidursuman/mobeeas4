@@ -2,13 +2,13 @@ class User < ActiveRecord::Base
 	has_many :educations
 	has_many :opportunities
 	has_many :opportunity_applications
-	has_many :org_users
+	has_many :org_users # a user can be a host for several organisations
 	has_many :organisations, through: :org_users
-	has_one :profile # this is the candidate user type
+	has_one :profile # a user can create one candidate profile
 	has_one :agreement
 	has_many :security_checks
 	has_many :admins
-	has_one :sponsor # this is the sponsor user type
+	has_one :sponsor # a user can create one sponsor profile
 
 
 	has_many :candidate_skills, dependent: :destroy

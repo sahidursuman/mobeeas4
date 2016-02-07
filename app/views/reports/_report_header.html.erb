@@ -9,6 +9,15 @@
   </div>
 <% end %>
 
+<div class="row">
+  <div class="col l3">
+    Opportunity ID and Title:
+  </div>
+  <div class="col l8">
+    <%= @opportunity.id %> - <%= @opportunity.title %>
+  </div>
+</div>
+
 <% if @opportunity.organisation_id.present? %>
   <div class="row">
     <div class="col l3">
@@ -62,7 +71,7 @@
       Engagement Start Date:
     </div>
     <div class="col l8">
-      <%= @report.engagement_start_date.strftime('%e %B %Y ') %>
+      <%= @report.engagement_start_date.getlocal.strftime('%e %B %Y ') %>
     </div>
   </div>
 <% end %>
@@ -73,7 +82,7 @@
       Engagement End Date:
     </div>
     <div class="col l8">
-      <%= @report.engagement_end_date.strftime('%e %B %Y ') %>
+      <%= @report.engagement_end_date.getlocal.strftime('%e %B %Y ') %>
     </div>
   </div>
 <% end %>
@@ -84,7 +93,7 @@
       Report Date:
     </div>
     <div class="col l8">
-      <%= @report.updated_at.strftime('%e %B %Y ') %>
+      <%= @report.updated_at.getlocal.strftime('%e %B %Y ') %>
     </div>
   </div>
 <% end %>

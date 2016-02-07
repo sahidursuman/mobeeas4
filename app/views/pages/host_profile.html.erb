@@ -1,7 +1,7 @@
 <div class="row">
   <div class="col s12 m11 offset-m1 l11 offset-l1">
-    <% if current_user.has_role? :host %>
-      <% if current_user.org_user_profile.present? %>
+    <% if (current_user.has_role? :host) %>
+      <% if current_user.org_user_profile.present? %><%#checking if the host already has his Host Profile created or not %>
         <%= render 'layouts/sidebar' %>
         <h4>Host Profile</h4>
         <%# Please note: render org_user_profiles/show below is rendering the partial file called '_show.html.erb',
@@ -11,7 +11,12 @@
       <% else %> <%# else if current_user's profile hasn't been created yet %>
         <p>Your host profile is not created. Please go to <%= link_to 'Organisations Index', organisations_host_path %> and select one of the organisations as the first step to create your host profile.</p>
       <% end %>
-
+    <% elsif (current_user.has_role? :admin) %>
+      <%= render 'layouts/sidebar' %>
+      <h4>Host Profile</h4>
+      <%# Please note: render org_user_profiles/show below is rendering the partial file called '_show.html.erb',
+      which then will be rendering the template 'show.html.erb' %>
+      <%= render 'org_user_profiles/show' %>
     <% else %><%# else if you don't have a role as a Host %>
     <p>
       Thank you for your interest in hosting a MOBEEAS collaborative learning experience.

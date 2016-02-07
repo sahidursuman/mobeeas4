@@ -135,22 +135,24 @@
       <% end %> <%# end if the org user profile is not an organisation creator %>
     <% end %><%# if (@user.organisations.present?) %>
 
-
-    <%# put Click here to view all Organisations button here: %>
-    <% if current_user.org_user_profile.agency == 'I represent an Organisation'%>
-    <div class="row">
-      <div class="col s12 m">
-        <div class="card">
-          <div class="card-content">
-            <p>
-              Click here to view all Organisations:
-              <br><br>
-              <%= link_to 'Organisations Index', organisations_host_path(state: 'show_organisations'), class: 'btn' %>
-            </p>
+    <%# only the host that represents an organisation can see the button of Organisation Index %>
+    <% if current_user.has_role? :host %>
+      <%# Organisation index appears only when the host is representing an organisation (not independent) %>
+      <% if (current_user.org_user_profile.agency == 'I represent an Organisation') %>
+        <div class="row">
+          <div class="col s12 m">
+            <div class="card">
+              <div class="card-content">
+                <p>
+                  Click here to view all Organisations:
+                  <br><br>
+                  <%= link_to 'Organisations Index', organisations_host_path(state: 'show_organisations'), class: 'btn' %>
+                </p>
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
-    </div><%# end of row %>
+        </div><%# end of row %>
+      <% end %>
     <% end %>
 
   </div><%# col s12 m4 %>

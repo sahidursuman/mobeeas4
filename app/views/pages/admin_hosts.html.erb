@@ -2,5 +2,10 @@
   <div class="col s12 m11 offset-m1 l11 offset-l1">
     <%= render 'layouts/sidebar' %>
     <h4>This is the list of MOBEEAS Hosts</h4>
+    <%= link_to 'View Hosts with unverified Security Check', unverified_wwc_path(type: 'host'), class: 'btn'%>
+    <br><br>
+    <%= link_to 'View All Approved Hosts', org_user_profiles_path(status: 'approved'), class: 'btn'%>
+    <br><br>
+    <%= link_to 'View All Prohibited Hosts', org_user_profiles_path(status: 'prohibited'), class: 'btn'%>
   </div>
 </div>

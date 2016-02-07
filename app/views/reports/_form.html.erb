@@ -19,10 +19,12 @@
 
 <div class="row">
   <div class="col l6">
-    <%= f.date_field :engagement_start_date, as: :string, label: 'Engagement Start Date:', input_html: { class: 'datetimepicker', :format => "%d/%m/%Y  %I:%m %p"} %>
+    <p>Engagement Start Date:</p>
+    <%= f.date_field :engagement_start_date, as: :string, input_html: { class: 'datetimepicker', :format => "%d/%m/%Y  %I:%m %p"} %>
   </div>
   <div class="col l6">
-    <%= f.date_field :engagement_end_date, as: :string, label: 'Engagement End Date:', input_html: { class: 'datetimepicker', :format => "%d/%m/%Y  %I:%m %p"} %>
+    <p>Engagement End Date:</p>
+    <%= f.date_field :engagement_end_date, as: :string, input_html: { class: 'datetimepicker', :format => "%d/%m/%Y  %I:%m %p"} %>
   </div>
 </div>
 
