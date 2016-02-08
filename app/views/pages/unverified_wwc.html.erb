@@ -13,14 +13,15 @@
             <li>
               Candidate Profile ID: <%= security_check.user.profile.id %> - <b><%= security_check.user.profile.name %></b> - <%= link_to 'View', candidate_profile_path(profile_id: security_check.user.profile.id, viewer: 'admin') %>
               <br>
-              Check number: <b><%= security_check.number %></b>, expiry date: <b><%= security_check.expiry_date.strftime("%e %b %Y") %></b>,
-              current Verification Code: <b><%= security_check.verification_code %></b>
+              Check number: <b><%= security_check.number %></b>, expiry date: <b><%= security_check.expiry_date.strftime("%e %b %Y") %></b>.<br>
+              Current Verification Code: <b><%= security_check.verification_code %></b>.
               <br><br>
 
               <%= simple_form_for(security_check) do |f| %>
                 <%= f.error_notification %>
-                <%= hidden_field_tag(:admin_check, true) %>
-                <%# this hidden params[:admin_check] will be passed on to the security_check_controller.rb file and will redirect viewer to this page again %>
+                <%= hidden_field_tag(:viewer, 'admin_user') %> <%# the viewer is Admin user %>
+                <%= hidden_field_tag(:viewee, params[:type]) %> <%# the one being viewed is either Host or Candidate %>
+                <%# this hidden field tag value will be passed on to the security_check_controller.rb file and will redirect viewer to this page again %>
                 <div class="row">
                   <div class="col s12 m4 l4">
                     <%= f.input :verification_code, label: 'Type the update of Verification Code here:' %>
@@ -34,7 +35,7 @@
                   </div>
                   <div class="col s12 m4 l4">
                     <br><%# keep the <br> tag here for formatting purpose %>
-                    <%= link_to "Verify this Candidate", verify_candidate_security_check_path(security_check, checked_by: current_user.id), class: 'btn' %>
+                    <%= link_to "Verify this Candidate", verify_candidate_security_check_path(security_check, checked_by: current_user.id, viewer: 'admin_user', viewee: 'candidate'), class: 'btn' %>
                   </div>
                 </div><%# end of row %>
             </li>
@@ -42,14 +43,15 @@
             <li>
               Host Profile ID: <%= security_check.user.org_user_profile.id %> - <b><%= security_check.user.org_user_profile.name %></b> - <%= link_to 'View', host_profile_path(org_user_profile_id: security_check.user.org_user_profile.id, viewer: 'admin') %>
               <br>
-              Check number: <b><%= security_check.number %></b>, expiry date: <b><%= security_check.expiry_date.strftime("%e %b %Y") %></b>,
-              current Verification Code: <b><%= security_check.verification_code %></b>
+              Check number: <b><%= security_check.number %></b>, expiry date: <b><%= security_check.expiry_date.strftime("%e %b %Y") %></b>.<br>
+              Current Verification Code: <b><%= security_check.verification_code %></b>.
               <br><br>
 
               <%= simple_form_for(security_check) do |f| %>
                 <%= f.error_notification %>
-                <%= hidden_field_tag(:admin_check, true) %>
-                <%# this hidden params[:admin_check] will be passed on to the security_check_controller.rb file and will redirect viewer to this page again %>
+                <%= hidden_field_tag(:viewer, 'admin_user') %> <%# the viewer is Admin user %>
+                <%= hidden_field_tag(:viewee, params[:type]) %> <%# the one being viewed is either Host or Candidate %>
+                <%# this hidden field tag value will be passed on to the security_check_controller.rb file and will redirect viewer to this page again %>
                 <div class="row">
                   <div class="col s12 m4 l4">
                     <%= f.input :verification_code, label: 'Type the update of Verification Code here:' %>
@@ -63,7 +65,7 @@
                   </div>
                   <div class="col s12 m4 l4">
                     <br><%# keep the <br> tag here for formatting purpose %>
-                    <%= link_to "Verify this Host", verify_candidate_security_check_path(security_check, checked_by: current_user.id), class: 'btn' %>
+                    <%= link_to "Verify this Host", verify_candidate_security_check_path(security_check, checked_by: current_user.id, viewer: 'admin_user', viewee: 'host'), class: 'btn' %>
                   </div>
                 </div><%# end of row %>
             </li>

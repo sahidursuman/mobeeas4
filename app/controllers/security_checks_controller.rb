@@ -5,7 +5,7 @@ class SecurityChecksController < ApplicationController
 
   def verify_candidate
     @security_check.verify(params[:checked_by])
-    redirect_to unverified_wwc_path
+    redirect_to unverified_wwc_path(type: params[:viewee])
   end
 
   # GET /security_checks
@@ -53,11 +53,17 @@ class SecurityChecksController < ApplicationController
   # PATCH/PUT /security_checks/1.json
   def update
     respond_to do |format|
-      if params[:admin_check] # this is coming from unverified_wwc page
+      if (params[:viewer] == 'admin_user') &&  (params[:viewee] == 'host') # this is coming from unverified_wwc page
         @security_check.update(security_check_params)
-        format.html { redirect_to unverified_wwc_path, notice: 'Security check was successfully updated.' }
-        format.json { render :show, status: :ok, location: @security_check }
-      elsif !(params[:admin_check].present?)
+        format.html { redirect_to unverified_wwc_path(type: 'host'), notice: 'Security check was successfully updated.' }
+        #format.json { render :show, status: :ok, location: @security_check }
+
+      elsif (params[:viewer] == 'admin_user') && (params[:viewee] == 'candidate')
+        @security_check.update(security_check_params)
+        format.html { redirect_to unverified_wwc_path(type: 'candidate'), notice: 'Security check was successfully updated.' }
+        #format.json { render :show, status: :ok, location: @security_check }
+
+      elsif !(params[:viewer].present?) # this is coming from somewhere else but not from the unverified_wwc page
         @security_check.update(security_check_params)
         format.html { redirect_to profile_path(current_user.profile), notice: 'Security check was successfully updated.' }
         format.json { render :show, status: :ok, location: @security_check }

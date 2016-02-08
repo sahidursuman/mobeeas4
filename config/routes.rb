@@ -21,7 +21,11 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :org_user_profiles
+  resources :org_user_profiles do
+    member do
+      get :approve, :prohibit
+    end
+  end
 
   resources :skill_verifications do
     member do

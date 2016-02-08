@@ -1,6 +1,22 @@
 class OrgUserProfilesController < ApplicationController
-  before_action :set_org_user_profile, only: [:show, :edit, :update, :destroy]
+  before_action :set_org_user_profile, only: [:show, :edit, :update, :destroy, :approve, :prohibit]
   # skip_before_action :check_admin, except: [:show]
+
+  # This function is for admin user only, to approve a host to appear in MOBEEAS website
+  # This function is called from the prohibited hosts page and will redirect to the same page after a host is approved.
+  def approve
+    @org_user_profile.approved = true
+    @org_user_profile.save!
+    redirect_to org_user_profiles_path(status: 'prohibited')
+  end
+
+  # This function is for admin user only, to prohibit a host to appear in MOBEEAS website
+  # This function is called from the list of approved hosts page and will redirect to the same page after a host is prohibited.
+  def prohibit
+    @org_user_profile.approved = false
+    @org_user_profile.save!
+    redirect_to org_user_profiles_path(status: 'approved')
+  end
 
   # GET /org_user_profiles
   # GET /org_user_profiles.json
@@ -94,6 +110,6 @@ class OrgUserProfilesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def org_user_profile_params
-      params.require(:org_user_profile).permit(:first_name, :last_name, :phone, :position, :guid, :user_id, :org_creator, :connections, :agency, :number_of_tokens_for_independent)
+      params.require(:org_user_profile).permit(:first_name, :last_name, :phone, :position, :guid, :user_id, :org_creator, :connections, :agency, :number_of_tokens_for_independent, :approved)
     end
 end

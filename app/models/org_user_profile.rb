@@ -6,6 +6,8 @@ class OrgUserProfile < ActiveRecord::Base
 
   scope :admin_rank,->{where(admin_status: true, verified_status: true)}
   scope :user_rank,->{where(admin_status: false, verified_status: true)}
+  scope :not_approved, -> {where(approved: false)}
+  scope :approved, -> {where(approved: true)}
 
   def set_guid
     self.guid = SecureRandom.uuid
