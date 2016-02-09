@@ -8,7 +8,6 @@
           <%# only admin host can see the purchase token button %>
         <ol>
           <% current_user.org_users.each do |org_user| %>
-            <%#= org_user.id %>
             <li>
               <p>
                 <strong><%= link_to org_user.organisation.name, organisation_path(org_user.organisation.id) %></strong>
@@ -17,11 +16,11 @@
               <%# if the host is an admin host and is verified, then he can see purchase buttons %>
               <% if (org_user.admin_status) && (org_user.verified_status) %>
                 <% @engagement_token_packs.each do |pack| %>
-                  <%= link_to new_token_purchase_path(org: org_user.organisation.id, token_pack: pack.id), class: 'btn' do %>
-                    <%= button_label(pack) %><br>
-
-                  <% end %>
-                  <br><br>
+                  <div class="margin-top-5px">
+                    <%= link_to new_token_purchase_path(org: org_user.organisation.id, token_pack: pack.id), class: 'btn' do %>
+                      <%= button_label(pack) %>
+                    <% end %>
+                  </div>
                 <% end %><%# end of loop @engagement_token_packs %>
 
               <%# if the host is not an admin host and is verified, then he can see the list of admin host names for that organisation %>
@@ -47,6 +46,7 @@
                 </ul>
               <% end %><%# end of if org_user.admin_status && org_user.verified_status %>
             </li>
+            <br>
           <% end %><%# end of loop current_user.org_users %>
         </ol>
       <% else %> <%# else if NOT current_user.organisations.present? %>
@@ -60,10 +60,11 @@
             Puchase more tokens:
             <br>
             <% @engagement_token_packs.each do |pack| %>
-              <%= link_to new_token_purchase_path(token_pack: pack.id), class: 'btn' do %>
-                <%= button_label(pack) %><br>
-              <% end %>
-              <br><br>
+              <div class="margin-top-5px">
+                <%= link_to new_token_purchase_path(token_pack: pack.id), class: 'btn' do %>
+                  <%= button_label(pack) %><br>
+                <% end %>
+              </div>
             <% end %><%# end of loop @engagement_token_packs %>
           </p>
         <% end %>

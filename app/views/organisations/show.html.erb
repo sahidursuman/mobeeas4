@@ -13,10 +13,11 @@
         <% current_user.org_users.each do |org_user| %>
           <% if (org_user.organisation_id == @organisation.id) && (org_user.admin_status) && (org_user.verified_status)%>
             <% @engagement_token_packs.each do |pack| %>
-              <%= link_to new_token_purchase_path(org: @organisation.id, token_pack: pack.id), class: 'btn btn-flat' do %>
-                <%= button_label(pack) %><br>
-              <% end %>
-              <br>
+              <div class="margin-top-5px">
+                <%= link_to new_token_purchase_path(org: @organisation.id, token_pack: pack.id), class: 'btn' do %>
+                  <%= button_label(pack) %><br>
+                <% end %>
+              </div>
             <% end %>
           <% end %>
         <% end %>

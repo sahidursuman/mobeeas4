@@ -30,6 +30,8 @@ class PaymentsController < ApplicationController
 
       # redirect to a thanks page
       redirect_to thanks_path(type: 'purchase')
+
+    # elsif 'subscription' present? here=================
     else # if the host is purchasing the tokens for himself (independent), when the org_id does not exist.
       # add number of tokens to number_of_tokens_for_independent in org_user_profiles table for this user.
       current_user.org_user_profile.update_attributes(number_of_tokens_for_independent: current_user.org_user_profile.number_of_tokens_for_independent + @token_pack.number_of_tokens)
