@@ -449,14 +449,20 @@
       </div><%# end of card content %>
     </div><%# end of card %>
 
-    <%#----------------------------------%>
-    <%# ORGANISATION SUBSCRIPTION DETAILS %>
-    <div class="card">
-      <div class="card-content">
-        <h5>Organisation Subscription</h5>
-        <p>some info here3</p>
-      </div><%# end of card content %>
-    </div><%# end of card %>
+    <%# ORGANISATION SUBSCRIPTION DETAILS ---------------------------------- %>
+    <%# Appears only if the current user is the Admin Host of this organisation %>
+    <% @organisation.org_users.admin_user.each do |org_user| %>
+      <% if org_user.user.id == current_user.id %>
+      <div class="card">
+        <div class="card-content">
+          <h5>Organisation Subscription</h5>
+          <p>Please purchase subscription here</p>
+          <%= link_to "Renew 1 Year Subscription", new_subscription_path(org_id: @organisation.id, user_id: current_user.id, user_type: 'organisation') %>
+
+        </div><%# end of card content %>
+      </div><%# end of card %>
+      <% end %>
+    <% end %>
 
     <%#----------------------------------%>
     <%# SECURITY CHECKS %>

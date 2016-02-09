@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160209021753) do
+ActiveRecord::Schema.define(version: 20160209052959) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -431,6 +431,26 @@ ActiveRecord::Schema.define(version: 20160209021753) do
 
   add_index "sponsors", ["user_id"], name: "index_sponsors_on_user_id", using: :btree
 
+  create_table "subscription_packs", force: :cascade do |t|
+    t.string   "name"
+    t.decimal  "price"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "subscriptions", force: :cascade do |t|
+    t.string   "user_type"
+    t.integer  "user_id"
+    t.integer  "organisation_id"
+    t.datetime "expiry_date"
+    t.decimal  "payment"
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+  end
+
+  add_index "subscriptions", ["organisation_id"], name: "index_subscriptions_on_organisation_id", using: :btree
+  add_index "subscriptions", ["user_id"], name: "index_subscriptions_on_user_id", using: :btree
+
   create_table "token_purchases", force: :cascade do |t|
     t.integer  "user_id"
     t.integer  "organisation_id"
@@ -507,6 +527,8 @@ ActiveRecord::Schema.define(version: 20160209021753) do
   add_foreign_key "skill_verifications", "users"
   add_foreign_key "skills", "skill_categories"
   add_foreign_key "sponsors", "users"
+  add_foreign_key "subscriptions", "organisations"
+  add_foreign_key "subscriptions", "users"
   add_foreign_key "token_purchases", "organisations"
   add_foreign_key "token_purchases", "users"
 end

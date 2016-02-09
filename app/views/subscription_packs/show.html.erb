@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @subscription_pack.name %>
+</p>
+
+<p>
+  <strong>Price:</strong>
+  <%= @subscription_pack.price %>
+</p>
+
+<%= link_to 'Edit', edit_subscription_pack_path(@subscription_pack) %> |
+<%= link_to 'Back', subscription_packs_path %>

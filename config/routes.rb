@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :subscription_packs
+  resources :subscriptions
   resources :sponsors
   resources :admins
   resources :admins

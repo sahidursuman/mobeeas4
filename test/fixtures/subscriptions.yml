@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  user_type: MyString
+  user_id:
+  organisation_id:
+  expiry_date: 2016-02-09 15:28:53
+  payment: 9.99
+
+two:
+  user_type: MyString
+  user_id:
+  organisation_id:
+  expiry_date: 2016-02-09 15:28:53
+  payment: 9.99

@@ -6,7 +6,7 @@
      for <%= @organisation.name %>.
   <% end %>
 </h5>
-
+<%# if a host is purchasing token for organisation %>
 <% if params[:org].present? %>
   <%= form_tag payments_path(token_pack: @token_pack.id, org_id: @organisation.id) do %>
   <article>
@@ -31,6 +31,7 @@
           data-amount="<%= (@token_pack.member_price * 100).to_int %>"
           data-locale="auto"></script>
   <% end %>
+<%# if host is an independent and purchasing a token for himself %>
 <% else %><%# else for if params[:org].present? %>
   <%= form_tag payments_path(token_pack: @token_pack.id) do %>
 
