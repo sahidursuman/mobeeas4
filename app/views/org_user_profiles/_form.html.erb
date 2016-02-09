@@ -9,17 +9,24 @@
       <div class="col l6">
         <%= f.input :last_name %>
       </div>
-
       <div class="col l6">
         <%= f.input :phone %>
       </div>
       <div class="col l6">
         <%= f.input :position %>
       </div>
-
-      <%#<div class="col l6">%>
-        <%#= f.input :agency, collection: [ "I am an Independent", "I represent an Organisation" ] %>
-      <%#</div>%>
+      <div class="col l6">
+        <%= f.input :suburb %>
+      </div>
+      <div class="col l6">
+        <%= f.input :state, priority: [ "NSW" ], collection: [ "NSW", "QLD", "SA", "TAS", "VIC", "ACT", "WA"] %>
+      </div>
+      <div class="col l6">
+        <%= f.input :postcode %>
+      </div>
+      <div class="col l6">
+        <%= f.input :country, priority: [ "Australia" ], :include_blank => false %>
+      </div>
       <%= hidden_field_tag(:org_id, params[:org_id]) %>
       <% if params[:is_admin].present? %>
         <%= hidden_field_tag(:is_admin, params[:is_admin]) %>

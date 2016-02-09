@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160207230117) do
+ActiveRecord::Schema.define(version: 20160209021753) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -233,6 +233,10 @@ ActiveRecord::Schema.define(version: 20160207230117) do
     t.string   "agency"
     t.integer  "number_of_tokens_for_independent", default: 0
     t.boolean  "approved",                         default: false
+    t.string   "suburb"
+    t.string   "state"
+    t.string   "postcode"
+    t.string   "country"
   end
 
   add_index "org_user_profiles", ["guid"], name: "index_org_user_profiles_on_guid", using: :btree

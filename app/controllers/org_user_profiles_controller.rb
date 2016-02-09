@@ -110,6 +110,6 @@ class OrgUserProfilesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def org_user_profile_params
-      params.require(:org_user_profile).permit(:first_name, :last_name, :phone, :position, :guid, :user_id, :org_creator, :connections, :agency, :number_of_tokens_for_independent, :approved)
+      params.require(:org_user_profile).permit(:first_name, :last_name, :phone, :position, :guid, :user_id, :org_creator, :connections, :agency, :number_of_tokens_for_independent, :approved, :suburb, :state, :postcode, :country)
     end
 end

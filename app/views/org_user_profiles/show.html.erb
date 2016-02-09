@@ -14,7 +14,7 @@
         <strong>Last name:</strong>
         <%= @org_user_profile.last_name %>
         </p>
-
+        <%# protect sensitive information of the host from all viewers %>
         <%  if current_user.id == @org_user_profile.user_id %>
           <p>
           <strong>Phone:</strong>
@@ -29,6 +29,22 @@
         <p>
         <strong>Position:</strong>
         <%= @org_user_profile.position %>
+        </p>
+        <p>
+        <strong>Suburb:</strong>
+        <%= @org_user_profile.suburb %>
+        </p>
+        <p>
+        <strong>State:</strong>
+        <%= @org_user_profile.state %>
+        </p>
+        <p>
+        <strong>Postcode:</strong>
+        <%= @org_user_profile.postcode %>
+        </p>
+        <p>
+        <strong>Country:</strong>
+        <%= @org_user_profile.country %>
         </p>
         <% if current_user.id == @org_user_profile.user_id %>
           <div class="margin-top-5px">
