@@ -16,7 +16,7 @@
             <% end %>
           </ol>
         <% else %>
-          <p>There is no approved hosts.</p>
+          <p>There are no approved hosts.</p>
         <% end %><%# end of if @org_user_profiles.approved.present? %>
       <% elsif (params[:status] == 'prohibited') %>
         <% if @org_user_profiles.not_approved.present? %>

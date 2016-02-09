@@ -6,7 +6,7 @@
 <p>
   Your organisation <%= @organisation.name %> profile has been created in MOBEEAS and a new organisation host for MOBEEAS has been added, waiting for your approval.
   <br>
-  Please click on the link below if you approve this application:
+  Please click on the link below if you approve this application and the payment of AUD$ 220.00 (includes GST) annual MOBEEAS subscription fee.
   <%# first, find the org_user of this current user, put it into the verified method below %>
   <br>
   <% @org_user = OrgUser.find_by(user_id: @user.id, organisation_id: @organisation.id)%>
@@ -73,7 +73,7 @@
 
 <p>
   Your organisation representative's details are shown below.
-  This user would like to apply for <strong>ADMIN</strong> level, which means that he or she will be able to create new opportunities, purchase and issue engagement tokens.
+  This user would like to apply for <strong>ADMIN</strong> level, which means that he or she will be able to renew the annual subscription fee, create new opportunities, purchase and issue engagement tokens.
 </p>
 
 <p>

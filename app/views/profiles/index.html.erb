@@ -16,7 +16,7 @@
             <% end %>
           </ol>
         <% else %>
-          <p>There is no approved candidate.</p>
+          <p>There are no approved candidate.</p>
         <% end %><%# end if @profiles.approved.present? %>
       <% elsif (params[:status] == 'prohibited') %>
         <% if @profiles.not_approved.present? %>

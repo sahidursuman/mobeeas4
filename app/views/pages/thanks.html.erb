@@ -34,8 +34,16 @@
           Candidate Email: <strong><%= @user.email %></strong>
         <% end %>
       </p>
-    <% end %>
+
     <%#-------------------------------%>
+    <% elsif params[:type] == 'verified_host' %>
+      <h5>Thank you for the approval.</h5>
+      <p>
+        Please visit MOBEEAS website.
+        <br>
+        <a href="/">Return to Home</a>
+      </p>
+    <% end %>
 
 
   </div>
