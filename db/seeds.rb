@@ -208,11 +208,15 @@ SchoolYear.create!(name: 'Year 11')
 SchoolYear.create!(name: 'Year 12')
 SchoolYear.create!(name: 'Beyond Year 12')
 
-EngagementTokenPack.create!(name: 'One token', member_price: 63, non_member_price: 70, number_of_tokens: 1)
-EngagementTokenPack.create!(name: 'Two token', member_price: 120, non_member_price: 130, number_of_tokens: 2)
-EngagementTokenPack.create!(name: 'Five token', member_price: 275, non_member_price: 300, number_of_tokens: 5)
+EngagementTokenPack.create!(name: 'One token', member_price: 63, number_of_tokens: 1)
+EngagementTokenPack.create!(name: 'Two token', member_price: 120, number_of_tokens: 2)
+EngagementTokenPack.create!(name: 'Five token', member_price: 275, number_of_tokens: 5)
 
 AchievementLevel.create!(name: 'Causing Concern')
 AchievementLevel.create!(name: 'Working towards')
 AchievementLevel.create!(name: 'Achieved')
 AchievementLevel.create!(name: 'Going Beyond')
+
+SubscriptionPack.create!(name: 'organisation', price: 220.00)
+SubscriptionPack.create!(name: 'independent', price: 55.00)
+SubscriptionPack.create!(name: 'candidate', price: 22.00)
