@@ -1,5 +1,35 @@
-<h1>New Subscription</h1>
+<h4>New 1 Year MOBEEAS Subscription</h4>
 
-<%= render 'form' %>
+<%# @subscription_pack = SubscriptionPack.find(params[:subscription_pack]) %>
+<p>
+  You are purchasing a One Year <%= @subscription_pack.name %> subscription.
+  <%= current_user.email %>
+  <br>
+  <%# this is for organisation subscription %>
+  <% if @subscription_pack.name == 'organisation' %>
+    <%= form_tag payments_path(subscription_pack: @subscription_pack.id, org_id: @organisation.id, user_id: current_user.id) do %>
+    <article>
+      <% if flash[:error].present? %>
+        <div id="error_explanation">
+          <p><%= flash[:error] %></p>
+        </div>
+      <% end %>
+      <label class="amount">
+        <span>Amount: <%= number_to_currency(@subscription_pack.price) %></span>
+      </label>
+    </article>
 
-<%= link_to 'Back', subscriptions_path %>
+    <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+            data-key="<%= Rails.configuration.stripe[:publishable_key] %>"
+            data-image="<%= asset_path 'MOBEEAS.png' %>"
+            data-name="MOBEEAS"
+            data-currency="aud"
+            data-email="<%= current_user.email %>"
+            data-receipt-email="<%= current_user.email %>"
+            data-description="<%= @subscription_pack.name %>"
+            data-amount="<%= (@subscription_pack.price * 100).to_int %>"
+            data-locale="auto"></script>
+    <% end %>
+
+  <% end %>
+</p>

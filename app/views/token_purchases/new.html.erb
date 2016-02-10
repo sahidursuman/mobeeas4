@@ -18,7 +18,7 @@
     <label class="amount">
       <span>Amount: <%= number_to_currency(@token_pack.member_price) %></span>
     </label>
-  </article>
+  </article>  
 
   <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
           data-key="<%= Rails.configuration.stripe[:publishable_key] %>"
@@ -31,6 +31,7 @@
           data-amount="<%= (@token_pack.member_price * 100).to_int %>"
           data-locale="auto"></script>
   <% end %>
+
 <%# if host is an independent and purchasing a token for himself %>
 <% else %><%# else for if params[:org].present? %>
   <%= form_tag payments_path(token_pack: @token_pack.id) do %>

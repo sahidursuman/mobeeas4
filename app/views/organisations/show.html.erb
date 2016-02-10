@@ -457,8 +457,8 @@
         <div class="card-content">
           <h5>Organisation Subscription</h5>
           <p>Please purchase subscription here</p>
-          <%= link_to "Renew 1 Year Subscription", new_subscription_path(org_id: @organisation.id, user_id: current_user.id, user_type: 'organisation') %>
-
+          <% @subscription_pack = SubscriptionPack.find_by(name: 'organisation') %>
+          <%= link_to "Renew 1 Year Subscription", new_subscription_path(org: @organisation.id, subscription_pack: @subscription_pack.id), class: 'btn' %>
         </div><%# end of card content %>
       </div><%# end of card %>
       <% end %>

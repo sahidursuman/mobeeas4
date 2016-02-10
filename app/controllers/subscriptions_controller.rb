@@ -15,6 +15,12 @@ class SubscriptionsController < ApplicationController
   # GET /subscriptions/new
   def new
     @subscription = Subscription.new
+    if params[:org]
+      @organisation = Organisation.find(params[:org])
+    end
+    if params[:subscription_pack].present?
+      @subscription_pack = SubscriptionPack.find(params[:subscription_pack])
+    end
   end
 
   # GET /subscriptions/1/edit
