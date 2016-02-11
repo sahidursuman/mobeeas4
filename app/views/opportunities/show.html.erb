@@ -516,7 +516,7 @@
                 He won't be able to see other candidates listed in the same opportunity  %>
                 <% if (current_user.has_role? :candidate) %>
                   <% if (current_user.profile.id == @profile.id ) %>
-                    <br><strong><%= current_user.profile.name %></strong> (Profile ID: <%= current_user.profile.id %>)
+                    <br><b><%= current_user.profile.name %></b> (Profile ID: <%= current_user.profile.id %>)
                     <% value.each do |val| %>
                       <br><%= val[0] %> - <%= val[1] %>
                     <% end %>
@@ -533,7 +533,7 @@
                   <% end %><%# end if current_user.profile.id == @profile.id %>
                 <%# The user with roles other than candidate can view the details of all candidates in an opportunity %>
                 <% else %>
-                  <br><strong><%= @profile.name %></strong> (Profile ID: <%= @profile.id %>)
+                  <br><b><%= @profile.name %></b> (Profile ID: <%= @profile.id %>)
                   <%# @found = false %><%# start with found is true %>
                   <%# counter = 0 %>
                   <% value.each do |val| %>

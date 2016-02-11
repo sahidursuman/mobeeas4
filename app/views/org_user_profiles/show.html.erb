@@ -1,5 +1,9 @@
-<br>
 <%# THE LEFT COLUMN FOR HOST DETAILS ------------------%>
+<%# if the host is not approved by MOBEEAS Admin, this red message will appear. %>
+<% if !(@org_user_profile.approved) %>
+  <h5 class="red-text">Pending Approval</h5>
+<% end %>
+
 <div class="row">
   <div class="col s12 m4">
     <div class="card">
@@ -54,123 +58,129 @@
       </div><%# card-content %>
     </div><%# card %>
 
-    <%# Search for all organisations linked to this host %>
-    <% @user = User.find(@org_user_profile.user_id) %>
-    <% if (@user.organisations.present?) %>
-      <%# This is the static value that will change from TRUE to FALSE if there at least one organisation executive that did not validate this host. %>
-      <%# Find the name of each organisation %>
-      <% @user.organisations.each do |organisation| %>
+    <%# ONLY The Host that has been approved by MOBEEAS Admin can see his links with his organisations %>
+    <% if @org_user_profile.approved %>
+      <%# Search for all organisations linked to this host %>
+      <% @user = User.find(@org_user_profile.user_id) %>
+      <% if (@user.organisations.present?) %>
+        <%# This is the static value that will change from TRUE to FALSE if there is at least one organisation executive that did not validate this host. %>
+        <%# Find the name of each organisation %>
+        <% @user.organisations.each do |organisation| %>
+            <div class="card">
+              <div class="card-content">
+
+              <%# Find the record in org_users join table of that user and that organisation, check the verification status %>
+              <% organisation.org_users.each do |org_user| %>
+                <% if org_user.user_id == @user.id %>
+                  <%# the host can click on New Opportunity button if:
+                      1. the Organisation Executive has verified his details
+                      AND
+                      2. the Admin has approved his registration
+                  %>
+                  <% if (org_user.verified_status) && (org_user.user.org_user_profile.approved)  %>
+                    <p>
+                      Your connection with:<br>
+                      <b><%= link_to organisation.name, organisation_path(organisation.id) %></b><br>
+                      has been verified.
+                      <%# create a link to create a new opportunity here, but only if the current user is the actual host %>
+                      <% if current_user.id == @org_user_profile.user_id %>
+                        <div class="margin-top-5px">
+                          <%= link_to 'New Opportunity', new_opportunity_path(org_id: organisation.id, object: 'title'), class: 'btn' %>
+                        </div>
+                      <% end %>
+                    </p>
+                  <%# the host can't click the New Opportunity button if:
+                      1. the Organisation Executive has not approved his details
+                      OR
+                      2. the Admin has not approved his registration.
+                  %>
+                  <% elsif !(org_user.verified_status) || !(org_user.user.org_user_profile.approved) %>
+                    <p>
+                      Your connection with:<br>
+                      <b><%= link_to organisation.name, organisation_path(organisation.id) %></b><br>
+                      has not been verified or your MOBEEAS registration has not yet been approved.
+                      <div class="margin-top-5px">
+                        <a class="btn disabled">New Opportunity</a>
+                      </div>
+                    </p>
+                  <% end %>
+                  <p><div class="margin-top-5px"><%= link_to "View Subscription", organisation_path(organisation.id), class: 'btn' %></div></p>
+                <% end %><%# end of if org_user.user_id == @user.id %>
+              <% end %>
+            </div><%# card-content %>
+          </div><%# card %>
+        <% end %>
+      <% else %>
+        <%# if org user profile is the creator of this organisation, only then the new organisation form will appear%>
+        <% if @org_user_profile.org_creator %>
           <div class="card">
             <div class="card-content">
+              <p>Please create the new organisation profile that you are representing:</p>
+              <h4>ORGANISATION DETAILS:</h4>
+              <br>
+              <% @new_organisation = Organisation.new %>
 
-            <%# Find the record in org_users join table of that user and that organisation, check the verification status %>
-            <% organisation.org_users.each do |org_user| %>
-              <% if org_user.user_id == @user.id %>
-                <%# the host can click on New Opportunity button if:
-                    1. the Organisation Executive has verified his details
-                    AND
-                    2. the Admin has approved his registration
-                %>
-                <% if (org_user.verified_status) && (org_user.user.org_user_profile.approved)  %>
-                  <p>
-                    Your connection with:<br>
-                    <b><%= link_to organisation.name, organisation_path(organisation.id) %></b><br>
-                    has been verified.
-                    <%# create a link to create a new opportunity here, but only if the current user is the actual host %>
-                    <% if current_user.id == @org_user_profile.user_id %>
-                      <div class="margin-top-5px">
-                        <%= link_to 'New Opportunity', new_opportunity_path(org_id: organisation.id, object: 'title'), class: 'btn' %>
-                      </div>
-                    <% end %>
-                  </p>
-                <%# the host can't click the New Opportunity button if:
-                    1. the Organisation Executive has not approved his details
-                    OR
-                    2. the Admin has not approved his registration.
-                %>
-                <% elsif !(org_user.verified_status) || !(org_user.user.org_user_profile.approved) %>
-                  <p>
-                    Your connection with:<br>
-                    <b><%= link_to organisation.name, organisation_path(organisation.id) %></b><br>
-                    has not been verified or your MOBEEAS registration has not yet been approved.
-                    <div class="margin-top-5px">
-                      <a class="btn disabled">New Opportunity</a>
+              <%# ORGANISATION%>
+              <%= simple_form_for(@new_organisation) do |f| %>
+                <%= f.error_notification %>
+
+                <div class="form-inputs">
+                  <%= f.association :organisation_type, :include_blank => false  %>
+                  <%= f.input :name, label: 'Organisation name' %>
+                  <%= f.input :address, label: 'Street Address' %>
+                  <div class="row">
+                    <div class="col s6">
+                      <%= f.input :suburb %>
                     </div>
-                  </p>
-                <% end %>
-                <p><div class="margin-top-5px"><%= link_to "View Subscription", organisation_path(organisation.id), class: 'btn' %></div></p>
-              <% end %><%# end of if org_user.user_id == @user.id %>
-            <% end %>
-          </div><%# card-content %>
-        </div><%# card %>
-      <% end %>
-    <% else %>
-      <%# if org user profile is the creator of this organisation, only then the new organisation form will appear%>
-      <% if @org_user_profile.org_creator %>
-        <div class="card">
-          <div class="card-content">
-            <p>Please create the new organisation profile that you are representing:</p>
-            <h4>ORGANISATION DETAILS:</h4>
-            <br>
-            <% @new_organisation = Organisation.new %>
-
-            <%# ORGANISATION%>
-            <%= simple_form_for(@new_organisation) do |f| %>
-              <%= f.error_notification %>
-
-              <div class="form-inputs">
-                <%= f.association :organisation_type, :include_blank => false  %>
-                <%= f.input :name, label: 'Organisation name' %>
-                <%= f.input :address, label: 'Street Address' %>
-                <div class="row">
-                  <div class="col s6">
-                    <%= f.input :suburb %>
+                    <div class="col s6" style="list-style-type: none;">
+                      <%= f.input :state, priority: [ "NSW" ], collection: [ "NSW", "QLD", "SA", "TAS", "VIC", "ACT", "WA"], :include_blank => false %>
+                    </div>
                   </div>
-                  <div class="col s6" style="list-style-type: none;">
-                    <%= f.input :state, priority: [ "NSW" ], collection: [ "NSW", "QLD", "SA", "TAS", "VIC", "ACT", "WA"], :include_blank => false %>
+                  <div class="row">
+                    <div class="col s6">
+                      <%= f.input :postcode %>
+                    </div>
+                    <div class="col s6">
+                      <%= f.input :country, priority: [ "Australia" ], :include_blank => false %>
+                    </div>
                   </div>
+                  <%= f.input :contact_name, label: 'Executive of this Organisation: ' ' <a href="#modal_org_executive" class="modal-trigger"><i class="material-icons">help</i></a>'.html_safe %>
+                  <%= f.input :contact_email %>
+                  <%= f.input :contact_phone %>
+                  <%= f.input :logo %>
+                  <%= f.input :website %>
+                  <%#= f.input :acara_school_id %>
+                  <%= f.input :school_type, collection: [ "Pre-School", "K-12", "Primary", "Secondary", "Tertiary", "Other"] %>
                 </div>
-                <div class="row">
-                  <div class="col s6">
-                    <%= f.input :postcode %>
-                  </div>
-                  <div class="col s6">
-                    <%= f.input :country, priority: [ "Australia" ], :include_blank => false %>
-                  </div>
+
+                <div class="form-actions">
+                  <%= f.button :submit %>
                 </div>
-                <%= f.input :contact_name, label: 'Executive of this Organisation: ' ' <a href="#modal_org_executive" class="modal-trigger"><i class="material-icons">help</i></a>'.html_safe %>
-                <%= f.input :contact_email %>
-                <%= f.input :contact_phone %>
-                <%= f.input :logo %>
-                <%= f.input :website %>
-                <%#= f.input :acara_school_id %>
-                <%= f.input :school_type, collection: [ "Pre-School", "K-12", "Primary", "Secondary", "Tertiary", "Other"] %>
-              </div>
+              <% end %>
+            </div>
+          </div>
 
-              <div class="form-actions">
-                <%= f.button :submit %>
-              </div>
-            <% end %>
+          <%# Modal Structure %>
+          <div id="modal_org_executive" class="modal">
+            <div class="modal-content">
+              <h4>Executive of this Organisation</h4>
+              <p>Enter the name and contact details for an Executive of this Organisation who will be able to authorise the listing of this new organisation in MOBEEAS.</p>
+            </div>
+            <div class="modal-footer">
+              <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">X</a>
+            </div>
           </div>
-        </div>
-
-        <%# Modal Structure %>
-        <div id="modal_org_executive" class="modal">
-          <div class="modal-content">
-            <h4>Executive of this Organisation</h4>
-            <p>Enter the name and contact details for an Executive of this Organisation who will be able to authorise the listing of this new organisation in MOBEEAS.</p>
-          </div>
-          <div class="modal-footer">
-            <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">X</a>
-          </div>
-        </div>
-      <% end %> <%# end if the org user profile is not an organisation creator %>
-    <% end %><%# if (@user.organisations.present?) %>
+        <% end %> <%# end if the org user profile is not an organisation creator %>
+      <% end %><%# if (@user.organisations.present?) %>
+    <% end %><%# end if @org_user_profile.approved is TRUE %>
 
     <%# only the host that represents an organisation can see the button of Organisation Index %>
     <% if current_user.has_role? :host %>
-      <%# Organisation index appears only when the host is representing an organisation (not independent) %>
-      <% if (current_user.org_user_profile.agency == 'I represent an Organisation') %>
+      <%# Organisation index appears only if:
+          1. the host is representing an organisation (not independent)
+          AND
+          2. the host is approved by MOBEEAS Admin %>
+      <% if (current_user.org_user_profile.agency == 'I represent an Organisation') && (current_user.org_user_profile.approved) %>
         <div class="row">
           <div class="col s12 m">
             <div class="card">

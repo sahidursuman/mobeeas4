@@ -1,12 +1,31 @@
 <li class="bold active"><%= link_to 'Host Profile', host_profile_path %></li>
 <%#<li class="bold">>%<%#= link_to 'Mailbox', messages_path(my_id: current_user.id) %><%#</li>%>
-<% if current_user.org_user_profile.agency == "I represent an Organisation" %>
-  <li class="bold"><%= link_to 'Organisations Index', organisations_host_path(state: 'show_organisations') %></li>
+
+<%# The Host can click all links in Host Sidebar if his @org_user_profiles.approved is TRUE (by MOBEEAS Admin).
+    If the @org_user_profiles.approved is FALSE, he will be able to access just the Host Profile link.
+    The @org_user_profiles.approved determines if a host can access the entire Host Functions, regardless he is verified by Org Executive or not.
+%>
+
+<% if (current_user.org_user_profile.approved) %>
+  <% if current_user.org_user_profile.agency == "I represent an Organisation" %>
+    <li class="bold"><%= link_to 'Organisations Index', organisations_host_path(state: 'show_organisations') %></li>
+  <% end %>
+  <li class="bold"><%= link_to 'Purchase Tokens', purchase_tokens_path %></li>
+  <li class="bold"><%= link_to 'Create Opportunity', organisations_host_path(state: 'show_opportunities') %></li>
+  <li class="bold"><%= link_to 'Draft Opportunities', opportunities_path(status: 'draft') %></li>
+  <li class="bold"><%= link_to 'Listed Opportunities', opportunities_path(status: 'listed') %></li>
+  <li class="bold"><%= link_to 'Active Opportunities', opportunities_path(status: 'active') %></li>
+  <li class="bold"><%= link_to 'Completed Opportunities', opportunities_path(status: 'post_active') %></li>
+  <li class="bold"><%= link_to 'Archived Opportunities', opportunities_path(status: 'archived') %></li>
+<% else %>
+  <% if current_user.org_user_profile.agency == "I represent an Organisation" %>
+    <li class="bold"><div class="grey-text margin-left-15px margin-top-15px">Organisations Index</div></li>
+  <% end %>
+  <li class="bold"><div class="grey-text margin-left-15px margin-top-15px">Purchase Tokens</div></li>
+  <li class="bold"><div class="grey-text margin-left-15px margin-top-15px">Create Opportunity</div></li>
+  <li class="bold"><div class="grey-text margin-left-15px margin-top-15px">Draft Opportunities</div></li>
+  <li class="bold"><div class="grey-text margin-left-15px margin-top-15px">Listed Opportunities</div></li>
+  <li class="bold"><div class="grey-text margin-left-15px margin-top-15px">Active Opportunities</div></li>
+  <li class="bold"><div class="grey-text margin-left-15px margin-top-15px">Completed Opportunities</div></li>
+  <li class="bold"><div class="grey-text margin-left-15px margin-top-15px">Archived Opportunities</div></li>
 <% end %>
-<li class="bold"><%= link_to 'Purchase Tokens', purchase_tokens_path %></li>
-<li class="bold"><%= link_to 'Create Opportunity', organisations_host_path(state: 'show_opportunities') %></li>
-<li class="bold"><%= link_to 'Draft Opportunities', opportunities_path(status: 'draft') %></li>
-<li class="bold"><%= link_to 'Listed Opportunities', opportunities_path(status: 'listed') %></li>
-<li class="bold"><%= link_to 'Active Opportunities', opportunities_path(status: 'active') %></li>
-<li class="bold"><%= link_to 'Completed Opportunities', opportunities_path(status: 'post_active') %></li>
-<li class="bold"><%= link_to 'Archived Opportunities', opportunities_path(status: 'archived') %></li>

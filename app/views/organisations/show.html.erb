@@ -65,7 +65,7 @@
         <%# When a new organisation is created, the very first host who created it must become the Administrator Host, not just a Host %>
         <%# This will display the list of Admin Host of this organisation%>
         <% if @organisation.org_users.admin_user.present? %>
-          <p>List of Approved Administrator:</p>
+          <p>List of approved Administrator Host:</p>
           <ol>
             <% @organisation.users.each do |user| %>
               <% if user.org_users.present? %>
@@ -74,7 +74,12 @@
                   <% if org_user.organisation_id == @organisation.id %>
                     <% if (org_user.admin_status) && (org_user.verified_status) %>
                       <li><p>
-                      <strong><%= link_to user.org_user_profile.name, org_user_profile_path(user.org_user_profile.id) %></strong>
+                      <%# ONLY the current user can see his own Profile page %>
+                      <% if current_user.id == user.id %>
+                        <strong><%= link_to user.org_user_profile.name, org_user_profile_path(user.org_user_profile.id) %></strong>
+                      <% else %>
+                        <strong><%= user.org_user_profile.name %></strong>
+                      <% end %>
                       (Verified)
                       <%# if the curret user is already linked to this organisation they can edit or delete %>
                       <% if org_user.user_id == current_user.id %>
@@ -261,7 +266,7 @@
         <h5>Approved Hosts</h5>
         <p>Approved Hosts will have the ability to create an opportunity and apply organisation tokens.</p>
         <% if @organisation.org_users.host_user.present? %>
-          <p>List of approved hosts:</p>
+          <p>List of approved Hosts:</p>
           <ol>
             <% @organisation.users.each do |user| %>
               <% if user.org_users.present? %>
@@ -271,14 +276,15 @@
 
                       <% if !(org_user.admin_status) && (org_user.verified_status) %>
                         <li><p>
-                          <strong><%= link_to user.org_user_profile.name, org_user_profile_path(user.org_user_profile.id) %></strong>
-                          (Verified)
-                          <%# if the curret user is already linked to this organisation they can edit or delete %>
-                          <% if org_user.user_id == current_user.id %>
+                          <%# ONLY the current user can see his own Profile page %>
+                          <% if current_user.id == user.id %>
+                            <strong><%= link_to user.org_user_profile.name, org_user_profile_path(user.org_user_profile.id) %></strong>
+                            (Verified)
                             <%= link_to edit_org_user_profile_path(user.org_user_profile, org_id: @organisation.id) do %><i class="material-icons tiny">mode_edit</i><% end %>
                             <%= link_to 'Disconnect', remove_host_from_organisation_path(@organisation, user_id: user.id), data: {confirm: "Are you sure to remove the connection?"}%>
-                          <% end %><%# end of org_user.user_id == current_user.id %>
-
+                          <% else %>
+                            <strong><%= user.org_user_profile.name %></strong>
+                          <% end %>
                         </p></li>
                       <% elsif !(org_user.admin_status) && !(org_user.verified_status) %>
                         <li><p>
