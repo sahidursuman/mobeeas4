@@ -66,7 +66,12 @@
             <%# Find the record in org_users join table of that user and that organisation, check the verification status %>
             <% organisation.org_users.each do |org_user| %>
               <% if org_user.user_id == @user.id %>
-                <% if org_user.verified_status %>
+                <%# the host can click on New Opportunity button if:
+                    1. the Organisation Executive has verified his details
+                    AND
+                    2. the Admin has approved his registration
+                %>
+                <% if (org_user.verified_status) && (org_user.user.org_user_profile.approved)  %>
                   <p>
                     Your connection with:<br>
                     <b><%= link_to organisation.name, organisation_path(organisation.id) %></b><br>
@@ -78,11 +83,16 @@
                       </div>
                     <% end %>
                   </p>
-                <% else %>
+                <%# the host can't click the New Opportunity button if:
+                    1. the Organisation Executive has not approved his details
+                    OR
+                    2. the Admin has not approved his registration.
+                %>
+                <% elsif !(org_user.verified_status) || !(org_user.user.org_user_profile.approved) %>
                   <p>
                     Your connection with:<br>
                     <b><%= link_to organisation.name, organisation_path(organisation.id) %></b><br>
-                    has not been verified.
+                    has not been verified or your MOBEEAS registration has not yet been approved.
                     <div class="margin-top-5px">
                       <a class="btn disabled">New Opportunity</a>
                     </div>

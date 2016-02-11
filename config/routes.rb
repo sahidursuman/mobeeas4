@@ -99,6 +99,8 @@ Rails.application.routes.draw do
   get 'unverified_education', to: 'pages#unverified_education'
   get 'unverified_wwc', to: 'pages#unverified_wwc'
   get 'independent_host', to: 'pages#independent_host'
+  get 'income', to: 'pages#income'
+
 
   devise_for :users
   # The priority is based upon order of creation: first created -> highest priority.

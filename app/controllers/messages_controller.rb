@@ -29,10 +29,12 @@ class MessagesController < ApplicationController
   def create
     @message = Message.new(message_params)
     if params[:from].present?
+      # @message.from is the User id of whom the message is from
       @message.from = params[:from]
     end
 
     if params[:to].present?
+      # @message.to is the User id of whom the message is to
       @message.to = params[:to]
     end
 

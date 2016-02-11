@@ -3,6 +3,7 @@
     <%= render 'layouts/sidebar' %>
     <% if params[:viewer] == 'admin' %><%# this params is coming from profiles/index.html.erb page where Admin can view a candidate's profile %>
       <% @profile = Profile.find(params[:profile_id])%>
+      <h5 class="red-text">THIS IS LIVE DATA. PLEASE DO NOT MODIFY THE RECORD BELOW</h5>
     <% elsif !(params[:viewer] == 'admin') %>
       <% @profile = Profile.find(current_user.profile.id) %><%# this params will not appear if the candidate is viewing her own profile page %>
     <% end %>

@@ -7,7 +7,12 @@
     <!-- <div class="row"> -->
     <% organisation.org_users.each do |org_user| %>
       <% if org_user.user_id == current_user.id %>
-        <% if org_user.verified_status %>
+        <%# the host can click on New Opportunity button if:
+            1. the Organisation Executive has verified his details
+            AND
+            2. the Admin has approved his registration
+        %>
+        <% if (org_user.verified_status) && (org_user.user.org_user_profile.approved)  %>
           <div class="card">
             <div class="card-content">
               <div class="col l8">
@@ -21,12 +26,18 @@
               </div>
             </div>
           </div>
-        <% else %>
+
+        <%# the host can't click the New Opportunity button if:
+            1. the Organisation Executive has not approved his details
+            OR
+            2. the Admin has not approved his registration.
+        %>
+        <% elsif !(org_user.verified_status) || !(org_user.user.org_user_profile.approved) %>
           <div class="card">
             <div class="card-content">
               <div class="col l8">
                 <p>
-                  Your connection with: <b><%= link_to organisation.name, organisation_path(organisation.id) %></b> has not been verified.
+                  Your connection with <b><%= link_to organisation.name, organisation_path(organisation.id) %></b> has not been verified or your MOBEEAS registration has not yet been approved.
                 </p>
               </div>
               <div class="col l4 margin-bottom-20px">

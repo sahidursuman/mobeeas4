@@ -35,8 +35,9 @@
                       <% if org_user.organisation_id == @organisation.id %>
                         <% if (org_user.admin_status) && (org_user.verified_status) %>
                           <li class="list-style-disc"><p>
-                          <strong><%= user.org_user_profile.name %> not ready...<%#= link_to "Send message to" + user.org_user_profile.name, purchase_more_tokens_url(opportunity_id, profile_id) %></strong>
+                          <strong><%= user.org_user_profile.name %> </strong>
                           (Verified)
+                          <%= link_to " - Send a short message to " + user.org_user_profile.name, new_message_path(from: current_user.id, to: user.id) %>
                           </li>
                         <% end %><%# end of if (org_user.admin_status) %>
                       <% end %><%# end of org_user.organisation_id == %>

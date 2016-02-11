@@ -125,4 +125,9 @@ class PagesController < ApplicationController
 	def independent_host
 	end
 
+	def income
+		@engagement_token_packs = EngagementTokenPack.all
+		@subscription_packs = SubscriptionPack.all
+	end
+
 end

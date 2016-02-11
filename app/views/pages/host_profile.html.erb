@@ -14,6 +14,8 @@
     <% elsif (current_user.has_role? :admin) %>
       <%= render 'layouts/sidebar' %>
       <h4>Host Profile</h4>
+      <h5 class="red-text">THIS IS LIVE DATA. PLEASE DO NOT MODIFY THE RECORD BELOW</h5>
+
       <%# Please note: render org_user_profiles/show below is rendering the partial file called '_show.html.erb',
       which then will be rendering the template 'show.html.erb' %>
       <%= render 'org_user_profiles/show' %>

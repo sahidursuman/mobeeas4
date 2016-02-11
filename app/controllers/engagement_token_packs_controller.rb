@@ -28,8 +28,12 @@ class EngagementTokenPacksController < ApplicationController
 
     respond_to do |format|
       if @engagement_token_pack.save
-        format.html { redirect_to @engagement_token_pack, notice: 'Engagement token pack was successfully created.' }
+        format.html { redirect_to income_path, notice: 'Engagement token pack was successfully created.' }
         format.json { render :show, status: :created, location: @engagement_token_pack }
+
+        # Keep this two lines below, only because it is the original code
+        # format.html { redirect_to @engagement_token_pack, notice: 'Engagement token pack was successfully created.' }
+        # format.json { render :show, status: :created, location: @engagement_token_pack }
       else
         format.html { render :new }
         format.json { render json: @engagement_token_pack.errors, status: :unprocessable_entity }
@@ -42,8 +46,11 @@ class EngagementTokenPacksController < ApplicationController
   def update
     respond_to do |format|
       if @engagement_token_pack.update(engagement_token_pack_params)
-        format.html { redirect_to @engagement_token_pack, notice: 'Engagement token pack was successfully updated.' }
-        format.json { render :show, status: :ok, location: @engagement_token_pack }
+          format.html { redirect_to income_path, notice: 'Engagement token pack was successfully updated.' }
+          format.json { render :show, status: :ok, location: @engagement_token_pack }
+          # Keep this two lines below, only because it is the original code
+          # format.html { redirect_to @engagement_token_pack, notice: 'Engagement token pack was successfully updated.' }
+          # format.json { render :show, status: :ok, location: @engagement_token_pack }
       else
         format.html { render :edit }
         format.json { render json: @engagement_token_pack.errors, status: :unprocessable_entity }
@@ -56,8 +63,12 @@ class EngagementTokenPacksController < ApplicationController
   def destroy
     @engagement_token_pack.destroy
     respond_to do |format|
-      format.html { redirect_to engagement_token_packs_url, notice: 'Engagement token pack was successfully destroyed.' }
+      format.html { redirect_to income_path, notice: 'Engagement token pack was successfully destroyed.' }
       format.json { head :no_content }
+
+      # Keep this two lines below, only because it is the original code
+      # format.html { redirect_to engagement_token_packs_url, notice: 'Engagement token pack was successfully destroyed.' }
+      # format.json { head :no_content }
     end
   end
 

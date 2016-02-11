@@ -28,8 +28,12 @@ class SubscriptionPacksController < ApplicationController
 
     respond_to do |format|
       if @subscription_pack.save
-        format.html { redirect_to @subscription_pack, notice: 'Subscription pack was successfully created.' }
+        format.html { redirect_to income_path, notice: 'Subscription pack was successfully created.' }
         format.json { render :show, status: :created, location: @subscription_pack }
+
+        # Keep this two lines below, only because it is the original code
+        # format.html { redirect_to @subscription_pack, notice: 'Subscription pack was successfully created.' }
+        # format.json { render :show, status: :created, location: @subscription_pack }
       else
         format.html { render :new }
         format.json { render json: @subscription_pack.errors, status: :unprocessable_entity }
@@ -42,6 +46,10 @@ class SubscriptionPacksController < ApplicationController
   def update
     respond_to do |format|
       if @subscription_pack.update(subscription_pack_params)
+        format.html { redirect_to income_path, notice: 'Subscription pack was successfully updated.' }
+        format.json { render :show, status: :ok, location: @subscription_pack }
+
+        # Keep this two lines below, only because it is the original code
         format.html { redirect_to @subscription_pack, notice: 'Subscription pack was successfully updated.' }
         format.json { render :show, status: :ok, location: @subscription_pack }
       else
@@ -56,8 +64,12 @@ class SubscriptionPacksController < ApplicationController
   def destroy
     @subscription_pack.destroy
     respond_to do |format|
-      format.html { redirect_to subscription_packs_url, notice: 'Subscription pack was successfully destroyed.' }
+      format.html { redirect_to income_path, notice: 'Subscription pack was successfully destroyed.' }
       format.json { head :no_content }
+
+      # Keep this two lines below, only because it is the original code
+      # format.html { redirect_to subscription_packs_url, notice: 'Subscription pack was successfully destroyed.' }
+      # format.json { head :no_content }
     end
   end
 
