@@ -17,6 +17,6 @@ class EnquiryMailer < ApplicationMailer
   #
   def received(enquiry_id)
     @enquiry = Enquiry.find(enquiry_id)
-    mail(to: "info@mobeeas.com", subject: 'An enquiry has been received')
+    mail(to: "mobeeas@mobeeas.com", subject: 'An enquiry has been received')
   end
 end

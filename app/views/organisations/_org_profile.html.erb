@@ -68,7 +68,9 @@
 
     <%# If the current_user's admin status is true %>
     <% if @org_linked.admin_status %>
-      <%= link_to "Edit Organisation", edit_organisation_path(@organisation.id)%>
+      <div class="margin-top-20px">
+        <%= link_to "Edit Organisation", edit_organisation_path(@organisation.id), class: 'btn' %>
+      </div>
     <% end %>
   <% end %>
 

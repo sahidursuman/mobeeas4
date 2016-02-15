@@ -18,12 +18,48 @@
               <div class="col l8">
                 <p>
                   Your connection with <b><%= link_to organisation.name, organisation_path(organisation.id) %></b> has been verified.
+
+                  <%# the @flag value is set to 'expired' at the beginning of the loop %>
+                  <%# during the loop, it will set to 'active-current' if there is ONE SUBSCRIPTION RECORD with future expiry date for this organisation %>
+                  <% @flag = 'expired' %>
+                  <% if organisation.subscriptions.present? %>
+                    <% organisation.subscriptions.each do |subscription| %>
+                      <%# this is to display the subscription that is not expired yet (still current) %>
+                      <% if subscription.is_active %>
+                        <br>
+                        Subscription expiry date: <b><%= subscription.expiry_date.getlocal.strftime('%e %B %Y') %></b>
+                        <% if subscription.expires_in_less_than_30_days %>
+                           - <span class="red-text bold">Expiring soon!</span>
+                        <% end %>
+                        <%# the @flag value will be 'active-current' if at least ONE of the organisation's subscription expiry_date is still in the future %>
+                        <% @flag = 'active-current' %>
+                      <% end %>
+                    <% end %><%# exit the loop @organisation.subscriptions %>
+                    <%# the @flag value will remain 'expired' if there is no subscription with future expiry date %>
+                    <% if @flag == 'expired' %>
+                      <br>
+                      <%= organisation.name %> does not have an active subscription.
+                      <br>
+                      The last subscription's expiry date is: <%= organisation.subscriptions.last.expiry_date.getlocal.strftime('%e %B %Y') %>
+                      <br>
+                    <% end %><br>
+                  <% else %>
+                    <br>
+                    There is no subscription record for <%= organisation.name %>
+                  <% end %>
                 </p>
               </div>
-              <div class="col l4 margin-bottom-20px">
-                <%# if verified, host can create a new opportunity here %>
-                <%= link_to 'New Opportunity', new_opportunity_path(org_id: organisation.id, object: 'title'), class: 'btn' %>
-              </div>
+              <% if @flag == 'active-current' %>
+                <div class="col l4 margin-bottom-20px">
+                  <%# if verified and if the organisation subscription is active, host can create a new opportunity here %>
+                  <%= link_to 'New Opportunity', new_opportunity_path(org_id: organisation.id, object: 'title'), class: 'btn' %>
+                </div>
+              <% elsif @flag == 'expired' %>
+                <div class="col l4 margin-bottom-20px">
+                  <%# if verified and if the organisation subscription is active, host can create a new opportunity here %>
+                  <a class="btn disabled">New Opportunity</a>
+                </div>
+              <% end %>
             </div>
           </div>
 
@@ -49,6 +85,6 @@
         <% end %>
       <% end %>
     <% end %><%# end of organisation.org_users loop %>
-  <% end %>
+  <% end %><%# end of current_user.organisations %>
 </div>
 </div>

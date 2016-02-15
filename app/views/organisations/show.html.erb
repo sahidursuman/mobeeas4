@@ -462,9 +462,37 @@
       <div class="card">
         <div class="card-content">
           <h5>Organisation Subscription</h5>
-          <p>Please purchase subscription here</p>
+          <p>
+            <%# the @flag value is set to 'expired' at the beginning of the loop %>
+            <%# during the loop, it will set to 'active-current' if there is ONE SUBSCRIPTION RECORD with future expiry date for this organisation %>
+            <% @flag = 'expired' %>
+            <% if @organisation.subscriptions.present? %>
+              <% @organisation.subscriptions.each do |subscription| %>
+                <%# this is to display the subscription that is not expired yet (still current) %>
+                <% if subscription.is_active %>
+                  Subscription expiry date: <b><%= subscription.expiry_date.getlocal.strftime('%e %B %Y') %></b>
+                  <% if subscription.expires_in_less_than_30_days %>
+                     - <span class="red-text bold">Expiring soon!</span>
+                  <% end %>
+                  <% @flag = 'active-current' %>
+                <% end %>
+              <% end %><%# exit the loop @organisation.subscriptions %>
+              <%# the @flag value will stay 'expired' if there is no subscription with future expiry date %>
+              <% if @flag == 'expired' %>
+                <%= @organisation.name %> does not have an active subscription.
+                <br>
+                The last subscription's expiry date is: <%= @organisation.subscriptions.last.expiry_date.getlocal.strftime('%e %B %Y') %>
+              <% end %>
+            <% else %>
+              There is no MOBEEAS subscription record for <%= @organisation.name %>
+            <% end %>
+            <br>
+            Please purchase subscription here:
+          </p>
           <% @subscription_pack = SubscriptionPack.find_by(name: 'organisation') %>
-          <%= link_to "Renew 1 Year Subscription", new_subscription_path(org: @organisation.id, subscription_pack: @subscription_pack.id), class: 'btn' %>
+          <div class="margin-top-20px">
+            <%= link_to "Renew 1 Year Subscription", new_subscription_path(org: @organisation.id, subscription_pack: @subscription_pack.id), class: 'btn' %>
+          </div>
         </div><%# end of card content %>
       </div><%# end of card %>
       <% end %>

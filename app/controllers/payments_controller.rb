@@ -65,8 +65,16 @@ class PaymentsController < ApplicationController
       charge = Stripe::Charge.create(
         :customer    => customer.id,
         :amount      => @amount,
-        :description => 'One Year Subscription for ' + @subscription_pack.name,
-        :currency    => 'aud'
+        :description => 'One Year Subscription to MOBEEAS for ' + @organisation.name,
+        :currency    => 'aud',
+        :metadata    => {
+                        'User ID'       =>  current_user.id,
+                        'Host Name'     =>  current_user.org_user_profile.name,
+                        'Email'         =>  current_user.email,
+                        'Organisation'  =>  @organisation.name,
+                        'Subscription Type' => @subscription_pack.name,
+                        'expiry_date'   =>   1.year.from_now.getlocal.strftime('%e %B %Y')
+                      }
       )
       if charge['paid']
         # if the host is purchasing the tokens for his organisation

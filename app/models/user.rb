@@ -9,6 +9,7 @@ class User < ActiveRecord::Base
 	has_many :security_checks
 	has_many :admins
 	has_one :sponsor # a user can create one sponsor profile
+	has_many :subscriptions
 
 
 	has_many :candidate_skills, dependent: :destroy
