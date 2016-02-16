@@ -62,6 +62,7 @@ gem 'pg'
 gem 'passenger'
 gem 'nested_form'
 gem 'will_paginate'
+gem 'whenever', require: false
 
 source 'https://rails-assets.org' do
   gem 'rails-assets-datetimepicker'
