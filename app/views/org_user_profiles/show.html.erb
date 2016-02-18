@@ -18,8 +18,11 @@
         <strong>Last name:</strong>
         <%= @org_user_profile.last_name %>
         </p>
-        <%# protect sensitive information of the host from all viewers %>
-        <%  if current_user.id == @org_user_profile.user_id %>
+        <%# Protect sensitive information of the host from all viewers.
+            Only the host who created this profile OR the Admin user can view these info.
+        %>
+
+        <%  if (current_user.id == @org_user_profile.user_id) || (current_user.has_role? :admin ) %>
           <p>
           <strong>Phone:</strong>
           <%= @org_user_profile.phone %>

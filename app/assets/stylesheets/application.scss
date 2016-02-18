@@ -50,9 +50,14 @@ nav ul a {
   line-height: 31px;
 }
 
+// this is to keep the active selection of sidebar in the admin/host/candidate profile in transparent color.
+// without this, the background of the active selection will be in grey background color.
+.side-nav li.active {
+  background-color: transparent;
+}
 .parallax-container {
-      height: 400px;
-    }
+  height: 400px;
+}
 
 .palette1 {
   color: #13a99e;
@@ -116,6 +121,9 @@ nav ul a {
 
 .margin-top-20px {
   margin-top: 20px;
+}
+.margin-top-50px {
+  margin-top: 50px;
 }
 
 .margin-top-5px {
@@ -217,4 +225,8 @@ footer.page-footer {
 
 .light-amber {
   background-color: #ffecb3;
+}
+
+.white-background {
+  background-color: #ffffff;
 }

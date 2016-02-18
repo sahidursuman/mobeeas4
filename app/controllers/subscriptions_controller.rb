@@ -71,6 +71,8 @@ class SubscriptionsController < ApplicationController
 
     respond_to do |format|
       if @subscription.save
+        # send receipt by mail to host
+        SubscriptionMailer.new_subscription_receipt(@subscription.id).deliver_now
         format.html { redirect_to @subscription, notice: 'Subscription was successfully created.' }
         format.json { render :show, status: :created, location: @subscription }
       else
