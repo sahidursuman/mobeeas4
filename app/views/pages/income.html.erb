@@ -3,6 +3,7 @@
 
 		<%= render 'layouts/sidebar' %>
     <h4>MOBEEAS Income</h4>
+    <%#=====================================================================%>
 
     <div class="row">
       <div class="col m6">
@@ -11,34 +12,34 @@
         <% @engagement_token_packs.order("id ASC").each do |engagement_token_pack| %>
           <li>
             <%= engagement_token_pack.name %> for $ <%= sprintf("%.2f", engagement_token_pack.member_price ) %>
-            | <%= link_to "Edit", edit_engagement_token_pack_path(engagement_token_pack) %>
+             - <%= link_to "Edit", edit_engagement_token_pack_path(engagement_token_pack) %>
             <br>
           </li>
         <% end %>
       </ol>
-      <%# IMPORTANT: remove the comment from the Add function ONLY when there is a new record to be added.
-      ONLY the Developer can add this function, do not let the user, even admin user to add new record. %>
+      <%# IMPORTANT: DO NOT display the Add function here.
+      ONLY the Developer can add into the engagement token pack record, do not let the user, even admin user to add new record. %>
       <%#= link_to 'Add', new_engagement_token_pack_path, class: 'btn' %>
       <%# end of IMPORTANT message%>
       </div>
+      <%#=====================================================================%>
       <div class="col m6">
-
-
         <h5>Subscriptions</h5>
         <ol>
           <% @subscription_packs.order("id ASC").each do |subscription_pack| %>
             <li>
               <%= subscription_pack.name %> for $ <%= sprintf("%.2f", subscription_pack.price) %>
-              | <%= link_to "Edit", edit_subscription_pack_path(subscription_pack) %>
+               - <%= link_to "Edit", edit_subscription_pack_path(subscription_pack) %>
             </li>
           <% end %>
         </ol>
-        <%# IMPORTANT: remove the comment from the Add function ONLY when there is a new record to be added.
-        ONLY the Developer can add this function, do not let the user, even admin user to add new record. %>
-        <%#= link_to 'Add', new_subscription_pack_path, class: 'btn' %>
+        <%# IMPORTANT: DO NOT display the Add function here.
+        ONLY the Developer can add into the subscription pack record, do not let the user, even admin user to add new record. %>
+        <%#= link_to 'Add', new_engagement_token_pack_path, class: 'btn' %>
         <%# end of IMPORTANT message%>
       </div>
-    </div>
+    </div><%# end of row %>
+
 
   </div>
 </div>

@@ -128,6 +128,9 @@ class PagesController < ApplicationController
 	def income
 		@engagement_token_packs = EngagementTokenPack.all
 		@subscription_packs = SubscriptionPack.all
+		 if params[:organisation] == 'active'
+		 	@subscriptions = Subscription.organisation
+		 end
 	end
 
 end

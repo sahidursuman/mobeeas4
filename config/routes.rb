@@ -1,6 +1,10 @@
 Rails.application.routes.draw do
   resources :subscription_packs
-  resources :subscriptions
+  resources :subscriptions do
+    member do
+      get :notify_expiring
+    end
+  end
   resources :sponsors
   resources :admins
   resources :admins

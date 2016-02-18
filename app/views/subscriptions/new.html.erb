@@ -2,11 +2,12 @@
 
 <%# @subscription_pack = SubscriptionPack.find(params[:subscription_pack]) %>
 <p>
-  You are purchasing a One Year <%= @subscription_pack.name %> subscription.
-  <%= current_user.email %>
+  You are purchasing a One Year MOBEEAS subscription.
   <br>
   <%# this is for organisation subscription %>
   <% if @subscription_pack.name == 'organisation' %>
+    <p>Organisation: <%= @organisation.name %></p>
+    <%# this is to call the STRIPE PAYMENT PROCESS in controllers/payments_controller.rb file %>
     <%= form_tag payments_path(subscription_pack: @subscription_pack.id, org_id: @organisation.id, user_id: current_user.id) do %>
     <article>
       <% if flash[:error].present? %>
@@ -15,10 +16,10 @@
         </div>
       <% end %>
       <label class="amount">
-        <span>Amount: <%= number_to_currency(@subscription_pack.price) %></span>
+        <span class="font-24px"><b>Amount: <%= number_to_currency(@subscription_pack.price) %></b></span>
       </label>
     </article>
-
+    <br>
     <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
             data-key="<%= Rails.configuration.stripe[:publishable_key] %>"
             data-image="<%= asset_path 'MOBEEAS.png' %>"

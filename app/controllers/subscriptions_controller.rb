@@ -1,10 +1,47 @@
 class SubscriptionsController < ApplicationController
-  before_action :set_subscription, only: [:show, :edit, :update, :destroy]
+  before_action :set_subscription, only: [:show, :edit, :update, :destroy, :notify_expiring]
+
+  # Must declare in the before_action above, this function will send email to
+  def notify_expiring
+    SubscriptionMailer.notify(@subscription.id).deliver_now
+    @subscription.notified_at = Date.today
+    @subscription.save!
+    redirect_to subscriptions_path(organisation: 'expiring')
+  end
 
   # GET /subscriptions
   # GET /subscriptions.json
   def index
-    @subscriptions = Subscription.all
+    # @subscriptions = Subscription.all
+
+    if params[:organisation] == 'active'
+      @subscriptions = Subscription.organisation.expiring_in_more_than_30_days
+
+    elsif params[:organisation] == 'expiring'
+      @subscriptions = Subscription.organisation.expiring_in_less_than_30_days.is_active
+
+    elsif params[:organisation] == 'expired'
+      @subscriptions = Subscription.organisation.is_expired
+
+    elsif params[:independent] == 'active'
+      @subscriptions = Subscription.independent.expiring_in_more_than_30_days
+
+    elsif params[:independent] == 'expiring'
+      @subscriptions = Subscription.independent.expiring_in_less_than_30_days.is_active
+
+    elsif params[:independent] == 'expired'
+      @subscriptions = Subscription.independent.is_expired
+
+    elsif params[:candidate] == 'active'
+      @subscriptions = Subscription.candidate.expiring_in_more_than_30_days
+
+    elsif params[:candidate] == 'expiring'
+      @subscriptions = Subscription.candidate.expiring_in_less_than_30_days.is_active
+
+    elsif params[:candidate] == 'expired'
+      @subscriptions = Subscription.candidate.is_expired
+
+    end
   end
 
   # GET /subscriptions/1
@@ -75,6 +112,6 @@ class SubscriptionsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def subscription_params
-      params.require(:subscription).permit(:user_type, :user_id, :organisation_id, :expiry_date, :payment)
+      params.require(:subscription).permit(:user_type, :user_id, :organisation_id, :expiry_date, :payment, :notified_at)
     end
 end

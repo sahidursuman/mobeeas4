@@ -1,3 +1,4 @@
+<br>
 <li class="bold active"><%= link_to 'Admin Profile', admin_page_path %></li>
 <% if current_user.has_role? :master_admin %>
   <li class="bold"><%= link_to 'Site Administration', site_administration_path %></li>
@@ -5,9 +6,69 @@
 <li class="bold"><%= link_to 'Hosts', admin_hosts_path %></li>
 <li class="bold"><%= link_to 'Candidates', admin_candidates_path %></li>
 <li class="bold"><%= link_to 'Sponsors', admin_sponsors_path %></li>
-<li class="bold"><%= link_to 'Draft Opportunities', opportunities_path(status: 'draft') %></li>
-<li class="bold"><%= link_to 'Listed Opportunities', opportunities_path(status: 'listed') %></li>
-<li class="bold"><%= link_to 'Active Opportunities', opportunities_path(status: 'active') %></li>
-<li class="bold"><%= link_to 'Completed Opportunities', opportunities_path(status: 'post_active') %></li>
-<li class="bold"><%= link_to 'Archived Opportunities', opportunities_path(status: 'archived') %></li>
+
+
+<li class="bold no-padding">
+  <ul class="collapsible collapsible-accordion">
+
+    <li class=" margin-top-5px">
+      <a class="collapsible-header">Opportunities</a>
+      <div class="collapsible-body">
+        <ul>
+          <li><%= link_to 'Draft', opportunities_path(status: 'draft') %></li>
+          <li><%= link_to 'Listed', opportunities_path(status: 'listed') %></li>
+          <li><%= link_to 'Active', opportunities_path(status: 'active') %></li>
+          <li><%= link_to 'Completed', opportunities_path(status: 'post_active') %></li>
+          <li><%= link_to 'Archived', opportunities_path(status: 'archived') %></li>
+        </ul>
+      </div>
+    </li>
+  </ul>
+</li>
+
+<li class="bold no-padding">
+  <ul class="collapsible collapsible-accordion">
+    <li class=" margin-top-5px">
+      <a class="collapsible-header">Organisation Subscr.</a>
+      <div class="collapsible-body">
+        <ul>
+          <li><%= link_to 'Active', subscriptions_path(organisation: "active") %></li>
+          <li><%= link_to 'Expiring', subscriptions_path(organisation: "expiring") %></li>
+          <li><%= link_to 'Expired', subscriptions_path(organisation: "expired") %></li>
+        </ul>
+      </div>
+    </li>
+  </ul>
+</li>
+
+<li class="bold no-padding">
+  <ul class="collapsible collapsible-accordion">
+    <li class=" margin-top-5px">
+      <a class="collapsible-header">Independent Subscr.</a>
+      <div class="collapsible-body">
+        <ul>
+          <li><%= link_to 'Active', subscriptions_path(independent: "active") %></li>
+          <li><%= link_to 'Expiring', subscriptions_path(independent: "expiring") %></li>
+          <li><%= link_to 'Expired', subscriptions_path(independent: "expired") %></li>
+        </ul>
+      </div>
+    </li>
+  </ul>
+</li>
+
+<li class="bold no-padding">
+  <ul class="collapsible collapsible-accordion">
+    <li class=" margin-top-5px">
+      <a class="collapsible-header">Candidate Subscr.</a>
+      <div class="collapsible-body">
+        <ul>
+          <li><%= link_to 'Active', subscriptions_path(candidate: "active") %></li>
+          <li><%= link_to 'Expiring', subscriptions_path(candidate: "expiring") %></li>
+          <li><%= link_to 'Expired', subscriptions_path(candidate: "expired") %></li>
+        </ul>
+      </div>
+    </li>
+  </ul>
+</li>
+
 <li class="bold"><%= link_to 'Income', income_path %></li>

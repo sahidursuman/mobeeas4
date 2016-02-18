@@ -1,0 +1,16 @@
+<h4>Your MOBEEAS subscription is expiring in 30 days</h4>
+
+<p>
+  Hello <%= @user.org_user_profile.name %>
+  <br><br>
+  Your MOBEEAS subscription for <%= @subscription.organisation.name %> will expire soon.
+  <br>
+  Expiry date is <%= @subscription.expiry_date.getlocal.strftime('%e %B %Y') %>
+  <br>
+  Please return to <a href="/">MOBEEAS</a> and renew your subscription at your earliest convenience.
+  <br><br>
+  Thank you,
+  <br>
+  MOBEEAS Team
+
+</p>

@@ -1,35 +1,84 @@
-<p id="notice"><%= notice %></p>
+<div class="row">
+  <div class="col c12 m9 offset-m1 l9 offset-l1">
+    <%= render 'layouts/sidebar' %>
+      <p id="notice"><%= notice %></p>
 
-<h1>Listing Subscriptions</h1>
+      <% if params[:organisation] == 'active' %>
+        <h4>Active Organisation Subscriptions</h4>
 
-<table>
-  <thead>
-    <tr>
-      <th>Subscription type</th>
-      <th>User</th>
-      <th>Organisation</th>
-      <th>Expiry date</th>
-      <th>Payment</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
+      <% elsif params[:organisation] == 'expiring' %>
+        <h4>Expiring Organisation Subscriptions</h4>
 
-  <tbody>
-    <% @subscriptions.each do |subscription| %>
-      <tr>
-        <td><%= subscription.user_type %></td>
-        <td><%= subscription.user %></td>
-        <td><%= subscription.organisation %></td>
-        <td><%= subscription.expiry_date %></td>
-        <td><%= subscription.payment %></td>
-        <td><%= link_to 'Show', subscription %></td>
-        <td><%= link_to 'Edit', edit_subscription_path(subscription) %></td>
-        <td><%= link_to 'Destroy', subscription, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+      <% elsif params[:organisation] == 'expired' %>
+        <h4>Expired Organisation Subscriptions</h4>
 
-<br>
+      <% elsif params[:independent] == 'active' %>
+        <h4>Active Independent Host Subscriptions</h4>
 
-<%= link_to 'New Subscription', new_subscription_path %>
+      <% elsif params[:independent] == 'expiring' %>
+        <h4>Expiring Independent Host Subscriptions</h4>
+
+      <% elsif params[:independent] == 'expired' %>
+        <h4>Expired Independent Host Subscriptions</h4>
+
+      <% elsif params[:candidate] == 'active' %>
+        <h4>Active Candidate Subscriptions</h4>
+
+      <% elsif params[:candidate] == 'expiring' %>
+        <h4>Expiring Candidate Subscriptions</h4>
+
+      <% elsif params[:candidate] == 'expired' %>
+        <h4>Expired Candidate Subscriptions</h4>
+
+      <% end %>
+
+      <% if @subscriptions.present? %>
+        <table>
+          <thead>
+            <tr>
+              <th>Type</th>
+              <th>User</th>
+              <th>Organisation</th>
+              <th>Expiry</th>
+              <th>Payment</th>
+              <% if params[:organisation] == 'expiring' %>
+                <th>Notified</th>
+                <th>Action</th>
+              <% end %>
+              <th colspan="3"></th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <% @subscriptions.each do |subscription| %>
+              <tr>
+                <td><%= subscription.user_type %></td>
+                <td><%= subscription.user.org_user_profile.name %></td>
+                <td><%= subscription.organisation.name %></td>
+                <td><%= subscription.expiry_date.getlocal.strftime('%e %b %Y') %></td>
+                <td><%= sprintf("%.2f", subscription.payment) %></td>
+                <% if params[:organisation] == 'expiring' %>
+                  <% if subscription.notified_at.present? %>
+                    <td><%= subscription.notified_at.getlocal.strftime('%e %b %Y') %></td>
+                  <% else %>
+                    <td>Never</td>
+                   <% end %>
+                  <td><%= link_to "Notify", notify_expiring_subscription_path(subscription)%></td>
+                <% end %>
+                <%# DO NOT USE THE FUNCTIONS BELOW, KEEP FOR RECORDS ONLY %>
+                <%#= link_to 'Show', subscription %>
+                <%#= link_to 'Edit', edit_subscription_path(subscription) %>
+                <%#= link_to 'Destroy', subscription, method: :delete, data: { confirm: 'Are you sure?' } %>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+        <% else %>
+          No subscription available.
+        <% end %>
+
+      <br>
+
+      <%#= link_to 'New Subscription', new_subscription_path %>
+  </div>
+</div>

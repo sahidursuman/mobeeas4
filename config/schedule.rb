@@ -13,8 +13,15 @@
 #   rake "some:great:rake:task"
 # end
 #
-every :day, :at => '12:00 am' do
-  runner "Subscription.expires_in_30_days", environment: :development
-end
+# =============================================================================
+# THIS CRON JOB IS PARKED ASIDE NOW, PLEASE TOUCH THIS LATER IF YOU KNOW HOW TO:
+# 1. Check that the subscription date is expiring less than 30 days from today
+# 2. Send the notification email once to the user
+# every :day, :at => '2:13 pm' do
+# every 1.day, :at => '3:30 pm' do
+  # runner "Subscription.expires_in_30_days", environment: :development
+#  runner "Subscription.active_and_expires_in_30_days", :environment => "development"
+#end
+# ==============================================================================
 
 # Learn more: http://github.com/javan/whenever
