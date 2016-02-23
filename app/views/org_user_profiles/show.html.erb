@@ -5,53 +5,54 @@
 <% end %>
 
 <div class="row">
+  <%# The LEFT column ===================================== %>
   <div class="col s12 m4">
     <div class="card">
       <div class="card-content">
         <p id="notice"><%= notice %></p>
         <p>
-        <strong>First name:</strong>
-        <%= @org_user_profile.first_name %>
+        First name:
+        <b><%= @org_user_profile.first_name %></b>
         </p>
 
         <p>
-        <strong>Last name:</strong>
-        <%= @org_user_profile.last_name %>
+        Last name:
+        <b><%= @org_user_profile.last_name %></b>
         </p>
+
         <%# Protect sensitive information of the host from all viewers.
             Only the host who created this profile OR the Admin user can view these info.
         %>
-
         <%  if (current_user.id == @org_user_profile.user_id) || (current_user.has_role? :admin ) %>
           <p>
-          <strong>Phone:</strong>
-          <%= @org_user_profile.phone %>
+          Phone:
+          <b><%= @org_user_profile.phone %></b>
           </p>
 
           <p>
-          <strong>Email:</strong>
-          <%= @org_user_profile.user.email %>
+          Email:
+          <b><%= @org_user_profile.user.email %></b>
           </p>
         <% end %>
         <p>
-        <strong>Position:</strong>
-        <%= @org_user_profile.position %>
+        Position:
+        <b><%= @org_user_profile.position %></b>
         </p>
         <p>
-        <strong>Suburb:</strong>
-        <%= @org_user_profile.suburb %>
+        Suburb:
+        <b><%= @org_user_profile.suburb %></b>
         </p>
         <p>
-        <strong>State:</strong>
-        <%= @org_user_profile.state %>
+        State:
+        <b><%= @org_user_profile.state %></b>
         </p>
         <p>
-        <strong>Postcode:</strong>
-        <%= @org_user_profile.postcode %>
+        Postcode:
+        <b><%= @org_user_profile.postcode %></b>
         </p>
         <p>
-        <strong>Country:</strong>
-        <%= @org_user_profile.country %>
+        Country:
+        <b><%= @org_user_profile.country %></b>
         </p>
         <% if current_user.id == @org_user_profile.user_id %>
           <div class="margin-top-5px">
@@ -61,6 +62,50 @@
       </div><%# card-content %>
     </div><%# card %>
 
+    <%# FOR INDEPENDENT HOSTS, THEIR SUBSCRIPTION INFO APPEARS BELOW THEIR PERSONAL PROFILE CARD %>
+    <% if @org_user_profile.agency == "I am an Independent" %>
+    <div class="card">
+      <div class="card-content">
+        <span class="card-title blue-text"><i class="fa fa-flag-o"></i> My Subscription</span>
+        <p>
+          <% @subscription_pack = SubscriptionPack.find_by(name: 'independent') %><%# get the Independent Subscription pack %>
+          <% if @org_user_profile.user.subscriptions.present? %>
+            <% @subscription = Subscription.find(@org_user_profile.user.subscriptions.last.id) %><%# get the LAST subscription of this ORGANISATION %>
+            Your subscriptions expiry date:<br>
+            <b><%= @subscription.expiry_date.getlocal.strftime('%e %b %Y') %></b>
+            <% if (@subscription.active) %><%# =============== if the last subscription is ACTIVE %>
+              <% if @subscription.expires_in_less_than_30_days %>
+                - <span class="red-text bold">Expiring soon!</span>
+                <br>
+                Please renew your annual subscription.<br>
+                <div class="margin-top-20px">
+                  <%= link_to "Renew", new_subscription_path(subscription_pack: @subscription_pack.id), class: 'btn' %>
+                </div>
+              <% end %>
+            <% elsif (@subscription.expired)%><%# =============== if the last subscription has EXPIRED %>
+              - <span class="red-text bold">Expired!</span>
+              <br>
+              Please renew your annual subscription.<br>
+              <div class="margin-top-20px">
+                <%= link_to "Renew", new_subscription_path(subscription_pack: @subscription_pack.id), class: 'btn' %>
+              </div>
+              <br>
+            <% end %>
+          <% else %><%# if the independent host has never purchased a subscription at all (new) %>
+            Please purchase annual subscription which includes 1 engagement token.
+            <br>
+            <div class="margin-top-20px">
+              <%= link_to "1 Year Subscription", new_subscription_path(subscription_pack: @subscription_pack.id), class: 'btn' %>
+            </div>
+
+          <% end %>
+        </p>
+      </div><%# card-content %>
+    </div><%# card %>
+    <% end %>
+
+
+    <%# THIS SECTION APPLIES TO THE HOSTS THAT REPRESENT ORGANISATIONS, NOT THE INDEPENDENT HOSTS %>
     <%# ONLY The Host that has been approved by MOBEEAS Admin can see his links with his organisations %>
     <% if @org_user_profile.approved %>
       <%# Search for all organisations linked to this host %>
@@ -203,7 +248,7 @@
 
   </div><%# col s12 m4 %>
 
-<%# THE RIGHT COLUMN FOR AGREEMENTS ----------------%>
+<%# The RIGHT column for AGREEMENTS ===================================== %>
   <div class="col s12 m8">
     <div class="card">
       <div class="card-content">

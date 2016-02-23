@@ -38,10 +38,13 @@
             <tr>
               <th>Type</th>
               <th>User</th>
-              <th>Organisation</th>
+              <% if params[:organisation].present? %>
+                <th>Organisation</th>
+              <% end %>
               <th>Expiry</th>
               <th>Payment</th>
-              <% if params[:organisation] == 'expiring' %>
+              <%# the function to notify the user with expiring subscription is available for all three types of users%>
+              <% if (params[:organisation] == 'expiring') || (params[:independent] == 'expiring') || (params[:candidate] == 'expiring') %>
                 <th>Notified</th>
                 <th>Action</th>
               <% end %>
@@ -54,10 +57,12 @@
               <tr>
                 <td><%= subscription.user_type %></td>
                 <td><%= subscription.user.org_user_profile.name %></td>
-                <td><%= subscription.organisation.name %></td>
+                <% if params[:organisation].present? %>
+                  <td><%= subscription.organisation.name %></td>
+                <% end %>
                 <td><%= subscription.expiry_date.getlocal.strftime('%e %b %Y') %></td>
                 <td><%= sprintf("%.2f", subscription.payment) %></td>
-                <% if params[:organisation] == 'expiring' %>
+                <% if (params[:organisation] == 'expiring') || (params[:independent] == 'expiring') || (params[:candidate] == 'expiring') %>
                   <% if subscription.notified_at.present? %>
                     <td><%= subscription.notified_at.getlocal.strftime('%e %b %Y') %></td>
                   <% else %>
@@ -65,6 +70,7 @@
                    <% end %>
                   <td><%= link_to "Notify", notify_expiring_subscription_path(subscription)%></td>
                 <% end %>
+
                 <%# DO NOT USE THE FUNCTIONS BELOW, KEEP FOR RECORDS ONLY %>
                 <%#= link_to 'Show', subscription %>
                 <%#= link_to 'Edit', edit_subscription_path(subscription) %>

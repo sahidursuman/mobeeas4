@@ -48,43 +48,96 @@ class PaymentsController < ApplicationController
       end
 
 
-    # if the payment is for subscription purchase ==================================
+    # if the payment is for SUBSCRIPTIONS purchase for HOST that represents ORGANISATION =========================
     elsif params[:subscription_pack].present?
-      if params[:org_id].present?
-        @organisation = Organisation.find(params[:org_id])
-      end
       @subscription_pack = SubscriptionPack.find(params[:subscription_pack])
-      # Amount in cents
-      @amount = (@subscription_pack.price * 100).to_i
-      # Stripe expects amounts to be in cents; since the charge is for $5, the amount parameter is assigned 500.
-      customer = Stripe::Customer.create(
-        :email => params[:stripeEmail],
-        :source  => params[:stripeToken]
-      )
 
-      charge = Stripe::Charge.create(
-        :customer    => customer.id,
-        :amount      => @amount,
-        :description => 'One Year Subscription to MOBEEAS for ' + @organisation.name,
-        :currency    => 'aud',
-        :metadata    => {
-                        'User ID'       =>  current_user.id,
-                        'Host Name'     =>  current_user.org_user_profile.name,
-                        'Email'         =>  current_user.email,
-                        'Organisation'  =>  @organisation.name,
-                        'Subscription Type' => @subscription_pack.name,
-                        'expiry_date'   =>   1.year.from_now.getlocal.strftime('%e %B %Y')
-                      }
-      )
-      if charge['paid']
-        # if the host is purchasing the tokens for his organisation
-        if params[:org_id].present?
+      # Subscription for HOST that represents ORGANISATION ===============================
+      if @subscription_pack.name == "organisation"
+        @organisation = Organisation.find(params[:org_id])
+
+        # Amount in cents
+        @amount = (@subscription_pack.price * 100).to_i
+        # Stripe expects amounts to be in cents; since the charge is for $5, the amount parameter is assigned 500.
+        customer = Stripe::Customer.create(
+          :email => params[:stripeEmail],
+          :source  => params[:stripeToken]
+        )
+
+        charge = Stripe::Charge.create(
+          :customer    => customer.id,
+          :amount      => @amount,
+          :description => 'One Year Subscription to MOBEEAS for ' + @organisation.name,
+          :currency    => 'aud',
+          :metadata    => {
+                          'User ID'       =>  current_user.id,
+                          'Host Name'     =>  current_user.org_user_profile.name,
+                          'Email'         =>  current_user.email,
+                          'Organisation'  =>  @organisation.name,
+                          'Subscription Type' => @subscription_pack.name,
+                          'expiry_date'   =>   1.year.from_now.getlocal.strftime('%e %B %Y')
+                        }
+        )
+        if charge['paid']
+          # if the host is purchasing the tokens for his organisation
+          if params[:org_id].present?
+            # create new subscription
+            @subscription = Subscription.create!(user_type: @subscription_pack.name, user_id: current_user.id, organisation_id: @organisation.id, expiry_date: 1.year.from_now, payment: @subscription_pack.price)
+            if @subscription.save
+              # send receipt by mail to host
+              SubscriptionMailer.new_subscription_receipt(@subscription.id).deliver_now            # increase 1 token to organisation when purchasing a new or renewing their subscription
+              @organisation.number_of_tokens += 1
+              @organisation.save!
+            end
+
+            # redirect to a thanks page
+            redirect_to thanks_path(type: 'purchase')
+          end
+        end
+
+      # Subscription for INDEPENDENT HOST ===============================
+      elsif @subscription_pack.name == "independent"
+        @org_user_profile = OrgUserProfile.find(current_user.org_user_profile.id)
+
+        # Amount in cents
+        @amount = (@subscription_pack.price * 100).to_i
+        # Stripe expects amounts to be in cents; since the charge is for $5, the amount parameter is assigned 500.
+        customer = Stripe::Customer.create(
+          :email => params[:stripeEmail],
+          :source  => params[:stripeToken]
+        )
+
+        charge = Stripe::Charge.create(
+          :customer    => customer.id,
+          :amount      => @amount,
+          :description => 'One Year Subscription to MOBEEAS for ' + @org_user_profile.name,
+          :currency    => 'aud',
+          :metadata    => {
+                          'User ID'       =>  current_user.id,
+                          'Host Name'     =>  current_user.org_user_profile.name,
+                          'Email'         =>  current_user.email,
+                          'Subscription Type' => @subscription_pack.name,
+                          'expiry_date'   =>   1.year.from_now.getlocal.strftime('%e %B %Y')
+                        }
+        )
+        if charge['paid']
           # create new subscription
-          @subscription = Subscription.create!(user_type: @subscription_pack.name, user_id: current_user.id, organisation_id: @organisation.id, expiry_date: 1.year.from_now, payment: @subscription_pack.price)
-          @subscription.save!
+          @subscription = Subscription.create!(user_type: @subscription_pack.name, user_id: current_user.id, expiry_date: 1.year.from_now, payment: @subscription_pack.price)
+          if @subscription.save
+            # send receipt by mail to host
+            SubscriptionMailer.new_subscription_receipt(@subscription.id).deliver_now
+            # increase 1 token to independent host when purchasing a new or renewing their subscription
+            @org_user_profile.number_of_tokens_for_independent += 1
+            @org_user_profile.save!
+          end
+
           # redirect to a thanks page
           redirect_to thanks_path(type: 'purchase')
         end
+
+      # Subscription for CANDIDATE ===============================
+    #  elsif @subscription_pack.name == "candidate"
+        # not ready
       end
     end # end of elsif params[:subscription_pack].present
   end # end of def create
@@ -101,8 +154,13 @@ class PaymentsController < ApplicationController
         redirect_to new_token_purchase_path(token_pack: @token_pack.id)
       end
     elsif params[:subscription_pack].present?
-      if params[:org_id].present?
+      @subscription_pack = SubscriptionPack.find(params[:subscription_pack])
+      if @subscription_pack.name == "organisation" # Subscription for HOST that represents ORGANISATION
         redirect_to new_subscription_path(org_id: @organisation.id, user_id: current_user.id, subscription_pack: @subscription_pack.id)
+      elsif @subscription_pack.name == "independent" # Subscription for INDEPENDENT HOST
+        redirect_to new_subscription_path(user_id: current_user.id, subscription_pack: @subscription_pack.id)
+      elsif @subscription_pack.name == "candidate" # Subscription for CANDIDATE
+        redirect_to new_subscription_path(user_id: current_user.id, subscription_pack: @subscription_pack.id)
       end
     end
   end

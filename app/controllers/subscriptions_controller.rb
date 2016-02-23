@@ -6,7 +6,13 @@ class SubscriptionsController < ApplicationController
     SubscriptionMailer.notify(@subscription.id).deliver_now
     @subscription.notified_at = Date.today
     @subscription.save!
-    redirect_to subscriptions_path(organisation: 'expiring')
+    if @subscription.user_type == 'organisation'
+      redirect_to subscriptions_path(organisation: 'expiring')
+    elsif @subscription.user_type == 'independent'
+      redirect_to subscriptions_path(independent: 'expiring')
+    elsif @subscription.user_type == 'candidate'
+      redirect_to subscriptions_path(candidate: 'expiring')
+    end
   end
 
   # GET /subscriptions
@@ -52,12 +58,13 @@ class SubscriptionsController < ApplicationController
   # GET /subscriptions/new
   def new
     @subscription = Subscription.new
-    if params[:org]
-      @organisation = Organisation.find(params[:org])
-    end
     if params[:subscription_pack].present?
       @subscription_pack = SubscriptionPack.find(params[:subscription_pack])
     end
+    if params[:org].present?
+      @organisation = Organisation.find(params[:org])
+    end
+
   end
 
   # GET /subscriptions/1/edit
@@ -71,8 +78,6 @@ class SubscriptionsController < ApplicationController
 
     respond_to do |format|
       if @subscription.save
-        # send receipt by mail to host
-        SubscriptionMailer.new_subscription_receipt(@subscription.id).deliver_now
         format.html { redirect_to @subscription, notice: 'Subscription was successfully created.' }
         format.json { render :show, status: :created, location: @subscription }
       else

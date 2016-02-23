@@ -1,6 +1,6 @@
 Please purchase subscription here:
 <br>
 <% @subscription_pack = SubscriptionPack.find_by(name: 'organisation') %>
-<div class="margin-top-20px margin-bottom-20px">
-  <%= link_to "Renew 1 Year Subscription", new_subscription_path(org: @organisation.id, subscription_pack: @subscription_pack.id), class: 'btn' %>
+<div class="margin-top-20px">
+  <%= link_to "Renew Annual Subscription", new_subscription_path(org: @organisation.id, subscription_pack: @subscription_pack.id), class: 'btn' %>
 </div>

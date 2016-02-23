@@ -28,7 +28,7 @@
         <ol>
           <% @subscription_packs.order("id ASC").each do |subscription_pack| %>
             <li>
-              <%= subscription_pack.name %> for $ <%= sprintf("%.2f", subscription_pack.price) %>
+              Annual <%= subscription_pack.name %> $ <%= sprintf("%.2f", subscription_pack.price) %> includes GST
                - <%= link_to "Edit", edit_subscription_pack_path(subscription_pack) %>
             </li>
           <% end %>
