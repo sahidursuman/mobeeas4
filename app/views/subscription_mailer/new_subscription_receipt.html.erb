@@ -6,17 +6,17 @@
   <% if @subscription.user_type == 'organisation' %>
     Hello <%= @user.org_user_profile.name %>
     <br><br>
-    Your annual MOBEEAS subscription for <%= @subscription.organisation.name %> has been renewed with subscription ID: <%= @subscription.id %>.
+    Your annual MOBEEAS subscription for <%= @subscription.organisation.name %> has been renewed with Subscription ID: <%= @subscription.id %>.
     <br>
   <% elsif @subscription.user_type == 'independent' %>
     Hello <%= @user.org_user_profile.name %>
     <br><br>
-    Your annual MOBEEAS subscription has been renewed with subscription ID: <%= @subscription.id %>.
+    Your annual MOBEEAS subscription has been renewed with Subscription ID: <%= @subscription.id %>.
     <br>
   <% elsif @subscription.user_type == 'candidate' %>
     Hello <%= @user.profile.name %>
     <br><br>
-    Your annual MOBEEAS subscription has been renewed with subscription ID: <%= @subscription.id %>.
+    Your annual MOBEEAS subscription has been renewed with Subscription ID: <%= @subscription.id %>.
     <br>
   <% end %>
   Expiry date is <%= @subscription.expiry_date.getlocal.strftime('%e %B %Y') %>.

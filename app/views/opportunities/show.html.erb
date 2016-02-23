@@ -429,20 +429,73 @@
             2. if the opportunity is not archived.
             3. if the opportunity is not closed.%>
         <% if (current_user.has_role? :host) && (current_user.id == @opportunity.user_id) && !(@opportunity.archived) && !(@opportunity.opportunity_status == 'closed') %>
+          <%# DRAFT OPPORTUNITY ============================================= %>
           <% if @opportunity.opportunity_status == 'draft' %>
-            <div class="margin-top-20px">
-              <%= link_to "List", status_listed_opportunity_path(@opportunity), class: 'btn' %>
-              <%= link_to "Archive", status_archived_opportunity_path(@opportunity), class: 'btn' %>
-            </div>
+            <%# DRAFT OPPORTUNITY FOR ORGANISATION HOST ======================%>
+            <% if @host.org_user_profile.agency == 'I represent an Organisation' %>
+              <%# The Organisation Host can change from DRAFT to LIST the opportunity only if the organisation's subscription exists and is still active %>
+              <% if @organisation.subscriptions.present? %>
+                <% @subscription = Subscription.find(@organisation.subscriptions.last.id) %><%# get the LAST subscription of this ORGANISATION %>
+                <% if (@subscription.active) %>
+                  <div class="margin-top-20px margin-bottom-20px">
+                    <%= link_to "List", status_listed_opportunity_path(@opportunity), class: 'btn' %>
+                    <%= link_to "Archive", status_archived_opportunity_path(@opportunity), class: 'btn' %>
+                  </div>
+                <% elsif (@subscription.expired)%>
+                  <div class="margin-top-20px margin-bottom-20px">
+                    <a class="btn disabled">List</a>
+                    <%= link_to "Archive", status_archived_opportunity_path(@opportunity), class: 'btn' %>
+                  </div>
+                  <%= @organisation.name %> subscription has expired, please renew before you can list your opportunity.
+                <% end %>
+              <% else %>
+                <div class="margin-top-20px margin-bottom-20px">
+                  <a class="btn disabled">List</a>
+                  <%= link_to "Archive", status_archived_opportunity_path(@opportunity), class: 'btn' %>
+                </div>
+                <%= @organisation.name %> does not have MOBEEAS subscription, please subscribe before you can list your opportunity.
+              <% end %>
+
+            <%# DRAFT OPPORTUNITY FOR INDEPENDENT HOST ======================%>
+            <% elsif @host.org_user_profile.agency == 'I am an Independent' %>
+              <%# The Independent Host can change from DRAFT to LIST the opportunity only if the his subscription exists and is still active %>
+              <% if @host.subscriptions.present? %>
+                <% @subscription = Subscription.find(@host.subscriptions.last.id) %><%# get the LAST subscription of this ORGANISATION %>
+                <% if (@subscription.active) %>
+                  <div class="margin-top-20px margin-bottom-20px">
+                    <%= link_to "List", status_listed_opportunity_path(@opportunity), class: 'btn' %>
+                    <%= link_to "Archive", status_archived_opportunity_path(@opportunity), class: 'btn' %>
+                  </div>
+                <% elsif (@subscription.expired)%>
+                  <div class="margin-top-20px margin-bottom-20px">
+                    <a class="btn disabled">List</a>
+                    <%= link_to "Archive", status_archived_opportunity_path(@opportunity), class: 'btn' %>
+                  </div>
+                  Your subscription has expired, please renew before you can list your opportunity.
+                <% end %>
+              <% else %>
+                <div class="margin-top-20px margin-bottom-20px">
+                  <a class="btn disabled">List</a>
+                  <%= link_to "Archive", status_archived_opportunity_path(@opportunity), class: 'btn' %>
+                </div>
+                You do not have MOBEEAS subscription, please subscribe before you can list your opportunity.
+              <% end %>
+            <% end %>
+
+          <%# LISTED OPPORTUNITY ============================================= %>
           <% elsif @opportunity.opportunity_status == 'listed' %>
             <div class="margin-top-20px">
               <%= link_to "Draft", status_draft_opportunity_path(@opportunity), class: 'btn' %>
               <%= link_to "Archive", status_archived_opportunity_path(@opportunity), class: 'btn' %>
             </div>
+
+          <%# ACTIVE OPPORTUNITY ============================================= %>
           <% elsif @opportunity.opportunity_status == 'active' %>
             <div class="margin-top-20px">
               <%= link_to "Completed", post_active_opportunity_path(@opportunity), data: {confirm: "Are you sure you want to complete this opportunity? Changes will be permanent."}, class: 'btn' %>
             </div>
+
+          <%# POST-ACTIVE (COMPLETED) OPPORTUNITY ============================================= %>
           <% elsif @opportunity.opportunity_status == 'post_active' %>
              <div class="margin-top-20px">
                <%= link_to "Archive", status_archived_opportunity_path(@opportunity), class: 'btn' %>
@@ -472,37 +525,53 @@
               hash[value] = the array of [skill_category, skill]
               This will involve two steps
           %>
-          <%# First step, set the hash keys with all matching candidates' user_id %>
+          <%# 1. STEP ONE, set the hash[key] with all matching candidates' user_id ======= %>
           <% @opportunity.opportunity_skills.each do |opportunity_skill| %>
             <% @candidate_skills.each do |candidate_skill| %>
-              <%# Only these candidates will be included in the sorting result:
-                1. candidates that has the matching skill id and
-                2. his skill has been verified and
-                3. his profile has been approved by admin
+              <%# Only these candidates will be included in the Hash:
+                1. the candidate has active subscription
+                2. candidates that has the matching skill id and
+                3. his skill has been verified and
+                4. his profile has been approved by admin
               %>
-              <% if (candidate_skill.skill_id == opportunity_skill.skill.id) && (candidate_skill.verified) && (candidate_skill.user.profile.approved) %>
-              <%# what does candidate_skill.user.profile.approved mean? %>
-              <%# It means that the Admin has clicked the 'approve' function in the Prohibited Candidate list which calls the approve function in profiles_controller.rb file %>
-                <% hash[candidate_skill.user_id] = [] %> <%# create a hash of array, key is skill name, value is user id %>
-              <% end %>
+              <% if candidate_skill.user.subscriptions.present? %><%# check if Candidate has any subscriptions %>
+                <% @subscription = Subscription.find(candidate_skill.user.subscriptions.last) %><%# find the last subscription of this candidate %>
+                <% if (@subscription.active) %><%# if Candidate's subscription is active then he will be included in the next search %>
+                  <% if (candidate_skill.skill_id == opportunity_skill.skill.id) && (candidate_skill.verified) && (candidate_skill.user.profile.approved) %>
+                  <%# what does candidate_skill.user.profile.approved mean? %>
+                  <%# It means that the Admin has clicked the 'approve' function in the Prohibited Candidate list which calls the approve function in profiles_controller.rb file %>
+                    <% hash[candidate_skill.user_id] = [] %> <%# create a hash of array, key is skill name, value is user id %>
+                  <% end %>
+                <% end %><%# end of if (@subscription.active)%>
+              <% end %><%# end of if candidate_skill.user.subscriptions.present? %>
             <% end %><%# end of candidate skill loop %>
           <% end %><%# end of opportunity loop %>
+          <%# End of STEP ONE =================== %>
 
-          <%# Second step, fill the hash value with array of skill_set according to the user_id already in the hash key %>
+          <%# 2. STEP TWO, fill the hash[value] with array of skill_set according to the user_id that is already in the hash[key] %>
           <% @opportunity.opportunity_skills.each do |opportunity_skill| %>
             <% @candidate_skills.each do |candidate_skill| %>
-              <%# Only these candidates will be included in the sorting result:
-                1. candidates that has the matching skill id and
-                2. his skill has been verified and
-                3. his profile has been approved by admin
+              <%# Only these candidates will be included in the Hash:
+                1. the candidate has active subscription
+                2. candidates that has the matching skill id and
+                3. his skill has been verified and
+                4. his profile has been approved by admin
               %>
-              <% if (candidate_skill.skill_id == opportunity_skill.skill.id) && (candidate_skill.verified)  && (candidate_skill.user.profile.approved) %>
-                <% hash[candidate_skill.user_id] << [candidate_skill.skill.skill_category.name, candidate_skill.skill.name] %>
-              <% end %>
+              <% if candidate_skill.user.subscriptions.present? %><%# check if Candidate has any subscriptions %>
+                <% @subscription = Subscription.find(candidate_skill.user.subscriptions.last) %><%# find the last subscription of this candidate %>
+                <% if (@subscription.active) %><%# if Candidate's subscription is active then he will be included in the next search %>
+                  <% if (candidate_skill.skill_id == opportunity_skill.skill.id) && (candidate_skill.verified)  && (candidate_skill.user.profile.approved) %>
+                    <% hash[candidate_skill.user_id] << [candidate_skill.skill.skill_category.name, candidate_skill.skill.name] %>
+                  <% end %>
+                <% end %><%# end of if (@subscription.active)%>
+              <% end %><%# end of if candidate_skill.user.subscriptions.present? %>
             <% end %><%# end of @candidate_skills loop %>
-          <% end %>
-          <%#= hash %><%# print hash %>
-          <%# At this point the Hash has been built and filled  with this type:
+          <% end %><%# end of @opportunity.opportunity_skills loop %>
+          <%# End of STEP TWO =================== %>
+
+          <%#= hash %><%# print hash, for testing %>
+          <%# At this point the Hash is created and filled with this type:
+            hash[key] = hash[value]
             hash[key] = the user_id
             hash[value] = the array of [skill_category, skill] %>
           <%# e.g. {2=>[["Digital Technologies", "Robotics"], ["Design & Technology", "3D Printing"], ["English", "Secondary-Extension 1"], ["Mathematics", "Secondary-Extension 1"]] %>
@@ -516,7 +585,7 @@
                 He won't be able to see other candidates listed in the same opportunity  %>
                 <% if (current_user.has_role? :candidate) %>
                   <% if (current_user.profile.id == @profile.id ) %>
-                    <br><b><%= current_user.profile.name %></b> (Profile ID: <%= current_user.profile.id %>)
+                    <br><b><%= current_user.profile.name %></b> (User ID: <%= current_user.id %>)
                     <% value.each do |val| %>
                       <br><%= val[0] %> - <%= val[1] %>
                     <% end %>
@@ -531,9 +600,9 @@
                       <br>
                     <% end %><%# end of @profile.user.security_checks loop %>
                   <% end %><%# end if current_user.profile.id == @profile.id %>
-                <%# The user with roles other than candidate can view the details of all candidates in an opportunity %>
+                <%# The user with ANY roles other than candidate can view the details of all candidates in an opportunity %>
                 <% else %>
-                  <br><b><%= @profile.name %></b> (Profile ID: <%= @profile.id %>)
+                  <br><b><%= @profile.name %></b> (User ID: <%= @profile.user.id %>)
                   <%# @found = false %><%# start with found is true %>
                   <%# counter = 0 %>
                   <% value.each do |val| %>

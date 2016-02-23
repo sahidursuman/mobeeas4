@@ -1,0 +1,39 @@
+<span class="card-title blue-text"><i class="fa fa-flag-o"></i> My Subscription</span>
+  <p>
+    Subscription is mandatory.
+  </p>
+<% @subscription_pack = SubscriptionPack.find_by(name: 'candidate') %><%# get the Candidate Subscription pack %>
+
+<%# If the candidate has one or many subscriptions ========================= %>
+<% if @profile.user.subscriptions.present? %>
+  <% @subscription = Subscription.find(@profile.user.subscriptions.last.id) %><%# get the LAST subscription of this CANDIDATE %>
+  <br>Your subscriptions expiry date:<br>
+  <b><%= @subscription.expiry_date.getlocal.strftime('%e %b %Y') %></b>
+  <% if (@subscription.active) %><%# =============== if the last subscription is ACTIVE %>
+    <% if @subscription.expires_in_less_than_30_days %>
+      - <span class="red-text bold">Expiring soon!</span>
+      <br>
+      Please renew your annual subscription.<br>
+      <div class="margin-top-20px">
+        <%= link_to "Renew", new_subscription_path(subscription_pack: @subscription_pack.id), class: 'btn' %>
+      </div>
+    <% end %>
+  <% elsif (@subscription.expired)%><%# =============== if the last subscription has EXPIRED %>
+    - <span class="red-text bold">Expired!</span>
+    <br>
+    Please renew your annual subscription.<br>
+    <div class="margin-top-20px">
+      <%= link_to "Renew", new_subscription_path(subscription_pack: @subscription_pack.id), class: 'btn' %>
+    </div>
+    <br>
+  <% end %>
+
+<%# If the candidate never subscribed at all (new candidate) ==================  %>
+<% else %>
+  <p>
+    Please purchase annual MOBEEAS subscription.
+    <div class="margin-top-20px">
+      <%= link_to "1 Year Subscription", new_subscription_path(subscription_pack: @subscription_pack.id), class: 'btn' %>
+    </div>
+  </p>
+<% end %>

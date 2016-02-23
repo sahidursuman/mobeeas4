@@ -76,7 +76,7 @@
                       <li><p>
                       <%# ONLY the current user can see his own Profile page %>
                       <% if current_user.id == user.id %>
-                        <strong><%= link_to user.org_user_profile.name, org_user_profile_path(user.org_user_profile.id) %></strong>
+                        <strong><%= link_to user.org_user_profile.name, host_profile_path(user.org_user_profile.id) %></strong>
                       <% else %>
                         <strong><%= user.org_user_profile.name %></strong>
                       <% end %>
@@ -278,7 +278,7 @@
                         <li><p>
                           <%# ONLY the current user can see his own Profile page %>
                           <% if current_user.id == user.id %>
-                            <strong><%= link_to user.org_user_profile.name, org_user_profile_path(user.org_user_profile.id) %></strong>
+                            <strong><%= link_to user.org_user_profile.name, host_profile_path(user.org_user_profile.id) %></strong>
                             (Verified)
                             <%= link_to edit_org_user_profile_path(user.org_user_profile, org_id: @organisation.id) do %><i class="material-icons tiny">mode_edit</i><% end %>
                             <%= link_to 'Disconnect', remove_host_from_organisation_path(@organisation, user_id: user.id), data: {confirm: "Are you sure to remove the connection?"}%>
