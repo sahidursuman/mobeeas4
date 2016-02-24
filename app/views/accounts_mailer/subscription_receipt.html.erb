@@ -1,0 +1,100 @@
+<h5>TAX INVOICE</h5>
+
+<div class="row">
+  <div class="col m6">
+    MOBEEAS LOGO
+    <br><br><br>
+    <b>Receipt For:</b><br>
+    Organisation or Someone<br>
+    ATTN: Someone (if Host representing org)<br>
+    999 Somewhere Ave<br>
+    Suburb, New South Wales, 2222<br>
+    Australia<br>
+  </div><%# end of col m6 %>
+
+  <div class="col m3">
+    <p>
+      <b>Invoice Date</b><br>
+      31 Jan 2016
+      <br><br>
+      <b>Subscription ID:</b><br>
+      1
+      <br><br>
+      <b>ABN:</b><br>
+      18 504 829 484
+      <br><br>
+    </p>
+  </div><%# end of col m3 %>
+
+  <div class="col m3">
+    MOBEEAS Pty Ltd<br>
+    PO Box 282<br>
+    Gordon NSW 2072<br>
+  </div><%# end of col m3 %>
+</div><%# end of row %>
+<br>stripe_receipt_id: <%= @stripe_receipt_id %>
+
+<br><br>
+
+<table class="bordered">
+  <thead>
+    <tr>
+        <th data-field="id">Description</th>
+        <th data-field="name">Amount</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <tr>
+      <td>MOBEEAS Subscription 1 Year</td>
+      <td>$100.00AUD</td>
+    </tr>
+    <tr>
+      <td>GST 10%</td>
+      <td>$10AUD</td>
+    </tr>
+    <tr>
+      <td>Total</td>
+      <td>$110.00AUD</td>
+    </tr>
+  </tbody>
+</table>
+
+<br><br>
+<h5>Transactions</h5>
+<table>
+  <thead>
+    <tr>
+        <th data-field="id">Transaction Date</th>
+        <th data-field="name">MOBEEAS Subscription ID</th>
+        <th data-field="price">Gateway</th>
+        <th data-field="price">Stripe Receipt ID</th>
+        <th data-field="price">Amount</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <tr>
+      <td>23 Jan 2020</td>
+      <td>1</td>
+      <td>Stripe Secure Payment</td>
+      <td><%= @stripe_receipt_id %></td>
+      <td>$110.00AUD</td>
+
+    </tr>
+    <tr>
+      <td> </td>
+      <td> </td>
+      <td> </td>
+      <td>Balance</td>
+      <td>$00.00AUD</td>
+    </tr>
+  </tbody>
+</table>
+
+
+<p>
+  Thank you for your subscription.
+  <br><br>
+  MOBEEAS Team
+</p>
