@@ -1,5 +1,9 @@
 Rails.application.routes.draw do
-  resources :expression_of_interests
+  resources :expression_of_interests do
+    member do
+      get :notify
+    end
+  end
   resources :subscription_packs
   resources :subscriptions do
     member do

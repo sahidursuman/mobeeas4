@@ -36,7 +36,10 @@
         <% if (current_user.has_role? :host) || (current_user.has_role? :candidate) || (current_user.has_role? :admin) %>
           <p>Proudly sponsored by: </p>
         <% elsif current_user.has_role? :sponsor %>
-          <p>Would you like to sponsor this opportunity? You can express your interest to the MOBEEAS Admin. Yes, I am interested.</p>
+          <p>Would you like to sponsor this opportunity? You can express your interest to the MOBEEAS Admin.
+            <%= link_to "Yes, I am interested", notify_expression_of_interest_path(sponsor_id: current_user.sponsor.id, opportunity_id: @opportunity.id) %>
+
+          </p>
         <% end %>
       </div>
     </div><%# end of card-content %>

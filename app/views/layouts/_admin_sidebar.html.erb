@@ -4,12 +4,25 @@
 <% end %>
 <li class="bold"><%= link_to 'Hosts', admin_hosts_path %></li>
 <li class="bold"><%= link_to 'Candidates', admin_candidates_path %></li>
-<li class="bold"><%= link_to 'Sponsors', admin_sponsors_path %></li>
+
+<li class="bold no-padding">
+  <ul class="collapsible collapsible-accordion">
+    <li class=" margin-top-5px">
+      <a class="collapsible-header">Sponsors</a>
+      <div class="collapsible-body">
+        <ul>
+          <li><%= link_to 'EOI', expression_of_interests_path(status: "pending") %></li>
+          <li><%= link_to 'Sponsored', expression_of_interests_path(status: "approved") %></li>
+          <li><%= link_to 'Index', admin_sponsors_path %></li>
+        </ul>
+      </div>
+    </li>
+  </ul>
+</li>
 
 
 <li class="bold no-padding">
   <ul class="collapsible collapsible-accordion">
-
     <li class=" margin-top-5px">
       <a class="collapsible-header">Opportunities</a>
       <div class="collapsible-body">

@@ -1,6 +1,14 @@
 class ExpressionOfInterestsController < ApplicationController
   before_action :set_expression_of_interest, only: [:show, :edit, :update, :destroy]
 
+  def notify
+    @eoi = ExpressionOfInterest.create(sponsor_id: params[:sponsor_id], opportunity_id: params[:opportunity_id])
+    if @eoi.save
+      SponsorshipMailer.expression_of_interest(params[:sponsor_id], params[:opportunity_id]).deliver_now
+    end
+    redirect_to thanks_path(type: 'expression_of_interest')
+  end
+
   # GET /expression_of_interests
   # GET /expression_of_interests.json
   def index

@@ -1,0 +1,20 @@
+<h5>Expression of Interest</h5>
+
+<p>
+  Hello Admin,<br><br>
+  This organisation would like to sponsor this opportunity:
+  <br>
+  <b>Sponsor Details:</b><br>
+  Organisation name: <%= @sponsor.organisation %><br>
+  Contact name: <%= @sponsor.name %><br>
+  Contact phone 1: <%= @sponsor.phone1 %><br>
+  Contact phone 2: <%= @sponsor.phone2 %><br>
+  Contact email: <%= @sponsor.user.email %><br><br>
+
+  <b>Opportunity:</b><br>
+  Owner: <%= @opportunity.user.org_user_profile.name %><br>
+  Title: <%= @opportunity.title %><br><br>
+
+  Please login to Admin dashboard.<br>
+
+</p>
