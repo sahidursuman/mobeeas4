@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160216035923) do
+ActiveRecord::Schema.define(version: 20160224043045) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -119,6 +119,17 @@ ActiveRecord::Schema.define(version: 20160216035923) do
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
   end
+
+  create_table "expression_of_interests", force: :cascade do |t|
+    t.integer  "sponsor_id"
+    t.integer  "opportunity_id"
+    t.boolean  "approved",       default: false
+    t.datetime "created_at",                     null: false
+    t.datetime "updated_at",                     null: false
+  end
+
+  add_index "expression_of_interests", ["opportunity_id"], name: "index_expression_of_interests_on_opportunity_id", using: :btree
+  add_index "expression_of_interests", ["sponsor_id"], name: "index_expression_of_interests_on_sponsor_id", using: :btree
 
   create_table "friendly_id_slugs", force: :cascade do |t|
     t.string   "slug",                      null: false
@@ -502,6 +513,8 @@ ActiveRecord::Schema.define(version: 20160216035923) do
   add_foreign_key "educations", "users"
   add_foreign_key "engagements", "opportunities"
   add_foreign_key "engagements", "profiles"
+  add_foreign_key "expression_of_interests", "opportunities"
+  add_foreign_key "expression_of_interests", "sponsors"
   add_foreign_key "messages", "opportunities"
   add_foreign_key "messages", "users"
   add_foreign_key "opportunities", "organisations"

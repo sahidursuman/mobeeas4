@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :expression_of_interests
   resources :subscription_packs
   resources :subscriptions do
     member do

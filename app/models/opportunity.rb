@@ -17,6 +17,9 @@ class Opportunity < ActiveRecord::Base
   has_many :opportunity_school_years
   has_many :school_years, through: :opportunity_school_years
 
+  has_many :expression_of_interests
+  has_many :sponsors, through: :expression_of_interests
+
   validates :number_of_tokens, numericality: { greater_than_or_equal_to: 0 }, presence: true
 
   scope :draft, -> { where(opportunity_status: 'draft') }

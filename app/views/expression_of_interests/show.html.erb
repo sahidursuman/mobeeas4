@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Sponsor:</strong>
+  <%= @expression_of_interest.sponsor %>
+</p>
+
+<p>
+  <strong>Opportunity:</strong>
+  <%= @expression_of_interest.opportunity %>
+</p>
+
+<p>
+  <strong>Approved:</strong>
+  <%= @expression_of_interest.approved %>
+</p>
+
+<%= link_to 'Edit', edit_expression_of_interest_path(@expression_of_interest) %> |
+<%= link_to 'Back', expression_of_interests_path %>

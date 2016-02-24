@@ -1,0 +1,13 @@
+<%= simple_form_for(@expression_of_interest) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="form-inputs">
+    <%= f.association :sponsor %>
+    <%= f.association :opportunity %>
+    <%= f.input :approved %>
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>
