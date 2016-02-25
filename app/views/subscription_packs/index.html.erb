@@ -6,7 +6,7 @@
   <thead>
     <tr>
       <th>Name</th>
-      <th>Price</th>
+      <th>Price ex GST</th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -15,7 +15,7 @@
     <% @subscription_packs.each do |subscription_pack| %>
       <tr>
         <td><%= subscription_pack.name %></td>
-        <td><%= subscription_pack.price %></td>
+        <td><%= subscription_pack.price_ex_gst %></td>
         <td><%= link_to 'Show', subscription_pack %></td>
         <td><%= link_to 'Edit', edit_subscription_pack_path(subscription_pack) %></td>
         <td><%= link_to 'Destroy', subscription_pack, method: :delete, data: { confirm: 'Are you sure?' } %></td>

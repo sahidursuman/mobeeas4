@@ -16,9 +16,9 @@
       </div>
     <% end %>
     <label class="amount">
-      <span>Amount: <%= number_to_currency(@token_pack.member_price) %></span>
+      <span>Amount: <%= number_to_currency(@token_pack.price_ex_gst) %></span>
     </label>
-  </article>  
+  </article>
 
   <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
           data-key="<%= Rails.configuration.stripe[:publishable_key] %>"
@@ -28,7 +28,7 @@
           data-email="<%= current_user.email %>"
           data-receipt-email="<%= current_user.email %>"
           data-description="<%= @token_pack.name %>"
-          data-amount="<%= (@token_pack.member_price * 100).to_int %>"
+          data-amount="<%= (@token_pack.price_ex_gst * 100).to_int %>"
           data-locale="auto"></script>
   <% end %>
 
@@ -43,7 +43,7 @@
       </div>
     <% end %>
     <label class="amount">
-      <span>Amount: <%= number_to_currency(@token_pack.member_price) %></span>
+      <span>Amount: <%= number_to_currency(@token_pack.price_ex_gst) %></span>
     </label>
   </article>
 
@@ -55,7 +55,7 @@
           data-email="<%= current_user.email %>"
           data-receipt-email="<%= current_user.email %>"
           data-description="<%= @token_pack.name %>"
-          data-amount="<%= (@token_pack.member_price * 100).to_int %>"
+          data-amount="<%= (@token_pack.price_ex_gst * 100).to_int %>"
           data-locale="auto"></script>
   <% end %>
 <% end %>

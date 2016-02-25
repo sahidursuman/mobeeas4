@@ -18,7 +18,7 @@
         </div>
       <% end %>
       <label class="amount">
-        <span class="font-24px"><b>Amount: <%= number_to_currency(@subscription_pack.price) %></b></span> (including GST)
+        <span class="font-24px"><b>Amount: <%= number_to_currency(@subscription_pack.price_ex_gst) %></b></span> (including GST)
       </label>
     </article>
     <br>
@@ -30,7 +30,7 @@
             data-email="<%= current_user.email %>"
             data-receipt-email="<%= current_user.email %>"
             data-description="<%= @subscription_pack.name %>"
-            data-amount="<%= (@subscription_pack.price * 100).to_int %>"
+            data-amount="<%= (@subscription_pack.price_ex_gst * 100).to_int %>"
             data-locale="auto"></script>
     <% end %>
 
@@ -47,7 +47,7 @@
         </div>
       <% end %>
       <label class="amount">
-        <span class="font-24px"><b>Amount: <%= number_to_currency(@subscription_pack.price) %></b></span> (including GST)
+        <span class="font-24px"><b>Amount: <%= number_to_currency(@subscription_pack.price_ex_gst) %></b></span> (including GST)
       </label>
     </article>
     <br>
@@ -59,7 +59,7 @@
             data-email="<%= current_user.email %>"
             data-receipt-email="<%= current_user.email %>"
             data-description="<%= @subscription_pack.name %>"
-            data-amount="<%= (@subscription_pack.price * 100).to_int %>"
+            data-amount="<%= (@subscription_pack.price_ex_gst * 100).to_int %>"
             data-locale="auto"></script>
     <% end %>
 
@@ -76,7 +76,7 @@
         </div>
       <% end %>
       <label class="amount">
-        <span class="font-24px"><b>Amount: <%= number_to_currency(@subscription_pack.price) %></b></span> (including GST)
+        <span class="font-24px"><b>Amount: <%= number_to_currency(@subscription_pack.price_ex_gst) %></b></span> (including GST)
       </label>
     </article>
     <br>
@@ -88,7 +88,7 @@
             data-email="<%= current_user.email %>"
             data-receipt-email="<%= current_user.email %>"
             data-description="<%= @subscription_pack.name %>"
-            data-amount="<%= (@subscription_pack.price * 100).to_int %>"
+            data-amount="<%= (@subscription_pack.price_ex_gst * 100).to_int %>"
             data-locale="auto"></script>
     <% end %>
 

@@ -2,8 +2,8 @@
 
 one:
   name: MyString
-  price: 9.99
+  price_ex_gst: 9.99
 
 two:
   name: MyString
-  price: 9.99
+  price_ex_gst: 9.99

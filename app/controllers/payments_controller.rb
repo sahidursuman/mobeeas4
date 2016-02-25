@@ -8,7 +8,7 @@ class PaymentsController < ApplicationController
       end
       @token_pack = EngagementTokenPack.find(params[:token_pack])
       # Amount in cents
-      @amount = (@token_pack.member_price * 100).to_i
+      @amount = (@token_pack.price_ex_gst * 100).to_i
     # Stripe expects amounts to be in cents; since the charge is for $5, the amount parameter is assigned 500.
       customer = Stripe::Customer.create(
         :email => params[:stripeEmail],
@@ -28,7 +28,7 @@ class PaymentsController < ApplicationController
           @organisation.update_attributes(number_of_tokens: @organisation.number_of_tokens + @token_pack.number_of_tokens)
 
           # create token purchase
-          @token_purchase = TokenPurchase.create(user_id: current_user.id, organisation_id: @organisation.id, number_of_tokens: @token_pack.number_of_tokens, payment_total: @token_pack.member_price)
+          @token_purchase = TokenPurchase.create(user_id: current_user.id, organisation_id: @organisation.id, number_of_tokens: @token_pack.number_of_tokens, payment_total: @token_pack.price_ex_gst)
 
           # redirect to a thanks page
           redirect_to thanks_path(type: 'purchase')
@@ -39,7 +39,7 @@ class PaymentsController < ApplicationController
 
           puts "current_user.org_user_profile.number_of_tokens_for_independent: #{current_user.org_user_profile.number_of_tokens_for_independent}"
           # create token purchase
-          @token_purchase = TokenPurchase.create(user_id: current_user.id, number_of_tokens: @token_pack.number_of_tokens, payment_total: @token_pack.member_price)
+          @token_purchase = TokenPurchase.create(user_id: current_user.id, number_of_tokens: @token_pack.number_of_tokens, payment_total: @token_pack.price_ex_gst)
 
           # redirect to a thanks page
           redirect_to thanks_path(type: 'purchase')
@@ -56,7 +56,7 @@ class PaymentsController < ApplicationController
         @organisation = Organisation.find(params[:org_id])
 
         # Amount in cents
-        @amount = (@subscription_pack.price * 100).to_i
+        @amount = (@subscription_pack.price_ex_gst * 100).to_i
         # Stripe expects amounts to be in cents; since the charge is for $5, the amount parameter is assigned 500.
         customer = Stripe::Customer.create(
           :email => params[:stripeEmail],
@@ -81,7 +81,7 @@ class PaymentsController < ApplicationController
           # if the host is purchasing the tokens for his organisation
           if params[:org_id].present?
             # create new subscription
-            @subscription = Subscription.create!(user_type: @subscription_pack.name, user_id: current_user.id, organisation_id: @organisation.id, expiry_date: 1.year.from_now, payment: @subscription_pack.price)
+            @subscription = Subscription.create!(user_type: @subscription_pack.name, user_id: current_user.id, organisation_id: @organisation.id, expiry_date: 1.year.from_now, payment: @subscription_pack.price_ex_gst)
             if @subscription.save
               # send receipt by mail to host
               SubscriptionMailer.new_subscription(@subscription.id).deliver_now            # increase 1 token to organisation when purchasing a new or renewing their subscription
@@ -99,7 +99,7 @@ class PaymentsController < ApplicationController
         @org_user_profile = OrgUserProfile.find(current_user.org_user_profile.id)
 
         # Amount in cents
-        @amount = (@subscription_pack.price * 100).to_i
+        @amount = (@subscription_pack.price_ex_gst * 100).to_i
         # Stripe expects amounts to be in cents; since the charge is for $5, the amount parameter is assigned 500.
         customer = Stripe::Customer.create(
           :email => params[:stripeEmail],
@@ -121,7 +121,7 @@ class PaymentsController < ApplicationController
         )
         if charge['paid']
           # create new subscription
-          @subscription = Subscription.create!(user_type: @subscription_pack.name, user_id: current_user.id, expiry_date: 1.year.from_now, payment: @subscription_pack.price)
+          @subscription = Subscription.create!(user_type: @subscription_pack.name, user_id: current_user.id, expiry_date: 1.year.from_now, payment: @subscription_pack.price_ex_gst)
           if @subscription.save
             # send receipt by mail to host
             SubscriptionMailer.new_subscription(@subscription.id).deliver_now
@@ -139,7 +139,7 @@ class PaymentsController < ApplicationController
         @profile = Profile.find(current_user.profile.id)
 
         # Amount in cents
-        @amount = (@subscription_pack.price * 100).to_i
+        @amount = (@subscription_pack.price_ex_gst * 100).to_i
         # Stripe expects amounts to be in cents; since the charge is for $5, the amount parameter is assigned 500.
         customer = Stripe::Customer.create(
           :email => params[:stripeEmail],
@@ -162,7 +162,7 @@ class PaymentsController < ApplicationController
         if charge['paid']
           puts "Stripe receipt number #{charge['receipt_number']}"
           # create new subscription
-          @subscription = Subscription.create!(user_type: @subscription_pack.name, user_id: current_user.id, expiry_date: 1.year.from_now, payment: @subscription_pack.price)
+          @subscription = Subscription.create!(user_type: @subscription_pack.name, user_id: current_user.id, expiry_date: 1.year.from_now, payment: @subscription_pack.price_ex_gst)
           @stripe_receipt_id = charge['id']
           if @subscription.save
             SubscriptionMailer.new_subscription(@subscription.id).deliver_now # send receipt by mail to host

@@ -18,7 +18,7 @@ class SubscriptionPacksControllerTest < ActionController::TestCase
 
   test "should create subscription_pack" do
     assert_difference('SubscriptionPack.count') do
-      post :create, subscription_pack: { name: @subscription_pack.name, price: @subscription_pack.price }
+      post :create, subscription_pack: { name: @subscription_pack.name, price_ex_gst: @subscription_pack.price_ex_gst }
     end
 
     assert_redirected_to subscription_pack_path(assigns(:subscription_pack))
@@ -35,7 +35,7 @@ class SubscriptionPacksControllerTest < ActionController::TestCase
   end
 
   test "should update subscription_pack" do
-    patch :update, id: @subscription_pack, subscription_pack: { name: @subscription_pack.name, price: @subscription_pack.price }
+    patch :update, id: @subscription_pack, subscription_pack: { name: @subscription_pack.name, price_ex_gst: @subscription_pack.price_ex_gst }
     assert_redirected_to subscription_pack_path(assigns(:subscription_pack))
   end
 

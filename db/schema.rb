@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160224043045) do
+ActiveRecord::Schema.define(version: 20160225012608) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -90,7 +90,7 @@ ActiveRecord::Schema.define(version: 20160224043045) do
 
   create_table "engagement_token_packs", force: :cascade do |t|
     t.string   "name"
-    t.decimal  "member_price"
+    t.decimal  "price_ex_gst"
     t.integer  "number_of_tokens"
     t.datetime "created_at",       null: false
     t.datetime "updated_at",       null: false
@@ -443,9 +443,9 @@ ActiveRecord::Schema.define(version: 20160224043045) do
 
   create_table "subscription_packs", force: :cascade do |t|
     t.string   "name"
-    t.decimal  "price"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.decimal  "price_ex_gst"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
   end
 
   create_table "subscriptions", force: :cascade do |t|

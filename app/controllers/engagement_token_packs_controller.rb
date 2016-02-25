@@ -80,6 +80,6 @@ class EngagementTokenPacksController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def engagement_token_pack_params
-      params.require(:engagement_token_pack).permit(:name, :member_price, :number_of_tokens)
+      params.require(:engagement_token_pack).permit(:name, :price_ex_gst, :number_of_tokens)
     end
 end

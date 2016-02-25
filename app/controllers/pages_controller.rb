@@ -73,7 +73,7 @@ class PagesController < ApplicationController
 	end
 
 	def purchase_tokens
-		@engagement_token_packs = EngagementTokenPack.order(member_price: :asc)
+		@engagement_token_packs = EngagementTokenPack.order(price_ex_gst: :asc)
 	end
 
 	def required_skills

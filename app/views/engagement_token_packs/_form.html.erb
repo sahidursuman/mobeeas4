@@ -6,7 +6,7 @@
       <%= f.input :name %>
       <%= f.input :number_of_tokens %>
     <% end %>
-    <%= f.input :member_price, label: 'Price', :input_html => {value: number_with_precision(f.object.member_price, precision: 2) } %>
+    <%= f.input :price_ex_gst, label: 'Price ex GST', :input_html => {value: number_with_precision(f.object.price_ex_gst, precision: 2) } %>
   </div>
 
   <div class="form-actions">

@@ -81,6 +81,6 @@ class SubscriptionPacksController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def subscription_pack_params
-      params.require(:subscription_pack).permit(:name, :price)
+      params.require(:subscription_pack).permit(:name, :price_ex_gst)
     end
 end

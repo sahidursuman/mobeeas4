@@ -18,7 +18,7 @@ class EngagementTokenPacksControllerTest < ActionController::TestCase
 
   test "should create engagement_token_pack" do
     assert_difference('EngagementTokenPack.count') do
-      post :create, engagement_token_pack: { member_price: @engagement_token_pack.member_price, name: @engagement_token_pack.name, number_of_tokens: @engagement_token_pack.number_of_tokens }
+      post :create, engagement_token_pack: { price_ex_gst: @engagement_token_pack.price_ex_gst, name: @engagement_token_pack.name, number_of_tokens: @engagement_token_pack.number_of_tokens }
     end
 
     assert_redirected_to engagement_token_pack_path(assigns(:engagement_token_pack))
@@ -35,7 +35,7 @@ class EngagementTokenPacksControllerTest < ActionController::TestCase
   end
 
   test "should update engagement_token_pack" do
-    patch :update, id: @engagement_token_pack, engagement_token_pack: { member_price: @engagement_token_pack.member_price, name: @engagement_token_pack.name, number_of_tokens: @engagement_token_pack.number_of_tokens }
+    patch :update, id: @engagement_token_pack, engagement_token_pack: { price_ex_gst: @engagement_token_pack.price_ex_gst, name: @engagement_token_pack.name, number_of_tokens: @engagement_token_pack.number_of_tokens }
     assert_redirected_to engagement_token_pack_path(assigns(:engagement_token_pack))
   end
 
