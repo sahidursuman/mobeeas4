@@ -18,6 +18,13 @@
     <label class="amount">
       <span>Amount: <%= number_to_currency(@token_pack.price_ex_gst) %></span>
     </label>
+    <label class="amount">
+      <span class="font-16px"><b>Amount: <%= number_to_currency(@token_pack.price_ex_gst) %></b></span> (excludes GST)
+      <br>
+      <span class="font-16px"><b>GST: <%= number_to_currency(@token_pack.price_ex_gst * @token_pack.gst_rate) %></b></span>
+      <br>
+      <span class="font-16px"><b>Total: <%= number_to_currency(@token_pack.price_ex_gst + (@token_pack.price_ex_gst * @token_pack.gst_rate)) %></b></span>
+    </label>
   </article>
 
   <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"

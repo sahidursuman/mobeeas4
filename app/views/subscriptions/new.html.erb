@@ -18,7 +18,11 @@
         </div>
       <% end %>
       <label class="amount">
-        <span class="font-24px"><b>Amount: <%= number_to_currency(@subscription_pack.price_ex_gst) %></b></span> (including GST)
+        <span class="font-16px"><b>Amount: <%= number_to_currency(@subscription_pack.price_ex_gst) %></b></span> (excludes GST)
+        <br>
+        <span class="font-16px"><b>GST: <%= number_to_currency(@subscription_pack.price_ex_gst * @subscription_pack.gst_rate) %></b></span>
+        <br>
+        <span class="font-16px"><b>Total: <%= number_to_currency(@subscription_pack.price_ex_gst + (@subscription_pack.price_ex_gst * @subscription_pack.gst_rate)) %></b></span>
       </label>
     </article>
     <br>
@@ -47,7 +51,11 @@
         </div>
       <% end %>
       <label class="amount">
-        <span class="font-24px"><b>Amount: <%= number_to_currency(@subscription_pack.price_ex_gst) %></b></span> (including GST)
+        <span class="font-16px"><b>Amount: <%= number_to_currency(@subscription_pack.price_ex_gst) %></b></span> (excludes GST)
+        <br>
+        <span class="font-16px"><b>GST: <%= number_to_currency(@subscription_pack.price_ex_gst * @subscription_pack.gst_rate) %></b></span>
+        <br>
+        <span class="font-16px"><b>Total: <%= number_to_currency(@subscription_pack.price_ex_gst + (@subscription_pack.price_ex_gst * @subscription_pack.gst_rate)) %></b></span>
       </label>
     </article>
     <br>
