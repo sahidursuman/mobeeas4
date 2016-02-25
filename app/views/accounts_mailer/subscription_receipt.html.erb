@@ -46,32 +46,31 @@
   <tbody>
     <tr>
       <td>MOBEEAS Subscription 1 Year</td>
-      <td><%= sprintf("%.2f", @subcription.payment ) %> AUD</td>
+      <td><%= number_to_currency(@subscription.payment)  %> AUD</td>
     </tr>
     <tr>
       <td>GST 10%</td>
-      <td><%= sprintf("%.2f", (@subcription.payment * 0.1) ) %> AUD</td>
+      <td><%= number_to_currency(@subscription.payment * @subscription_pack.gst_rate) %> AUD</td>
     </tr>
     <tr>
       <td>Total</td>
-      <td><%= sprintf("%.2f", (@subcription.payment * 1.1) ) %> AUD</td>
+      <td><%= number_to_currency(@subscription.payment + (@subscription.payment * @subscription_pack.gst_rate)) %> AUD</td>
     </tr>
     <tr>
       <td>Amount Owing</td>
-      <td>$0.00AUD</td>
+      <td><%= number_to_currency(0) %> AUD</td>
     </tr>
   </tbody>
 </table>
 
 <p>
-  <br><br>
   <h4>Transactions</h4>
   MOBEEAS subscription ID: <%= @subscription.id %><br>
   Stripe receipt ID: <%= @stripe_receipt_id %><br>
   Transaction date: <%= @subscription.created_at.strftime('%e %B %Y') %><br>
   Subscription expiry date: <%= @subscription.expiry_date.strftime('%e %B %Y') %><br>
-
-  Thank you for your subscription.
   <br><br>
+  Thank you for your subscription.
+  <br>
   MOBEEAS Team
 </p>

@@ -1,6 +1,13 @@
 class EngagementTokenPacksController < ApplicationController
   before_action :set_engagement_token_pack, only: [:show, :edit, :update, :destroy]
 
+  # This function is called from app/views/pages/income.html.erb
+  def update_gst_rate_for
+    EngagementTokenPack.update_all(gst_rate: params[:update_gst_rate])
+    redirect_to income_path
+  end
+
+
   # GET /engagement_token_packs
   # GET /engagement_token_packs.json
   def index
@@ -80,6 +87,6 @@ class EngagementTokenPacksController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def engagement_token_pack_params
-      params.require(:engagement_token_pack).permit(:name, :price_ex_gst, :number_of_tokens)
+      params.require(:engagement_token_pack).permit(:name, :price_ex_gst, :number_of_tokens, :gst_rate)
     end
 end

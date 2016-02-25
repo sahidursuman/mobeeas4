@@ -1,6 +1,12 @@
 class SubscriptionPacksController < ApplicationController
   before_action :set_subscription_pack, only: [:show, :edit, :update, :destroy]
 
+  # This function is called from app/views/pages/income.html.erb
+  def update_gst_rate_for
+    SubscriptionPack.update_all(gst_rate: params[:update_gst_rate])
+    redirect_to income_path
+  end
+
   # GET /subscription_packs
   # GET /subscription_packs.json
   def index
@@ -81,6 +87,6 @@ class SubscriptionPacksController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def subscription_pack_params
-      params.require(:subscription_pack).permit(:name, :price_ex_gst)
+      params.require(:subscription_pack).permit(:name, :price_ex_gst, :gst_rate)
     end
 end

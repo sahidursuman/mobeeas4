@@ -10,6 +10,13 @@ class AccountsMailer < ApplicationMailer
     @subscription = Subscription.find(subscription_id)
     @stripe_receipt_id = stripe_receipt_id
     @user = User.find(@subscription.user_id)
+    if @subscription.user_type == "organisation"
+      @subscription_pack = SubscriptionPack.find_by(name: "organisation")
+    elsif @subscription.user_type == "independent"
+      @subscription_pack = SubscriptionPack.find_by(name: "independent")
+    elsif @subscription.user_type == "candidate"
+      @subscription_pack = SubscriptionPack.find_by(name: "candidate")
+    end
     # mail(to: [@user.email, 'mobeeas@mobeeas.com'], subject: 'Receipt for your MOBEEAS subscription.')
     mail(to: ['kfatiguso@gmail.com', 'mobeeas@mobeeas.com'], subject: 'Receipt for your MOBEEAS subscription.')
   end

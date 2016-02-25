@@ -4,7 +4,11 @@ Rails.application.routes.draw do
       get :notify
     end
   end
-  resources :subscription_packs
+  resources :subscription_packs do
+    collection do
+      get :update_gst_rate_for
+    end
+  end
   resources :subscriptions do
     member do
       get :notify_expiring
@@ -21,7 +25,11 @@ Rails.application.routes.draw do
       get :short_list, :invite, :accept, :apply_a_token_to
     end
   end
-  resources :engagement_token_packs
+  resources :engagement_token_packs do
+    collection do
+      get :update_gst_rate_for
+    end
+  end
   resources :payments, only: :create
   resources :token_purchases
   resources :opportunity_times

@@ -7,21 +7,34 @@
 
     <div class="row">
       <div class="col m6">
-      <h5>Opportunity Tokens</h5>
-      <ol>
-        <% @engagement_token_packs.order("id ASC").each do |engagement_token_pack| %>
-          <li>
-            <%= engagement_token_pack.name %> for $ <%= sprintf("%.2f", engagement_token_pack.price_ex_gst ) %> AUD ex. GST
-             - <%= link_to "Edit", edit_engagement_token_pack_path(engagement_token_pack) %>
+        <h5>Opportunity Tokens</h5>
+        <ol>
+          <% @engagement_token_packs.order("id ASC").each do |engagement_token_pack| %>
+            <li>
+              <%= engagement_token_pack.name %> for $ <%= sprintf("%.2f", engagement_token_pack.price_ex_gst ) %> AUD ex. GST
+               - <%= link_to "Edit", edit_engagement_token_pack_path(engagement_token_pack) %>
+              <br>
+              GST amount: $ <%= sprintf("%.2f", engagement_token_pack.price_ex_gst * engagement_token_pack.gst_rate) %>
+              <br>
+              GST rate: <%= sprintf("%.2f", engagement_token_pack.gst_rate) %>
+            </li>
             <br>
-          </li>
+          <% end %>
+        </ol>
+        <%# IMPORTANT: DO NOT display the Add function here.
+        ONLY the Developer can add into the engagement token pack record, do not let the user, even admin user to add new record. %>
+        <%#= link_to 'Add', new_engagement_token_pack_path, class: 'btn' %>
+        <%# end of IMPORTANT message%>
+
+        <%= form_tag(update_gst_rate_for_engagement_token_packs_path, :method => "get", id: "search-form") do %>
+          <%= text_field_tag :update_gst_rate, params[:update_gst_rate], placeholder: "Update GST rate for Token Packs"%>
+          <%= submit_tag "Save" %>
         <% end %>
-      </ol>
-      <%# IMPORTANT: DO NOT display the Add function here.
-      ONLY the Developer can add into the engagement token pack record, do not let the user, even admin user to add new record. %>
-      <%#= link_to 'Add', new_engagement_token_pack_path, class: 'btn' %>
-      <%# end of IMPORTANT message%>
+
+
       </div>
+
+
       <%#=====================================================================%>
       <div class="col m6">
         <h5>Subscriptions</h5>
@@ -30,13 +43,25 @@
             <li>
               Annual <%= subscription_pack.name %> $ <%= sprintf("%.2f", subscription_pack.price_ex_gst) %> AUD ex. GST
                - <%= link_to "Edit", edit_subscription_pack_path(subscription_pack) %>
+               <br>
+               GST amount: $ <%= sprintf("%.2f", subscription_pack.price_ex_gst * subscription_pack.gst_rate) %>
+               <br>
+               GST rate: <%= sprintf("%.2f", subscription_pack.gst_rate) %>
             </li>
+            <br>
           <% end %>
         </ol>
         <%# IMPORTANT: DO NOT display the Add function here.
         ONLY the Developer can add into the subscription pack record, do not let the user, even admin user to add new record. %>
         <%#= link_to 'Add', new_engagement_token_pack_path, class: 'btn' %>
         <%# end of IMPORTANT message%>
+
+        <%= form_tag(update_gst_rate_for_subscription_packs_path, :method => "get", id: "search-form") do %>
+          <%= text_field_tag :update_gst_rate, params[:update_gst_rate], placeholder: "Update GST rate for Subscription Packs"%>
+          <%= submit_tag "Save" %>
+        <% end %>
+
+
       </div>
     </div><%# end of row %>
 
