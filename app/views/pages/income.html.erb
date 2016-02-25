@@ -11,12 +11,12 @@
         <ol>
           <% @engagement_token_packs.order("id ASC").each do |engagement_token_pack| %>
             <li>
-              <%= engagement_token_pack.name %> for $ <%= sprintf("%.2f", engagement_token_pack.price_ex_gst ) %> AUD ex. GST
+              <%= engagement_token_pack.name %> for <%= number_to_currency(engagement_token_pack.price_ex_gst) %> AUD ex. GST
                - <%= link_to "Edit", edit_engagement_token_pack_path(engagement_token_pack) %>
               <br>
-              GST amount: $ <%= sprintf("%.2f", engagement_token_pack.price_ex_gst * engagement_token_pack.gst_rate) %>
+              GST amount: <%= number_to_currency(engagement_token_pack.price_ex_gst * engagement_token_pack.gst_rate) %>
               <br>
-              GST rate: <%= sprintf("%.2f", engagement_token_pack.gst_rate) %>
+              GST rate: <%= number_to_currency(engagement_token_pack.gst_rate) %>
             </li>
             <br>
           <% end %>
@@ -41,10 +41,10 @@
         <ol>
           <% @subscription_packs.order("id ASC").each do |subscription_pack| %>
             <li>
-              Annual <%= subscription_pack.name %> $ <%= sprintf("%.2f", subscription_pack.price_ex_gst) %> AUD ex. GST
+              Annual <%= subscription_pack.name %> <%= number_to_currency(subscription_pack.price_ex_gst) %> AUD ex. GST
                - <%= link_to "Edit", edit_subscription_pack_path(subscription_pack) %>
                <br>
-               GST amount: $ <%= sprintf("%.2f", subscription_pack.price_ex_gst * subscription_pack.gst_rate) %>
+               GST amount: <%= number_to_currency(subscription_pack.price_ex_gst * subscription_pack.gst_rate) %>
                <br>
                GST rate: <%= sprintf("%.2f", subscription_pack.gst_rate) %>
             </li>

@@ -13,7 +13,7 @@
       <td><%= @subscription.organisation.name %></td>
     <% end %>
     <td><%= @subscription.expiry_date.getlocal.strftime('%e %b %Y') %></td>
-    <td><%= sprintf("%.2f", @subscription.payment) %></td>
+    <td><%= number_to_currency(@subscription.payment) %></td>
     <% if (params[:organisation] == 'expiring') || (params[:independent] == 'expiring') || (params[:candidate] == 'expiring') %>
       <% if @subscription.notified_at.present? %>
         <td><%= @subscription.notified_at.getlocal.strftime('%e %b %Y') %></td>

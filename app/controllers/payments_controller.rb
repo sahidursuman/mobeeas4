@@ -8,7 +8,7 @@ class PaymentsController < ApplicationController
       end
       @token_pack = EngagementTokenPack.find(params[:token_pack])
       # Amount in cents
-      @amount = (@token_pack.price_ex_gst * 100).to_i
+      @amount = ((@token_pack.price_ex_gst + (@token_pack.price_ex_gst * @token_pack.gst_rate)) * 100).to_i
     # Stripe expects amounts to be in cents; since the charge is for $5, the amount parameter is assigned 500.
       customer = Stripe::Customer.create(
         :email => params[:stripeEmail],
@@ -56,7 +56,7 @@ class PaymentsController < ApplicationController
         @organisation = Organisation.find(params[:org_id])
 
         # Amount in cents
-        @amount = (@subscription_pack.price_ex_gst * 100).to_i
+        @amount = ((@subscription_pack.price_ex_gst + (@subscription_pack.price_ex_gst * @subscription_pack.gst_rate)) * 100).to_i
         # Stripe expects amounts to be in cents; since the charge is for $5, the amount parameter is assigned 500.
         customer = Stripe::Customer.create(
           :email => params[:stripeEmail],
@@ -99,7 +99,7 @@ class PaymentsController < ApplicationController
         @org_user_profile = OrgUserProfile.find(current_user.org_user_profile.id)
 
         # Amount in cents
-        @amount = (@subscription_pack.price_ex_gst * 100).to_i
+        @amount = ((@subscription_pack.price_ex_gst + (@subscription_pack.price_ex_gst * @subscription_pack.gst_rate)) * 100).to_i
         # Stripe expects amounts to be in cents; since the charge is for $5, the amount parameter is assigned 500.
         customer = Stripe::Customer.create(
           :email => params[:stripeEmail],
@@ -139,7 +139,7 @@ class PaymentsController < ApplicationController
         @profile = Profile.find(current_user.profile.id)
 
         # Amount in cents
-        @amount = (@subscription_pack.price_ex_gst * 100).to_i
+        @amount = ((@subscription_pack.price_ex_gst + (@subscription_pack.price_ex_gst * @subscription_pack.gst_rate)) * 100).to_i
         # Stripe expects amounts to be in cents; since the charge is for $5, the amount parameter is assigned 500.
         customer = Stripe::Customer.create(
           :email => params[:stripeEmail],
