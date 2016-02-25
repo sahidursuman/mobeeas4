@@ -1,0 +1,30 @@
+  <tr>
+    <td><%= @subscription.id %></td>
+    <td><%= @subscription.user_type %></td>
+    <%# displaying the name of the organisation host, independent host or the candidate %>
+    <% if params[:organisation].present? || params[:independent].present? %>
+      <td><%= @subscription.user.org_user_profile.name %></td>
+    <% elsif (params[:candidate].present?) %>
+      <td><%= @subscription.user.profile.name %></td>
+    <% end %>
+
+    <%# displaying the organisation name if the subscription is for organisation %>
+    <% if params[:organisation].present? %>
+      <td><%= @subscription.organisation.name %></td>
+    <% end %>
+    <td><%= @subscription.expiry_date.getlocal.strftime('%e %b %Y') %></td>
+    <td><%= sprintf("%.2f", @subscription.payment) %></td>
+    <% if (params[:organisation] == 'expiring') || (params[:independent] == 'expiring') || (params[:candidate] == 'expiring') %>
+      <% if @subscription.notified_at.present? %>
+        <td><%= @subscription.notified_at.getlocal.strftime('%e %b %Y') %></td>
+      <% else %>
+        <td>Never</td>
+       <% end %>
+      <td><%= link_to "Notify", notify_expiring_subscription_path(@subscription)%></td>
+    <% end %>
+
+    <%# DO NOT USE THE FUNCTIONS BELOW, KEEP FOR RECORDS ONLY %>
+    <%#= link_to 'Show', subscription %>
+    <%#= link_to 'Edit', edit_subscription_path(subscription) %>
+    <%#= link_to 'Destroy', subscription, method: :delete, data: { confirm: 'Are you sure?' } %>
+  </tr>

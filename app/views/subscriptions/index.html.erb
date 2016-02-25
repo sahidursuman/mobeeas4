@@ -11,6 +11,7 @@
 
       <% elsif params[:organisation] == 'expired' %>
         <h4>Expired Organisation Subscriptions</h4>
+      <%# =========================================%>
 
       <% elsif params[:independent] == 'active' %>
         <h4>Active Independent Host Subscriptions</h4>
@@ -20,6 +21,8 @@
 
       <% elsif params[:independent] == 'expired' %>
         <h4>Expired Independent Host Subscriptions</h4>
+      <%# =========================================%>
+
 
       <% elsif params[:candidate] == 'active' %>
         <h4>Active Candidate Subscriptions</h4>
@@ -36,6 +39,7 @@
         <table>
           <thead>
             <tr>
+              <th>ID</th>
               <th>Type</th>
               <th>User</th>
               <% if params[:organisation].present? %>
@@ -53,34 +57,40 @@
           </thead>
 
           <tbody>
-            <% @subscriptions.each do |subscription| %>
-              <tr>
-                <td><%= subscription.user_type %></td>
-                <td><%= subscription.user.org_user_profile.name %></td>
-                <% if params[:organisation].present? %>
-                  <td><%= subscription.organisation.name %></td>
-                <% end %>
-                <td><%= subscription.expiry_date.getlocal.strftime('%e %b %Y') %></td>
-                <td><%= sprintf("%.2f", subscription.payment) %></td>
-                <% if (params[:organisation] == 'expiring') || (params[:independent] == 'expiring') || (params[:candidate] == 'expiring') %>
-                  <% if subscription.notified_at.present? %>
-                    <td><%= subscription.notified_at.getlocal.strftime('%e %b %Y') %></td>
-                  <% else %>
-                    <td>Never</td>
-                   <% end %>
-                  <td><%= link_to "Notify", notify_expiring_subscription_path(subscription)%></td>
+            <% @subscriptions.order("id ASC").each do |subscription| %>
+              <% @subscription = Subscription.find(subscription.id) %><%# set a local variable for partial rendering %>
+              <%# for the params 'active', show the subscription if the expiring date more than 30 days in the future %>
+              <% if (params[:organisation] == 'active') || (params[:independent] == 'active') || (params[:candidate] == 'active') %>
+                <%# displaying the subscription with expiry date than 30 days in the future %>
+                <% if subscription.expires_in_more_than_30_days %>
+                  <%= render "subscriptions_list" %>
                 <% end %>
 
-                <%# DO NOT USE THE FUNCTIONS BELOW, KEEP FOR RECORDS ONLY %>
-                <%#= link_to 'Show', subscription %>
-                <%#= link_to 'Edit', edit_subscription_path(subscription) %>
-                <%#= link_to 'Destroy', subscription, method: :delete, data: { confirm: 'Are you sure?' } %>
-              </tr>
-            <% end %>
+              <%# for the params 'expiring', show the subscription if it is still active and expiring in less than 30 days %>
+              <% elsif (params[:organisation] == 'expiring') || (params[:independent] == 'expiring') || (params[:candidate] == 'expiring') %>
+                <%# displaying the subscription with active status but expiring less than 30 days %>
+                <% if (subscription.active) && (subscription.expires_in_less_than_30_days) %>
+                  <%= render "subscriptions_list" %>
+                <% end %>
+
+              <%# for the params 'expired', show the subscription that has expired %>
+              <% elsif (params[:organisation] == 'expired') || (params[:independent] == 'expired') || (params[:candidate] == 'expired') %>
+                <%# displaying the subscription that has expired %>
+                <% if subscription.expired %>
+                  <%= render "subscriptions_list" %>
+                <% end %>
+              <% end %>
+            <% end %><%# end of @subscriptions loop %>
           </tbody>
         </table>
         <% else %>
-          No subscription available.
+          <% if (params[:organisation]).present? %>
+            No organisation subscription available.
+          <% elsif (params[:independent]).present? %>
+            No independent host subscription available.
+          <% elsif (params[:candidate]).present? %>
+            No candidate subscription available.
+          <% end %>
         <% end %>
 
       <br>

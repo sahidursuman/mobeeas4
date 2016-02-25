@@ -1,4 +1,4 @@
-<h5>TAX INVOICE</h5>
+<h4>TAX INVOICE</h4>
 
 <div class="row">
   <div class="col m6">
@@ -27,12 +27,11 @@
   </div><%# end of col m3 %>
 
   <div class="col m3">
-    MOBEEAS Pty Ltd<br>
+    The Trustee for Moreton Trading Trust t/a MOBEEAS<br>
     PO Box 282<br>
     Gordon NSW 2072<br>
   </div><%# end of col m3 %>
 </div><%# end of row %>
-<br>stripe_receipt_id: <%= @stripe_receipt_id %>
 
 <br><br>
 
@@ -47,53 +46,31 @@
   <tbody>
     <tr>
       <td>MOBEEAS Subscription 1 Year</td>
-      <td>$100.00AUD</td>
+      <td><%= sprintf("%.2f", @subcription.payment ) %> AUD</td>
     </tr>
     <tr>
       <td>GST 10%</td>
-      <td>$10AUD</td>
+      <td><%= sprintf("%.2f", (@subcription.payment * 0.1) ) %> AUD</td>
     </tr>
     <tr>
       <td>Total</td>
-      <td>$110.00AUD</td>
+      <td><%= sprintf("%.2f", (@subcription.payment * 1.1) ) %> AUD</td>
+    </tr>
+    <tr>
+      <td>Amount Owing</td>
+      <td>$0.00AUD</td>
     </tr>
   </tbody>
 </table>
-
-<br><br>
-<h5>Transactions</h5>
-<table>
-  <thead>
-    <tr>
-        <th data-field="id">Transaction Date</th>
-        <th data-field="name">MOBEEAS Subscription ID</th>
-        <th data-field="price">Gateway</th>
-        <th data-field="price">Stripe Receipt ID</th>
-        <th data-field="price">Amount</th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <tr>
-      <td>23 Jan 2020</td>
-      <td>1</td>
-      <td>Stripe Secure Payment</td>
-      <td><%= @stripe_receipt_id %></td>
-      <td>$110.00AUD</td>
-
-    </tr>
-    <tr>
-      <td> </td>
-      <td> </td>
-      <td> </td>
-      <td>Balance</td>
-      <td>$00.00AUD</td>
-    </tr>
-  </tbody>
-</table>
-
 
 <p>
+  <br><br>
+  <h4>Transactions</h4>
+  MOBEEAS subscription ID: <%= @subscription.id %><br>
+  Stripe receipt ID: <%= @stripe_receipt_id %><br>
+  Transaction date: <%= @subscription.created_at.strftime('%e %B %Y') %><br>
+  Subscription expiry date: <%= @subscription.expiry_date.strftime('%e %B %Y') %><br>
+
   Thank you for your subscription.
   <br><br>
   MOBEEAS Team

@@ -7,8 +7,8 @@ class Subscription < ActiveRecord::Base
   scope :candidate, -> { where(user_type: 'candidate') }
   scope :expiring_in_less_than_30_days, -> { where('expiry_date < ?', 30.day.from_now) }
   scope :expiring_in_more_than_30_days, -> { where('expiry_date >= ?', 30.day.from_now) }
-  scope :is_active, -> { where('expiry_date >= ?', Date.today) }
-  scope :is_expired, -> { where('expiry_date < ?', Date.today) }
+  scope :are_active, -> { where('expiry_date >= ?', Date.today) }
+  scope :are_expired, -> { where('expiry_date < ?', Date.today) }
 
   def notified
     !self.notified_at.nil?
@@ -28,6 +28,10 @@ class Subscription < ActiveRecord::Base
 
   def expires_in_less_than_30_days
     self.expiry_date < 30.day.from_now
+  end
+
+  def expires_in_more_than_30_days
+    self.expiry_date >= 30.day.from_now
   end
 
 
