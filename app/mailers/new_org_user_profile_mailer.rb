@@ -10,7 +10,7 @@ class NewOrgUserProfileMailer < ApplicationMailer
     @organisation = Organisation.find(org_id)
     @user = User.find(user_id)
 
-    mail(to: "info@mobeeas.com", subject: 'An new organisation host is added')
+    mail(to: "mobeeas@mobeeas.com", subject: 'An new organisation host is added')
   end
 
   # Subject can be set in your I18n file at config/locales/en.yml

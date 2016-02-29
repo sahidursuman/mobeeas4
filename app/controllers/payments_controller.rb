@@ -84,7 +84,8 @@ class PaymentsController < ApplicationController
             @subscription = Subscription.create!(user_type: @subscription_pack.name, user_id: current_user.id, organisation_id: @organisation.id, expiry_date: 1.year.from_now, payment: @subscription_pack.price_ex_gst)
             if @subscription.save
               # send receipt by mail to host
-              SubscriptionMailer.new_subscription(@subscription.id).deliver_now            # increase 1 token to organisation when purchasing a new or renewing their subscription
+              SubscriptionMailer.new_subscription(@subscription.id).deliver_now
+              # increase 1 token to organisation when purchasing a new or renewing their subscription
               @organisation.number_of_tokens += 1
               @organisation.save!
             end

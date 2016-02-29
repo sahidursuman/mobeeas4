@@ -1,5 +1,5 @@
 class EnquiryMailer < ApplicationMailer
-  default from: 'info@mobeeas.com'
+  default from: 'mobeeas@mobeeas.com'
   # Subject can be set in your I18n file at config/locales/en.yml
   # with the following lookup:
   #

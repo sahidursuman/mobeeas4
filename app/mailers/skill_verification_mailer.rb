@@ -10,7 +10,7 @@ class SkillVerificationMailer < ApplicationMailer
 
   def approve(skill_verification_id)
     @skill_verification = SkillVerification.find(skill_verification_id)
-    mail(to: 'info@mobeeas.com', subject: 'Skill Verification Submitted')
+    mail(to: 'mobeeas@mobeeas.com', subject: 'Skill Verification Submitted')
   end
-  
+
 end

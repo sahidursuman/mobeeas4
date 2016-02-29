@@ -8,15 +8,12 @@ class SubscriptionMailer < ApplicationMailer
   def notify(subscription_id)
     @subscription = Subscription.find(subscription_id)
     @user = User.find(@subscription.user_id)
-    # mail(to: @user.email, subject: 'Your MOBEEAS subscription is expiring in 30 days.' )
-    mail(to: 'kfatiguso@gmail.com', subject: 'Your MOBEEAS subscription is expiring soon.' )
+    mail(to: @user.email, subject: 'Your MOBEEAS subscription is expiring soon.' )
   end
 
   def new_subscription(subscription_id)
     @subscription = Subscription.find(subscription_id)
     @user = User.find(@subscription.user_id)
-    # mail(to: @user.email, subject: 'Your MOBEEAS subscription is expiring in 30 days.' )
-    mail(to: 'kfatiguso@gmail.com', subject: 'Thank you for renewing your annual MOBEEAS subscription.' )
-
+    mail(to: @user.email, subject: 'Thank you for renewing your annual MOBEEAS subscription.' )
   end
 end

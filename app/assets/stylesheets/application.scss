@@ -119,9 +119,6 @@ nav ul a {
   margin-top: 15px;
 }
 
-.margin-top-20px {
-  margin-top: 20px;
-}
 .margin-top-50px {
   margin-top: 50px;
 }
@@ -132,8 +129,20 @@ nav ul a {
 .margin-bottom-5px {
   margin-bottom: 5px;
 }
+
+.margin-top-20px {
+  margin-top: 20px;
+}
 .margin-bottom-20px {
   margin-bottom: 20px;
+}
+
+.margin-bottom-30px {
+  margin-bottom: 30px;
+}
+
+.margin-top-10px {
+  margin-top: 10px;
 }
 .margin-bottom-10px {
   margin-bottom: 10px;
@@ -183,6 +192,9 @@ footer.page-footer {
 .text-underline {
   text-decoration: underline;
 }
+.text-decoration-none {
+  text-decoration: none;
+}
 
 .list-style-disc {
   list-style-type: disc;
@@ -219,6 +231,10 @@ footer.page-footer {
 
 .grey-text {
   color: #cbc8c8;
+}
+
+.white-text {
+  color: white;
 }
 
 .border-bottom {

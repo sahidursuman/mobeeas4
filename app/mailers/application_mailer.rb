@@ -1,4 +1,4 @@
 class ApplicationMailer < ActionMailer::Base
-  default from: 'info@mobeeas.com'
+  default from: 'mobeeas@mobeeas.com'
   layout 'mailer'
 end

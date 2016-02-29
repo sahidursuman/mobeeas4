@@ -1,5 +1,5 @@
 <% if @receiver.has_role? :candidate %>
-  <h4>Send messageee to <%= @receiver.profile.name %></h4>
+  <h4>Send message to <%= @receiver.profile.name %></h4>
 <% elsif @receiver.has_role? :host %>
   <h4>Send message to <%= @receiver.org_user_profile.name %></h4>
 <% end %>

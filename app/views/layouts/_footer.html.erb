@@ -1,25 +1,48 @@
- <footer class="page-footer">
-           <div class="container">
-             <div class="row">
-               <div class="col l6 s12" style="margin-top: none;">
-                 <h5 class="white-text">MOBEEAS</h5>
-                 <p class="grey-text text-lighten-4">Managed Opportunities Between Employers, Educators and Students</p>
-               </div>
-               <div class="col l4 offset-l2 s12">
-                 <h5 class="white-text">Links</h5>
-                 <%# <ul>
-                   <li><a class="grey-text text-lighten-3" href="#!">Link 1</a></li>
-                   <li><a class="grey-text text-lighten-3" href="#!">Link 2</a></li>
-                   <li><a class="grey-text text-lighten-3" href="#!">Link 3</a></li>
-                   <li><a class="grey-text text-lighten-3" href="#!">Link 4</a></li>
-                 </ul> %>
-               </div>
-             </div>
-           </div>
-           <div class="footer-copyright">
-             <div class="container">
-             © 2016 Copyright
-             <%# <a class="grey-text text-lighten-4 right" href="#!">More Links</a> %>
-             </div>
-           </div>
-         </footer>
+<footer class="page-footer">
+  <!-- <div class="container"> -->
+    <div class="row">
+      <div class="col l6 s12" style="margin-top: none;">
+        <h5 class="white-text">MOBEEAS</h5>
+        <p class="grey-text text-lighten-4">
+          Managed Opportunities Between Employers, Educators and Students
+        </p>
+        <p class="grey-text text-lighten-4">
+          © 2016 Copyright
+        </p>
+      </div>
+      <div class="col l4 offset-l2 s12">
+        <!-- Modal Trigger -->
+        <h5>
+          <a class="modal-trigger white-text" href="#modal-faqs">FAQ's</a>
+        </h5>
+        <!-- Modal Structure -->
+        <div id="modal-faqs" class="modal">
+          <div class="modal-content">
+            <h4>Frequently Asked Questions</h4>
+            <%= cl_image_tag("MOBEEAS_FAQs.png", :width => '100%') %>
+          </div>
+          <div class="modal-footer">
+            <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Close</a>
+          </div>
+        </div>
+
+        <%# <ul>
+        <li><a class="grey-text text-lighten-3" href="#!">Link 1</a></li>
+        <li><a class="grey-text text-lighten-3" href="#!">Link 2</a></li>
+        <li><a class="grey-text text-lighten-3" href="#!">Link 3</a></li>
+        <li><a class="grey-text text-lighten-3" href="#!">Link 4</a></li>
+        </ul> %>
+      </div>
+
+
+    </div>
+
+
+
+  <!-- </div> -->
+  <!-- <div class="footer-copyright"> -->
+    <!-- <div class="container"> -->
+    <%# <a class="grey-text text-lighten-4 right" href="#!">More Links</a> %>
+    <!-- </div> -->
+  <!-- </div> -->
+</footer>

@@ -20,7 +20,7 @@ class OpportunityMailer < ApplicationMailer
   def accepted(opportunity_id, profile_id)
     @opportunity = Opportunity.find(opportunity_id)
     @profile = Profile.find(profile_id)
-    mail(to: "info@mobeeas.com", subject: 'A Candidate has accepted your invitation to participate in MOBEEAS Opportunity')
+    mail(to: @opportunity.user.email, subject: 'A Candidate has accepted your invitation to participate in MOBEEAS Opportunity')
   end
 
   # Subject can be set in your I18n file at config/locales/en.yml
@@ -31,7 +31,7 @@ class OpportunityMailer < ApplicationMailer
   def assigned_a_token(opportunity_id, profile_id)
     @opportunity = Opportunity.find(opportunity_id)
     @profile = Profile.find(profile_id)
-    mail(to: "info@mobeeas.com", subject: 'Your engagement in MOBEEAS Opportunity has been confirmed')
+    mail(to: @profile.user.email, subject: 'Your engagement in MOBEEAS Opportunity has been confirmed')
   end
 
   # This mailer is sent from opportunity by the opp. owner to request purchasing more tokens to the admin host email.

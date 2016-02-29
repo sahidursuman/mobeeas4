@@ -8,7 +8,7 @@ class NewlyAddedSkillMailer < ApplicationMailer
   def approve_new_skill(skill_id, user_id)
     @skill = Skill.find(skill_id)
     @user = User.find(user_id)
-    mail(to: "info@mobeeas.com", subject: 'An new skill has been created')
+    mail(to: "mobeeas@mobeeas.com", subject: 'An new skill has been created')
   end
 
   def notification_of_approved_new_skill(skill_id, user_id)

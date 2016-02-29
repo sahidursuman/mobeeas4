@@ -17,8 +17,7 @@ class AccountsMailer < ApplicationMailer
     elsif @subscription.user_type == "candidate"
       @subscription_pack = SubscriptionPack.find_by(name: "candidate")
     end
-    # mail(to: [@user.email, 'mobeeas@mobeeas.com'], subject: 'Receipt for your MOBEEAS subscription.')
-    mail(to: ['kfatiguso@gmail.com', 'mobeeas@mobeeas.com'], subject: 'Receipt for your MOBEEAS subscription.')
+    mail(to: [@user.email, 'mobeeas@mobeeas.com'], subject: 'Receipt for your MOBEEAS subscription.')
   end
 
 

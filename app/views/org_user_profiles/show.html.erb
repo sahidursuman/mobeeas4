@@ -71,7 +71,7 @@
           <% @subscription_pack = SubscriptionPack.find_by(name: 'independent') %><%# get the Independent Subscription pack %>
           <% if @org_user_profile.user.subscriptions.present? %>
             <% @subscription = Subscription.find(@org_user_profile.user.subscriptions.last.id) %><%# get the LAST subscription of this ORGANISATION %>
-            Your subscriptions expiry date:<br>
+            Your subscription expiry date:<br>
             <b><%= @subscription.expiry_date.getlocal.strftime('%e %b %Y') %></b>
             <% if (@subscription.active) %><%# =============== if the last subscription is ACTIVE %>
               <% if @subscription.expires_in_less_than_30_days %>

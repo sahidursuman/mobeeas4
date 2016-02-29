@@ -7,7 +7,7 @@
 <%# If the candidate has one or many subscriptions ========================= %>
 <% if @profile.user.subscriptions.present? %>
   <% @subscription = Subscription.find(@profile.user.subscriptions.last.id) %><%# get the LAST subscription of this CANDIDATE %>
-  <br>Your subscriptions expiry date:<br>
+  <br>Your subscription expiry date:<br>
   <b><%= @subscription.expiry_date.getlocal.strftime('%e %b %Y') %></b>
   <% if (@subscription.active) %><%# =============== if the last subscription is ACTIVE %>
     <% if @subscription.expires_in_less_than_30_days %>
