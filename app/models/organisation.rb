@@ -3,6 +3,7 @@ class Organisation < ActiveRecord::Base
   has_many :org_users
   has_many :users, through: :org_users
   has_many :subscriptions
+  validates :name, :contact_name, :contact_email, :contact_phone, :address, :suburb, :state, :postcode, :country, presence: true
 
   mount_uploader :logo, PictureUploader
 
@@ -16,5 +17,10 @@ class Organisation < ActiveRecord::Base
 	def self.search(search)
 	  where("name ILIKE ? OR suburb ILIKE ? OR state ILIKE ?", "%#{search}%", "%#{search}%", "%#{search}%")
 	end
+
+  def country_name(country_code)
+    country = ISO3166::Country[country_code]
+    country.translations[I18n.locale.to_s] || country.name
+  end
 
 end

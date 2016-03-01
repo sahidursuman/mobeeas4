@@ -1,14 +1,14 @@
 <div class="navbar-fixed">
 <nav class="top-nav">
     <div class="nav-wrapper">
-      <a href="/" class="brand-logo margin-top-10px margin-left-10px"><%= cl_image_tag("MOBEEAS_horiz_RGB_10cm_Res_250_12.jpg", class: 'img-responsive', :width=>515, :crop=>:scale) %></a>
+      <a href="/" class="brand-logo margin-top-15px margin-left-20px"><%= cl_image_tag("MOBEEAS_horiz_RGB_10cm_Res_250_12.jpg", class: 'img-responsive', :width=>420, :crop=>:scale) %></a>
 
       <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
 
       <ul class="right hide-on-med-and-down">
         <%# <li><a href="sass.html"><i class="material-icons left">search</i>Find Opportunities</a></li> %>
         <li><a href="/"><i class="material-icons left">home</i> Home</a></li>
-        <li><a href="/enquiries/new"><i class="material-icons left">group_add</i> Get involved</a></li>
+        <li><a href="/enquiries/new"><i class="material-icons left">group_add</i> Get Involved</a></li>
         <li><a href="/about"><i class="material-icons left">help_outline</i> About</a></li>
         <% if user_signed_in? %>
           <% if current_user.has_role? :admin %>

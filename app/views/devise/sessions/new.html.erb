@@ -1,26 +1,20 @@
-<div class="row">
+<div class="row margin-top-50px">
 
   <%# LOGIN TO ACCESS PROFILES %>
   <div class="col m6">
-    <div class="card height-420px">
+    <div class="card height-360px">
       <div class="card-content black-text">
         <span class="card-title blue-text text-darken-2">Already a MOBEEAS member?</span>
           <%= simple_form_for(resource, as: resource_name, url: session_path(resource_name), html: { class: 'form-login' }) do |f| %>
-            <div class="input-field">
-              <%= f.input :email, autofocus: true %>
+            <%= f.input :email, label: 'Email' %>
+            <%= f.input :password, label: 'Password' %>
+            <%#= f.input :remember_me, inline_label: 'Remember me' %><%# Keep this as the template %>
+            <%#
+            <div class="input string optional user_remember_me">
+              <input class="string optional" type="checkbox" name="user[remember_me]" value="true" checked="checked" id="user_remember_me" />
+                <label class="string optional" for="user_remember_me">Remember me</label>
             </div>
-            <div class="input-field">
-              <%= f.input :password %>
-            </div>
-            <div class="row">
-              <div class="col s6">
-                <input value="0" type="hidden" name="user[remember_me]" />
-                <p>
-                  <input type="checkbox" class="boolean optional" value="1" name="user[remember_me]" id="user_remember_me" />
-                  <label class="boolean optional checkbox" for="user_remember_me">Remember me</label>
-                </p>
-              </div>
-            </div>
+            %>
 
             <div class="row">
               <div class="col s6">
@@ -28,7 +22,7 @@
               </div>
             </div>
               <%= link_to "Forgot your password?", new_password_path(resource_name) %>
-              <hr>
+              <br>
             <%#- if devise_mapping.registerable? && controller_name != 'registrations' %>
                 <%#= link_to "Register", new_registration_path(resource_name) %><%#<br />%>
             <%# end -%>
@@ -42,20 +36,21 @@
 
   <%# SIGN UP TO REGISTER %>
   <div class="col m6">
-      <div class="card height-420px">
-        <div class="card-content black-text">
-          <span class="card-title blue-text text-darken-2">New to MOBEEAS?<% if params[:user_type]  %> as <%= params[:user_type].indefinitize %> <% end %></span>
-          <%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name), html: { class: 'form-login' }) do |f| %>
-
-        	<%= f.error_notification %>
-
-          <%= f.input :email, label: 'Your email', required: true, autofocus: true %>
-          <%= f.input :password, label: 'Choose a password', required: true, hint: ("#{@minimum_password_length} characters minimum" if @minimum_password_length) %>
-          <% if params[:user_type] %>
-          	<%= f.input :user_type, as: :hidden, input_html: { value: params[:user_type]} %>
-          <% end %>
-          <button type="submit" class="btn waves-effect waves-light" name="action">Register</button>
-      	<hr>
+    <div class="card height-360px">
+      <div class="card-content black-text">
+        <span class="card-title blue-text text-darken-2">New to MOBEEAS?<% if params[:user_type]  %> as <%= params[:user_type].indefinitize %> <% end %></span>
+        <%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name), html: { class: 'form-login' }) do |f| %>
+      	<%= f.error_notification %>
+        <%= f.input :email, label: 'Your email', required: true %>
+        <%= f.input :password, label: 'Choose a password', required: true, hint: ("#{@minimum_password_length} characters minimum" if @minimum_password_length) %>
+        <% if params[:user_type] %>
+        	<%= f.input :user_type, as: :hidden, input_html: { value: params[:user_type]} %>
+        <% end %>
+        <div class="row">
+          <div class="col s6">
+            <button type="submit" class="btn waves-effect waves-light" name="action">Register</button>
+          </div>
+        </div>
       	<%# <p>Already a MOBEEAS member? %><%#= render "devise/shared/links" %><%#</p> %>
         <p><a href="/">Return Home</a></p>
       </div><%# end of card-content %>

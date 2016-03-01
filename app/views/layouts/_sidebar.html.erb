@@ -1,20 +1,20 @@
 	  <% if current_user.has_role? :candidate %>
       <ul id="slide-out" class="side-nav fixed">
-        <li class="logo margin-top-20px margin-bottom-20px"><a href="/"><%= image_tag 'MOBEEAS.png', height: '122px', class: 'brand-logo responsive-img' %></a>
+        <li class="logo margin-top-20px margin-bottom-20px"><a href="/"><%= cl_image_tag("MOBEEAS_RGB_10cm_Res_300_12.jpg", :width=>200, :crop=>:scale) %></a>
         </li>
         <%= render 'layouts/candidate_sidebar' %>
       </ul>
 
     <% elsif current_user.has_role? :host %>
       <ul id="slide-out" class="side-nav fixed">
-        <li class="logo margin-top-20px margin-bottom-20px"><a href="/"><%= image_tag 'MOBEEAS.png', height: '122px', class: 'brand-logo responsive-img' %></a>
+        <li class="logo margin-top-20px margin-bottom-20px"><a href="/"><%= cl_image_tag("MOBEEAS_RGB_10cm_Res_300_12.jpg", :width=>200, :crop=>:scale) %></a>
         </li>
       <%= render 'layouts/host_sidebar' %>
       </ul>
 
 		<% elsif current_user.has_role? :admin %>
 			<ul id="slide-out" class="side-nav fixed">
-				<li class="logo margin-top-20px margin-bottom-20px"><a href="/"><%= image_tag 'MOBEEAS.png', height: '122px', class: 'brand-logo responsive-img' %></a>
+				<li class="logo margin-top-20px margin-bottom-20px"><a href="/"><%= cl_image_tag("MOBEEAS_RGB_10cm_Res_300_12.jpg", :width=>200, :crop=>:scale) %></a>
 				</li>
 			<%= render 'layouts/admin_sidebar' %>
 			</ul>

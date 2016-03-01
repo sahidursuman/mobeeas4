@@ -10,9 +10,16 @@
     <% if params[:user_type] %>
     	<%= f.input :user_type, as: :hidden, input_html: { value: params[:user_type]} %>
     <% end %>
-    <button type="submit" class="btn waves-effect waves-light" name="action">Register</button>
-	<hr>
-	<p>Already a MOBEEAS member? <%= render "devise/shared/links" %></p>
+    <div class="row">
+      <div class="col s6">
+        <button type="submit" class="btn waves-effect waves-light margin-top-20px" name="action">Register</button>
+      </div>
+    </div>
+
+	<p>
+    Already a MOBEEAS member? <br>
+    <%= render "devise/shared/links" %>
+  </p>
   <p><a href="/">Return Home</a></p>
   </div>
 <% end %>

@@ -52,7 +52,7 @@
         </p>
         <p>
         Country:
-        <b><%= @org_user_profile.country %></b>
+        <b><%= @org_user_profile.country_name(@org_user_profile.country) %></b>
         </p>
         <% if current_user.id == @org_user_profile.user_id %>
           <div class="margin-top-5px">
@@ -180,7 +180,7 @@
                       <%= f.input :suburb %>
                     </div>
                     <div class="col s6" style="list-style-type: none;">
-                      <%= f.input :state, priority: [ "NSW" ], collection: [ "NSW", "QLD", "SA", "TAS", "VIC", "ACT", "WA"], :include_blank => false %>
+                      <%= f.input :state, priority: [ "NSW" ], collection: [ "NSW", "QLD", "SA", "TAS", "VIC", "ACT", "WA"] %>
                     </div>
                   </div>
                   <div class="row">
@@ -188,7 +188,7 @@
                       <%= f.input :postcode %>
                     </div>
                     <div class="col s6">
-                      <%= f.input :country, priority: [ "Australia" ], :include_blank => false %>
+                      <%= f.input :country, priority: [ "Australia" ] %>
                     </div>
                   </div>
                   <%= f.input :contact_name, label: 'Executive of this Organisation: ' ' <a href="#modal_org_executive" class="modal-trigger"><i class="material-icons">help</i></a>'.html_safe %>

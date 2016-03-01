@@ -88,6 +88,9 @@ class PaymentsController < ApplicationController
               # increase 1 token to organisation when purchasing a new or renewing their subscription
               @organisation.number_of_tokens += 1
               @organisation.save!
+
+              # Sending the mail of the the subscription receipt
+              AccountsMailer.subscription_receipt(@subscription.id, charge['id']).deliver_now
             end
 
             # redirect to a thanks page
@@ -129,6 +132,9 @@ class PaymentsController < ApplicationController
             # increase 1 token to independent host when purchasing a new or renewing their subscription
             @org_user_profile.number_of_tokens_for_independent += 1
             @org_user_profile.save!
+
+            # Sending the mail of the the subscription receipt
+            AccountsMailer.subscription_receipt(@subscription.id, charge['id']).deliver_now
           end
 
           # redirect to a thanks page
@@ -169,6 +175,7 @@ class PaymentsController < ApplicationController
             SubscriptionMailer.new_subscription(@subscription.id).deliver_now # send receipt by mail to host
             # No token needed for Candidate
 
+            # Sending the mail of the the subscription receipt
             AccountsMailer.subscription_receipt(@subscription.id, charge['id']).deliver_now
           end
 

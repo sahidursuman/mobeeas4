@@ -29,7 +29,11 @@
     <hr>
     <h5>Address</h5>
     <p><%= @profile.address %></p>
-    <p><%= @profile.suburb %> <%= @profile.state %> <%= @profile.postcode %></p>
+    <p>
+      <%= @profile.suburb %> <%= @profile.state %> <%= @profile.postcode %>
+      <br>
+      <%= @profile.country_name(@profile.country) %>
+    </p>
   <% end %>
 </div>
 <div class="card-reveal">

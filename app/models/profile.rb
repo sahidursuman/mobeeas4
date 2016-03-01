@@ -8,7 +8,7 @@ class Profile < ActiveRecord::Base
   has_many :messages
 
 
-  validates :first_name, :last_name, :bio, :suburb, :postcode, :state, presence: true
+  validates :first_name, :last_name, :bio, :suburb, :postcode, :state, :country, presence: true
 
   geocoded_by :profile_data
 	after_validation :geocode
@@ -30,5 +30,10 @@ class Profile < ActiveRecord::Base
 
   scope :not_approved, -> {where(approved: false)}
   scope :approved, -> {where(approved: true)}
+
+  def country_name(country_code)
+    country = ISO3166::Country[country_code]
+    country.translations[I18n.locale.to_s] || country.name
+  end
 
 end

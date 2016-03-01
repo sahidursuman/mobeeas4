@@ -27,13 +27,13 @@
 
     <div class="row">
       <div class="col s4">
-        <%= f.input :state, priority: [ "NSW" ], collection: [ "NSW", "QLD", "SA", "TAS", "VIC", "ACT", "WA"], :include_blank => false %>
+        <%= f.input :state, priority: [ "NSW" ], collection: [ "NSW", "QLD", "SA", "TAS", "VIC", "ACT", "WA"] %>
       </div>
       <div class="col s4">
         <%= f.input :postcode %>
       </div>
       <div class="col s4">
-        <%= f.input :country, priority: [ "Australia" ], :include_blank => false %>
+        <%= f.input :country, priority: [ "Australia" ] %>
       </div>
     </div>
 

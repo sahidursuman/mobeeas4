@@ -2,34 +2,52 @@
 
 <div class="row">
   <div class="col m6">
-    MOBEEAS LOGO
-    <br><br><br>
-    <b>Receipt For:</b><br>
-    Organisation or Someone<br>
-    ATTN: Someone (if Host representing org)<br>
-    999 Somewhere Ave<br>
-    Suburb, New South Wales, 2222<br>
-    Australia<br>
+    <br>
+    <b>Receipt For: </b>
+    <% if @subscription.user_type == "organisation" %><%# for Organisation Host %>
+      <% @organisation = Organisation.find(@subscription.organisation_id) %>
+      <%= @organisation.name %><br><br>
+      <b>Attention: </b><%= @subscription.user.org_user_profile.name %><br><br>
+      <b>Address:</b><br>
+      <%= @organisation.address %><br>
+      <%= @organisation.suburb %> <%= @organisation.state %> <%= @organisation.postcode %><br>
+      <%= @organisation.country_name(@organisation.country) %>
+
+    <% elsif @subscription.user_type == "independent" %><%# for Independent Host %>
+      <%= @subscription.user.org_user_profile.name %><br>
+      <b>Address:</b><br>
+      <%= @subscription.user.org_user_profile.suburb %> <%= @subscription.user.org_user_profile.state %> <%= @subscription.user.org_user_profile.postcode %>
+      <br>
+      <%= @subscription.user.org_user_profile.country_name(@subscription.user.org_user_profile.country) %>
+      <br>
+
+    <% elsif @subscription.user_type == "candidate" %><%# for Candidate %>
+      <%= @subscription.user.profile.name %><br>
+      <b>Address:</b><br>
+      <%= @subscription.user.profile.suburb %> <%= @subscription.user.profile.state %> <%= @subscription.user.profile.postcode %>
+      <br>
+      <%= @subscription.user.profile.country_name(@subscription.user.profile.country) %>
+      <br>
+
+    <% end %>
   </div><%# end of col m6 %>
 
   <div class="col m3">
     <p>
-      <b>Invoice Date</b><br>
-      31 Jan 2016
-      <br><br>
-      <b>Subscription ID:</b><br>
-      1
-      <br><br>
-      <b>ABN:</b><br>
-      18 504 829 484
+      <b>Invoice Date: </b><%= @subscription.created_at.getlocal.strftime('%e %B %Y') %>
       <br><br>
     </p>
   </div><%# end of col m3 %>
 
   <div class="col m3">
-    The Trustee for Moreton Trading Trust t/a MOBEEAS<br>
+    <%= cl_image_tag("MOBEEAS_RGB_10cm_Res_300_12.jpg", :width=>150, :crop=>:scale) %>
+    <br><br>
+    The Trustee for Moreton Trading Trust t/a <b>MOBEEAS</b><br>
     PO Box 282<br>
     Gordon NSW 2072<br>
+    Australia<br>
+    <b>ABN: </b>18 504 829 484
+    <br><br>
   </div><%# end of col m3 %>
 </div><%# end of row %>
 
@@ -49,7 +67,7 @@
       <td><%= number_to_currency(@subscription.payment)  %> AUD</td>
     </tr>
     <tr>
-      <td>GST 10%</td>
+      <td>GST <%= (@subscription_pack.gst_rate * 100).to_i %>%</td>
       <td><%= number_to_currency(@subscription.payment * @subscription_pack.gst_rate) %> AUD</td>
     </tr>
     <tr>

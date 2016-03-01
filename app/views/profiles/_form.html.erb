@@ -54,41 +54,46 @@
         <%= f.input :address %>
       </div>
     </div>
-      <div class="row">
-        <div class="col s4">
-          <%= f.input :suburb %>
-        </div>
-        <div class="col s4">
-        <select class="select required browser-default" name="profile[state]" id="profile_state">
-        <% if @profile.new_record? %>
-          <option value="" disabled selected>* State</option>
-        <% else %>
-          <option value="<%= @profile.state %>" disabled selected><%= @profile.state %></option>
-        <% end %>
-        <option value="ACT">ACT</option>
-        <option value="NSW">NSW</option>
-        <option value="NT">NT</option>
-        <option value="QLD">QLD</option>
-        <option value="SA">SA</option>
-        <option value="TAS">TAS</option>
-        <option value="VIC">VIC</option>
-        <option value="WA">WA</option></select>
-
-        </div>
-        <div class="col s4">
-          <%= f.input :postcode %>
-        </div>
+    <div class="row">
+      <div class="col s6">
+        <%= f.input :suburb %>
       </div>
-      <div class="row">
-        <div class="col s6">
-          <%= f.input :phone %>
-        </div>
-        <div class="col s6">
-          <%= f.input :website %>
-        </div>
-      </div>
+      <div class="col s6">
+      <select class="select required browser-default" name="profile[state]" id="profile_state">
+      <% if @profile.new_record? %>
+        <option value="" disabled selected>* State</option>
+      <% else %>
+        <option value="<%= @profile.state %>" disabled selected><%= @profile.state %></option>
+      <% end %>
+      <option value="ACT">ACT</option>
+      <option value="NSW">NSW</option>
+      <option value="NT">NT</option>
+      <option value="QLD">QLD</option>
+      <option value="SA">SA</option>
+      <option value="TAS">TAS</option>
+      <option value="VIC">VIC</option>
+      <option value="WA">WA</option></select>
 
-      <%= f.button :submit %>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col s6">
+        <%= f.input :postcode %>
+      </div>
+      <div class="col s6">
+        <%= f.input :country, priority: [ "Australia" ] %>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col s6">
+        <%= f.input :phone %>
+      </div>
+      <div class="col s6">
+        <%= f.input :website %>
+      </div>
+    </div>
+
+    <%= f.button :submit %>
 
   <% end %>
 <% end %>
