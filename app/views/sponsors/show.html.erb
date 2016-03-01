@@ -52,7 +52,9 @@
 
 <p>
   <strong>Country:</strong>
-  <%= @sponsor.country_name(@sponsor.country) %>
+  <% if @sponsor.country.present? %>
+    <%= @sponsor.country_name(@sponsor.country) %>
+  <% end %>
 </p>
 
 <p>

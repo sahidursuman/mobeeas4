@@ -52,7 +52,9 @@
         </p>
         <p>
         Country:
-        <b><%= @org_user_profile.country_name(@org_user_profile.country) %></b>
+        <% if @org_user_profile.country.present? %>
+          <b><%= @org_user_profile.country_name(@org_user_profile.country) %></b>
+        <% end %>
         </p>
         <% if current_user.id == @org_user_profile.user_id %>
           <div class="margin-top-5px">

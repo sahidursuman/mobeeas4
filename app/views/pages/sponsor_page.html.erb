@@ -16,7 +16,11 @@
         <p><strong>Suburb: </strong><%= @sponsor.suburb %></p>
         <p><strong>State: </strong><%= @sponsor.state %></p>
         <p><strong>Postcode: </strong><%= @sponsor.postcode %></p>
-        <p><strong>Country: </strong><%= @sponsor.country_name(@sponsor.country) %></p>
+        <p><strong>Country: </strong>
+          <% if @sponsor.country.present? %>
+            <%= @sponsor.country_name(@sponsor.country) %>
+          <% end %>
+        </p>
       </div>
       <div class="col l6">
         <% if @sponsor.logo.present? %>

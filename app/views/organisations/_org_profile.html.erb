@@ -50,8 +50,9 @@
 
   <p>
     <strong>Country:</strong>
-    <%= @organisation.country_name(@organisation.country) %>
-
+    <% if @organisation.country.present? %>
+      <%= @organisation.country_name(@organisation.country) %>
+    <% end %>
   </p>
 
   <p>

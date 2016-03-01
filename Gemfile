@@ -63,7 +63,12 @@ gem 'passenger'
 gem 'nested_form'
 gem 'will_paginate'
 gem 'whenever', require: false
+
+# This dotenv-rails gem must be placed above the recaptcha gem at all time
+gem 'dotenv-rails', :groups => [:development, :test]
 gem 'recaptcha', require: "recaptcha/rails"
+
+
 gem 'countries'
 
 source 'https://rails-assets.org' do

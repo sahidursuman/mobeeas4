@@ -11,14 +11,18 @@
       <b>Address:</b><br>
       <%= @organisation.address %><br>
       <%= @organisation.suburb %> <%= @organisation.state %> <%= @organisation.postcode %><br>
-      <%= @organisation.country_name(@organisation.country) %>
+      <% if @organisation.country.present? %>
+        <%= @organisation.country_name(@organisation.country) %>
+      <% end %>
 
     <% elsif @subscription.user_type == "independent" %><%# for Independent Host %>
       <%= @subscription.user.org_user_profile.name %><br>
       <b>Address:</b><br>
       <%= @subscription.user.org_user_profile.suburb %> <%= @subscription.user.org_user_profile.state %> <%= @subscription.user.org_user_profile.postcode %>
       <br>
-      <%= @subscription.user.org_user_profile.country_name(@subscription.user.org_user_profile.country) %>
+      <% if @subscription.user.org_user_profile.country.present? %>
+        <%= @subscription.user.org_user_profile.country_name(@subscription.user.org_user_profile.country) %>
+      <% end %>
       <br>
 
     <% elsif @subscription.user_type == "candidate" %><%# for Candidate %>
@@ -26,7 +30,9 @@
       <b>Address:</b><br>
       <%= @subscription.user.profile.suburb %> <%= @subscription.user.profile.state %> <%= @subscription.user.profile.postcode %>
       <br>
-      <%= @subscription.user.profile.country_name(@subscription.user.profile.country) %>
+      <% if@subscription.user.profile.country.present? %>
+        <%= @subscription.user.profile.country_name(@subscription.user.profile.country) %>
+      <% end %>
       <br>
 
     <% end %>
