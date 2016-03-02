@@ -15,18 +15,21 @@
   <%= @enquiry.email %>
 </p>
 
-<p>
-  <strong>Phone:</strong>
-  <%= @enquiry.phone %>
-</p>
+<% if @enquiry.phone.present? %>
+  <p>
+    <strong>Phone:</strong>
+    <%= @enquiry.phone %>
+  </p>
+<% end %>
 
-<p>
-  <strong>Company:</strong>
-  <%= @enquiry.company %>
-</p>
+<% if @enquiry.company.present? %>
+  <p>
+    <strong>Company:</strong>
+    <%= @enquiry.company %>
+  </p>
+<% end %>
 
 <p>
   <strong>Message:</strong>
   <%= @enquiry.message %>
 </p>
-

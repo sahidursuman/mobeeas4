@@ -1,6 +1,8 @@
 class EnquiriesController < ApplicationController
   before_action :set_enquiry, only: [:show, :edit, :update, :destroy]
   skip_before_action :authenticate_user!, only: [:new, :create]
+  invisible_captcha only: [:create, :update], on_spam: :my_on_spam_callback_method
+
 
   # GET /enquiries
   # GET /enquiries.json
@@ -68,6 +70,10 @@ class EnquiriesController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_enquiry
       @enquiry = Enquiry.find(params[:id])
+    end
+
+    def my_on_spam_callback_method
+      redirect_to root_path
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
