@@ -4,7 +4,9 @@
 
     <h3>Registered Organisations
       <!-- Modal Trigger -->
-      <a class="modal-trigger" href="#modal1"><i class="material-icons">help</i></a>
+      <% if current_user.has_role? :host %>
+        <a class="modal-trigger" href="#modal1"><i class="material-icons">help</i></a>
+      <% end %>
     </h3>
     <!-- Modal Structure -->
     <div id="modal1" class="modal modal-fixed-footer">
@@ -18,7 +20,7 @@
     </div>
 
     <%# Only the user with role as Host can add a new organisation %>
-    <% if current_user.has_role? :host%>
+    <% if current_user.has_role? :host %>
       <p>
         Before adding a new organisation, please search first to check if it is already registered.
       </p>
@@ -44,16 +46,9 @@
     <br>
     <% else %> <%# it’s good to notify reader if not found %>
       <p>There are no organisations with description: <%= params[:search] %>.</p>
-
       <%# Only the user with role as Host can add a new organisation %>
       <% if current_user.has_role? :host %>
-        <%# if current_user.org_user_profile.present? %>
-          <%# if host profile already exist, just create a new organisation %>
           <%= link_to 'Register New Organisation', new_organisation_path(subs_type: 'new_org'), class: 'btn' %>
-        <%# end %>
-      <% else %>
-        <%# if host profile does not exist, create both host and organisation %>
-        <%= link_to 'Register New Organisation', new_organisation_path(subs_type: 'new_host_new_org'), class: 'btn' %>
       <% end %>
     <% end %>
   </div>
