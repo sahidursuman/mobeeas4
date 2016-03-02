@@ -60,7 +60,7 @@
         <ol>
           <% @required_skills.each do |required_skill| %>
             <% if required_skill.approved %><%# only skills approved by admin can appear in the list %>
-              <li><%= required_skill.name %> (<%= required_skill.skill_category.name %>)  <%= link_to 'remove', remove_required_skill_path(required_skill, opportunity_id: @opportunity.id) %></li>
+              <li><%= required_skill.name %> (<%= required_skill.skill_category.name %>)  <br><%= link_to 'remove', remove_required_skill_path(required_skill, opportunity_id: @opportunity.id) %><br><br></li>
             <% end %>
           <% end %>
         </ol>

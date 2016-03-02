@@ -59,11 +59,13 @@
     <div class="card">
       <div class="card-content" id="my-skills">
         <% if @my_skills.present? %>
-          <% @my_skills.each do |my_skill| %>
-            <% if my_skill.approved %><%# only skills approved by admin can appear in the list %>
-              <p><%= my_skill.name %> (<%= my_skill.skill_category.name %>) <%= link_to 'remove', remove_user_skill_path(my_skill) %></p>
+          <ol>
+            <% @my_skills.each do |my_skill| %>
+              <% if my_skill.approved %><%# only skills approved by admin can appear in the list %>
+                <li><%= my_skill.name %> (<%= my_skill.skill_category.name %>) <br><%= link_to 'remove', remove_user_skill_path(my_skill) %><br><br></li>
+              <% end %>
             <% end %>
-          <% end %>
+          </ol>
         <% end %>
       </div>
       <div class="card-action">

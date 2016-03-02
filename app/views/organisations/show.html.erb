@@ -28,10 +28,11 @@
 <%# RIGHT COLUMN %>
   <div class="col m8">
     <%# WELCOME BUTTON%>
-    <a class="waves-effect waves-light btn modal-trigger" href="#modal-welcome"><i class="material-icons left">speaker_notes</i>Getting Started</a>
-      <div id="modal-welcome" class="modal">
+    <a class="waves-effect waves-light btn modal-trigger margin-bottom-10px" href="#modal-welcome"><i class="material-icons left">speaker_notes</i>Getting Started</a>
+      <div id="modal-welcome" class="modal modal-fixed-footer">
         <div class="modal-content">
-          <p>Something to appear here</p>
+          <h5>Getting Started</h5>
+          <%= cl_image_tag("Buying_a_token_Getting_Started_Org_Show.png", :width => '100%') %>
         </div>
         <div class="modal-footer">
           <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Close</a>
