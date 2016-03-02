@@ -64,7 +64,6 @@ gem 'nested_form'
 gem 'will_paginate'
 gem 'whenever', require: false
 gem 'countries'
-gem 'invisible_captcha'
 
 source 'https://rails-assets.org' do
   gem 'rails-assets-datetimepicker'

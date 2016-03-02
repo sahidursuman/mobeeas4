@@ -32,7 +32,7 @@
     <p>
       <%= @profile.suburb %> <%= @profile.state %> <%= @profile.postcode %>
       <br>
-      <% if @profile.country.present? %>
+      <% if !(@profile.country.nil?) %>
         <%= @profile.country_name(@profile.country) %>
       <% end %>
     </p>
