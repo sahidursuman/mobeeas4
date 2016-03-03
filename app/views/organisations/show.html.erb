@@ -457,54 +457,58 @@
     </div><%# end of card %>
 
     <%# ORGANISATION SUBSCRIPTION DETAILS ---------------------------------- %>
-    <%# The Subscription Card will display the button to purchase subscription for all the Admin Hosts of this organisation %>
-    <div class="card">
-      <div class="card-content">
-        <% @organisation.org_users.each do |org_user| %>
-          <% if (org_user.user.id == current_user.id) %>
-            <h5>Organisation Subscription</h5>
-            <p>
-              <%# There is an identical subscription process below in another file:
-                  app/views/opportunities/_organisation_new_opportunity.html.erb
-              %>
-            <% if @organisation.subscriptions.present? %>
-              <%# searching for the LAST subscription of this ORGANISATION %>
-              <% @subscription = Subscription.find(@organisation.subscriptions.last.id) %>
-              The subscription's expiry date is: <b><%= @organisation.subscriptions.last.expiry_date.getlocal.strftime('%e %B %Y') %></b>
-              <% if (@subscription.active) %>
-                <% if @subscription.expires_in_less_than_30_days %>
-                  - <span class="red-text bold">Expiring soon!</span>
-                  <br>
-                  <% if org_user.is_admin_user %><%# only admin host can view Subscription button %>
-                    <%= render 'subscription_button' %>
-                  <% elsif org_user.is_host_user %>
-                    Please contact your organisation Administrators as shown above.
-                    <br>
-                  <% end %>
-                <% end %>
-              <% elsif (@subscription.expired)%>
-                  - <span class="red-text bold">Expired!</span>
-                  <br>
-                  <% if org_user.is_admin_user %><%# only admin host can view Subscription button %>
-                    <%= render 'subscription_button' %>
-                  <% elsif org_user.is_host_user %>
-                    Please contact your organisation Administrators as shown above.
-                    <br>
-                  <% end %>
-                <% end %>
-            <% else %>
-              There is no MOBEEAS subscription record for <%= @organisation.name %>.<br>
-              <% if org_user.is_admin_user %><%# only admin host can view Subscription button %>
-                <%= render 'subscription_button' %>
-              <% elsif org_user.is_host_user %>
-                Please contact your organisation Administrator as shown above.
-                <br>
-              <% end %>
-            <% end %>
-            </p>
-          <% end %><%# end of if (org_user.user.id == current_user.id)%>
-        <% end %><%# end of @organisation.org_users loop %>
-      </div><%# end of card content %>
-    </div><%# end of card %>
+    <%# The Subscription Card will display the button to purchase subscription for all the Admin Hosts of this organisation.
+        Will appear only if the current use is a host or admin
+    %>
 
+    <% if (current_user.has_role? :host) || (current_user.has_role? :admin) %>
+      <div class="card">
+        <div class="card-content">
+          <% @organisation.org_users.each do |org_user| %>
+            <% if (org_user.user.id == current_user.id) %>
+              <h5>Organisation Subscription</h5>
+              <p>
+                <%# There is an identical subscription process below in another file:
+                    app/views/opportunities/_organisation_new_opportunity.html.erb
+                %>
+              <% if @organisation.subscriptions.present? %>
+                <%# searching for the LAST subscription of this ORGANISATION %>
+                <% @subscription = Subscription.find(@organisation.subscriptions.last.id) %>
+                The subscription's expiry date is: <b><%= @organisation.subscriptions.last.expiry_date.getlocal.strftime('%e %B %Y') %></b>
+                <% if (@subscription.active) %>
+                  <% if @subscription.expires_in_less_than_30_days %>
+                    - <span class="red-text bold">Expiring soon!</span>
+                    <br>
+                    <% if org_user.is_admin_user %><%# only admin host can view Subscription button %>
+                      <%= render 'subscription_button' %>
+                    <% elsif org_user.is_host_user %>
+                      Please contact your organisation Administrators as shown above.
+                      <br>
+                    <% end %>
+                  <% end %>
+                <% elsif (@subscription.expired)%>
+                    - <span class="red-text bold">Expired!</span>
+                    <br>
+                    <% if org_user.is_admin_user %><%# only admin host can view Subscription button %>
+                      <%= render 'subscription_button' %>
+                    <% elsif org_user.is_host_user %>
+                      Please contact your organisation Administrators as shown above.
+                      <br>
+                    <% end %>
+                  <% end %>
+              <% else %>
+                There is no MOBEEAS subscription record for <%= @organisation.name %>.<br>
+                <% if org_user.is_admin_user %><%# only admin host can view Subscription button %>
+                  <%= render 'subscription_button' %>
+                <% elsif org_user.is_host_user %>
+                  Please contact your organisation Administrator as shown above.
+                  <br>
+                <% end %>
+              <% end %>
+              </p>
+            <% end %><%# end of if (org_user.user.id == current_user.id)%>
+          <% end %><%# end of @organisation.org_users loop %>
+        </div><%# end of card content %>
+      </div><%# end of card %>
+    <% end %>
     <%#----------------------------------%>

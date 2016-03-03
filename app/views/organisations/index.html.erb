@@ -4,9 +4,8 @@
 
     <h3>Registered Organisations
       <!-- Modal Trigger -->
-      <% if current_user.has_role? :host %>
+      <%# Any users with roles other than Host can also view info to be come a Host %>
         <a class="modal-trigger" href="#modal1"><i class="material-icons">help</i></a>
-      <% end %>
     </h3>
     <!-- Modal Structure -->
     <div id="modal1" class="modal modal-fixed-footer">
@@ -47,9 +46,9 @@
     <% else %> <%# it’s good to notify reader if not found %>
       <p>There are no organisations with description: <%= params[:search] %>.</p>
       <%# Only the user with role as Host can add a new organisation %>
-      <% if current_user.has_role? :host %>
-          <%= link_to 'Register New Organisation', new_organisation_path(subs_type: 'new_org'), class: 'btn' %>
-      <% end %>
+      <%# Any users with roles other than Host can also sign up to be come a Host %>
+      <%= link_to 'Register New Organisation', new_organisation_path(subs_type: 'new_org'), class: 'btn' %>
+
     <% end %>
   </div>
 </div>

@@ -14,7 +14,7 @@
           <% if current_user.has_role? :admin %>
             <li><%= link_to admin_page_path do %><i class="material-icons left">account_box</i> Admin<% end %></li>
           <% elsif current_user.has_role? :sponsor %>
-            <li><%= link_to sponsor_page_path do %><i class="material-icons left">account_box</i> Sponsor<% end %></li>
+            <li><%= link_to sponsor_path(current_user.sponsor) do %><i class="material-icons left">account_box</i> Sponsor<% end %></li>
           <%# elsif current_user.profile and current_user.profile.id != nil %><%# 1st version %>
           <% elsif current_user.profile.present? %>
               <li><%= link_to candidate_profile_path do %><i class="material-icons left">account_circle</i> My Dashboard<% end %></li>

@@ -36,7 +36,7 @@ class SponsorsController < ApplicationController
         # Send notification to MOBEEAS Admin that a new sponsor user has been created
         RegistrationMailer.new_user_notification(@sponsor.user.id).deliver_now
 
-        format.html { redirect_to sponsor_page_path, notice: 'Sponsor was successfully created.' }
+        format.html { redirect_to @sponsor, notice: 'Sponsor was successfully created.' }
         format.json { render :show, status: :created, location: @sponsor }
       else
         format.html { render :new }
@@ -50,8 +50,7 @@ class SponsorsController < ApplicationController
   def update
     respond_to do |format|
       if @sponsor.update(sponsor_params)
-        # format.html { redirect_to @sponsor, notice: 'Sponsor was successfully updated.' }
-        format.html { redirect_to sponsor_page_path, notice: 'Sponsor was successfully updated.' }
+        format.html { redirect_to @sponsor, notice: 'Sponsor was successfully updated.' }
         format.json { render :show, status: :ok, location: @sponsor }
       else
         format.html { render :edit }

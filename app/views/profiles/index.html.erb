@@ -10,7 +10,7 @@
             <% @profiles.approved.order("id ASC").each do |profile| %>
               <li>
                 Profile ID: <%= profile.id %> - <strong><%= profile.name %></strong> of <%= profile.suburb %>, <%= profile.state %> <%= profile.country %>
-                - <%= link_to 'View', candidate_profile_path(profile_id: profile.id, viewer: 'admin') %>
+                - <%= link_to 'View', candidate_profile_path(profile_id: profile.id) %>
                  | <%= link_to 'Prohibit '+ profile.first_name, prohibit_profile_path(profile) %>
               </li>
             <% end %>
@@ -30,7 +30,7 @@
                 <% @profiles.not_approved.order("id ASC").each do |profile| %>
                   <li>
                     Profile ID: <%= profile.id %> - <strong><%= profile.name %></strong> of <%= profile.suburb %>, <%= profile.state %> <%= profile.country %>
-                     - <%= link_to 'View', candidate_profile_path(profile_id: profile.id, viewer: 'admin') %>
+                     - <%= link_to 'View', candidate_profile_path(profile_id: profile.id) %>
                      | <%= link_to 'Approve '+ profile.first_name, approve_profile_path(profile) %>
                   </li>
                 <% end %>

@@ -1,7 +1,11 @@
+
 <div class="row">
 <%# OPPORTUNITY ===========================================%>
 
   <div class="col l11 offset-l1">
+    <% if current_user.has_role? :admin %>
+      <h5 class="red-text">THIS IS LIVE DATA. PLEASE DO NOT MODIFY THE RECORD BELOW</h5>
+    <% end %>
     <p>
       <% if @opportunity.organisation.present? %>
         <% @name = @organisation.name %>
@@ -28,28 +32,77 @@
   </div>
 </div>
 <%# SPONSORSHIP ===========================================%>
+<%# Sponsorship banner card appears on the top of this opportunity ONLY IF it has at least one EOI %>
+<% if @opportunity.expression_of_interests.present? %>
+  <div class="row">
+    <div class="col m11 offset-m1">
+      <div class="card">
+        <div class="card-content">
+          <%# Show the sponsor logo and org name if their EOI have been approved.
+              If doesn't exist, it won't be displayed %>
+          <div class = 'row'>
+            <% @opportunity.expression_of_interests.approved.each do |expression_of_interest| %>
+                <div class = 'col l6 align-center'>
+                  <h5><%= expression_of_interest.sponsor.organisation %></h5>
+                  <% if expression_of_interest.sponsor.logo.present? %>
+                    <%= cl_image_tag(expression_of_interest.sponsor.logo_url, class: 'img-responsive activator', :width=>100, :crop=>:scale ) %>
+                  <% else %>
+                    <%= cl_image_tag("noPhoto-icon.png", class: 'img-responsive activator', :width=>100, :crop=>:scale )  %>
+                  <% end %>
+                  <br>
+                </div>
+            <% end %><%# end of @opportunity.expression_of_interests.approved loop %>
+          </div>
+          <% if current_user.has_role? :sponsor %>
+            <% if @opportunity.expression_of_interests.present? %>
+              <% @flag_sponsored = false %>
+              <% @opportunity.expression_of_interests.each do |expression_of_interest| %>
+                <% if expression_of_interest.sponsor.id == current_user.sponsor.id %><%# the sponsor has EOI for this opportunity %>
+                  <% @flag_sponsored = true %>
+                  <% if !(expression_of_interest.approved) %><%# if FALSE for approved by Admin %>
+                    <p class="purple-text">Your request to sponsor this opportunity is currently being reviewed.</p>
+                  <% end %>
+                  <%# if TRUE for approved by Admin, don't do anything, it would have already been displayed on the above %>
+                <% end %><%# end of if expression_of_interest.sponsor.id == current_user.sponsor.id %>
+              <% end %><%# end of @opportunity.expression_of_interests loop %>
+              <% if !@flag_sponsored %><%# After exiting the loop, FALSE if the current_user sponsor never submitted EOI for this opportunity %>
+                <p>
+                  Would you like to sponsor this opportunity? Please follow <%= link_to "this link", notify_expression_of_interest_path(sponsor_id: current_user.sponsor.id, opportunity_id: @opportunity.id) %> and we will contact you to discuss options.
+                </p>
+              <% end %>
+            <% else %><%# if this @opportunity doesn't have an EOI at all, invite the sponsors %>
+              <p>
+                Would you like to sponsor this opportunity? Please follow <%= link_to "this link", notify_expression_of_interest_path(sponsor_id: current_user.sponsor.id, opportunity_id: @opportunity.id) %> and we will contact you to discuss options.
+              </p>
+            <% end %><%# end of if @opportunity.expression_of_interests.present? %>
+          <% end %><%# end of if current_user.has_role? :sponsor %>
+        </div>
+      </div><%# end of card-content %>
+    </div><%# end of card %>
+  </div><%# end of row %>
+<% else %>
+  <%# If this @opportunity doesn't have an EOI at all, the sponsorship card will appear only to user with role as sponsor,
+      and it is to invite the sponsor to submit EOI for this @opportunity .
+      The sponsorship banner of @opportunity without EOI will be invisibe to users with roles other than sponsor. %>
+  <% if current_user.has_role? :sponsor %>
+    <div class="row">
+      <div class="col m11 offset-m1">
+        <div class="card">
+          <div class="card-content">
+            <p>
+              Would you like to sponsor this opportunity? Please follow <%= link_to "this link", notify_expression_of_interest_path(sponsor_id: current_user.sponsor.id, opportunity_id: @opportunity.id) %> and we will contact you to discuss options.
+            </p>
+          </div>
+        </div><%# end of card-content %>
+      </div><%# end of card %>
+    </div><%# end of row %>
+  <% end %>
+<% end %>
 
-<div class="row">
-  <div class="col m11 offset-m1">
-    <div class="card">
-      <div class="card-content">
-        <% if (current_user.has_role? :host) || (current_user.has_role? :candidate) || (current_user.has_role? :admin) %>
-          <p>Proudly sponsored by: </p>
-        <% elsif current_user.has_role? :sponsor %>
-          <p>Would you like to sponsor this opportunity? Please follow <%= link_to "this link", notify_expression_of_interest_path(sponsor_id: current_user.sponsor.id, opportunity_id: @opportunity.id) %> and we will contact you to discuss options.
-
-
-          </p>
-        <% end %>
-      </div>
-    </div><%# end of card-content %>
-  </div><%# end of card %>
-</div><%# end of row %>
-
+<%# OPPORTUNITY DETAILS ===========================================%>
 <div class="row">
   <div class="col l6 offset-l1">
-
-  <%# ORGANISATION NAME AND LOGO ===========================================%>
+    <%# ORGANISATION NAME AND LOGO ===========================================%>
     <div class="card">
       <div class="card-content">
         <% @host.org_user_profile.name %>

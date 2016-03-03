@@ -1,5 +1,5 @@
 class ExpressionOfInterestsController < ApplicationController
-  before_action :set_expression_of_interest, only: [:show, :edit, :update, :destroy]
+  before_action :set_expression_of_interest, only: [:show, :edit, :update, :destroy, :approve]
 
   def notify
     @eoi = ExpressionOfInterest.create(sponsor_id: params[:sponsor_id], opportunity_id: params[:opportunity_id])
@@ -7,6 +7,14 @@ class ExpressionOfInterestsController < ApplicationController
       SponsorshipMailer.expression_of_interest(params[:sponsor_id], params[:opportunity_id]).deliver_now
     end
     redirect_to thanks_path(type: 'expression_of_interest')
+  end
+
+  def approve
+    @expression_of_interest.approved = true
+    if @expression_of_interest.save
+      SponsorshipMailer.approved(params[:sponsor_id], params[:opportunity_id]).deliver_now
+    end
+    redirect_to expression_of_interests_path(status: "pending")
   end
 
   # GET /expression_of_interests
@@ -64,7 +72,13 @@ class ExpressionOfInterestsController < ApplicationController
   def destroy
     @expression_of_interest.destroy
     respond_to do |format|
-      format.html { redirect_to expression_of_interests_url, notice: 'Expression of interest was successfully destroyed.' }
+      # do not delete this original format:
+      # format.html { redirect_to expression_of_interests_url, notice: 'Expression of interest was successfully destroyed.' }
+      if params[:status] == 'pending'
+        format.html { redirect_to expression_of_interests_path(status: "pending"), notice: 'Expression of interest was successfully destroyed.' }
+      elsif params[:status] == 'approved'
+        format.html { redirect_to expression_of_interests_path(status: "approved"), notice: 'Expression of interest was successfully destroyed.' }
+      end
       format.json { head :no_content }
     end
   end

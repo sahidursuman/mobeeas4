@@ -50,7 +50,7 @@
       <% elsif params[:type] == 'expression_of_interest' %>
         <h5>Thank you for your expression of interest. We will be in touch shortly.</h5>
         <br>
-        <p><%= link_to "My Profile", sponsor_page_path %></p>
+        <p><%= link_to "My Profile", sponsor_path(current_user.sponsor) %></p>
     <% end %>
 
 

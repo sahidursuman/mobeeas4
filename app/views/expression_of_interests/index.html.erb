@@ -3,32 +3,81 @@
     <%= render 'layouts/sidebar' %>
 
     <p id="notice"><%= notice %></p>
+    <% if params[:status] == "pending" %>
+      <h4>Pending Expression Of Interests</h4>
+      <% if @expression_of_interests.not_approved.present? %>
+        <table>
+          <thead>
+            <tr>
+              <th>EOI ID</th>
+              <th>Sponsor ID</th>
+              <th>Organisation</th>
+              <th>Opp ID</th>
+              <th>Title</th>
+              <th>Actions</th>
+              <th colspan="3"></th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @expression_of_interests.not_approved.order("id ASC").each do |expression_of_interest| %>
+              <tr>
+                <td><%= expression_of_interest.id %></td>
+                <td><%= link_to expression_of_interest.sponsor.id, sponsor_path(expression_of_interest.sponsor.id) %></td>
+                <td><%= expression_of_interest.sponsor.organisation %></td>
+                <td><%= link_to expression_of_interest.opportunity.id, opportunity_path(expression_of_interest.opportunity.id) %></td>
+                <td><%= expression_of_interest.opportunity.title %></td>
+                <td><%= link_to "Approve", approve_expression_of_interest_path(expression_of_interest, sponsor_id: expression_of_interest.sponsor_id, opportunity_id: expression_of_interest.opportunity_id)  %></td>
+                <!-- <td><%#= link_to 'Show', expression_of_interest %></td>
+                <td><%#= link_to 'Edit', edit_expression_of_interest_path(expression_of_interest) %></td> -->
+                <td><%= link_to 'Delete', expression_of_interest_path(expression_of_interest, status: "pending" ), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+              </tr>
+            <% end %><%# end of @expression_of_interests loop %>
+          </tbody>
+        </table>
+      <% else %>
+        There is no pending expression of interest from sponsor.
+      <% end %>
+    <%#===================================%>
+    <% elsif params[:status] == "approved" %>
+      <h4>Approved Expression Of Interests</h4>
+      <% if @expression_of_interests.approved.present? %>
+        <table>
+          <thead>
+            <tr>
+              <th>EOI ID</th>
+              <th>Sponsor ID</th>
+              <th>Organisation</th>
+              <th>Opp ID</th>
+              <th>Title</th>
+              <th>Approved</th>
+              <th>Action</th>
+              <th colspan="3"></th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @expression_of_interests.approved.order("id ASC").each do |expression_of_interest| %>
+                <tr>
+                  <td><%= expression_of_interest.id %></td>
+                  <!-- <td><%#= expression_of_interest.sponsor.id %></td> -->
+                  <td><%= link_to expression_of_interest.sponsor.id, sponsor_path(expression_of_interest.sponsor.id) %></td>
+                  <td><%= expression_of_interest.sponsor.organisation %></td>
+                  <td><%= link_to expression_of_interest.opportunity.id, opportunity_path(expression_of_interest.opportunity.id) %></td>
+                  <td><%= expression_of_interest.opportunity.title %></td>
+                  <td><%= expression_of_interest.opportunity.updated_at.getlocal.strftime('%e %b %Y') %></td>
 
-    <h4>Listing Expression Of Interests</h4>
+                  <!-- <td><%#= link_to 'Show', expression_of_interest %></td>
+                  <td><%#= link_to 'Edit', edit_expression_of_interest_path(expression_of_interest) %></td> -->
+                  <td><%= link_to 'Delete', expression_of_interest_path(expression_of_interest, status: "approved"), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+                </tr>
+            <% end %><%# end of @expression_of_interests loop %>
+          </tbody>
+        </table>
+      <% else %>
+        There is no approved expression of interest from sponsor.
+      <% end %>
+    <% end %>
 
-    <table>
-      <thead>
-        <tr>
-          <th>Sponsor</th>
-          <th>Opportunity</th>
-          <th>Approved</th>
-          <th colspan="3"></th>
-        </tr>
-      </thead>
 
-      <tbody>
-        <% @expression_of_interests.each do |expression_of_interest| %>
-          <tr>
-            <td><%= expression_of_interest.sponsor %></td>
-            <td><%= expression_of_interest.opportunity %></td>
-            <td><%= expression_of_interest.approved %></td>
-            <td><%= link_to 'Show', expression_of_interest %></td>
-            <td><%= link_to 'Edit', edit_expression_of_interest_path(expression_of_interest) %></td>
-            <td><%= link_to 'Destroy', expression_of_interest, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-          </tr>
-        <% end %>
-      </tbody>
-    </table>
 
     <br>
 

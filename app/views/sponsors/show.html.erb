@@ -1,70 +1,48 @@
-<p id="notice"><%= notice %></p>
+<div class="row">
+  <div class="col s12 m11 offset-m1 l11 offset-l1">
 
-<p>
-  <strong>First name:</strong>
-  <%= @sponsor.first_name %>
-</p>
+		<%= render 'layouts/sidebar' %>
+    <br>
+    <% if current_user.has_role? :admin %>
+      <h5 class="red-text">THIS IS LIVE DATA. PLEASE DO NOT MODIFY THE RECORD BELOW</h5>
+    <% end %>
+    <div class = 'row'>
 
-<p>
-  <strong>Last name:</strong>
-  <%= @sponsor.last_name %>
-</p>
+      <div class="col l4">
+        <h5>Logo <span class="font-10px grey-text">(Max size: 100 pixels square)</span></h5>
+        <% if @sponsor.logo.present? %>
+          <%= cl_image_tag(@sponsor.logo_url, class: 'img-responsive activator', :width=>100, :crop=>:scale ) %>
+        <% else %>
+          <%= cl_image_tag("noPhoto-icon.png", class: 'img-responsive activator', :width=>100, :crop=>:scale )  %>
+        <% end %>
+      </div>
+      <div class ="col l8">
+    		<h5><%= @sponsor.organisation %></h5>
+        <p><strong>First Name: </strong><%= @sponsor.first_name %></p>
+        <p><strong>Last Name: </strong><%= @sponsor.last_name %></p>
+        <p><strong>Position: </strong><%= @sponsor.position %></p>
+        <p><strong>Phone Option 1: </strong><%= @sponsor.phone1 %></p>
+        <p><strong>Phone Option 2: </strong><%= @sponsor.phone2 %></p>
+        <p><strong>Email: </strong><%= @sponsor.user.email %></p>
+        <p><strong>Address: </strong><%= @sponsor.address %></p>
+        <p><strong>Suburb: </strong><%= @sponsor.suburb %></p>
+        <p><strong>State: </strong><%= @sponsor.state %></p>
+        <p><strong>Postcode: </strong><%= @sponsor.postcode %></p>
+        <p><strong>Country: </strong>
+          <% if @sponsor.country.present? %>
+            <%= @sponsor.country_name(@sponsor.country) %>
+          <% end %>
+        </p>
+        <% if (current_user.has_role? :sponsor) && (current_user.id == @sponsor.user.id) %>
+          <%# <p>match</p> %>
+          <%= link_to "Edit", edit_sponsor_path(@sponsor), class: 'btn'%>
+        <% end %>
+      </div>
 
-<p>
-  <strong>Organisation:</strong>
-  <%= @sponsor.organisation %>
-</p>
+    </div><%# end row %>
 
-<p>
-  <strong>Position:</strong>
-  <%= @sponsor.position %>
-</p>
 
-<p>
-  <strong>Phone1:</strong>
-  <%= @sponsor.phone1 %>
-</p>
 
-<p>
-  <strong>Phone2:</strong>
-  <%= @sponsor.phone2 %>
-</p>
 
-<p>
-  <strong>Address:</strong>
-  <%= @sponsor.address %>
-</p>
-
-<p>
-  <strong>Suburb:</strong>
-  <%= @sponsor.suburb %>
-</p>
-
-<p>
-  <strong>State:</strong>
-  <%= @sponsor.state %>
-</p>
-
-<p>
-  <strong>Postcode:</strong>
-  <%= @sponsor.postcode %>
-</p>
-
-<p>
-  <strong>Country:</strong>
-  <% if @sponsor.country.present? %>
-    <%= @sponsor.country_name(@sponsor.country) %>
-  <% end %>
-</p>
-
-<p>
-  <strong>Guid:</strong>
-  <%= @sponsor.guid %>
-</p>
-
-<p>
-  <strong>User:</strong>
-  <%= @sponsor.user %>
-</p>
-
-<%= link_to 'Edit', edit_sponsor_path(@sponsor) %>
+	</div>
+</div>

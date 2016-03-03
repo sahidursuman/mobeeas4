@@ -1,12 +1,14 @@
 <div class="row">
   <div class="col s12 m11 offset-m1 l11 offset-l1">
     <%= render 'layouts/sidebar' %>
-    <% if params[:viewer] == 'admin' %><%# this params is coming from profiles/index.html.erb page where Admin can view a candidate's profile %>
+    <%# Admin can view Candidate profile from profiles/index.html.erb %>
+    <% if current_user.has_role? :admin %>
       <% @profile = Profile.find(params[:profile_id])%>
       <h5 class="red-text">THIS IS LIVE DATA. PLEASE DO NOT MODIFY THE RECORD BELOW</h5>
-    <% elsif !(params[:viewer] == 'admin') %>
-      <% @profile = Profile.find(current_user.profile.id) %><%# this params will not appear if the candidate is viewing her own profile page %>
+    <% else %>
+      <% @profile = Profile.find(current_user.profile.id) %>
     <% end %>
+
     <%# Please note: render profiles/show below is rendering the partial file called '_show.html.erb',
     which then will be rendering the template 'show.html.erb' %>
     <%= render 'profiles/show' %>

@@ -10,4 +10,12 @@ class SponsorshipMailer < ApplicationMailer
     @sponsor = Sponsor.find(sponsor_id)
     mail(to: 'mobeeas@mobeeas.com', subject: 'Expression of Interest')
   end
+
+  def approved(sponsor_id, opportunity_id)
+    @opportunity = Opportunity.find(opportunity_id)
+    @sponsor = Sponsor.find(sponsor_id)
+    mail(to: @sponsor.user.email, subject: 'MOBEEAS Sponsorship Approval')
+  end
+
+
 end

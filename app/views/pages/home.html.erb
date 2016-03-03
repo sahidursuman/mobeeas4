@@ -61,7 +61,7 @@
               <% if user_signed_in? %>
                 <% if current_user.sponsor.present? %>
                   <% @sponsor = Sponsor.find_by(user_id: current_user.id) %>
-                  <a class="waves-effect white btn margin-top-20px margin-bottom-20px" href="/sponsor_page">
+                  <a class="waves-effect white btn margin-top-20px margin-bottom-20px" href="/sponsors/<%= current_user.sponsor.id %>">
                     <span class="palette2">
                       My Sponsor Dashboard
                     </span>

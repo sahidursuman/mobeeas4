@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   resources :expression_of_interests do
     member do
-      get :notify
+      get :notify, :approve
     end
   end
   resources :subscription_packs do
@@ -93,7 +93,6 @@ Rails.application.routes.draw do
   end
 
   get 'admin_page', to: 'pages#admin_page'
-  get 'sponsor_page', to: 'pages#sponsor_page'
   get 'contact', to: 'pages#contact'
   get 'welcome', to: 'pages#welcome'
   get 'find_organisation', to: 'pages#find_organisation'
