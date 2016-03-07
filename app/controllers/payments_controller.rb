@@ -6,6 +6,7 @@ class PaymentsController < ApplicationController
       if params[:org_id].present?
         @organisation = Organisation.find(params[:org_id])
       end
+
       @token_pack = EngagementTokenPack.find(params[:token_pack])
       # Amount in cents
       @amount = ((@token_pack.price_ex_gst + (@token_pack.price_ex_gst * @token_pack.gst_rate)) * 100).to_i
@@ -15,15 +16,38 @@ class PaymentsController < ApplicationController
         :source  => params[:stripeToken]
       )
 
-      charge = Stripe::Charge.create(
-        :customer    => customer.id,
-        :amount      => @amount,
-        :description => 'Token purchase (' + @token_pack.name + ')',
-        :currency    => 'aud'
-      )
+      if @organisation.present? # purchasing token for an ORGANISATION
+        charge = Stripe::Charge.create(
+          :customer    => customer.id,
+          :amount      => @amount,
+          :description => 'Token purchase (' + @token_pack.name + ')',
+          :currency    => 'aud',
+          :metadata    => {
+                          'User ID'       =>  current_user.id,
+                          'User Email'         =>  current_user.email,
+                          'Organisation ID'  =>  @organisation.id,
+                          'User Name'     =>  current_user.org_user_profile.name,
+                          'Organisation'  =>  @organisation.name,
+                          'Token pack' => @token_pack.name
+                        }
+        )
+      else  # purchasing token for an INDEPENDENT HOST
+        charge = Stripe::Charge.create(
+          :customer    => customer.id,
+          :amount      => @amount,
+          :description => 'Token purchase (' + @token_pack.name + ')',
+          :currency    => 'aud',
+          :metadata    => {
+                          'User ID'       =>  current_user.id,
+                          'User Name'     =>  current_user.org_user_profile.name,
+                          'User Email'         =>  current_user.email,
+                          'Token pack' => @token_pack.name
+                        }
+        )
+      end
       if charge['paid']
         # if the host is purchasing the tokens for his organisation
-        if params[:org_id].present?
+        if @organisation.present?
           # create token purchase
           @token_purchase = TokenPurchase.create(user_id: current_user.id, organisation_id: @organisation.id, number_of_tokens: @token_pack.number_of_tokens, payment: @token_pack.price_ex_gst)
 

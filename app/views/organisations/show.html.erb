@@ -8,7 +8,11 @@
     </div>
     <div class="card">
       <div class="card-content">
-        <p><strong>Number of Tokens Available: </strong><%= @organisation.number_of_tokens %></p>
+        <p>
+          <strong>Number of Tokens Available: </strong><%= @organisation.number_of_tokens %>
+          <br>
+          Price ex GST.
+        </p>
         <%# Only approved admin host that is linked to this org can buy more tokens %>
         <% current_user.org_users.each do |org_user| %>
           <% if (org_user.organisation_id == @organisation.id) && (org_user.admin_status) && (org_user.verified_status)%>

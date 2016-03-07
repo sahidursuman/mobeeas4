@@ -17,7 +17,7 @@ class AccountsMailer < ApplicationMailer
     elsif @subscription.user_type == "candidate"
       @subscription_pack = SubscriptionPack.find_by(name: "candidate")
     end
-    mail(to: [@user.email, 'mobeeas@mobeeas.com'], subject: 'Receipt for your MOBEEAS subscription.')
+    mail(to: [@user.email, 'accounts@mobeeas.com'], subject: 'Receipt for your MOBEEAS subscription.')
   end
 
 
@@ -35,6 +35,6 @@ class AccountsMailer < ApplicationMailer
     end
     @engagement_token_pack = EngagementTokenPack.find_by(number_of_tokens: @token.number_of_tokens)
     @user = User.find(@token.user_id)
-    mail(to: @user.email, subject: 'Receipt for your MOBEEAS engagement token')
+    mail(to: [@user.email, 'accounts@mobeeas.com'], subject: 'Receipt for your MOBEEAS engagement token')
   end
 end
