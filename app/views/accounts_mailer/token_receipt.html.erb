@@ -1,5 +1,88 @@
-<h1>AccountsMailer#token_receipt</h1>
+<h4>TAX INVOICE</h4>
+
+<div class="row">
+  <div class="col m6">
+    <br>
+    <b>Receipt For: </b>
+    <% if @organisation.present? %><%# for Organisation Host %>
+      <%= @organisation.name %><br><br>
+      <b>Attention: </b><%= @user.org_user_profile.name %><br><br>
+      <b>Address:</b><br>
+      <%= @organisation.address %><br>
+      <%= @organisation.suburb %> <%= @organisation.state %> <%= @organisation.postcode %><br>
+      <% if @organisation.country.present? %>
+        <%= @organisation.country_name(@organisation.country) %>
+      <% end %>
+
+    <% else %><%# for Independent Host %>
+      <%= @user.org_user_profile.name %><br>
+      <b>Address:</b><br>
+      <%= @user.org_user_profile.suburb %> <%= @user.org_user_profile.state %> <%= @user.org_user_profile.postcode %>
+      <br>
+      <% if @user.org_user_profile.country.present? %>
+        <%= @user.org_user_profile.country_name(@user.org_user_profile.country) %>
+      <% end %>
+      <br>
+
+    <% end %>
+  </div><%# end of col m6 %>
+
+  <div class="col m3">
+    <p>
+      <b>Invoice Date: </b><%= @token.created_at.getlocal.strftime('%e %B %Y') %>
+      <br><br>
+    </p>
+  </div><%# end of col m3 %>
+
+  <div class="col m3">
+    <%= cl_image_tag("MOBEEAS_RGB.png", :width=>150, :crop=>:scale) %>
+    <br><br>
+    The Trustee for Moreton Trading Trust t/a <b>MOBEEAS</b><br>
+    PO Box 282<br>
+    Gordon NSW 2072<br>
+    Australia<br>
+    <b>ABN: </b>18 504 829 484
+    <br><br>
+  </div><%# end of col m3 %>
+</div><%# end of row %>
+
+<br><br>
+
+<table class="bordered">
+  <thead>
+    <tr class="align-left">
+        <th class="align-left" data-field="id">Description</th>
+        <th class="align-left" data-field="name">Amount</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <tr>
+      <td><%= @engagement_token_pack.name %> purchase</td>
+      <td><%= number_to_currency(@token.payment)  %> AUD</td>
+    </tr>
+    <tr>
+      <td>GST <%= (@engagement_token_pack.gst_rate * 100).to_i %>%</td>
+      <td><%= number_to_currency(@token.payment * @engagement_token_pack.gst_rate) %> AUD</td>
+    </tr>
+    <tr>
+      <td>Total</td>
+      <td><%= number_to_currency(@token.payment + (@token.payment * @engagement_token_pack.gst_rate)) %> AUD</td>
+    </tr>
+    <tr>
+      <td>Amount Owing</td>
+      <td><%= number_to_currency(0) %> AUD</td>
+    </tr>
+  </tbody>
+</table>
 
 <p>
-  <%= @greeting %>, find me in app/views/accounts_mailer/token_receipt.html.erb
+  <h4>Transactions</h4>
+  MOBEEAS token ID: <%= @token.id %><br>
+  Stripe receipt ID: <%= @stripe_receipt_id %><br>
+  Transaction date: <%= @token.created_at.strftime('%e %B %Y') %><br>
+  <br><br>
+  Thank you for your token.
+  <br>
+  MOBEEAS Team
 </p>

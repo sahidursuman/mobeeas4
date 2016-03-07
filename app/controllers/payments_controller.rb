@@ -1,7 +1,7 @@
 class PaymentsController < ApplicationController
 
   def create
-    # Payment is for token purchase ==================================
+    # Payment is for TOKEN purchase ==================================
     if params[:token_pack].present?
       if params[:org_id].present?
         @organisation = Organisation.find(params[:org_id])
@@ -9,7 +9,7 @@ class PaymentsController < ApplicationController
       @token_pack = EngagementTokenPack.find(params[:token_pack])
       # Amount in cents
       @amount = ((@token_pack.price_ex_gst + (@token_pack.price_ex_gst * @token_pack.gst_rate)) * 100).to_i
-    # Stripe expects amounts to be in cents; since the charge is for $5, the amount parameter is assigned 500.
+      # Stripe expects amounts to be in cents; since the charge is for $5, the amount parameter is assigned 500.
       customer = Stripe::Customer.create(
         :email => params[:stripeEmail],
         :source  => params[:stripeToken]
@@ -24,34 +24,41 @@ class PaymentsController < ApplicationController
       if charge['paid']
         # if the host is purchasing the tokens for his organisation
         if params[:org_id].present?
-          # add number of tokens to number_of_tokens in organisation table
-          @organisation.update_attributes(number_of_tokens: @organisation.number_of_tokens + @token_pack.number_of_tokens)
-
           # create token purchase
-          @token_purchase = TokenPurchase.create(user_id: current_user.id, organisation_id: @organisation.id, number_of_tokens: @token_pack.number_of_tokens, payment_total: @token_pack.price_ex_gst)
+          @token_purchase = TokenPurchase.create(user_id: current_user.id, organisation_id: @organisation.id, number_of_tokens: @token_pack.number_of_tokens, payment: @token_pack.price_ex_gst)
 
+          if @token_purchase.save
+            # add number of tokens to number_of_tokens in organisation table
+            @organisation.update_attributes(number_of_tokens: @organisation.number_of_tokens + @token_pack.number_of_tokens)
+            @organisation.save!
+            SubscriptionMailer.new_token(@token_purchase.id).deliver_now
+            AccountsMailer.token_receipt(@token_purchase.id, charge['receipt_number']).deliver_now
+
+          end
           # redirect to a thanks page
           redirect_to thanks_path(type: 'purchase')
 
-        else # if the host is purchasing the tokens for himself (independent), when the org_id does not exist.
+        else # if the host is purchasing the tokens for himself (independent), which is when the org_id does not exist.
           # add number of tokens to number_of_tokens_for_independent in org_user_profiles table for this user.
           current_user.org_user_profile.update_attributes(number_of_tokens_for_independent: current_user.org_user_profile.number_of_tokens_for_independent + @token_pack.number_of_tokens)
 
           puts "current_user.org_user_profile.number_of_tokens_for_independent: #{current_user.org_user_profile.number_of_tokens_for_independent}"
           # create token purchase
-          @token_purchase = TokenPurchase.create(user_id: current_user.id, number_of_tokens: @token_pack.number_of_tokens, payment_total: @token_pack.price_ex_gst)
-
+          @token_purchase = TokenPurchase.create(user_id: current_user.id, number_of_tokens: @token_pack.number_of_tokens, payment: @token_pack.price_ex_gst)
+          if @token_purchase.save
+            SubscriptionMailer.new_token(@token_purchase.id).deliver_now
+            AccountsMailer.token_receipt(@token_purchase.id, charge['receipt_number']).deliver_now
+          end
           # redirect to a thanks page
           redirect_to thanks_path(type: 'purchase')
         end
       end
 
 
-    # Payment to purchase SUBSCRIPTIONS for HOST that represents ORGANISATION =========================
+    # Payment to SUBSCRIPTION purchase for HOST that represents ORGANISATION =========================
     elsif params[:subscription_pack].present?
       @subscription_pack = SubscriptionPack.find(params[:subscription_pack])
 
-      # Subscription for HOST that represents ORGANISATION ===============================
       if @subscription_pack.name == "organisation"
         @organisation = Organisation.find(params[:org_id])
 
@@ -82,6 +89,7 @@ class PaymentsController < ApplicationController
           if params[:org_id].present?
             # create new subscription
             @subscription = Subscription.create!(user_type: @subscription_pack.name, user_id: current_user.id, organisation_id: @organisation.id, expiry_date: 1.year.from_now, payment: @subscription_pack.price_ex_gst)
+
             if @subscription.save
               # send receipt by mail to host
               SubscriptionMailer.new_subscription(@subscription.id).deliver_now
@@ -90,7 +98,7 @@ class PaymentsController < ApplicationController
               @organisation.save!
 
               # Sending the mail of the the subscription receipt
-              AccountsMailer.subscription_receipt(@subscription.id, charge['id']).deliver_now
+              AccountsMailer.subscription_receipt(@subscription.id, charge['receipt_number']).deliver_now
             end
 
             # redirect to a thanks page
@@ -98,7 +106,7 @@ class PaymentsController < ApplicationController
           end
         end
 
-      # Subscription for INDEPENDENT HOST ===============================
+      # Payment to SUBSCRIPTION purchase for INDEPENDENT HOST =========================
       elsif @subscription_pack.name == "independent"
         @org_user_profile = OrgUserProfile.find(current_user.org_user_profile.id)
 
@@ -126,6 +134,7 @@ class PaymentsController < ApplicationController
         if charge['paid']
           # create new subscription
           @subscription = Subscription.create!(user_type: @subscription_pack.name, user_id: current_user.id, expiry_date: 1.year.from_now, payment: @subscription_pack.price_ex_gst)
+
           if @subscription.save
             # send receipt by mail to host
             SubscriptionMailer.new_subscription(@subscription.id).deliver_now
@@ -134,14 +143,14 @@ class PaymentsController < ApplicationController
             @org_user_profile.save!
 
             # Sending the mail of the the subscription receipt
-            AccountsMailer.subscription_receipt(@subscription.id, charge['id']).deliver_now
+            AccountsMailer.subscription_receipt(@subscription.id, charge['receipt_number']).deliver_now
           end
 
           # redirect to a thanks page
           redirect_to thanks_path(type: 'purchase')
         end
 
-      # Subscription for CANDIDATE ===============================
+      # Payment to SUBSCRIPTION purchase for CANDIDATE =========================
       elsif @subscription_pack.name == "candidate"
         @profile = Profile.find(current_user.profile.id)
 
@@ -170,13 +179,13 @@ class PaymentsController < ApplicationController
           puts "Stripe receipt number #{charge['receipt_number']}"
           # create new subscription
           @subscription = Subscription.create!(user_type: @subscription_pack.name, user_id: current_user.id, expiry_date: 1.year.from_now, payment: @subscription_pack.price_ex_gst)
-          @stripe_receipt_id = charge['id']
+
           if @subscription.save
             SubscriptionMailer.new_subscription(@subscription.id).deliver_now # send receipt by mail to host
             # No token needed for Candidate
 
             # Sending the mail of the the subscription receipt
-            AccountsMailer.subscription_receipt(@subscription.id, charge['id']).deliver_now
+            AccountsMailer.subscription_receipt(@subscription.id, charge['receipt_number']).deliver_now
           end
 
           redirect_to thanks_path(type: 'purchase')

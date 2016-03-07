@@ -16,4 +16,15 @@ class SubscriptionMailer < ApplicationMailer
     @user = User.find(@subscription.user_id)
     mail(to: @user.email, subject: 'Thank you for renewing your annual MOBEEAS subscription.' )
   end
+
+  def new_token(token_purchase_id)
+    @token_purchase = TokenPurchase.find(token_purchase_id)
+    if @token_purchase.organisation_id.present?
+      @organisation = Organisation.find(@token_purchase.organisation_id)
+    end
+    @user = User.find(@token_purchase.user_id)
+    mail(to: @user.email, subject: 'Thank you for purchasing MOBEEAS tokens.' )
+
+  end
+
 end

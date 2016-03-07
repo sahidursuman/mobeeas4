@@ -18,7 +18,7 @@ class TokenPurchasesControllerTest < ActionController::TestCase
 
   test "should create token_purchase" do
     assert_difference('TokenPurchase.count') do
-      post :create, token_purchase: { number_of_tokens: @token_purchase.number_of_tokens, organisation_id: @token_purchase.organisation_id, payment_total: @token_purchase.payment_total, token_price: @token_purchase.token_price, user_id: @token_purchase.user_id }
+      post :create, token_purchase: { number_of_tokens: @token_purchase.number_of_tokens, organisation_id: @token_purchase.organisation_id, payment: @token_purchase.payment, user_id: @token_purchase.user_id }
     end
 
     assert_redirected_to token_purchase_path(assigns(:token_purchase))
@@ -35,7 +35,7 @@ class TokenPurchasesControllerTest < ActionController::TestCase
   end
 
   test "should update token_purchase" do
-    patch :update, id: @token_purchase, token_purchase: { number_of_tokens: @token_purchase.number_of_tokens, organisation_id: @token_purchase.organisation_id, payment_total: @token_purchase.payment_total, token_price: @token_purchase.token_price, user_id: @token_purchase.user_id }
+    patch :update, id: @token_purchase, token_purchase: { number_of_tokens: @token_purchase.number_of_tokens, organisation_id: @token_purchase.organisation_id, payment: @token_purchase.payment, user_id: @token_purchase.user_id }
     assert_redirected_to token_purchase_path(assigns(:token_purchase))
   end
 

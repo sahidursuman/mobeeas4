@@ -1,0 +1,25 @@
+<h4>Your MOBEEAS tokens purchase receipt</h4>
+
+
+<p>
+  <%# Organisation Host %>
+  <% if @token_purchase.organisation_id.present? %>
+    Hello <%= @user.org_user_profile.name %>
+    <br><br>
+    You have purchased <b><%= @token_purchase.number_of_tokens %></b> MOBEEAS <%= (@token_purchase.number_of_tokens > 1) ? 'tokens' : 'token' %> for this organisation:
+    <br>
+    <b><%= @organisation.name %></b>.
+    <br>
+  <% else %><%# Independent Host %>
+    Hello <%= @user.org_user_profile.name %>
+    <br><br>
+    You have purchased <b><%= @token_purchase.number_of_tokens %></b> MOBEEAS <%= (@token_purchase.number_of_tokens > 1) ? 'tokens' : 'token' %>.
+    <br>
+  <% end %>
+
+  The token purchase ID: <%= @token_purchase.id %>.
+  <br><br>
+  Thank you,
+  <br>
+  MOBEEAS Team
+</p>

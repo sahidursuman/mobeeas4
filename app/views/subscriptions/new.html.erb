@@ -3,7 +3,7 @@
 <%# @subscription_pack = SubscriptionPack.find(params[:subscription_pack]) %>
 <p>
   <br>
-  <%# this is for organisation annual subscription ========================== %>
+  <%# this is for ORGANISATION annual subscription ========================== %>
   <% if @subscription_pack.name == 'organisation' %>
     You are purchasing an annual MOBEEAS subscription which includes 1 engagement token.
     <br>
@@ -28,7 +28,7 @@
     <br>
     <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
             data-key="<%= Rails.configuration.stripe[:publishable_key] %>"
-            data-image="<%= asset_path 'MOBEEAS.png' %>"
+            data-image="<%= cl_image_tag("MOBEEAS_icon_RGB.png", :width=>100, :crop=>:scale) %>"
             data-name="MOBEEAS"
             data-currency="aud"
             data-email="<%= current_user.email %>"
@@ -38,7 +38,7 @@
             data-locale="auto"></script>
     <% end %>
 
-  <%# this is for Independent Host annual subscription ========================== %>
+  <%# this is for INDEPENDENT HOST annual subscription ========================== %>
   <% elsif @subscription_pack.name == 'independent' %>
     You are purchasing an annual MOBEEAS subscription which includes 1 engagement token.
     <br>
@@ -61,7 +61,7 @@
     <br>
     <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
             data-key="<%= Rails.configuration.stripe[:publishable_key] %>"
-            data-image="<%= asset_path 'MOBEEAS.png' %>"
+            data-image="<%= cl_image_tag("MOBEEAS_icon_RGB.png", :width=>100, :crop=>:scale) %>"
             data-name="MOBEEAS"
             data-currency="aud"
             data-email="<%= current_user.email %>"
@@ -94,7 +94,7 @@
     <br>
     <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
             data-key="<%= Rails.configuration.stripe[:publishable_key] %>"
-            data-image="<%= asset_path 'MOBEEAS.png' %>"
+            data-image="<%= cl_image_tag("MOBEEAS_icon_RGB.png", :width=>100, :crop=>:scale) %>"
             data-name="MOBEEAS"
             data-currency="aud"
             data-email="<%= current_user.email %>"

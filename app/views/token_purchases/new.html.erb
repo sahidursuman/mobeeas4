@@ -16,26 +16,23 @@
       </div>
     <% end %>
     <label class="amount">
-      <span>Amount: <%= number_to_currency(@token_pack.price_ex_gst) %></span>
-    </label>
-    <label class="amount">
-      <span class="font-16px"><b>Amount: <%= number_to_currency(@token_pack.price_ex_gst) %></b></span> (excludes GST)
+      <span class="font-16px"><b>Amount: <%= number_to_currency(@token_pack.price_ex_gst) %></b></span>
       <br>
       <span class="font-16px"><b>GST: <%= number_to_currency(@token_pack.price_ex_gst * @token_pack.gst_rate) %></b></span>
       <br>
-      <span class="font-16px"><b>Total: <%= number_to_currency(@token_pack.price_ex_gst + (@token_pack.price_ex_gst * @token_pack.gst_rate)) %></b></span>
+      <span class="font-16px"><b>Total: <%= number_to_currency(@token_pack.price_ex_gst + (@token_pack.price_ex_gst * @token_pack.gst_rate )) %></b></span>
     </label>
   </article>
 
   <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
           data-key="<%= Rails.configuration.stripe[:publishable_key] %>"
-          data-image="<%= asset_path 'MOBEEAS.png' %>"
+          data-image="<%= cl_image_tag("MOBEEAS_icon_RGB.png", :width => '100%') %>"
           data-name="MOBEEAS"
           data-currency="aud"
           data-email="<%= current_user.email %>"
           data-receipt-email="<%= current_user.email %>"
           data-description="<%= @token_pack.name %>"
-          data-amount="<%= (@token_pack.price_ex_gst * 100).to_int %>"
+          data-amount="<%= (@token_pack.price_ex_gst * 100).to_int %>" <%# why price_ex_gst ??? %>
           data-locale="auto"></script>
   <% end %>
 
@@ -50,13 +47,17 @@
       </div>
     <% end %>
     <label class="amount">
-      <span>Amount: <%= number_to_currency(@token_pack.price_ex_gst) %></span>
+      <span class="font-16px"><b>Amount: <%= number_to_currency(@token_pack.price_ex_gst) %></b></span>
+      <br>
+      <span class="font-16px"><b>GST: <%= number_to_currency(@token_pack.price_ex_gst * @token_pack.gst_rate) %></b></span>
+      <br>
+      <span class="font-16px"><b>Total: <%= number_to_currency(@token_pack.price_ex_gst + (@token_pack.price_ex_gst * @token_pack.gst_rate )) %></b></span>
     </label>
   </article>
 
   <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
           data-key="<%= Rails.configuration.stripe[:publishable_key] %>"
-          data-image="<%= asset_path 'MOBEEAS.png' %>"
+          data-image="<%= asset_path 'MOBEEAS_icon_RGB_350px.png' %>"
           data-name="MOBEEAS"
           data-currency="aud"
           data-email="<%= current_user.email %>"

@@ -26,9 +26,15 @@ class AccountsMailer < ApplicationMailer
   #
   #   en.accounts_mailer.token_receipt.subject
   #
-  def token_receipt(token_purchase_id)
+  def token_receipt(token_purchase_id, stripe_receipt_id)
     @token = TokenPurchase.find(token_purchase_id)
-    @user = User.find(@subscription.user_id)
+    @stripe_receipt_id = stripe_receipt_id
+
+    if @token.organisation_id.present?
+      @organisation = Organisation.find(@token.organisation_id)
+    end
+    @engagement_token_pack = EngagementTokenPack.find_by(number_of_tokens: @token.number_of_tokens)
+    @user = User.find(@token.user_id)
     mail(to: @user.email, subject: 'Receipt for your MOBEEAS engagement token')
   end
 end

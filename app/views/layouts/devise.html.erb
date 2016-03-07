@@ -27,7 +27,7 @@
         <div class="col s12 margin-top-20px">
           <!-- <img src="<%= asset_path 'MOBEEAS.png' %>" class="responsive-img"> -->
 					<div class="align-center">
-						<%= cl_image_tag("MOBEEAS_RGB_10cm_Res_300_12.jpg", :width=>800, :crop=>:scale) %>
+						<%= cl_image_tag("MOBEEAS_RGB.png", :width=>800, :crop=>:scale) %>
 					</div>
           <%= yield %>
         </div>
@@ -45,10 +45,15 @@
     $('.button-collapse').sideNav('hide');
     $('.parallax').parallax();
     $('select').material_select();
+
     $('.datepicker').pickadate({
        // selectMonths: true, // Creates a dropdown to control month
        // selectYears: 15 // Creates a dropdown of 15 years to control year
      });
+
+		 // the "href" attribute of .modal-trigger must specify the modal ID that wants to be triggered
+		 // without this, the FAQ's modal won't open when you are in sign-up/sign-in page
+		 $('.modal-trigger').leanModal();
   }); // end of document ready
 })(jQuery); // end of jQuery name space
 </script>

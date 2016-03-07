@@ -75,6 +75,6 @@ class TokenPurchasesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def token_purchase_params
-      params.require(:token_purchase).permit(:user_id, :organisation_id, :number_of_tokens, :token_price, :payment_total)
+      params.require(:token_purchase).permit(:user_id, :organisation_id, :number_of_tokens, :payment)
     end
 end
