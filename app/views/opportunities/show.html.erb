@@ -38,11 +38,12 @@
     <div class="col m11 offset-m1">
       <div class="card">
         <div class="card-content">
-          <%# Show the sponsor logo and org name if their EOI have been approved.
+          <%# Display the list of the sponsor logos and org names of all approved sponsorship.
               If doesn't exist, it won't be displayed %>
           <div class = 'row'>
             <% @opportunity.expression_of_interests.approved.each do |expression_of_interest| %>
                 <div class = 'col l6 align-center'>
+                  <p>Proudly sponsored by</p>
                   <h5><%= expression_of_interest.sponsor.organisation %></h5>
                   <% if expression_of_interest.sponsor.logo.present? %>
                     <%= cl_image_tag(expression_of_interest.sponsor.logo_url, class: 'img-responsive activator', :width=>100, :crop=>:scale ) %>

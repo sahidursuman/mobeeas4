@@ -66,8 +66,13 @@ class SkillsController < ApplicationController
         NewlyAddedSkillMailer.approve_new_skill(@skill.id, current_user.id).deliver_now
 
         # format.html { redirect_to @skill, notice: 'Skill was successfully created.' }
-        format.html { redirect_to my_skills_path, notice: 'Skill was successfully created.' }
-        format.json { render :show, status: :created, location: @skill }
+         if params[:oppo_id].present?
+          format.html { redirect_to required_skills_path(oppo_id: params[:oppo_id]), notice: 'Skill was successfully created.' }
+          format.json { render :show, status: :created, location: @skill }
+        else
+          format.html { redirect_to my_skills_path, notice: 'Skill was successfully created.' }
+          format.json { render :show, status: :created, location: @skill }
+        end
       else
         format.html { render :new }
         format.json { render json: @skill.errors, status: :unprocessable_entity }

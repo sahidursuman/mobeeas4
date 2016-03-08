@@ -47,10 +47,10 @@
   <% end %><%# end of if @user_skills.present? %>
 </div><%# end of card content %>
   <div class="card-action">
-    <a href="/my_skills">Add skills</a>
+    <a href="/my_skills" class="waves-effect waves-light btn white-text">Add skills</a>
     <% if @profile.user.candidate_skills.present? %>
       <% if @profile.user.candidate_skills.any? %>
-        <%= link_to "Verify your skills", new_skill_verification_path, class: 'waves-effect waves-teal btn-flat' %>
+        <%= link_to "Verify your skills", new_skill_verification_path, class: 'waves-effect waves-teal btn white-text' %>
       <% end %>
     <% end %>
   </div>

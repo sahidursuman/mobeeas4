@@ -6,6 +6,8 @@ class Skill < ActiveRecord::Base
   has_many :candidate_skills, dependent: :destroy
   has_many :users, through: :candidate_skills
 
+  validates :name, presence: true
+
   # after_create :send_new_skill_mailer
   #
   # def send_new_skill_mailer

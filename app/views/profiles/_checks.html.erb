@@ -1,6 +1,8 @@
 <div class="card-content">
       <span class="card-title blue-text"><i class="fa fa-child"></i> Your security checks <a href="#modal-checks" class="modal-trigger"><i class="material-icons">help</i></a></span>
-
+      <p>
+        Security check requirements are different in each region. Find out more <a href="#modal-checks" class="modal-trigger">here</a>.
+      </p>
       <p><% if @profile.user.security_checks.present? %><%# instead of .any?%>
         <table>
           <thead><tr>
@@ -30,9 +32,9 @@
         <% end %>
         </table>
       <% else %>
-        No security checks listed.
+        <div class="purple-text">No security checks listed.</div>
       <% end %></p>
     </div>
     <div class="card-action">
-      <a href="/security_checks/new">Add a security check</a>
+      <a href="/security_checks/new" class="waves-effect waves-light btn white-text">Add a security check</a>
     </div>

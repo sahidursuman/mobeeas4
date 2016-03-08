@@ -1,4 +1,16 @@
-<span class="card-title blue-text"><i class="fa fa-child"></i> Your security checks <a href="#modal-checks" class="modal-trigger"><i class="material-icons">help</i></a></span>
+<span class="card-title blue-text"><i class="fa fa-child"></i> Your security checks <a href="#modal-checks-host" class="modal-trigger"><i class="material-icons">help</i></a></span>
+<p>
+  Security check requirements are different in each region. Find out more <a href="#modal-checks-host" class="modal-trigger">here</a>.
+</p>
+<%# SECURITY CHECK INFO MODAL for HOST %>
+<div id="modal-checks-host" class="modal modal-fixed-footer">
+  <div class="modal-content">
+    <%= render 'layouts/security_checks' %>
+  </div>
+  <div class="modal-footer">
+    <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Close</a>
+  </div>
+</div>
 
 <p>
   <% if @org_user_profile.user.security_checks.present? %>
@@ -30,10 +42,10 @@
     <% end %>
   </table>
   <% else %>
-    No security checks listed.
+    <div class="purple-text">No security checks listed.</div>
   <% end %>
 </p>
 
 <div class="card-action">
-<a href="/security_checks/new">Add a security check</a>
+<a href="/security_checks/new" class="waves-effect waves-light btn white-text">Add a security check</a>
 </div>

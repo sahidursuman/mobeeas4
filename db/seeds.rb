@@ -1,7 +1,14 @@
-user = User.create!(email: 'admin@example.com', password: '12345678')
+user = User.create!(email: 'admin@mobeeas.com', password: 'KFmiwork$16')
 user.add_role :admin
-user.add_role :master_admin
-# the role master_admin can create or delete the user with role admin
+
+user1 = User.create!(email: 'admin1@mobeeas.com', password: 'KFmiwork$16')
+user1.add_role :admin
+
+user2 = User.create!(email: 'admin2@mobeeas.com', password: 'KFmiwork$16')
+user2.add_role :admin
+
+user3 = User.create!(email: 'admin3@mobeeas.com', password: 'KFmiwork$16')
+user3.add_role :admin
 
 user2 = User.create!(email: 'candidate@example.com', password: '12345678')
 user2.add_role :candidate

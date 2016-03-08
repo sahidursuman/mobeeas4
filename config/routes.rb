@@ -108,7 +108,6 @@ Rails.application.routes.draw do
   get 'required_skills', to: 'pages#required_skills'
   get 'conversations', to: 'pages#conversations'
   get 'candidate_reports', to: 'pages#candidate_reports'
-  get 'site_administration', to: 'pages#site_administration'
   get 'admin_candidates', to: 'pages#admin_candidates'
   get 'admin_hosts', to: 'pages#admin_hosts'
   get 'admin_sponsors', to: 'pages#admin_sponsors'

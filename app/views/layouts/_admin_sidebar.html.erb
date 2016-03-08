@@ -1,7 +1,17 @@
-<li class="bold active margin-top-50px"><%= link_to 'Admin Profile', admin_page_path %></li>
-<% if current_user.has_role? :master_admin %>
-  <li class="bold"><%= link_to 'Site Administration', site_administration_path %></li>
-<% end %>
+<li class="bold active margin-top-50px no-padding">
+  <ul class="collapsible collapsible-accordion">
+    <li class=" margin-top-5px">
+
+      <a class="collapsible-header">Admin Profile</a>
+      <div class="collapsible-body">
+        <ul>
+          <li><%= link_to 'My Profile', admin_page_path %></li>
+          <li><%= link_to 'Admin Index', admins_path %></li>
+        </ul>
+      </div>
+    </li>
+  </ul>
+</li>
 <li class="bold"><%= link_to 'Hosts', admin_hosts_path %></li>
 <li class="bold"><%= link_to 'Candidates', admin_candidates_path %></li>
 

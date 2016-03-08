@@ -34,7 +34,6 @@ class PagesController < ApplicationController
 
   def my_skills
     @skill_categories = SkillCategory.includes(:skills)
-    # @skills = Skill.all
     @my_skills = current_user.skills
   end
 
@@ -90,14 +89,6 @@ class PagesController < ApplicationController
 
 	def candidate_reports
 		@engagement = Engagement.find(params[:engagement_id])
-	end
-
-	def site_administration
-		if current_user.has_role? :master_admin
-			@admins = Admin.all
-		else
-			redirect_to root_path
-		end
 	end
 
 	def admin_candidates

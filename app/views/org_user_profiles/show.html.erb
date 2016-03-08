@@ -81,7 +81,7 @@
                 <br>
                 Please renew your annual subscription.<br>
                 <div class="margin-top-20px">
-                  <%= link_to "Renew", new_subscription_path(subscription_pack: @subscription_pack.id), class: 'btn' %>
+                  <%= link_to "Renew", new_subscription_path(subscription_pack: @subscription_pack.id), class: 'waves-effect waves-light btn' %>
                 </div>
               <% end %>
             <% elsif (@subscription.expired)%><%# =============== if the last subscription has EXPIRED %>
@@ -89,7 +89,7 @@
               <br>
               Please renew your annual subscription.<br>
               <div class="margin-top-20px">
-                <%= link_to "Renew", new_subscription_path(subscription_pack: @subscription_pack.id), class: 'btn' %>
+                <%= link_to "Renew", new_subscription_path(subscription_pack: @subscription_pack.id), class: 'waves-effect waves-light btn' %>
               </div>
               <br>
             <% end %>
@@ -97,7 +97,7 @@
             Please purchase annual subscription which includes 1 engagement token.
             <br>
             <div class="margin-top-20px">
-              <%= link_to "1 Year Subscription", new_subscription_path(subscription_pack: @subscription_pack.id), class: 'btn' %>
+              <%= link_to "1 Year Subscription", new_subscription_path(subscription_pack: @subscription_pack.id), class: 'waves-effect waves-light btn' %>
             </div>
           <% end %>
         </p>
