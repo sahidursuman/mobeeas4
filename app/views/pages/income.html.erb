@@ -16,7 +16,7 @@
               <br>
               GST amount: <%= number_to_currency(engagement_token_pack.price_ex_gst * engagement_token_pack.gst_rate) %>
               <br>
-              GST rate: <%= number_to_currency(engagement_token_pack.gst_rate) %>
+              GST rate: <%= (engagement_token_pack.gst_rate * 100).to_i %>%
             </li>
             <br>
           <% end %>
@@ -46,7 +46,7 @@
                <br>
                GST amount: <%= number_to_currency(subscription_pack.price_ex_gst * subscription_pack.gst_rate) %>
                <br>
-               GST rate: <%= sprintf("%.2f", subscription_pack.gst_rate) %>
+               GST rate: <%= (subscription_pack.gst_rate * 100).to_i %>%
             </li>
             <br>
           <% end %>
