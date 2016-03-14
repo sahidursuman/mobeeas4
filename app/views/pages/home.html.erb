@@ -1,7 +1,7 @@
 <%# LANDING %>
 <div class="parallax-container">
     <div class="parallax">
-      <%= cl_image_tag("foto-students.jpg") %>
+      <%= cl_image_tag("foto-students.jpg", :width => '100%') %>
     </div>
   </div>
   <div class="section white">
@@ -22,7 +22,7 @@
 
       <div class="row align-center">
         <div class="col s12 m4 l4">
-          <div class="card palette1-bg" style="height: 350px;">
+          <div class="card palette1-bg" style="height: 280px;">
             <div class="card-content white-text">
                   <% if user_signed_in? %>
                     <% if current_user.org_user_profile.present? %>
@@ -42,21 +42,21 @@
                   <% else %>
                     <a class="waves-effect white btn margin-top-20px margin-bottom-20px" href="/host_profile">
                       <span class="palette2">
-                        Register as a Host
+                        Become a Host
                       </span>
                     </a>
                   <% end %>
 
-              <p class="font-24px">
-                  Looking for an expert <br>to help with your <br>educational initiative?<br>
-                  Can your organisation provide employment or work experience?
+              <p class="font-20px">
+                  Looking for an expert to help with your educational initiative?
+                  Can your organisation provide employment or<br>work experience?
               </p>
             </div>
           </div>
         </div>
 
         <div class="col s12 m4 l4">
-          <div class="card palette1-bg" style="height: 350px;">
+          <div class="card palette1-bg" style="height: 280px;">
             <div class="card-content white-text">
               <% if user_signed_in? %>
                 <% if current_user.sponsor.present? %>
@@ -76,12 +76,12 @@
               <% else %>
                 <a class="waves-effect white btn margin-top-20px margin-bottom-20px" href="/users/sign_in">
                   <span class="palette2">
-                    Register as a Sponsor
+                    Become a Sponsor
                   </span>
                 </a>
               <% end %><%# end of if user_signed_in? %>
 
-              <p class="font-24px">
+              <p class="font-20px">
                 Can your organisation help by becoming a MOBEEAS partner, sponsoring an event or making a donation?
               </p>
             </div>
@@ -89,7 +89,7 @@
         </div>
 
         <div class="col s12 m4 l4">
-          <div class="card palette1-bg" style="height: 350px;">
+          <div class="card palette1-bg" style="height: 280px;">
             <div class="card-content white-text">
               <% if user_signed_in? %>
                 <% if current_user.profile.present? %>
@@ -108,14 +108,14 @@
               <% else %>
                 <a class="waves-effect white btn margin-top-20px margin-bottom-20px" href="/users/sign_in">
                   <span class="palette2">
-                    Register as a Candidate
+                    Become a Candidate
                   </span>
                 </a>
               <% end %>
 
-              <p class="font-24px">
+              <p class="font-20px">
                 Are you a professional, an academic or a university student that would
-                like to get involved as a tutor, guest speaker, <br>consultant or judge?
+                like to get involved as a tutor, guest speaker, consultant or judge?
               </p>
             </div>
           </div>

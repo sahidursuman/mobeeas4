@@ -9,7 +9,18 @@
         <%= render 'org_user_profiles/show' %>
         <%#-----------%>
       <% else %> <%# else if current_user's profile hasn't been created yet %>
-        <p>Your host profile is not created. Please go to <%= link_to 'Organisations Index', organisations_host_path %> and select one of the organisations as the first step to create your host profile.</p>
+        <% if @organisations.present? %>
+          <p>
+            Your host profile is not created. Please go to <%= link_to 'Organisations Index', organisations_host_path %> and select one of the organisations as the first step to create your host profile.
+          </p>
+        <% else %>
+          <p>
+            Please create a new organisation
+            <br><br>
+            <%= link_to 'New organisation', new_organisation_path(subs_type: 'new_host_new_org'), class: 'btn' %>
+          </p>
+
+        <% end %>
       <% end %>
     <% elsif (current_user.has_role? :admin) %>
       <%= render 'layouts/sidebar' %>

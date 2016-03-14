@@ -6,8 +6,8 @@
         <div class="col s6 m6 l6">
           <%= f.input :start_date, as: :string, label: 'Start Date:', input_html: { class: 'datetimepicker1', :format => "%d/%m/%Y  %I:%m %p"} %>
         </div>
-        <div class="col s6 m6 offset-s6 l6 offset-l6">
-
+        <div class="col s6 m6 l6">
+          <%= f.input :end_date, as: :string, label: 'End Date:', input_html: { class: 'datetimepicker1', :format => "%d/%m/%Y  %I:%m %p"} %>
         </div>
 
         <div class="col s6 m3 l3">
@@ -28,13 +28,6 @@
             yes, once
           <% end %>
         <% end %>
-
-        <div class="col s6 m6 offset-s6 l6 offset-l6col s6 m6 l6">
-          <%= f.input :end_date, as: :string, label: 'End Date:', input_html: { class: 'datetimepicker1', :format => "%d/%m/%Y  %I:%m %p"} %>
-        </div>
-        <div class="col s6 m6 l6">
-
-        </div>
 
     </div><%# end of row %>
 

@@ -44,6 +44,7 @@ class PagesController < ApplicationController
   end
 
 	def host_profile
+		@organisations = Organisation.all
 		# this params is coming from profiles/index.html.erb page where Admin can view a candidate's profile
 	 	if params[:viewer] == 'admin'
 			@org_user_profile = OrgUserProfile.find(params[:org_user_profile_id])

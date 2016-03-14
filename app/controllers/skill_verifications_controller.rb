@@ -2,11 +2,15 @@ class SkillVerificationsController < ApplicationController
   before_action :set_skill_verification, only: [:approve, :edit, :update, :destroy]
   skip_before_action :authenticate_user!, only: [:show, :update]
 
-# Ask Pete what is the purpose of this function.
-# What does approve attribute signify ?
+# This function appears in app/views/skill_verifications/edit.html.erb for the Admin user to approve.
+# This edit file appears in SkillVerificationMailer.approve that is sent to mobeeas@mobeeas.com after
+# the candidate's referee has approved her skills.
   def approve
     if current_user.has_role? :admin
       @skill_verification.update_attributes(approve: true)
+      if @skill_verification.save
+        SkillVerificationMailer.approved_by_admin(@skill_verification.id).deliver_now
+      end
       redirect_to skill_verifications_path
     else
       redirect_to root_path
@@ -26,7 +30,9 @@ class SkillVerificationsController < ApplicationController
   # GET /skill_verifications/1.json
   def show
     @skill_verification = SkillVerification.find_by(guid: params[:id])
-    @candidate_skills = @skill_verification.candidate_skills
+    if @skill_verification.candidate_skills.present?
+      @candidate_skills = @skill_verification.candidate_skills
+    end
   end
 
   # GET /skill_verifications/new

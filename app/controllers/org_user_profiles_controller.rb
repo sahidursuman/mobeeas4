@@ -68,9 +68,15 @@ class OrgUserProfilesController < ApplicationController
           current_user.save!
         end # end if params[:is_admin].present?
 
-        format.html { redirect_to @org_user_profile, notice: 'Organisation host was successfully created.' }
-        # format.html { redirect_to :back, notice: 'Org user profile was successfully created.' }
-        format.json { render :show, status: :created, location: @org_user_profile }
+        if @organisation.present? # if no organisation is ever created or if the host does not have any organisation attached to it.
+          format.html { redirect_to @org_user_profile, notice: 'Organisation host was successfully created.' }
+          # format.html { redirect_to :back, notice: 'Org user profile was successfully created.' }
+          format.json { render :show, status: :created, location: @org_user_profile }
+        else
+          format.html { redirect_to new_organisation_path(subs_type: 'new_org'), notice: 'Organisation host was successfully created.' }
+          # format.html { redirect_to :back, notice: 'Org user profile was successfully created.' }
+          format.json { render :show, status: :created, location: @org_user_profile }
+        end
       else
         format.html { render :new }
         format.json { render json: @org_user_profile.errors, status: :unprocessable_entity }

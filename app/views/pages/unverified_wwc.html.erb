@@ -2,13 +2,13 @@
   <div class="col s12 m11 offset-m1 l11 offset-l1">
     <%= render 'layouts/sidebar' %>
     <% if @security_checks.present? %>
-    <% if params[:type] == "candidate" %>
-      <h4>List of Candidates with unverified Security Check</h4>
-    <% elsif params[:type] == "host" %>
-      <h4>List of Hosts with unverified Security Check</h4>
-    <% end %>
+      <% if params[:type] == "candidate" %>
+        <h4>List of Candidates with unverified Security Check</h4>
+      <% elsif params[:type] == "host" %>
+        <h4>List of Hosts with unverified Security Check</h4>
+      <% end %>
       <ol>
-        <% @security_checks.order("user_id ASC").each do |security_check| %>
+        <% @security_checks.each do |security_check| %>
           <% if (security_check.user.has_role? :candidate) && (security_check.expiry_date.present?) && (params[:type] == "candidate") %>
             <li>
               Candidate Profile ID: <%= security_check.user.profile.id %> - <b><%= security_check.user.profile.name %></b> - <%= link_to 'View', candidate_profile_path(profile_id: security_check.user.profile.id, viewer: 'admin') %>
@@ -73,7 +73,7 @@
         <% end %><%# end of @educations loop %>
       </ol>
     <% else %>
-      <p>There are no candidate.</p>
+      <p>There is no candidate.</p>
     <% end %><%# end of if @security_checks.present? %>
   </div>
 </div>

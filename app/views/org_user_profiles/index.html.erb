@@ -9,7 +9,10 @@
           <ol>
             <% @org_user_profiles.approved.order("id ASC").each do |org_user_profile| %>
               <li>
-                Host ID: <%= org_user_profile.id %> - <strong><%= org_user_profile.name %></strong> of <%= org_user_profile.suburb %>, <%= org_user_profile.state %> <%= org_user_profile.postcode %>, <%= org_user_profile.country_name(org_user_profile.country) %>
+                Host ID: <%= org_user_profile.id %> - <strong><%= org_user_profile.name %></strong> of <%= org_user_profile.suburb %>, <%= org_user_profile.state %> <%= org_user_profile.postcode %>
+                <% if org_user_profile.country.present? %>
+                  , <%= org_user_profile.country_name(org_user_profile.country) %>
+                <% end %>
                 - <%= link_to 'View', host_profile_path(org_user_profile_id: org_user_profile.id, viewer: 'admin') %>
                  | <%= link_to 'Prohibit '+ org_user_profile.first_name, prohibit_org_user_profile_path(org_user_profile) %>
               </li>
@@ -29,7 +32,10 @@
               <ol>
                 <% @org_user_profiles.not_approved.order("id ASC").each do |org_user_profile| %>
                   <li>
-                    Host ID: <%= org_user_profile.id %> - <strong><%= org_user_profile.name %></strong> of <%= org_user_profile.suburb %>, <%= org_user_profile.state %> <%= org_user_profile.postcode %>, <%= org_user_profile.country_name(org_user_profile.country) %>
+                    Host ID: <%= org_user_profile.id %> - <strong><%= org_user_profile.name %></strong> of <%= org_user_profile.suburb %>, <%= org_user_profile.state %> <%= org_user_profile.postcode %>
+                    <% if org_user_profile.country.present? %>
+                    , <%= org_user_profile.country_name(org_user_profile.country) %>
+                    <% end %>
                      - <%= link_to 'View', host_profile_path(org_user_profile_id: org_user_profile.id, viewer: 'admin') %>
                      | <%= link_to 'Approve '+ org_user_profile.first_name, approve_org_user_profile_path(org_user_profile) %>
                   </li>

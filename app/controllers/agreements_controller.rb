@@ -13,6 +13,7 @@ class AgreementsController < ApplicationController
     elsif params[:agreement_type] == 'sponsor_terms'
       @agreement.update_attributes(sponsor_terms: true)
     end
+    @agreement.save!
     redirect_to :back
   end
   # GET /agreements

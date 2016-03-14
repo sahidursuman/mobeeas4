@@ -50,11 +50,13 @@ host_independent2 = OrgUserProfile.create!(user_id: user10.id, first_name: 'Hugh
 
 user11 = User.create!(email: 'host-org1@mobeeas.com', password: '12345678')
 user11.add_role :host
-host_org1 = OrgUserProfile.create!(user_id: user11.id, first_name: 'Harry', last_name: 'Hart', phone: '0299998888', position: 'SAM', suburb: 'Wahroonga', state: 'NSW', postcode: '2076', country: 'AU', agency: 'I represent an Organisation')
+# Do not create the host org profile, it has to be created upon an existing organisation, must enter it manually
+# host_org1 = OrgUserProfile.create!(user_id: user11.id, first_name: 'Harry', last_name: 'Hart', phone: '0299998888', position: 'SAM', suburb: 'Wahroonga', state: 'NSW', postcode: '2076', country: 'AU', agency: 'I represent an Organisation')
 
 user12 = User.create!(email: 'host-org2@mobeeas.com', password: '12345678')
 user12.add_role :host
-host_org2 = OrgUserProfile.create!(user_id: user12.id, first_name: 'Helen', last_name: 'Hamden', phone: '0299998888', position: 'SAM', suburb: 'Lindfield', state: 'NSW', postcode: '2070', country: 'AU', agency: 'I represent an Organisation')
+# Do not create the host org profile, it has to be created upon an existing organisation, must enter it manually
+# host_org2 = OrgUserProfile.create!(user_id: user12.id, first_name: 'Helen', last_name: 'Hamden', phone: '0299998888', position: 'SAM', suburb: 'Lindfield', state: 'NSW', postcode: '2070', country: 'AU', agency: 'I represent an Organisation')
 
 user13 = User.create!(email: 'sponsor1@mobeeas.com', password: '12345678')
 user13.add_role :sponsor

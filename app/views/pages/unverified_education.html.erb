@@ -4,7 +4,6 @@
     <h4>List of Candidates with unverified education</h4>
 
     <% if @educations.present? %>
-      <p>There are <%= @educations.count %> education records that are not verified.</p>
       <ol>
         <% @educations.order("user_id ASC").each do |education| %>
           <li>
@@ -13,7 +12,7 @@
         <% end %><%# end of @educations loop %>
       </ol>
     <% else %>
-      <p>There are no candidate.</p>
+      <p>There is no candidate.</p>
     <% end %><%# end of if @education.present? %>
 
   </div>

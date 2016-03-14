@@ -102,6 +102,8 @@ class OpportunitiesController < ApplicationController
   def show
     @candidate_skills = CandidateSkill.all
 		@engagement_token_packs = EngagementTokenPack.order(price_ex_gst: :asc)
+    # @engagement_token_packs = EngagementTokenPack.all
+
     @host = User.find(@opportunity.user_id)
     if @opportunity.organisation_id.present?
       @organisation = Organisation.find(@opportunity.organisation_id)
@@ -118,6 +120,10 @@ class OpportunitiesController < ApplicationController
   # GET /opportunities/1/edit
   def edit
     @school_years = SchoolYear.all
+    if params[:org_id].present?
+      @opportunity.organisation_id = params[:org_id]
+    end
+    # The @opportunity.organisation_id has to be re-entered otherwise it will disappear and will cause problems
   end
 
   # POST /opportunities

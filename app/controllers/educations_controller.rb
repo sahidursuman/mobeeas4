@@ -4,7 +4,9 @@ class EducationsController < ApplicationController
 
 
   def verify_candidate
-    @education.verify
+    if @education.verify
+      EducationMailer.approved_by_admin(@education.id).deliver_now
+    end
     redirect_to unverified_education_path
   end
 
@@ -36,6 +38,7 @@ class EducationsController < ApplicationController
     @education.user = current_user
     respond_to do |format|
       if @education.save
+        EducationMailer.notify(@education.id).deliver_now
         format.html { redirect_to profile_path(current_user.profile), notice: 'Education was successfully created.' }
         format.json { render :show, status: :created, location: @education }
       else
