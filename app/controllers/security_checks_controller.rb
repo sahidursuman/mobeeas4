@@ -1,10 +1,11 @@
 class SecurityChecksController < ApplicationController
-  before_action :set_security_check, only: [:show, :edit, :update, :destroy, :verify_candidate]
+  before_action :set_security_check, only: [:show, :edit, :update, :destroy, :verify]
   skip_before_action :check_admin, except: [:index, :show]
 
 
-  def verify_candidate
+  def verify
     @security_check.verify(params[:checked_by])
+    SecurityCheckMailer.notify(@security_check.id).deliver_now
     redirect_to unverified_wwc_path(type: params[:viewee])
   end
 

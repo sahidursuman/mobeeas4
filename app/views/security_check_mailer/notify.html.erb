@@ -1,0 +1,18 @@
+<h4>Your security check has been approved by MOBEEAS Administrator</h4>
+
+<p>
+  <% if @user.has_role? :host %>
+    Hello <%= @user.org_user_profile.name %>,
+  <% else%>
+    Hello <%= @user.profile.name %>,
+  <% end %>
+  <br><br>
+  Your Security check has been approved by MOBEEAS Administrator:
+  <br>
+  <%= @security_check.name %> with number: <%= @security_check.number %>
+  <br><br>
+  Thank you,
+  <br><br>
+  MOBEEAS Team
+
+</p>

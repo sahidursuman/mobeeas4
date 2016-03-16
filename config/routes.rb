@@ -72,7 +72,7 @@ Rails.application.routes.draw do
   resources :organisation_types
   resources :security_checks do
     member do
-      get :verify_candidate
+      get :verify
     end
   end
   resources :skills do

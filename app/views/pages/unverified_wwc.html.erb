@@ -35,9 +35,9 @@
                   </div>
                   <div class="col s12 m4 l4">
                     <br><%# keep the <br> tag here for formatting purpose %>
-                    <%= link_to "Verify this Candidate", verify_candidate_security_check_path(security_check, checked_by: current_user.id, viewer: 'admin_user', viewee: 'candidate'), class: 'btn' %>
+                    <%= link_to "Verify this Candidate", verify_security_check_path(security_check, checked_by: current_user.id, viewer: 'admin_user', viewee: 'candidate'), class: 'btn' %>
                   </div>
-                </div><%# end of row %>
+              </div><%# end of row %>
             </li>
           <% elsif (security_check.user.has_role? :host) && (security_check.expiry_date.present?) && (params[:type] == "host") %>
             <li>
@@ -65,7 +65,7 @@
                   </div>
                   <div class="col s12 m4 l4">
                     <br><%# keep the <br> tag here for formatting purpose %>
-                    <%= link_to "Verify this Host", verify_candidate_security_check_path(security_check, checked_by: current_user.id, viewer: 'admin_user', viewee: 'host'), class: 'btn' %>
+                    <%= link_to "Verify this Host", verify_security_check_path(security_check, checked_by: current_user.id, viewer: 'admin_user', viewee: 'host'), class: 'btn' %>
                   </div>
                 </div><%# end of row %>
             </li>
