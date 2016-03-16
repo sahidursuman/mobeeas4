@@ -13,9 +13,4 @@ class SkillVerificationMailer < ApplicationMailer
     mail(to: 'mobeeas@mobeeas.com', subject: 'Skill Verification Submitted')
   end
 
-  def approved_by_admin(skill_verification_id)
-    @skill_verification = SkillVerification.find(skill_verification_id)
-    mail(to: @skill_verification.user.email, subject: 'Your skill verifications have been approved by MOBEEAS Admin')
-  end
-
 end

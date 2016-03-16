@@ -11,7 +11,6 @@
             <th>ID</th>
             <th>Candidate</th>
             <th>Referee</th>
-            <th>Approved?</th>
             <th colspan="2"></th>
           </tr>
         </thead>
@@ -22,9 +21,8 @@
               <td><%= skill_verification.id %></td>
               <td><%= skill_verification.user.profile.name %></td>
               <td><%= skill_verification.referree_name %></td>
-              <td><%= 'YES' if skill_verification.approve %></td>
               <td><%= link_to 'Edit', edit_skill_verification_path(skill_verification) %></td>
-              <td><%= link_to 'Destroy', skill_verification, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+              <td><%= link_to 'Delete', skill_verification, method: :delete, data: { confirm: 'Are you sure?' } %></td>
             </tr>
           <% end %>
         </tbody>
