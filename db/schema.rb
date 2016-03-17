@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160316032356) do
+ActiveRecord::Schema.define(version: 20160317041110) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -144,21 +144,6 @@ ActiveRecord::Schema.define(version: 20160316032356) do
   add_index "friendly_id_slugs", ["slug", "sluggable_type"], name: "index_friendly_id_slugs_on_slug_and_sluggable_type", using: :btree
   add_index "friendly_id_slugs", ["sluggable_id"], name: "index_friendly_id_slugs_on_sluggable_id", using: :btree
   add_index "friendly_id_slugs", ["sluggable_type"], name: "index_friendly_id_slugs_on_sluggable_type", using: :btree
-
-  create_table "messages", force: :cascade do |t|
-    t.integer  "user_id"
-    t.integer  "opportunity_id"
-    t.text     "message_text"
-    t.string   "status",         default: "unread"
-    t.string   "attachment"
-    t.datetime "created_at",                        null: false
-    t.datetime "updated_at",                        null: false
-    t.integer  "from"
-    t.integer  "to"
-  end
-
-  add_index "messages", ["opportunity_id"], name: "index_messages_on_opportunity_id", using: :btree
-  add_index "messages", ["user_id"], name: "index_messages_on_user_id", using: :btree
 
   create_table "opportunities", force: :cascade do |t|
     t.integer  "organisation_id"
@@ -515,8 +500,6 @@ ActiveRecord::Schema.define(version: 20160316032356) do
   add_foreign_key "engagements", "profiles"
   add_foreign_key "expression_of_interests", "opportunities"
   add_foreign_key "expression_of_interests", "sponsors"
-  add_foreign_key "messages", "opportunities"
-  add_foreign_key "messages", "users"
   add_foreign_key "opportunities", "organisations"
   add_foreign_key "opportunities", "school_years"
   add_foreign_key "opportunities", "skills"

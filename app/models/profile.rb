@@ -5,9 +5,6 @@ class Profile < ActiveRecord::Base
   has_many :engagements
   has_many :opportunities, through: :engagements
 
-  has_many :messages
-
-
   validates :first_name, :last_name, :bio, :suburb, :postcode, :state, :country, presence: true
 
   geocoded_by :profile_data

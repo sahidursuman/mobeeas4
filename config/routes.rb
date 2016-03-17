@@ -19,7 +19,6 @@ Rails.application.routes.draw do
   resources :admins
   resources :opportunity_school_years
   resources :reports
-  resources :messages
   resources :engagements do
     member do
       get :short_list, :invite, :accept, :apply_a_token_to
@@ -61,7 +60,16 @@ Rails.application.routes.draw do
   resources :opportunity_applications
   resources :opportunities do
     member do
-      get :increase_one_token_into, :decrease_one_token_from, :increase_one_token_into_independent, :decrease_one_token_from_independent, :status_draft, :status_listed, :post_active, :status_archived, :purchase_more_tokens_for
+      get :increase_one_token_into,
+      :decrease_one_token_from,
+      :increase_one_token_into_independent,
+      :decrease_one_token_from_independent,
+      :status_draft,
+      :status_listed,
+      :post_active,
+      :status_archived,
+      :purchase_more_tokens_for,
+      :contact_candidate_for
     end
   end
   resources :organisations do
@@ -106,7 +114,6 @@ Rails.application.routes.draw do
   get 'organisations_candidate', to: 'pages#organisations_candidate'
   get 'purchase_tokens', to: 'pages#purchase_tokens'
   get 'required_skills', to: 'pages#required_skills'
-  get 'conversations', to: 'pages#conversations'
   get 'candidate_reports', to: 'pages#candidate_reports'
   get 'admin_candidates', to: 'pages#admin_candidates'
   get 'admin_hosts', to: 'pages#admin_hosts'

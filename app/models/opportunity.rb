@@ -12,8 +12,6 @@ class Opportunity < ActiveRecord::Base
 
   has_many :reports
 
-  has_many :messages
-
   has_many :opportunity_school_years
   has_many :school_years, through: :opportunity_school_years
 

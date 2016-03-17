@@ -1,0 +1,91 @@
+<p>
+  Hello <%= @profile.first_name %>,
+  <br><br>
+  A MOBEEAS host would like to discuss an opportunity with you.
+  <br>
+  The details of this opportunity are given below.
+  <br><br>
+  Opportunity Title: <b><%= @opportunity.title %></b>
+  <br>
+  Description: <b><%= @opportunity.description %></b>
+  <br>
+  <% if @organisation.present? %>
+    Organisation name: <b><%= @organisation.name %></b>
+  <% end %>
+  <br><br>
+  <% if @opportunity.school_years.present? %>
+    Participants School Year level(s):
+    <ol>
+      <% @opportunity.opportunity_school_years.each do |opportunity_school_year| %>
+        <li>
+          <b>
+            <%= opportunity_school_year.school_year.name %> (number of students: <%= (opportunity_school_year.number_of_students > 0)? opportunity_school_year.number_of_students : 0 %>)
+          </b>
+        </li>
+      <% end %>
+    </ol>
+  <% end %>
+  <br>
+
+  <% if @opportunity.opportunity_times.present? %>
+    Anticipated activity dates, days and times:
+    <ol>
+      <% @opportunity.opportunity_times.each do |opportunity_time|%>
+        <li>
+          <% if opportunity_time.frequency == "once" %>
+            <b>
+              On <%= opportunity_time.start_date %>, <%= opportunity_time.day %> at <%= opportunity_time.start_time %> to <%= opportunity_time.end_time %>.
+            </b>
+          <% else %>
+            <b>
+              From <%= opportunity_time.start_date %> on <%= opportunity_time.day %> at <%= opportunity_time.start_time %> to <%= opportunity_time.end_time %> <%= opportunity_time.frequency %> until <%= opportunity_time.end_date %>.
+            </b>
+          <% end %>
+        </li>
+      <% end %><%# end of @opportunity.opportunity_times loop %>
+    </ol>
+  <% end %>
+  <br>
+
+  <% if (@opportunity.skills.any?) %>
+    Candidate Skills:
+    <ol>
+      <% @opportunity.skills.each do |skill| %>
+        <li><b><%= skill.name %> (<%= skill.skill_category.name %>)</b></li>
+      <% end %>
+    </ol>
+  <% end %>
+  <br>
+  Remuneration:
+  <br>
+  Is this a paid engagement?
+    <% if @opportunity.paid_engagement %>
+      <b>Yes, paid engagement.</b>
+    <% else %>
+      <b>No, Not paid engagement.</b>
+    <% end %>
+  <br>
+  Hourly rate:
+    <% if @opportunity.pay.present? %>
+      <b>$ <%= @opportunity.pay %></b>
+    <% else %>
+      <b>Hourly rate not present</b>
+    <% end %>
+  <br>
+  Any specific terms or conditions of employment:
+    <% if @opportunity.employment_terms.present? %>
+      <b><%= @opportunity.employment_terms %></b>
+    <% else %>
+      <b>None</b>
+    <% end %>
+  <br>
+  <% if  @opportunity.experiences.present? %>
+    Other requirements: <b><%= @opportunity.experiences %></b>
+  <% end %>
+  <br><br>
+  If you are interested, please contact <b><%= @host.org_user_profile.name %></b> via email <%= @host.email %>.
+  <br>
+  If you have any other queries, please contact mobeeas@mobeeas.com.
+  <br><br>
+  MOBEEAS Team
+</p>

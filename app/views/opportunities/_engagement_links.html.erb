@@ -76,10 +76,6 @@
       <% if (engagement.status == 'assigned a token') && (@opportunity.opportunity_status == 'post_active') && !(@opportunity.archived) %>
         <%= link_to "Create Completion Report", new_report_path(opportunity_id: @opportunity.id, profile_id: @profile.id, engagement_id: engagement.id, report_type: 'completion')%><br>
       <% end %>
-
-      <% if !(@opportunity.opportunity_status == 'post_active') && !(@opportunity.archived) %>
-        <%= link_to 'Contact ' + @profile.first_name, new_message_path(from: @opportunity.user_id, to: @profile.user.id, opportunity_id: @opportunity.id)  %>
-      <% end %>
       </p>
     <% end %><%# end of if engagement.profile_id == @profile.id %>
   <% end %><%# end of @opportunity.engagements loop %>
@@ -87,7 +83,24 @@
     <p>
       <% if !(@opportunity.opportunity_status == 'post_active') && !(@opportunity.archived) %>
         <%= link_to 'Potential Candidate?', new_engagement_path(opp_id: @opportunity.id, profile_id: @profile.id) %>  |
-        <%= link_to 'Contact ' + @profile.first_name, new_message_path(from: @opportunity.user_id, to: @profile.user.id, opportunity_id: @opportunity.id)  %>
+
+        <!-- Modal Trigger -->
+        <a class="modal-trigger" href="#contact-candidate">Contact <%= @profile.first_name %></a>
+
+        <!-- Modal Structure -->
+        <div id="contact-candidate" class="modal">
+          <div class="modal-content">
+            <h4>Contact <%= @profile.first_name %></h4>
+            <p>
+              By clicking I AGREE the details about this opportunity, including your email address, will be sent to this candidate to initiate correspondence.
+              A copy of this message will be sent to you.
+            </p>
+          </div>
+          <div class="modal-footer">
+            <%= link_to "I Agree ", contact_candidate_for_opportunity_path(@opportunity, profile_id: @profile.id), class: "modal-action modal-close waves-effect waves-green btn-flat" %>
+            <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat ">Cancel</a>
+          </div>
+        </div>
       <% end %>
     </p>
   <% end %>

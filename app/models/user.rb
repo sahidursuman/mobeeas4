@@ -16,7 +16,6 @@ class User < ActiveRecord::Base
 	has_many :skills, through: :candidate_skills
 
 	has_one :org_user_profile # this is the host user type
-	has_many :messages
 
   rolify
   # Include default devise modules. Others available are:

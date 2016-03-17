@@ -37,7 +37,7 @@
                           <li class="list-style-disc"><p>
                           <strong><%= user.org_user_profile.name %> </strong>
                           (Verified)
-                          <%= link_to " - Send a short message to " + user.org_user_profile.name, new_message_path(from: current_user.id, to: user.id) %>
+                           Fix" - Send a short message to "<%#= user.org_user_profile.name, new_message_path(from: current_user.id, to: user.id) %>
                           </li>
                         <% end %><%# end of if (org_user.admin_status) %>
                       <% end %><%# end of org_user.organisation_id == %>

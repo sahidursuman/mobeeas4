@@ -135,7 +135,7 @@
             Hosted by: <b><%= @host.org_user_profile.name %></b>
             <%# Do not display 'contact host' while the owner of this opportunity is viewing my own opportunity %>
             <% if !(@host.id == current_user.id) && !(@opportunity.archived) %>
-               - <%= link_to 'Contact ' + @host.org_user_profile.first_name, new_message_path(from: current_user.id, to: @host.id, opportunity_id: @opportunity.id) %>
+               - Fix 'Contact' button 
             <% end %>
           </p>
 
