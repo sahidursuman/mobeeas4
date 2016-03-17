@@ -51,8 +51,13 @@ class MessagesController < ApplicationController
           format.html { redirect_to @opportunity, notice: 'Message was successfully created.' }
           format.json { render :show, status: :created, location: @opportunity }
         else
-          format.html { redirect_to host_profile_path, notice: 'Message was successfully created.' }
-          format.json { render :show, status: :created, location: @message }
+          if current_user.has_role? :host
+            format.html { redirect_to host_profile_path, notice: 'Message was successfully created.' }
+            format.json { render :show, status: :created, location: @message }
+          elsif current_user.has_role? :candidate
+            format.html { redirect_to profile_path(current_user.profile.id), notice: 'Message was successfully created.' }
+            format.json { render :show, status: :created, location: @message }
+          end
           # format.html { redirect_to @message, notice: 'Message was successfully created.' } # the original
           # format.json { render :show, status: :created, location: @message }  # the original
         end

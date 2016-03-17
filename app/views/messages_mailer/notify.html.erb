@@ -22,12 +22,12 @@
 <% if @user_from.has_role? :host %>
   <% @host_from = @user_from.org_user_profile %>
   <p>
-    You have received a new MOBEEAS email from <%= @host_from.first_name %>, please see the message below:
+    You have received a new MOBEEAS email from <%= @host_from.name %>, please see the message below:
   </p>
 <% elsif @user_from.has_role? :candidate %>
   <% @candidate_from = @user_from.profile %>
   <p>
-    You have received a new MOBEEAS email from <%= @candidate_from.first_name %>, please see the message below:
+    You have received a new MOBEEAS email from <%= @candidate_from.name %>, please see the message below:
   </p>
 <% elsif @user_from.has_role? :sponsor %>
   <% @sponsor_from = @user_from.sponsor %>

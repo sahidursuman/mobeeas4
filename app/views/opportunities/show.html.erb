@@ -575,7 +575,7 @@
           <% users = [] %>
           <p>Candidates with matching and verified skills:</p>
           <%# Remember: Hash[key]=value %>
-          <%# We want to build this Hash:
+          <%# We want to build this Hash structure:
               hash[key] = the user_id
               hash[value] = the array of [skill_category, skill]
               This will involve two steps
@@ -595,7 +595,7 @@
                   <% if (candidate_skill.skill_id == opportunity_skill.skill.id) && (candidate_skill.verified) && (candidate_skill.user.profile.approved) %>
                   <%# what does candidate_skill.user.profile.approved mean? %>
                   <%# It means that the Admin has clicked the 'approve' function in the Prohibited Candidate list which calls the approve function in profiles_controller.rb file %>
-                    <% hash[candidate_skill.user_id] = [] %> <%# create a hash of array, key is skill name, value is user id %>
+                    <% hash[candidate_skill.user_id] = [] %> <%# create a hash of empty array, key is skill name, value is user id to be filled in the next loop %>
                   <% end %>
                 <% end %><%# end of if (@subscription.active)%>
               <% end %><%# end of if candidate_skill.user.subscriptions.present? %>
@@ -624,11 +624,12 @@
           <% end %><%# end of @opportunity.opportunity_skills loop %>
           <%# End of STEP TWO =================== %>
 
-          <%#= hash %><%# print hash, for testing %>
+          <%#= hash %><%# prints hash, open only for testing %>
           <%# At this point the Hash is created and filled with this type:
             hash[key] = hash[value]
             hash[key] = the user_id
-            hash[value] = the array of [skill_category, skill] %>
+            hash[value] = the array of [skill_category, skill]
+            array value[0] = skill_category and array value[1] = skill %>
           <%# e.g. {2=>[["Digital Technologies", "Robotics"], ["Design & Technology", "3D Printing"], ["English", "Secondary-Extension 1"], ["Mathematics", "Secondary-Extension 1"]] %>
 
           <% if hash.empty? %>
@@ -642,7 +643,7 @@
                   <% if (current_user.profile.id == @profile.id ) %>
                     <br><b><%= current_user.profile.name %></b> (User ID: <%= current_user.id %>)
                     <% value.each do |val| %>
-                      <br><%= val[0] %> - <%= val[1] %>
+                      <br><%= val[0] %> - <%= val[1] %><%# skill_category - skill %>
                     <% end %>
                     <p>Location: <%= @profile.suburb %>, <%= @profile.state %></p>
                     <% @profile.user.security_checks.each do |security_check| %>
@@ -655,32 +656,84 @@
                       <br>
                     <% end %><%# end of @profile.user.security_checks loop %>
                   <% end %><%# end if current_user.profile.id == @profile.id %>
-                <%# The user with ANY roles other than candidate can view the details of all candidates in an opportunity %>
+                <%# Else if the user with ANY roles other than candidate can view the details of all candidates in an opportunity %>
                 <% else %>
-                  <br><b><%= @profile.name %></b> (User ID: <%= @profile.user.id %>)
-                  <%# @found = false %><%# start with found is true %>
-                  <%# counter = 0 %>
+                  <br>
+                  <%# Modal popup appears next to candidate's name and if clicked will show the profile of the candidate %>
+                  <!-- Modal Trigger -->
+                  <a class="modal-trigger" href="#candidate-profile"><span class="palette1"><i class="fa fa-user"></i></span></a> <b><%= @profile.name %></b>
+
+                  <!-- Modal Structure -->
+                  <div id="candidate-profile" class="modal modal-fixed-footer">
+                    <div class="modal-content">
+                      <div class="row">
+                        <div class="col m2">
+                          <% if @profile.picture.present? %>
+                            <%= cl_image_tag(@profile.picture, class: 'img-responsive activator', :width=>110, :crop=>:scale) %>
+                          <% else %>
+                            <%= cl_image_tag("user.png", :opacity=>30, class: 'img-responsive activator', :width=>110, :crop=>:scale) %>
+                          <% end %>
+                        </div>
+                        <div class="col m10">
+                          <h4><%= @profile.name %></h4>
+                          <p>
+                            User ID: <%= @profile.user.id %>
+                            <br>
+                            Location: <%= @profile.suburb %>, <%= @profile.state %>
+                            <% if @profile.country.present? %>
+                              <%= @profile.country_name(@profile.country) %>
+                            <% end %>
+                            <br>
+                          </div>
+
+                        </div>
+                        <%# Display candidate's skills %>
+                        List of all skills:
+                        <ol class="margin-top-0px">
+                          <% @profile.user.candidate_skills.each do |candidate_skill| %>
+                            <li><%= candidate_skill.skill.skill_category.name %> - <%= candidate_skill.skill.name %></li>
+                          <% end %><%# end of value.each loop %>
+                        </ol>
+
+                        <%# Display candidate's educations %>
+                        List of educations:
+                        <ol class="margin-top-0px">
+                          <% @profile.user.educations.each do |education| %>
+                            <% if education.verified %><%# only displays the verified education records %>
+                            <li><%= education.institution %> - <%= education.course %>, completed: <%= education.year_completed %> - <%= link_to 'File uploaded  ', education.achievement_url %></li>
+                            <% end %>
+                          <% end %><%# end of value.each loop %>
+                        </ol>
+
+                        <%# Display candidate's security checks %>
+                        <% @profile.user.security_checks.each do |security_check| %>
+                          <%= security_check.name %>: <%= security_check.number %> (<%= security_check.state %>)
+                          <% if security_check.verified %>
+                             - <span class="bold green-text">Verified</i></span>
+                          <% else %>
+                             - <span class="bold purple-text">Not Verified</span>
+                          <% end %>
+                          <br>
+                        <% end %><%# end of @profile.user.security_checks loop %>
+
+
+                      </p>
+                    </div>
+                    <div class="modal-footer">
+                      <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat ">Close</a>
+                    </div>
+                  </div>
+                  <%# end of Modal structure %>
                   <% value.each do |val| %>
                     <br><%= val[0] %> - <%= val[1] %>
                   <% end %><%# end of value.each loop %>
-                  <p>Location: <%= @profile.suburb %>, <%= @profile.state %></p>
-                  <% @profile.user.security_checks.each do |security_check| %>
-                    <%= security_check.name %>
-                    <% if security_check.verified %>
-                      <span class="green-text"><i class="fa fa-check-circle"></i></span>
-                    <% else %>
-                      <span class="red-text"><i class="fa fa-times"></i></span>
-                    <% end %>
-                    <br>
-                  <% end %><%# end of @profile.user.security_checks loop %>
+
                 <% end %><%# end of if current_user.has_role? :profile %>
 
               <%= render 'engagement_links' %>
             <% end %><%# end of hash1 loop %>
           <% end %><%# end of if hash1.empty? %>
           <br><br>
-          <%# <p>Display all candidate link for Admin and Host? </p> %>
-          <%#= link_to 'View all candidates', profiles_path %>
         <% end %><%# end of if the list status is still draft %>
       </div><%# end of card-content %>
     </div><%# end of card %>

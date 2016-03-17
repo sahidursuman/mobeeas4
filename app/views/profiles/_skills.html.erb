@@ -1,6 +1,5 @@
 <div class="card-content">
   <span class="card-title blue-text"><i class="fa fa-sliders"></i> Your skills</span>
-  <%#= @profile%>
   <% if @profile.user.candidate_skills.present? %>
     <% if @profile.user.candidate_skills.any? %>
       <table>
@@ -8,16 +7,6 @@
           <tr>
             <th>Category</th>
             <th>Skill</th>
-            <%# only appears if just created a new skill which needs to be approved by MOBEEAS admin%>
-            <% @profile.user.candidate_skills.each do |candidate_skill| %>
-              <%# if !(candidate_skill.skill.approved) %>
-                <%# <th class="right-align">Approved</th> %>
-              <%# end %>
-
-                <%# candidate_skill.each do |cs| %>
-                  <%#= cs.name  %>
-                <%# end %>
-            <% end %>
             <th class="right-align">Verified</th>
           </tr>
         </thead>
@@ -31,7 +20,7 @@
                 <% if candidate_skill.skill_level %>
                   <span class="bold teal-text"><%= candidate_skill.skill_level %></span>
                 <% else %>
-                  <span class="red-text"><i class="fa fa-times"></i></span>
+                  <span class="bold purple-text">Pending</span>
                 <% end %>
               </td>
             </tr>

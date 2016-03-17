@@ -22,13 +22,12 @@
                 <% else %>
                   <td>No file  <%= link_to edit_education_path(user_education) do %><i class="material-icons tiny  ">mode_edit</i><% end %></td>
                 <% end %>
-                <%# <td> %><%#= user_education.achievement_url %> <%#= link_to edit_education_path(user_education) do %><%#<i class="material-icons tiny  ">mode_edit</i>%><%# end %><%#</td> %>
 
                 <td class="right-align">
                   <% if user_education.verified %>
                     <span class="green-text"><i class="fa fa-check-circle"></i></span>
                   <% else %>
-                    <span class="red-text"><i class="fa fa-times"></i></span>
+                    <span class="bold purple-text">Pending</span>
                   <% end %>
                 </td>
               </tr>
