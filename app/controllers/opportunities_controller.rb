@@ -1,5 +1,5 @@
 class OpportunitiesController < ApplicationController
-  before_action :set_opportunity, only: [:increase_one_token_into, :decrease_one_token_from, :increase_one_token_into_independent, :decrease_one_token_from_independent, :status_draft, :status_listed, :post_active, :status_archived, :purchase_more_tokens_for, :contact_candidate_for, :show, :edit, :update, :destroy]
+  before_action :set_opportunity, only: [:increase_one_token_into, :decrease_one_token_from, :increase_one_token_into_independent, :decrease_one_token_from_independent, :status_draft, :status_listed, :post_active, :status_archived, :purchase_more_tokens_for, :contact_candidate_for, :contact_host_for, :show, :edit, :update, :destroy]
 
 
   def increase_one_token_into
@@ -72,6 +72,11 @@ class OpportunitiesController < ApplicationController
 
   def contact_candidate_for
     OpportunityMailer.contact_candidate(@opportunity.id, params[:profile_id]).deliver_now
+    redirect_to @opportunity
+  end
+
+  def contact_host_for
+    OpportunityMailer.contact_host(@opportunity.id, params[:user_id]).deliver_now
     redirect_to @opportunity
   end
 

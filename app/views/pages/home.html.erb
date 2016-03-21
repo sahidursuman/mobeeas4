@@ -28,7 +28,7 @@
                     <% if current_user.org_user_profile.present? %>
                       <a class="waves-effect white btn margin-top-20px margin-bottom-20px" href="/host_profile">
                         <span class="palette2">
-                          My Host Dashboard
+                          My Dashboard
                         </span>
                       </a>
                       <%# In host dashboard the user will have distinction if he has a role as a Host or not. %>
@@ -63,7 +63,7 @@
                   <% @sponsor = Sponsor.find_by(user_id: current_user.id) %>
                   <a class="waves-effect white btn margin-top-20px margin-bottom-20px" href="/sponsors/<%= current_user.sponsor.id %>">
                     <span class="palette2">
-                      My Sponsor Dashboard
+                      My Dashboard
                     </span>
                   </a>
                 <% else %>
@@ -95,7 +95,7 @@
                 <% if current_user.profile.present? %>
                   <a class="waves-effect white btn margin-top-20px margin-bottom-20px" href="/candidate_profile">
                     <span class="palette2">
-                      My Candidate Dashboard
+                      My Dashboard
                     </span>
                   </a>
                 <% else %>

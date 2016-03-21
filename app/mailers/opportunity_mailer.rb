@@ -16,11 +16,17 @@ class OpportunityMailer < ApplicationMailer
     mail(to: [@profile.user.email, @host.email], subject: 'You have been contacted by a MOBEEAS Host')
   end
 
+  def contact_host(opportunity_id, user_id)
+    @opportunity = Opportunity.find(opportunity_id)
+    @owner = User.find(@opportunity.user_id)
+    @sender = User.find(user_id)
+    mail(to: [@owner.email, @sender.email], subject: 'You have been contacted by a MOBEEAS Member')
+  end
 
   def invited(opportunity_id, profile_id)
     @opportunity = Opportunity.find(opportunity_id)
     @profile = Profile.find(profile_id)
-    mail(to: @profile.user.email, subject: 'You have been invited to participate in MOBEEAS Opportunity')
+    mail(to: @profile.user.email, subject: 'You have been invited to participate in a MOBEEAS Opportunity')
   end
 
   # Subject can be set in your I18n file at config/locales/en.yml

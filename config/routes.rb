@@ -69,7 +69,8 @@ Rails.application.routes.draw do
       :post_active,
       :status_archived,
       :purchase_more_tokens_for,
-      :contact_candidate_for
+      :contact_candidate_for,
+      :contact_host_for
     end
   end
   resources :organisations do
