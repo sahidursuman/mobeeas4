@@ -682,8 +682,7 @@
                       <br>
                     <% end %><%# end of @profile.user.security_checks loop %>
                   <% end %><%# end if current_user.profile.id == @profile.id %>
-                <%# Else if the user with ANY roles other than candidate can view the details of all candidates in an opportunity %>
-                <% else %>
+                <% else %><%# Else if the user's role is NOT a candidate, he can view the details of all other candidates in an opportunity %>
                   <br>
                   <%# Modal popup appears next to candidate's name and if clicked will show the profile of the candidate %>
                   <!-- Modal Trigger -->
@@ -702,61 +701,63 @@
                         </div>
                         <div class="col m10">
                           <h4><%= @profile.name %></h4>
-                          <p>
-                            User ID: <%= @profile.user.id %>
-                            <br>
-                            Location: <%= @profile.suburb %>, <%= @profile.state %>
-                            <% if @profile.country.present? %>
-                              <%= @profile.country_name(@profile.country) %>
-                            <% end %>
-                            <br>
-                          </div>
-
                         </div>
-                        <%# Display candidate's skills %>
-                        List of all skills:
-                        <ol class="margin-top-0px">
-                          <% @profile.user.candidate_skills.each do |candidate_skill| %>
-                            <li><%= candidate_skill.skill.skill_category.name %> - <%= candidate_skill.skill.name %></li>
-                          <% end %><%# end of value.each loop %>
-                        </ol>
-
-                        <%# Display candidate's educations %>
-                        List of educations:
-                        <ol class="margin-top-0px">
-                          <% @profile.user.educations.each do |education| %>
-                            <% if education.verified %><%# only displays the verified education records %>
-                            <li><%= education.institution %> - <%= education.course %>, completed: <%= education.year_completed %> - <%= link_to 'File uploaded  ', education.achievement_url %></li>
-                            <% end %>
-                          <% end %><%# end of value.each loop %>
-                        </ol>
-
-                        <%# Display candidate's security checks %>
-                        <% @profile.user.security_checks.each do |security_check| %>
-                          <%= security_check.name %>: <%= security_check.number %> (<%= security_check.state %>)
-                          <% if security_check.verified %>
-                             - <span class="bold green-text">Verified</i></span>
-                          <% else %>
-                             - <span class="bold purple-text">Not Verified</span>
+                      </div>
+                        <p>
+                          User ID: <%= @profile.user.id %>
+                          <br>
+                          Location: <%= @profile.suburb %>, <%= @profile.state %>
+                          <% if @profile.country.present? %>
+                            <%= @profile.country_name(@profile.country) %>
                           <% end %>
                           <br>
-                        <% end %><%# end of @profile.user.security_checks loop %>
-                      </p>
-                    </div>
+                          <%# Display candidate's skills %>
+                          List of all skills:
+                          <ol class="margin-top-0px">
+                            <% @profile.user.candidate_skills.each do |candidate_skill| %>
+                              <li><%= candidate_skill.skill.skill_category.name %> - <%= candidate_skill.skill.name %></li>
+                            <% end %><%# end of value.each loop %>
+                          </ol>
+
+                          <%# Display candidate's educations %>
+                          List of educations:
+                          <ol class="margin-top-0px">
+                            <% @profile.user.educations.each do |education| %>
+                              <% if education.verified %><%# only displays the verified education records %>
+                              <li><%= education.institution %> - <%= education.course %>, completed: <%= education.year_completed %> - <%= link_to 'File uploaded  ', education.achievement_url %></li>
+                              <% end %>
+                            <% end %><%# end of value.each loop %>
+                          </ol>
+
+                          <%# Display candidate's security checks %>
+                          <% @profile.user.security_checks.each do |security_check| %>
+                            <%= security_check.name %>: <%= security_check.number %> (<%= security_check.state %>)
+                            <% if security_check.verified %>
+                               - <span class="bold green-text">Verified</i></span>
+                            <% else %>
+                               - <span class="bold purple-text">Not Verified</span>
+                            <% end %>
+                            <br>
+                          <% end %><%# end of @profile.user.security_checks loop %>
+                        </p>
+                      </div>
                     <div class="modal-footer">
                       <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat ">Close</a>
                     </div>
                   </div>
                   <%# end of Modal structure %>
-                  <% value.each do |val| %>
-                    <br><%= val[0] %> - <%= val[1] %>
-                  <% end %><%# end of value.each loop %>
 
+                  <% value.each do |val| %>
+                    <br><%= val[0] %> - <%= val[1] %><%# display skill category - skill name %>
+                  <% end %><%# end of value.each loop %>
+                  <% @engagement = Engagement.find_by(opportunity_id: @opportunity.id, profile_id: @profile.id) %>
+                  <br>
+                  Engagement status: <%= @engagement.status %>
                 <% end %><%# end of if current_user.has_role? :profile %>
 
               <%= render 'engagement_links' %>
-            <% end %><%# end of hash1 loop %>
-          <% end %><%# end of if hash1.empty? %>
+            <% end %><%# end of hash.each_pair loop %>
+          <% end %><%# end of if hash.empty? %>
           <br><br>
         <% end %><%# end of if the list status is still draft %>
       </div><%# end of card-content %>

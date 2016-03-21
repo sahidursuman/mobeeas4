@@ -21,7 +21,7 @@ Rails.application.routes.draw do
   resources :reports
   resources :engagements do
     member do
-      get :short_list, :invite, :accept, :apply_a_token_to
+      get :invite, :accept, :apply_a_token_to
     end
   end
   resources :engagement_token_packs do

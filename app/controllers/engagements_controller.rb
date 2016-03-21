@@ -1,12 +1,5 @@
 class EngagementsController < ApplicationController
-  before_action :set_engagement, only: [:short_list, :invite, :accept, :apply_a_token_to, :show, :edit, :update, :destroy]
-
-
-  def short_list
-    @engagement.update_attributes(status: "short_listed")
-    @opportunity = Opportunity.find(params[:opportunity_id])
-    redirect_to @opportunity
-  end
+  before_action :set_engagement, only: [:invite, :accept, :apply_a_token_to, :show, :edit, :update, :destroy]
 
   def invite
     @engagement.update_attributes(status: "invited")

@@ -4,13 +4,13 @@
   <br>
   <% if @sender.has_role? :host %>
     <% @sender_host = OrgUserProfile.find_by(user_id: @sender.id) %>
-    A MOBEEAS host, <%= @sender_host.name %>, would like to discuss your opportunity <%= @opportunity.title %>.
+    A MOBEEAS host, <%= @sender_host.name %>, would like to discuss your opportunity: <b><%= @opportunity.title %>.</b>
   <% elsif @sender.has_role? :sponsor %>
     <% @sender_sponsor = Sponsor.find_by(user_id: @sender.id) %>
-    A MOBEEAS sponsor, <%= @sender_sponsor.name %>, would like to discuss your opportunity <%= @opportunity.title %>.
+    A MOBEEAS sponsor, <%= @sender_sponsor.name %>, would like to discuss your opportunity: <b><%= @opportunity.title %>.</b>
   <% elsif @sender.has_role? :candidate %>
     <% @sender_candidate = Profile.find_by(user_id: @sender.id) %>
-    A MOBEEAS candidate, <%= @sender_candidate.name %>, would like to discuss your opportunity <%= @opportunity.title %>.
+    A MOBEEAS candidate, <%= @sender_candidate.name %>, would like to discuss your opportunity: <b><%= @opportunity.title %>.</b>
   <% end %>
   <br>
   Please contact them using the email address provided below at your earliest convenience.

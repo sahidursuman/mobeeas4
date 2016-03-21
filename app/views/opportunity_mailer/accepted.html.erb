@@ -2,10 +2,14 @@
 
 <p>
   Dear <%= @opportunity.user.org_user_profile.name %>,
-  <br>
+  <br><br>
   <%= @profile.name %> has accepted your invitation to participate in this Opportunity: <strong><%= @opportunity.title %></strong>.
   <br>
-  Click on this <%= link_to "Opportunity Link", opportunity_url(@opportunity) %> to view this Opportunity details.
+  Please contact <%= @profile.first_name %> using the email address <%= @profile.user.email %> at your earliest convenience.
   <br>
+  Click on this <%= link_to "Opportunity Link", opportunity_url(@opportunity) %> to view this Opportunity details.
+  <br><br>
+  Thank you
+  <br><br>
+  MOBEEAS Team
 </p>
-<p>Thank you from the MOBEEAS Team</p>

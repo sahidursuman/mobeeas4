@@ -37,7 +37,7 @@ class OpportunityMailer < ApplicationMailer
   def accepted(opportunity_id, profile_id)
     @opportunity = Opportunity.find(opportunity_id)
     @profile = Profile.find(profile_id)
-    mail(to: @opportunity.user.email, subject: 'A Candidate has accepted your invitation to participate in MOBEEAS Opportunity')
+    mail(to: @opportunity.user.email, subject: 'A Candidate has accepted your invitation to participate in a MOBEEAS Opportunity')
   end
 
   # Subject can be set in your I18n file at config/locales/en.yml

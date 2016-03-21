@@ -10,22 +10,13 @@
         <p>Status: <strong>Pending</strong></p>
         <p>
           <% if !(@opportunity.opportunity_status == 'post_active') && !(@opportunity.archived) %>
-            <%= link_to 'Short list?', short_list_engagement_path(engagement, opportunity_id: @opportunity.id)%>  |
-            <%= link_to 'Decline', engagement_path(engagement, opportunity_id: @opportunity.id), method: :delete, data: { confirm: 'Are you sure?' } %> |
-            <%= render 'contact_candidate' %>
-          <% end %>
-
-      <% elsif (engagement.status == 'short_listed') %>
-        <p>Status: <strong>Short listed</strong></p>
-        <p>
-          <% if !(@opportunity.opportunity_status == 'post_active') && !(@opportunity.archived) %>
             <%= link_to 'Invite', invite_engagement_path(engagement, opportunity_id: @opportunity.id, profile_id: @profile.id )%>  |
             <%= link_to 'Decline', engagement_path(engagement, opportunity_id: @opportunity.id), method: :delete, data: { confirm: 'Are you sure?' } %> |
             <%= render 'contact_candidate' %>
           <% end %>
 
       <% elsif (engagement.status == 'invited') %>
-        <p>Status: <strong>Invited</strong> (pending acceptance)</p>
+        <p>Status: <strong>Invited</strong> <span class="purple-text">(pending acceptance)</span></p>
         <p>
           <% if !(@opportunity.opportunity_status == 'post_active') && !(@opportunity.archived) %>
             <%= link_to 'Decline', engagement_path(engagement, opportunity_id: @opportunity.id), method: :delete, data: { confirm: 'Are you sure?' } %> |
@@ -46,8 +37,9 @@
         <p>
           <%# Decline action and Apply a Token action are for the opportunity that is not 'post_active' such as 'listed' or 'active' and also not archived %>
           <% if !(@opportunity.opportunity_status == 'post_active') && !(@opportunity.archived) %>
-            <%= link_to 'Apply a token to this candidate', apply_a_token_to_engagement_path(engagement, opportunity_id: @opportunity.id, profile_id: @profile.id)%> |
             <%= link_to 'Decline', engagement_path(engagement, opportunity_id: @opportunity.id), method: :delete, data: { confirm: 'Are you sure?' } %> |
+            <%= render 'contact_candidate' %>
+            <div class="margin-top-5px"><%= link_to 'Apply a token to '+ @profile.first_name, apply_a_token_to_engagement_path(engagement, opportunity_id: @opportunity.id, profile_id: @profile.id), class: 'btn' %></div>
           <% end %>
 
       <% elsif (engagement.status == 'assigned a token') && (@opportunity.opportunity_status == 'active') %>
@@ -104,7 +96,24 @@
       <% if (current_user.profile.present?) && (current_user.profile.id == engagement.profile_id) %>
         <p>Status: <strong>Invited</strong></p>
         <% if !(@opportunity.opportunity_status == 'post_active') && !(@opportunity.archived) %>
-          <%= link_to 'Accept this opportunity', accept_engagement_path(engagement, opportunity_id: @opportunity.id, profile_id: @profile.id), class: 'btn' %>
+
+
+          <!-- Modal Trigger -->
+          <a class="waves-effect waves-light btn modal-trigger" href="#accept-opportunity">Accept this opportunity</a>
+
+          <!-- Modal Structure -->
+          <div id="accept-opportunity" class="modal">
+            <div class="modal-content">
+              <p>
+                When you click on ACCEPT THIS OPPORTUNITY, an acceptance message will be sent to the host along with your email address.
+              </p>
+            </div>
+            <div class="modal-footer">
+              <%= link_to 'Accept this opportunity', accept_engagement_path(engagement, opportunity_id: @opportunity.id, profile_id: @profile.id), class: 'modal-action modal-close waves-effect waves-green btn-flat' %>
+              <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Cancel</a>
+            </div>
+          </div>
+
           <br>
         <% end %>
       <% end %>
