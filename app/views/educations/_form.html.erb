@@ -7,7 +7,7 @@
     <div class="row">
       <div class="col s12">
         <%= f.input :achievement %>
-        <a href="#modal-achievements" class="modal-trigger"><i class="material-icons">help</i></a>
+        <a href="#modal-achievements" class="modal-trigger"><i class="material-icons">help</i></a>Any files that you upload will be visible to MOBEEAS members.
         <div id="modal-achievements" class="modal">
           <div class="modal-content">
             <p>
@@ -27,12 +27,13 @@
     <p>Uploaded File:</p>
     <p><%= @education.achievement %></p>
   <% end %>
-
-  <div class="form-actions">
+  <p>By clicking ADD COURSE, I agree to allow MOBEEAS representatives to confirm my enrolment at this educational institution.</p>
+  <div class="form-actions margin-top-5px margin-bottom-5px">
     <% if @education.new_record? %>
       <button type="submit" class="btn light-blue">Add course</button>
     <% else %>
-      <button type="submit" class="btn">Update course</button>
+      <button type="submit margin-top-5px" class="btn">Update course</button>
     <% end %>
   </div>
+  <%= link_to 'Back', candidate_profile_path %>
 <% end %>

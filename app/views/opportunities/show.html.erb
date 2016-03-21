@@ -367,6 +367,11 @@
               <p>Current Opportunity Status: <span class="red-text"><b>ACTIVE</b></span></p>
             <% elsif @opportunity.opportunity_status == 'post_active' %>
               Current Opportunity Status: <b>COMPLETED</b>
+              <br>
+              <%# after the opportunity status is changed to COMPLETED, the owner will be asked to create a completion report.%>
+              <% if (current_user.has_role? :host) && (current_user.id == @opportunity.user_id) && !(@opportunity.archived) %>
+                <div class="purple-text">Please submit a completion report.</div>
+              <% end %>
               <%# Note: when the opportunity status is post_active, the word to display is 'completed' %>
             <% elsif @opportunity.opportunity_status == 'listed' %>
               <p>
