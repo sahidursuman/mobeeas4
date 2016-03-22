@@ -1,34 +1,39 @@
-<h4>Reports Related to <%= @engagement.profile.first_name %></h4>
+<div class="row">
+  <div class="col l11 offset-l1">
+    <%= render 'layouts/sidebar' %>
+    <h4>Reports Related to <%= @engagement.profile.first_name %></h4>
 
-<% @progress_reports = [] %>
-<% @completion_reports = [] %>
+    <% @progress_reports = [] %>
+    <% @completion_reports = [] %>
 
-<%# Printing the list of progress reports %>
-<% if @engagement.progress_report_ids.present? %>
-  <p><strong> Progress Reports </strong></p>
-  <% @progress_reports = @engagement.progress_report_ids %>
-  <ol>
-    <% @progress_reports.each do |report| %>
-      <% @pr_report = Report.find(report)%>
-      <li><%= link_to "View Progress Report ID: "+ report.to_s, report_path(@pr_report, engagement_id: @pr_report.engagement_id) %></li>
+    <%# Printing the list of progress reports %>
+    <% if @engagement.progress_report_ids.present? %>
+      <p><strong> Progress Reports </strong></p>
+      <% @progress_reports = @engagement.progress_report_ids %>
+      <ol>
+        <% @progress_reports.each do |report| %>
+          <% @pr_report = Report.find(report)%>
+          <li><%= link_to "View Progress Report ID: "+ report.to_s, report_path(@pr_report, engagement_id: @pr_report.engagement_id) %></li>
+        <% end %>
+      </ol>
+    <% else %>
+      <p> No Progress Reports </p>
     <% end %>
-  </ol>
-<% else %>
-  <p> No Progress Reports </p>
-<% end %>
-<br><br>
-<%# Printing the list of completion reports %>
-<% if @engagement.completion_report_ids.present? %>
-  <p><strong> Completion Reports </strong></p>
-  <% @completion_reports = @engagement.completion_report_ids %>
-  <ol>
-    <% @completion_reports.each do |report| %>
-      <% @cm_report = Report.find(report) %>
-      <li><%= link_to "View Completion Report ID: "+ report.to_s, report_path(@cm_report, engagement_id: @cm_report.engagement_id) %></li>
+    <br><br>
+    <%# Printing the list of completion reports %>
+    <% if @engagement.completion_report_ids.present? %>
+      <p><strong> Completion Reports </strong></p>
+      <% @completion_reports = @engagement.completion_report_ids %>
+      <ol>
+        <% @completion_reports.each do |report| %>
+          <% @cm_report = Report.find(report) %>
+          <li><%= link_to "View Completion Report ID: "+ report.to_s, report_path(@cm_report, engagement_id: @cm_report.engagement_id) %></li>
+        <% end %>
+      </ol>
+    <% else %>
+      <p> No Completion Reports </p>
     <% end %>
-  </ol>
-<% else %>
-  <p> No Completion Reports </p>
-<% end %>
-<br>
-<%= link_to 'View Opportunity Details', opportunity_path(@engagement.opportunity), class: 'btn' %><br><br>
+    <br>
+    <%= link_to 'View Opportunity Details', opportunity_path(@engagement.opportunity), class: 'btn' %><br><br>
+  </div>
+</div>

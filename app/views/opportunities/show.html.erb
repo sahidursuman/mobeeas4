@@ -477,79 +477,76 @@
     <%# TOKENS ALLOCATIONS ===========================================%>
     <%# Only the opportunity owner can view/add/remove candidates and tokens %>
     <% if (current_user.has_role? :host) && (current_user.id == @opportunity.user.id) %>
-
       <div class="card">
         <div class="card-content">
           <div class="font-16px palette1"><i class="fa fa-certificate"></i> Tokens</div>
 
           <%# This is the token functions for the host representing an organisation %>
           <% if (current_user.org_user_profile.agency == "I represent an Organisation") %>
-              <p>You will need to allocate 1 token for each candidate to be engaged in this collaborative learning experience.</p>
-              <p><%= @organisation.name %> currently holds: <b><%= @organisation.number_of_tokens %> <%= (@organisation.number_of_tokens > 1) ? 'tokens' : 'token' %></b></p>
-
-              <%# if the host does not have enough token, he should buy at least one token. %>
-              <% if (@organisation.number_of_tokens == 0) && !(@opportunity.opportunity_status == 'post_active') && !(@opportunity.archived) %>
-                <p>
-                  <br>
-                  More tokens can be purchased here (price ex GST)
-                </p>
-                <%# =========== %>
-                <% current_user.org_users.each do |org_user| %>
-                  <%# search for the organisations linked to this user and find the one that is matching to this opportunity %>
-                  <% if  org_user.organisation_id == @organisation.id %>
-                    <%# if the host is an admin host and is verified, then he can see purchase buttons %>
-                    <% if (org_user.admin_status) && (org_user.verified_status) %>
-                      <% @engagement_token_packs = EngagementTokenPack.all %>
-                      <% @engagement_token_packs.each do |pack| %>
-                        <div class="margin-top-5px">
-                        <%= link_to new_token_purchase_path(org: org_user.organisation.id, token_pack: pack.id), class: 'btn' do %>
-                          <%= button_label(pack) %>
-                        <% end %>
-                        </div>
-                      <% end %><%# end of loop @engagement_token_packs %>
-
-                    <%# elsif the host is not an admin host and is verified, then he can see the list of admin host names for that organisation and select one to ask for more token %>
-                    <% elsif !(org_user.admin_status) && (org_user.verified_status) %>
-                      <p>Please contact your Administrator(s) to purchase more tokens:</p>
-                      <% @user_organisation = Organisation.find(org_user.organisation.id) %>
-                      <ul>
-                      <% @user_organisation.users.each do |user| %>
-                        <% if user.org_users.present? %>
-                          <% user.org_users.each do |org_user| %>
-                          <%# just show the profile that is linked to this organisation %>
-                            <% if org_user.organisation_id == @organisation.id %>
-                              <% if (org_user.admin_status) && (org_user.verified_status) %>
-                                <li class="list-style-disc"><p>
-                                <strong><%#= user.org_user_profile.id %><%= link_to "Send message to " + user.org_user_profile.name, purchase_more_tokens_for_opportunity_path(@opportunity.id, user_id: user.id) %></strong>
-                                (Verified)
-                                </li>
-                              <% end %><%# end of if (org_user.admin_status) %>
-                            <% end %><%# end of org_user.organisation_id == %>
-                          <% end %><%# end of user.org_users loop %>
-                        <% end %><%# end of if user.org_users %>
-                      <% end %><%#  end of loop @user_org.users %>
-                      </ul>
-                    <% end %><%# end of if org_user.admin_status && org_user.verified_status %>
-                  <% end %><%# end of if  org_user.organisation_id == @organisation.id%>
-                <% end %><%# end of loop current_user.org_users %>
+            <p><%# displays the number of tokens this opportunity currently holds %>
+              You will need to transfer 1 token for each candidate to be engaged in this collaborative learning experience.
+              <br><br>
+              This opportunity currently holds: <b><%= @opportunity.number_of_tokens %> <%= (@opportunity.number_of_tokens > 1) ? 'tokens' : 'token' %></b>
+              <%# if the host has enough token, he can transfer a token to this opportunity %>
+              <% if (@organisation.number_of_tokens > 0) && !(@opportunity.opportunity_status == 'post_active') && !(@opportunity.archived) %>
+                <div class="margin-top-5px margin-bottom-5px">
+                  <%= link_to 'Transfer 1 Token', increase_one_token_into_opportunity_path(org_id: @organisation.id), class: 'btn' %>
+                </div>
               <% end %>
-              <br>
-              <p>
-                This opportunity currently holds: <b><%= @opportunity.number_of_tokens %> <%= (@opportunity.number_of_tokens > 1) ? 'tokens' : 'token' %></b>
-                <%# if the host has enough token, he can transfer a token to this opportunity %>
-                <% if (@organisation.number_of_tokens > 0) && !(@opportunity.opportunity_status == 'post_active') && !(@opportunity.archived) %>
-                  <div class="margin-top-5px">
-                    <%= link_to 'Transfer 1 Token', increase_one_token_into_opportunity_path(org_id: @organisation.id), class: 'btn' %>
-                  </div>
-                <% end %>
-                <%# if this opportunity holds at least one token, the host can choose to transfer it back to his host profile %>
-                <% if (@opportunity.number_of_tokens > 0) && !(@opportunity.opportunity_status == 'post_active') && !(@opportunity.archived) %>
-                  <div class="margin-top-5px">
-                    <%= link_to 'Remove 1 Token', decrease_one_token_from_opportunity_path(org_id: @organisation.id), class: 'btn' %>
-                  </div>
-                <% end %>
-              </p>
+              <%# if this opportunity holds at least one token, the host can choose to transfer it back to his host profile %>
+              <% if (@opportunity.number_of_tokens > 0) && !(@opportunity.opportunity_status == 'post_active') && !(@opportunity.archived) %>
+                <div class="margin-top-5px margin-bottom-20px">
+                  <%= link_to 'Remove 1 Token', decrease_one_token_from_opportunity_path(org_id: @organisation.id), class: 'btn' %>
+                </div>
+              <% end %>
 
+              Your organisation currently holds: <b><%= @organisation.number_of_tokens %> <%= (@organisation.number_of_tokens > 1) ? 'tokens' : 'token' %></b></p>
+              <%# if the host does not have enough token, he should buy at least one token. %>
+              <% if !(@opportunity.opportunity_status == 'post_active') && !(@opportunity.archived) %>
+                <% if (@organisation.number_of_tokens == 0) && !(@opportunity.opportunity_status == 'post_active') && !(@opportunity.archived) %>
+
+                  <p>More tokens can be purchased here (price ex GST):</p>
+                  <%# =========== %>
+                  <% current_user.org_users.each do |org_user| %>
+                    <%# search for the organisations linked to this user and find the one that is matching to this opportunity %>
+                    <% if org_user.organisation_id == @organisation.id %>
+                      <%# if the host is an admin host and is verified, then he can see purchase buttons %>
+                      <% if (org_user.admin_status) && (org_user.verified_status) %>
+                        <% @engagement_token_packs = EngagementTokenPack.all %>
+                        <% @engagement_token_packs.each do |pack| %>
+                          <div class="margin-top-5px">
+                          <%= link_to new_token_purchase_path(org: org_user.organisation.id, token_pack: pack.id), class: 'btn' do %>
+                            <%= button_label(pack) %>
+                          <% end %>
+                          </div>
+                        <% end %><%# end of loop @engagement_token_packs %>
+
+                      <%# elsif the host is not an admin host and is verified, then he can see the list of admin host names for that organisation and select one to ask for more token %>
+                      <% elsif !(org_user.admin_status) && (org_user.verified_status) %>
+                        <p>Please contact your Administrator(s) to purchase more tokens:</p>
+                        <% @user_organisation = Organisation.find(org_user.organisation.id) %>
+                        <ul>
+                        <% @user_organisation.users.each do |user| %>
+                          <% if user.org_users.present? %>
+                            <% user.org_users.each do |org_user| %>
+                            <%# just show the profile that is linked to this organisation %>
+                              <% if org_user.organisation_id == @organisation.id %>
+                                <% if (org_user.admin_status) && (org_user.verified_status) %>
+                                  <li class="list-style-disc"><p>
+                                  <strong><%#= user.org_user_profile.id %><%= link_to "Send message to " + user.org_user_profile.name, purchase_more_tokens_for_opportunity_path(@opportunity.id, user_id: user.id) %></strong>
+                                  (Verified)
+                                  </li>
+                                <% end %><%# end of if (org_user.admin_status) %>
+                              <% end %><%# end of org_user.organisation_id == %>
+                            <% end %><%# end of user.org_users loop %>
+                          <% end %><%# end of if user.org_users %>
+                        <% end %><%#  end of loop @user_org.users %>
+                        </ul>
+                      <% end %><%# end of if org_user.admin_status && org_user.verified_status %>
+                    <% end %><%# end of if  org_user.organisation_id == @organisation.id%>
+                  <% end %><%# end of loop current_user.org_users %>
+                <% end %>
+              <% end %>
           <%# =========== %>
 
           <%# This is the token function for Independent host, not representing an organisation %>
@@ -557,38 +554,36 @@
             <%# if the host has enough token, he can transfer it to this opportunity %>
             <% if (current_user.org_user_profile.number_of_tokens_for_independent > 0) && !(@opportunity.opportunity_status == 'post_active') && !(@opportunity.archived) %>
               <p>
-                You will need to allocate 1 token for each candidate to be engaged in this collaborative learning experience.
                 <br>
                 Currently you are holding: <b><%= current_user.org_user_profile.number_of_tokens_for_independent %> <%= (current_user.org_user_profile.number_of_tokens_for_independent > 1) ? 'tokens' : 'token' %></b>
                 <br>
                 This opportunity currently holds: <b><%= @opportunity.number_of_tokens %> <%= (@opportunity.number_of_tokens > 1) ? 'tokens' : 'token' %></b>
               </p>
               <div class="margin-top-20px">
-                <%= link_to 'Transfer 1 Token into this Opportunity', increase_one_token_into_independent_opportunity_path, class: 'btn' %>
+                <%= link_to 'Transfer 1 Token', increase_one_token_into_independent_opportunity_path, class: 'btn' %>
               </div>
             <%# if the host does not have enough token, he should buy at least one token. %>
             <% elsif (current_user.org_user_profile.number_of_tokens_for_independent == 0) && !(@opportunity.opportunity_status == 'post_active') && !(@opportunity.archived) %>
-              <p>
-                You do not have any tokens. Please purchase a token for each candidate you would like to engage.
-              </p>
               <p>This opportunity currently holds: <b><%= @opportunity.number_of_tokens %> <%= (@opportunity.number_of_tokens > 1) ? 'tokens' : 'token' %></b></p>
-              <%# buttons to buy more tokens for independent host %>
-              Puchase more tokens (price ex GST):
-              <br>
-              <% @engagement_token_packs.each do |pack| %>
+              <%# if this opportunity holds at least one token, the host can choose to transfer it back to his host profile %>
+              <% if (@opportunity.number_of_tokens > 0) && !(@opportunity.opportunity_status == 'post_active') && !(@opportunity.archived) %>
                 <div class="margin-top-5px">
-                  <%= link_to new_token_purchase_path(token_pack: pack.id), class: 'btn' do %>
-                    <%= button_label(pack) %><br>
-                  <% end %>
+                  <%= link_to 'Remove 1 Token', decrease_one_token_from_independent_opportunity_path, class: 'btn' %>
                 </div>
-              <% end %><%# end of loop @engagement_token_packs %>
-
-            <% end %>
-            <%# if this opportunity holds at least one token, the host can choose to transfer it back to his host profile %>
-            <% if (@opportunity.number_of_tokens > 0) && !(@opportunity.opportunity_status == 'post_active') && !(@opportunity.archived) %>
-              <div class="margin-top-20px">
-                <%= link_to 'Remove 1 Token from this Opportunity', decrease_one_token_from_independent_opportunity_path, class: 'btn' %>
-              </div>
+              <% end %>
+              <br>
+              <%# buttons to buy more tokens for independent host %>
+              <p>
+                You have used all your tokens. Please purchase more tokens (price ex GST).
+                <br>
+                <% @engagement_token_packs.each do |pack| %>
+                  <div class="margin-top-5px">
+                    <%= link_to new_token_purchase_path(token_pack: pack.id), class: 'btn' do %>
+                      <%= button_label(pack) %><br>
+                    <% end %>
+                  </div>
+                <% end %><%# end of loop @engagement_token_packs %>
+              </p>
             <% end %>
           <% end %>
         </div>
@@ -755,9 +750,6 @@
                   <% value.each do |val| %>
                     <br><%= val[0] %> - <%= val[1] %><%# display skill category - skill name %>
                   <% end %><%# end of value.each loop %>
-                  <% @engagement = Engagement.find_by(opportunity_id: @opportunity.id, profile_id: @profile.id) %>
-                  <br>
-                  Engagement status: <%= @engagement.status %>
                 <% end %><%# end of if current_user.has_role? :profile %>
 
               <%= render 'engagement_links' %>

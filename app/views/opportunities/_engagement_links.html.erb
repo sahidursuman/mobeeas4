@@ -39,7 +39,8 @@
           <% if !(@opportunity.opportunity_status == 'post_active') && !(@opportunity.archived) %>
             <%= link_to 'Decline', engagement_path(engagement, opportunity_id: @opportunity.id), method: :delete, data: { confirm: 'Are you sure?' } %> |
             <%= render 'contact_candidate' %>
-            <div class="margin-top-5px"><%= link_to 'Apply a token to '+ @profile.first_name, apply_a_token_to_engagement_path(engagement, opportunity_id: @opportunity.id, profile_id: @profile.id), class: 'btn' %></div>
+            <div class="margin-top-5px"><%= link_to 'Confirm this engagement', apply_a_token_to_engagement_path(engagement, opportunity_id: @opportunity.id, profile_id: @profile.id), class: 'btn' %></div>
+            <%# once the CONFIRM THIS ENGAGEMENT button is clicked, 1 opportunity token will be deducted %>
           <% end %>
 
       <% elsif (engagement.status == 'assigned a token') && (@opportunity.opportunity_status == 'active') %>
@@ -50,7 +51,7 @@
 
       <% end %>
 
-      <%# The progress report links %>
+      <%# The progress and completion reports link for the Opportunity owner to see %>
       <% if (engagement.progress_report_ids.present?) || (engagement.completion_report_ids.present?) %>
         <%= link_to "View All Reports for "+ @profile.first_name, candidate_reports_path(engagement_id: engagement.id) %><br>
       <% end %>
@@ -94,18 +95,18 @@
     <%# If the host invited this candidate, the candidate dashboard will have the link to accept the opportunity %>
     <% if (engagement.status == 'invited') && (engagement.opportunity_id == @opportunity.id) && (engagement.profile_id == @profile.id ) %>
       <% if (current_user.profile.present?) && (current_user.profile.id == engagement.profile_id) %>
-        <p>Status: <strong>Invited</strong></p>
+        <p>Status: Invited</p>
         <% if !(@opportunity.opportunity_status == 'post_active') && !(@opportunity.archived) %>
 
-
           <!-- Modal Trigger -->
-          <a class="waves-effect waves-light btn modal-trigger" href="#accept-opportunity">Accept this opportunity</a>
+          <a class="waves-effect waves-light btn modal-trigger margin-top-5px margin-bottom-5px" href="#accept-opportunity">Accept this opportunity</a>
 
           <!-- Modal Structure -->
           <div id="accept-opportunity" class="modal">
             <div class="modal-content">
               <p>
                 When you click on ACCEPT THIS OPPORTUNITY, an acceptance message will be sent to the host along with your email address.
+                You will receive a copy of this acceptance email.
               </p>
             </div>
             <div class="modal-footer">
@@ -113,21 +114,23 @@
               <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Cancel</a>
             </div>
           </div>
-
-          <br>
         <% end %>
       <% end %>
     <% end %>
     <%# If the candidate accepted the invitation, the candidate dashboard will display status: accepted. %>
     <% if (engagement.status == 'accepted') && (engagement.opportunity_id == @opportunity.id) && (engagement.profile_id == @profile.id ) %>
       <% if (current_user.profile.present?) && (current_user.profile.id == engagement.profile_id) %>
-        <p>Status: <strong>Accepted</strong> <span class="green-text"><i class="fa fa-check-circle"></i></span></p>
+        <p>Status: Accepted <span class="green-text"><i class="fa fa-check-circle"></i></span></p>
       <% end %>
     <% end %>
     <%# If the host assigned one token to this candidate, the candidate dashboard will display status: assigned a token. %>
     <% if (engagement.status == 'assigned a token') && (engagement.opportunity_id == @opportunity.id) && (engagement.profile_id == @profile.id ) %>
       <% if (current_user.profile.present?) && (current_user.profile.id == engagement.profile_id) %>
-        <p>Status: <strong>Received a token</strong> <span class="orange-text"><i class="fa fa-star"></i></span></p>
+        <p>Status: Received a token <span class="orange-text"><i class="fa fa-star"></i></span></p>
+        <%# The progress and completion reports link for the Opportunity owner to see %>
+        <% if (engagement.progress_report_ids.present?) || (engagement.completion_report_ids.present?) %>
+          <%= link_to "View My Reports", candidate_reports_path(engagement_id: engagement.id) %><br>
+        <% end %>
       <% end %>
     <% end %>
   <% end %><%# end of @profile.engagements loop %>
