@@ -2,7 +2,7 @@
 INDEPENDENT HOST
 - not associated to an Organisation
 - representing themselves (eg. parents, individuals, etc.)
-- by default the org_creator value is false and agency value is 'I am an Independent'
+- by default the org_creator value is false and agency value is 'independent host'
 %>
 <p>
   Please create your profile:
@@ -17,7 +17,7 @@ INDEPENDENT HOST
     <%= f.input :last_name %>
     <%= f.input :phone %>
     <%= f.input :position %>
-    <%= f.input :agency, :as => :hidden, input_html: { value: 'I am an Independent' } %>
+    <%= f.input :agency, :as => :hidden, input_html: { value: 'independent host' } %>
     <%#= f.input :guid %>
   </div>
 

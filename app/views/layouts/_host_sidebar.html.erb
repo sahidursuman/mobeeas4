@@ -7,7 +7,7 @@
 
 <% if current_user.org_user_profile.present? %>
   <% if (current_user.org_user_profile.approved) %>
-    <% if current_user.org_user_profile.agency == "I represent an Organisation" %>
+    <% if current_user.org_user_profile.agency == "organisation host" %>
       <li class="bold"><%= link_to 'Organisations Index', organisations_host_path(state: 'show_organisations') %></li>
     <% end %>
     <li class="bold"><%= link_to 'Purchase Tokens', purchase_tokens_path %></li>
@@ -18,7 +18,7 @@
     <li class="bold"><%= link_to 'Completed Opportunities', opportunities_path(status: 'post_active') %></li>
     <li class="bold"><%= link_to 'Archived Opportunities', opportunities_path(status: 'archived') %></li>
   <% else %>
-    <% if current_user.org_user_profile.agency == "I represent an Organisation" %>
+    <% if current_user.org_user_profile.agency == "organisation host" %>
       <li class="bold"><div class="grey-text margin-left-15px margin-top-15px">Organisations Index</div></li>
     <% end %>
     <li class="bold"><div class="grey-text margin-left-15px margin-top-15px">Purchase Tokens</div></li>

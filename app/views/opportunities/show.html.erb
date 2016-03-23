@@ -107,9 +107,9 @@
     <div class="card">
       <div class="card-content">
         <% @host.org_user_profile.name %>
-        <% if @host.org_user_profile.agency == "I represent an Organisation" %>
+        <% if @host.org_user_profile.agency == "organisation host" %>
           <div class="font-16px palette1"><i class="fa fa-building-o"></i> Organisation</div>
-        <% elsif @host.org_user_profile.agency == "I am an Independent" %>
+        <% elsif @host.org_user_profile.agency == "independent host" %>
           <div class="font-16px palette1"><i class="fa fa-building-o"></i> Independent</div>
         <% end %>
         <%= render 'layouts/sidebar' %>
@@ -395,7 +395,7 @@
           <%# DRAFT OPPORTUNITY ============================================= %>
           <% if @opportunity.opportunity_status == 'draft' %>
             <%# DRAFT OPPORTUNITY FOR ORGANISATION HOST ======================%>
-            <% if @host.org_user_profile.agency == 'I represent an Organisation' %>
+            <% if @host.org_user_profile.agency == 'organisation host' %>
               <%# The Organisation Host can change from DRAFT to LIST the opportunity only if the organisation's subscription exists and is still active %>
               <% if @organisation.subscriptions.present? %>
                 <% @subscription = Subscription.find(@organisation.subscriptions.last.id) %><%# get the LAST subscription of this ORGANISATION %>
@@ -420,7 +420,7 @@
               <% end %>
 
             <%# DRAFT OPPORTUNITY FOR INDEPENDENT HOST ======================%>
-            <% elsif @host.org_user_profile.agency == 'I am an Independent' %>
+            <% elsif @host.org_user_profile.agency == 'independent host' %>
               <%# The Independent Host can change from DRAFT to LIST the opportunity only if the his subscription exists and is still active %>
               <% if @host.subscriptions.present? %>
                 <% @subscription = Subscription.find(@host.subscriptions.last.id) %><%# get the LAST subscription of this ORGANISATION %>
@@ -482,7 +482,7 @@
           <div class="font-16px palette1"><i class="fa fa-certificate"></i> Tokens</div>
 
           <%# This is the token functions for the host representing an organisation %>
-          <% if (current_user.org_user_profile.agency == "I represent an Organisation") %>
+          <% if (current_user.org_user_profile.agency == "organisation host") %>
             <p><%# displays the number of tokens this opportunity currently holds %>
               You will need to transfer 1 token for each candidate to be engaged in this collaborative learning experience.
               <br><br>
@@ -550,7 +550,7 @@
           <%# =========== %>
 
           <%# This is the token function for Independent host, not representing an organisation %>
-          <% elsif (current_user.org_user_profile.agency == "I am an Independent") %>
+          <% elsif (current_user.org_user_profile.agency == "independent host") %>
             <%# if the host has enough token, he can transfer it to this opportunity %>
             <% if (current_user.org_user_profile.number_of_tokens_for_independent > 0) && !(@opportunity.opportunity_status == 'post_active') && !(@opportunity.archived) %>
               <p>

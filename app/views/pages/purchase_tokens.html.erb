@@ -51,10 +51,10 @@
           <% end %><%# end of loop current_user.org_users %>
         </ol>
       <% else %> <%# else if NOT current_user.organisations.present? %>
-        <% if current_user.org_user_profile.agency == "I represent an Organisation" %>
+        <% if current_user.org_user_profile.agency == "organisation host" %>
           <p>You are currently not linked to any organisations. Please select one of the organisations below to join as the host.</p>
           <%= link_to 'Organisations Index', organisations_host_path(state: 'show_organisations'), class: 'btn' %>
-        <% elsif current_user.org_user_profile.agency == "I am an Independent" %>
+        <% elsif current_user.org_user_profile.agency == "independent host" %>
           <p>
             Number of tokens you have: <%= current_user.org_user_profile.number_of_tokens_for_independent %>
             <br><br>
