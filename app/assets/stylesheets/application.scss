@@ -59,6 +59,12 @@ nav ul a {
   height: 400px;
 }
 
+.collection-item.avatar {
+    min-height: 84px;
+    /* padding-left: 72px; */
+    position: relative;
+}
+
 .palette1 {
   color: #13a99e;
 }
@@ -91,12 +97,11 @@ nav ul a {
 .align-left {
   text-align: left;
 }
-.bg-position-center {
-  background-position: center;
-}
-
 .align-justify {
   text-align: justify;
+}
+.bg-position-center {
+  background-position: center;
 }
 
 .font-10px {
@@ -184,6 +189,9 @@ nav ul a {
 
 .padding-left-0px {
   padding-left: 0px;
+}
+.padding-left-none {
+  padding-left: none;
 }
 .padding-right-0px {
   padding-right: 0px;

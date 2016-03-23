@@ -51,6 +51,8 @@ class OrgUserProfilesController < ApplicationController
         if params[:org_id].present?
           @organisation = Organisation.find(params[:org_id])
           @organisation.users << current_user
+          NewOrgUserProfileMailer.notify(@organisation.id, current_user.id).deliver_now
+          NewOrgUserProfileMailer.register_user(@organisation.id, current_user.id).deliver_now
         end
         if params[:is_admin].present?
           if (params[:is_admin] == 'yes') # if params is_admin is true
@@ -64,7 +66,7 @@ class OrgUserProfilesController < ApplicationController
           else # else if params[:is_admin] == 'no'
             NewOrgUserProfileMailer.notify(@organisation.id, current_user.id).deliver_now
             NewOrgUserProfileMailer.register_user(@organisation.id, current_user.id).deliver_now
-          end # end of if params[:is_admin] == 'yes'
+          end # end of if params[:is_admin]
           current_user.save!
         end # end if params[:is_admin].present?
 

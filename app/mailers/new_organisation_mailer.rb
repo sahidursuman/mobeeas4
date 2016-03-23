@@ -13,7 +13,12 @@ class NewOrganisationMailer < ApplicationMailer
   def notify_verified_admin_host(org_id, user_id)
     @organisation = Organisation.find(org_id)
     @user = User.find(user_id)
-    @org_user_profile = OrgUserProfile.find_by(user_id: user_id)
+    mail(to: @user.email, subject: 'Your Organisation Executive has approved your MOBEEAS application')
+  end
+
+  def notify_verified_host(org_id, user_id)
+    @organisation = Organisation.find(org_id)
+    @user = User.find(user_id)
     mail(to: @user.email, subject: 'Your Organisation Executive has approved your MOBEEAS application')
   end
 

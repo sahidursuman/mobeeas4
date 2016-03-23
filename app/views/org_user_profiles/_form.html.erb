@@ -34,9 +34,10 @@
       <%#= f.input :guid %>
       <%= f.association :user, :as => :hidden %>
     </div>
+    <%= f.input :agency, :as => :hidden, input_html: { value: 'I represent an Organisation' } %>
   </div>
   <br>
   <div class="form-actions">
-  <%= f.button :submit, "Update Host Profile"%>
+  <%= f.button :submit, "Update Host Profile" %>
   </div>
 <% end %>

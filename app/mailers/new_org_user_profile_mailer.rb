@@ -9,7 +9,6 @@ class NewOrgUserProfileMailer < ApplicationMailer
     # @greeting = "Hi"
     @organisation = Organisation.find(org_id)
     @user = User.find(user_id)
-
     mail(to: "mobeeas@mobeeas.com", subject: 'An new organisation host is added')
   end
 
@@ -22,7 +21,7 @@ class NewOrgUserProfileMailer < ApplicationMailer
     # @greeting = "Hi"
     @organisation = Organisation.find(org_id)
     @user = User.find(user_id)
-    mail(to: @organisation.contact_email, subject: 'An new organisation host is added, waiting for your approval.')
+    mail(to: @organisation.contact_email, subject: 'An new organisation host in MOBEEAS is added, waiting for your approval.')
   end
 
   # Subject can be set in your I18n file at config/locales/en.yml
@@ -34,6 +33,6 @@ class NewOrgUserProfileMailer < ApplicationMailer
     # @greeting = "Hi"
     @organisation = Organisation.find(org_id)
     @user = User.find(user_id)
-    mail(to: @organisation.contact_email, subject: 'An new organisation host is added, waiting for your approval.')
+    mail(to: @organisation.contact_email, subject: 'An new organisation host in MOBEEAS is added, waiting for your approval.')
   end
 end

@@ -35,9 +35,20 @@
         <a href="/organisations/<%= organisation.id %>">
           <ul class="collection" style="list-style-type: none;">
             <li class="collection-item avatar" style="list-style-type: none;">
-              <img src="assets/company_logo.jpg" alt="" class="circle">
-              <p><span class="bold"><%= organisation.name %></span></p>
-              <p><%= organisation.suburb %>  <%= organisation.state %>  <%= organisation.country %></p>
+              <!-- <img src="assets/company_logo.jpg" alt="" class="circle"> -->
+                  <% if organisation.logo.present? %>
+                    <%= cl_image_tag(organisation.logo_url, :width=>50, :gravity=>"face", :radius=>"max", :crop=>:scale, :class=>:circle ) %>
+                  <% else %>
+                    <%= cl_image_tag("noPhoto-icon.png", :width=>50, :gravity=>"face", :radius=>"max", :crop=>:scale, :class=>:circle ) %>
+                  <% end %>
+                  <span class="bold"><%= organisation.name %></span>
+                  <p>
+                    <%= organisation.suburb %>  <%= organisation.state %>
+                    <% if organisation.country.present? %>
+                      <%= organisation.country_name(organisation.country) %>
+                    <% end %>
+
+                  </p>
             </li>
           </ul>
         </a>

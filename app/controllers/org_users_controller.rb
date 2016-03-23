@@ -15,7 +15,7 @@ class OrgUsersController < ApplicationController
     @org_user.update_attributes(admin_status: false, verified_status: true)
     @org_user.save!
     @organisation = Organisation.find(params[:org_id])
-    # Add a mailer trigger here for the new host that he has been approved??
+    NewOrganisationMailer.notify_verified_host(@organisation.id, @org_user.user.id).deliver_now
     redirect_to thanks_url(type: 'verified_host')
   end
 

@@ -11,7 +11,7 @@
       <% else %> <%# else if current_user's profile hasn't been created yet %>
         <% if @organisations.present? %>
           <p>
-            Your host profile is not created. Please go to <%= link_to 'Organisations Index', organisations_host_path %> and select one of the organisations as the first step to create your host profile.
+            Your host profile is not created. Please go to <%= link_to 'Organisations Index', organisations_host_path(state: 'show_organisations') %> and select one of the organisations as the first step to create your host profile.
           </p>
         <% else %>
           <p>
