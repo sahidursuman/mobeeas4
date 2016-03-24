@@ -9,29 +9,33 @@
     <% elsif params[:state] == 'show_organisations' %>
       <h4>My Organisations Connections</h4>
     <% end %>
-  <% if params[:state] == 'show_organisations' %>
-    <% if current_user.org_user_profile.present? %>
-      <%# Search for all organisations linked to this host %>
-      <%# @user = User.find(@org_user_profile.user_id)%>
-      <% if current_user.organisations.present? %>
-        <p>Currently you are connected with these organisations:</p>
-        <%= render 'opportunities/organisations_new_opportunity' %>
-      <% else %>
-        <% if (current_user.org_user_profile.agency == "organisation host" ) %>
-        <p>
-          You are currently not linked to any organisations.
-          <br>
-          If you would like to join as an organisation host, please select one of the organisations below.
-        </p>
-        <% elsif (current_user.org_user_profile.agency == "independent host" ) %>
-          <p>Create opportunity below</p>
-          <%= link_to 'New Opportunity', new_opportunity_path(object: 'independent'), class: 'btn' %>
+
+    <% if (params[:state] == 'show_organisations') || (params[:state] == 'show_opportunities') %>
+      <% if current_user.org_user_profile.present? %>
+        <%# Search for all organisations linked to this host %>
+        <%# @user = User.find(@org_user_profile.user_id)%>
+        <% if current_user.organisations.present? %>
+          <p>Currently you are connected with these organisations:</p>
+          <%= render 'opportunities/organisations_new_opportunity' %>
+        <% else %>
+          <% if (current_user.org_user_profile.agency == "organisation host" ) %>
+          <p>
+            You are currently not linked to any organisations.
+            <br>
+            If you would like to join as an organisation host, please select one of the organisations below.
+          </p>
+          <% elsif (current_user.org_user_profile.agency == "independent host" ) %>
+            <p>Create opportunity below</p>
+            <%= link_to 'New Opportunity', new_opportunity_path(object: 'independent'), class: 'btn' %>
+          <% end %>
+        <% end %>
+      <% end %>
+
+      <% if params[:state] == 'show_organisations' %>
+        <% if @organisations.present? %>
+          <%= render template: "organisations/index" %>
         <% end %>
       <% end %>
     <% end %>
   </div>
-    <% if @organisations.present? %>
-      <%= render template: "organisations/index" %>
-    <% end %>
-  <% end %>
 </div>

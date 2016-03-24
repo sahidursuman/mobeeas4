@@ -6,16 +6,17 @@
     <div class="card">
       <%= render 'organisations/org_profile' %>
     </div>
-    <div class="card">
-      <div class="card-content">
-        <p>
-          <strong>Number of Tokens Available: </strong><%= @organisation.number_of_tokens %>
-          <br>
-          Price ex GST.
-        </p>
-        <%# Only approved admin host that is linked to this org can buy more tokens %>
-        <% current_user.org_users.each do |org_user| %>
-          <% if (org_user.organisation_id == @organisation.id) && (org_user.admin_status) && (org_user.verified_status)%>
+
+    <%# Only approved admin host that is linked to this org can buy more tokens %>
+    <% current_user.org_users.each do |org_user| %>
+      <% if (org_user.organisation_id == @organisation.id) && (org_user.admin_status) && (org_user.verified_status)%>
+        <div class="card">
+          <div class="card-content">
+            <p>
+              <strong>Number of Tokens Available: </strong><%= @organisation.number_of_tokens %>
+              <br>
+              Price ex GST.
+            </p>
             <% @engagement_token_packs.each do |pack| %>
               <div class="margin-top-5px">
                 <%= link_to new_token_purchase_path(org: @organisation.id, token_pack: pack.id), class: 'btn' do %>
@@ -23,11 +24,11 @@
                 <% end %>
               </div>
             <% end %>
-          <% end %>
-        <% end %>
-      </div>
-    </div>
-  </div>
+          </div>
+        </div>
+      <% end %>
+    <% end %>
+  </div><%# end of class="col m4 %>
 <%# ========================================== %>
 <%# RIGHT COLUMN %>
   <div class="col m8">
@@ -270,35 +271,25 @@
       <div class="card-content">
         <h5>Approved Hosts</h5>
         <p>Approved Hosts will have the ability to create an opportunity and apply organisation tokens.</p>
-        <% if @organisation.org_users.host_user.present? %>
+        <% if @organisation.org_users.host_user.present? %><%# host_user looks for org_user record with admin_status: false, verified_status: true %>
           <p>List of approved Hosts:</p>
           <ol>
             <% @organisation.users.each do |user| %>
               <% if user.org_users.present? %>
                 <% user.org_users.each do |org_user| %>
-                <%# just show the profile that is linked to this organisation %>
-                  <% if org_user.organisation_id == @organisation.id %>
-
-                      <% if !(org_user.admin_status) && (org_user.verified_status) %>
-                        <li><p>
-                          <%# ONLY the current user can see his own Profile page %>
-                          <% if current_user.id == user.id %>
-                            <strong><%= link_to user.org_user_profile.name, host_profile_path(user.org_user_profile.id) %></strong>
-                            (Verified)
-                            <%= link_to edit_org_user_profile_path(user.org_user_profile, org_id: @organisation.id) do %><i class="material-icons tiny">mode_edit</i><% end %>
-                            <%= link_to 'Disconnect', remove_host_from_organisation_path(@organisation, user_id: user.id), data: {confirm: "Are you sure to remove the connection?"}%>
-                          <% else %>
-                            <strong><%= user.org_user_profile.name %></strong>
-                          <% end %>
-                        </p></li>
-                      <% elsif !(org_user.admin_status) && !(org_user.verified_status) %>
-                        <li><p>
-                          <strong><%= link_to user.org_user_profile.name, org_user_profile_path(user.org_user_profile.id) %></strong>
-                          (Not Verified)
-                        </p></li>
-                      <% end %>
-
-
+                  <% if org_user.organisation_id == @organisation.id %><%# just show the profile that is linked to this organisation %>
+                    <% if org_user.is_host_user %><%# is_host_user looks for org_user with admin_status: true, verified_status: true %>
+                      <li><p>
+                        <% if current_user.id == user.id %><%# ONLY the current user can see his own Profile page %>
+                          <strong><%= link_to user.org_user_profile.name, host_profile_path(user.org_user_profile.id) %></strong>
+                          (Verified)
+                          <%= link_to edit_org_user_profile_path(user.org_user_profile, org_id: @organisation.id) do %><i class="material-icons tiny">mode_edit</i><% end %>
+                          <%= link_to 'Disconnect', remove_host_from_organisation_path(@organisation, user_id: user.id), data: {confirm: "Are you sure to remove the connection?"}%>
+                        <% else %>
+                          <strong><%= user.org_user_profile.name %></strong> (Verified)
+                        <% end %>
+                      </p></li>
+                    <% end %>
                   <% end %><%# if org_user.organisation_id == @organisation.id %>
                 <% end %><%# end loop %>
               <% end %><%# if user.org_users.present? %>

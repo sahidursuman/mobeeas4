@@ -3,7 +3,7 @@ class NewOrgUserProfileMailerPreview < ActionMailer::Preview
 
   # Preview this email at http://localhost:3000/rails/mailers/new_org_user_profile_mailer/notify
   def notify
-    NewOrgUserProfileMailer.notify
+    NewOrgUserProfileMailer.new_organisation_host
   end
 
   # Preview this email at http://localhost:3000/rails/mailers/new_org_user_profile_mailer/register_admin

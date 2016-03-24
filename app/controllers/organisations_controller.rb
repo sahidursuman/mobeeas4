@@ -13,7 +13,7 @@ class OrganisationsController < ApplicationController
   def add_admin_into
     user = User.find(params[:user_id])
     @organisation.users << user
-    NewOrgUserProfileMailer.notify(@organisation.id, user.id).deliver_now
+    NewOrgUserProfileMailer.new_organisation_host(@organisation.id, user.id).deliver_now
     NewOrgUserProfileMailer.register_admin(@organisation.id, user.id).deliver_now
     redirect_to @organisation
   end
@@ -21,7 +21,7 @@ class OrganisationsController < ApplicationController
   def add_host_into
     user = User.find(params[:user_id])
     @organisation.users << user
-    NewOrgUserProfileMailer.notify(@organisation.id, user.id).deliver_now
+    NewOrgUserProfileMailer.new_organisation_host(@organisation.id, user.id).deliver_now
     NewOrgUserProfileMailer.register_user(@organisation.id, user.id).deliver_now
     redirect_to @organisation
   end

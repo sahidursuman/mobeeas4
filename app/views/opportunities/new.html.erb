@@ -16,10 +16,44 @@
       <% else %>
         <p>Please make sure you have accepted all of the MOBEEAS Agreements.</p>
       <% end %>
-    <%# Else if the current user is an Independent host %>
-    <% else %>
+
+    <% else %><%# Else if the current user is an Independent host ================================ %>
       <% if current_user.agreement.host_all_agreed %>
-        <%= render 'form' %>
+        <% @subscription_pack = SubscriptionPack.find_by(name: 'independent') %><%# get the Independent Subscription pack %>
+        <% if current_user.subscriptions.last.present? %>
+          <% @subscription = Subscription.find(current_user.org_user_profile.user.subscriptions.last.id) %><%# get the LAST subscription of this ORGANISATION %>
+          <% if (@subscription.active) %><%# =============== if the last subscription is ACTIVE %>
+            <% if @subscription.expires_in_less_than_30_days %>
+              <br>
+              Your subscription expiry date: <b><%= @subscription.expiry_date.getlocal.strftime('%e %b %Y') %></b>
+              - <span class="red-text bold">Expiring soon!</span>
+              <br>
+              Please renew your annual subscription.<br>
+              <div class="margin-top-5px">
+                <%= link_to "Renew", new_subscription_path(subscription_pack: @subscription_pack.id), class: 'waves-effect waves-light btn' %>
+              </div>
+            <% end %>
+            <br><br><br>
+            <h5>New Opportunity for <%= current_user.org_user_profile.name %></h5>
+            <%= render 'form' %>
+          <% elsif (@subscription.expired)%><%# =============== if the last subscription has EXPIRED %>
+            <br>
+            Your subscription expiry date: <b><%= @subscription.expiry_date.getlocal.strftime('%e %b %Y') %></b>
+            - <span class="red-text bold">Expired!</span>
+            <br>
+            Please renew your annual subscription.<br>
+            <div class="margin-top-5px">
+              <%= link_to "Renew", new_subscription_path(subscription_pack: @subscription_pack.id), class: 'waves-effect waves-light btn' %>
+            </div>
+            <br>
+          <% end %>
+
+        <% else %>
+          <p>Please purchase annual subscription which includes 1 engagement token.</p>
+          <div class="margin-top-5px">
+            <%= link_to "1 Year Subscription", new_subscription_path(subscription_pack: @subscription_pack.id), class: 'waves-effect waves-light btn' %>
+          </div>
+        <% end %>
       <% else %>
         <p>Please make sure you have accepted all of the MOBEEAS Agreements.</p>
       <% end %>

@@ -7,20 +7,40 @@
   <%# ORG USER PROFILE %>
   <%# The user who creates a new organisation will have role as a host %>
   <% @new_org_user_profile = OrgUserProfile.new %>
-  <%# current_user.add_role :host %>
-  <%# current_user.save! %>
-
   <%= simple_form_for(@new_org_user_profile) do |f| %>
     <%= f.error_notification %>
     <%= f.association :user, :as => :hidden, input_html: { value: current_user.id }%>
-    <%# org_creator is the host who created the organisation profile, not all hosts are organisation profile creators,
+    <%# org_creator is the host who created the organisation profile.
+    NOT ALL hosts are organisation profile creators,
     some host are just associated with some organisations %>
     <%= f.input :org_creator, :as => :hidden, input_html: { value: true } %>
     <div class="form-inputs">
-      <%= f.input :first_name %>
-      <%= f.input :last_name %>
-      <%= f.input :phone %>
-      <%= f.input :position %>
+      <div class="row">
+        <div class="col l6">
+          <%= f.input :first_name %>
+        </div>
+        <div class="col l6">
+          <%= f.input :last_name %>
+        </div>
+        <div class="col l6">
+          <%= f.input :phone %>
+        </div>
+        <div class="col l6">
+          <%= f.input :position %>
+        </div>
+        <div class="col l6">
+          <%= f.input :suburb %>
+        </div>
+        <div class="col l6">
+          <%= f.input :state, priority: [ "NSW" ], collection: [ "NSW", "QLD", "SA", "TAS", "VIC", "ACT", "WA"] %>
+        </div>
+        <div class="col l6">
+          <%= f.input :postcode %>
+        </div>
+        <div class="col l6">
+          <%= f.input :country, priority: [ "Australia" ] %>
+        </div>
+      </div>
       <%= f.input :agency, :as => :hidden, input_html: { value: 'organisation host' } %>
 
       <%#= f.input :guid %>

@@ -11,7 +11,12 @@
       <li class="bold"><%= link_to 'Organisations Index', organisations_host_path(state: 'show_organisations') %></li>
     <% end %>
     <li class="bold"><%= link_to 'Purchase Tokens', purchase_tokens_path %></li>
-    <li class="bold"><%= link_to 'Create Opportunity', organisations_host_path(state: 'show_opportunities') %></li>
+    <!-- ORIGINAL <li class="bold"><%#= link_to 'Create Opportunity', organisations_host_path(state: 'show_opportunities') %></li> -->
+    <% if current_user.org_user_profile.agency == "organisation host" %>
+      <li class="bold"><%= link_to 'Create Opportunity', organisations_host_path(state: 'show_opportunities') %></li>
+    <% elsif current_user.org_user_profile.agency == "independent host" %>
+      <li class="bold"><%= link_to 'Create Opportunity', new_opportunity_path(object: 'independent') %></li>
+    <% end %>
     <li class="bold"><%= link_to 'Draft Opportunities', opportunities_path(status: 'draft') %></li>
     <li class="bold"><%= link_to 'Listed Opportunities', opportunities_path(status: 'listed') %></li>
     <li class="bold"><%= link_to 'Active Opportunities', opportunities_path(status: 'active') %></li>

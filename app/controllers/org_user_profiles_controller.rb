@@ -48,35 +48,40 @@ class OrgUserProfilesController < ApplicationController
     respond_to do |format|
       if @org_user_profile.save
         current_user.add_role :host
-        if params[:org_id].present?
-          @organisation = Organisation.find(params[:org_id])
-          @organisation.users << current_user
-          NewOrgUserProfileMailer.notify(@organisation.id, current_user.id).deliver_now
-          NewOrgUserProfileMailer.register_user(@organisation.id, current_user.id).deliver_now
-        end
-        if params[:is_admin].present?
-          if (params[:is_admin] == 'yes') # if params is_admin is true
-            current_user.org_users.each do |org_user|
-              if (org_user.user_id == current_user.id) && (org_user.organisation_id == @organisation)
-                org_user.admin_status = true
-              end
-            end # end of loop
-            NewOrgUserProfileMailer.notify(@organisation.id, current_user.id).deliver_now
-            NewOrgUserProfileMailer.register_admin(@organisation.id, current_user.id).deliver_now
-          else # else if params[:is_admin] == 'no'
-            NewOrgUserProfileMailer.notify(@organisation.id, current_user.id).deliver_now
+        if @org_user_profile.agency == 'organisation host'
+          if params[:org_id].present?
+            @organisation = Organisation.find(params[:org_id])
+            @organisation.users << current_user
+            NewOrgUserProfileMailer.new_organisation_host(@organisation.id, current_user.id).deliver_now
             NewOrgUserProfileMailer.register_user(@organisation.id, current_user.id).deliver_now
-          end # end of if params[:is_admin]
-          current_user.save!
-        end # end if params[:is_admin].present?
+          end
+          if params[:is_admin].present?
+            if (params[:is_admin] == 'yes') # if params is_admin is true
+              current_user.org_users.each do |org_user|
+                if (org_user.user_id == current_user.id) && (org_user.organisation_id == @organisation)
+                  org_user.admin_status = true
+                end
+              end # end of loop
+              NewOrgUserProfileMailer.new_organisation_host(@organisation.id, current_user.id).deliver_now
+              NewOrgUserProfileMailer.register_admin(@organisation.id, current_user.id).deliver_now
+            else # else if params[:is_admin] == 'no'
+              NewOrgUserProfileMailer.new_organisation_host(@organisation.id, current_user.id).deliver_now
+              NewOrgUserProfileMailer.register_user(@organisation.id, current_user.id).deliver_now
+            end # end of if params[:is_admin]
+            current_user.save!
+          end # end if params[:is_admin].present?
 
-        if @organisation.present? # if no organisation is ever created or if the host does not have any organisation attached to it.
-          format.html { redirect_to @org_user_profile, notice: 'Organisation host was successfully created.' }
-          # format.html { redirect_to :back, notice: 'Org user profile was successfully created.' }
-          format.json { render :show, status: :created, location: @org_user_profile }
-        else
-          format.html { redirect_to new_organisation_path(subs_type: 'new_org'), notice: 'Organisation host was successfully created.' }
-          # format.html { redirect_to :back, notice: 'Org user profile was successfully created.' }
+          if @organisation.present? # if no organisation is ever created or if the host does not have any organisation attached to it.
+            format.html { redirect_to host_profile_path, notice: 'Organisation host was successfully created.' }
+            format.json { render :show, status: :created, location: @org_user_profile }
+          else
+            format.html { redirect_to new_organisation_path(subs_type: 'new_org'), notice: 'Organisation host was successfully created.' }
+            format.json { render :show, status: :created, location: @org_user_profile }
+          end
+
+        elsif @org_user_profile.agency == 'independent host'
+          NewOrgUserProfileMailer.new_independent_host(current_user.id).deliver_now # send message to MOBEEAS Admin
+          format.html { redirect_to host_profile_path, notice: 'Organisation host was successfully created.' }
           format.json { render :show, status: :created, location: @org_user_profile }
         end
       else
@@ -91,7 +96,8 @@ class OrgUserProfilesController < ApplicationController
   def update
     respond_to do |format|
       if @org_user_profile.update(org_user_profile_params)
-        format.html { redirect_to @org_user_profile }
+        # format.html { redirect_to @org_user_profile } ### the original code
+        format.html { redirect_to host_profile_path }
         format.json { render :show, status: :ok, location: @org_user_profile }
       else
         format.html { render :edit }

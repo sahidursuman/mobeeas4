@@ -1,0 +1,12 @@
+<h1>New Independent Host Notification</h1>
+
+<p>
+  Hello MOBEEAS Admin, a new independent host has been added, waiting for your approval.
+</p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @user.org_user_profile.name %>
+</p>
+
+<p><%= link_to 'View this Independent Host', org_user_profile_url(@user.org_user_profile.id) %></p>

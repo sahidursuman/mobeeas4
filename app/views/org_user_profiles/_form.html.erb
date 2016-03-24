@@ -27,14 +27,16 @@
       <div class="col l6">
         <%= f.input :country, priority: [ "Australia" ] %>
       </div>
-      <%= hidden_field_tag(:org_id, params[:org_id]) %>
+      <% if params[:org_id].present? %>
+        <%= hidden_field_tag(:org_id, params[:org_id]) %>
+        <%= f.input :agency, :as => :hidden, input_html: { value: 'organisation host' } %>
+      <% end %>
       <% if params[:is_admin].present? %>
         <%= hidden_field_tag(:is_admin, params[:is_admin]) %>
       <% end %>
       <%#= f.input :guid %>
       <%= f.association :user, :as => :hidden %>
     </div>
-    <%= f.input :agency, :as => :hidden, input_html: { value: 'organisation host' } %>
   </div>
   <br>
   <div class="form-actions">

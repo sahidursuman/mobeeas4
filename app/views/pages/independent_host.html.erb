@@ -13,10 +13,32 @@ INDEPENDENT HOST
   <%= f.association :user, :as => :hidden, input_html: { value: current_user.id }%>
 
   <div class="form-inputs">
-    <%= f.input :first_name %>
-    <%= f.input :last_name %>
-    <%= f.input :phone %>
-    <%= f.input :position %>
+    <div class="row">
+      <div class="col l6">
+        <%= f.input :first_name %>
+      </div>
+      <div class="col l6">
+        <%= f.input :last_name %>
+      </div>
+      <div class="col l6">
+        <%= f.input :phone %>
+      </div>
+      <div class="col l6">
+        <%= f.input :position %>
+      </div>
+      <div class="col l6">
+        <%= f.input :suburb %>
+      </div>
+      <div class="col l6">
+        <%= f.input :state, priority: [ "NSW" ], collection: [ "NSW", "QLD", "SA", "TAS", "VIC", "ACT", "WA"] %>
+      </div>
+      <div class="col l6">
+        <%= f.input :postcode %>
+      </div>
+      <div class="col l6">
+        <%= f.input :country, priority: [ "Australia" ] %>
+      </div>
+    </div>
     <%= f.input :agency, :as => :hidden, input_html: { value: 'independent host' } %>
     <%#= f.input :guid %>
   </div>
