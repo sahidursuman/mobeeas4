@@ -1,0 +1,13 @@
+<h4>You have been contacted by a MOBEEAS Host</h4>
+
+<p>
+  Hello <%= @receiver.org_user_profile.first_name %>,
+  <br><br>
+  A MOBEEAS Host would like to have a discussion with you.
+  <br>
+  Please contact <b><%= @sender.org_user_profile.name %></b> via email <%= @sender.email %> at your earliest convenience.
+  <br>
+  Regards,
+  <br><br>
+  MOBEEAS Team
+</p>

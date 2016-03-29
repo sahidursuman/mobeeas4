@@ -82,9 +82,11 @@
                       <li><p>
                       <%# ONLY the current user can see his own Profile page %>
                       <% if current_user.id == user.id %>
-                        <strong><%= link_to user.org_user_profile.name, host_profile_path(user.org_user_profile.id) %></strong>
+                        <b><%= link_to user.org_user_profile.name, host_profile_path(user.org_user_profile.id) %></b>
                       <% else %>
-                        <strong><%= user.org_user_profile.name %></strong>
+                        <% @host = User.find(user.id) %>
+                        <b><%= user.org_user_profile.name %></b> |
+                        <%= render 'contact_host_modal' %>
                       <% end %>
                       (Verified)
                       <%# if the curret user is already linked to this organisation they can edit or delete %>
@@ -281,12 +283,14 @@
                     <% if org_user.is_host_user %><%# is_host_user looks for org_user with admin_status: true, verified_status: true %>
                       <li><p>
                         <% if current_user.id == user.id %><%# ONLY the current user can see his own Profile page %>
-                          <strong><%= link_to user.org_user_profile.name, host_profile_path(user.org_user_profile.id) %></strong>
+                          <b><%= link_to user.org_user_profile.name, host_profile_path(user.org_user_profile.id) %></b>
                           (Verified)
                           <%= link_to edit_org_user_profile_path(user.org_user_profile, org_id: @organisation.id) do %><i class="material-icons tiny">mode_edit</i><% end %>
                           <%= link_to 'Disconnect', remove_host_from_organisation_path(@organisation, user_id: user.id), data: {confirm: "Are you sure to remove the connection?"}%>
                         <% else %>
-                          <strong><%= user.org_user_profile.name %></strong> (Verified)
+                          <% @host = User.find(user.id) %>
+                          <b><%= user.org_user_profile.name %></b> (Verified) |
+                          <%= render 'contact_host_modal' %>
                         <% end %>
                       </p></li>
                     <% end %>

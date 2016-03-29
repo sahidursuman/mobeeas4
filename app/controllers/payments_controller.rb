@@ -85,6 +85,17 @@ class PaymentsController < ApplicationController
 
       if @subscription_pack.name == "organisation"
         @organisation = Organisation.find(params[:org_id])
+        #### Find the appropriate expiry date from the last subscription by this organisation:
+        if @organisation.subscriptions.present? # if this org has previous subscription
+          @last_subscription = Subscription.find(@organisation.subscriptions.last.id) # get the LAST subscription of this ORGANISATION
+          if @last_subscription.active # if last subscription is active, get the expiry date from this last subscription as the last expiry date.
+            @last_expiry_date = @last_subscription.expiry_date
+          elsif @last_subscription.expired # if the last subscription already expired, get today's date as the last expiry date.
+            @last_expiry_date = Date.today
+          end
+        else
+          @last_expiry_date = Date.today # if this org doesn't have previous subscription (brand new), get today's date as the last expiry date.
+        end
 
         # Amount in cents
         @amount = ((@subscription_pack.price_ex_gst + (@subscription_pack.price_ex_gst * @subscription_pack.gst_rate)) * 100).to_i
@@ -105,14 +116,14 @@ class PaymentsController < ApplicationController
                           'Email'         =>  current_user.email,
                           'Organisation'  =>  @organisation.name,
                           'Subscription Type' => @subscription_pack.name,
-                          'expiry_date'   =>   1.year.from_now.getlocal.strftime('%e %B %Y')
+                          'expiry_date'   =>  (@last_expiry_date + 1.year).strftime('%e %B %Y')
                         }
         )
         if charge['paid']
           # if the host is purchasing the tokens for his organisation
           if params[:org_id].present?
             # create new subscription
-            @subscription = Subscription.create!(user_type: @subscription_pack.name, user_id: current_user.id, organisation_id: @organisation.id, expiry_date: 1.year.from_now, payment: @subscription_pack.price_ex_gst)
+            @subscription = Subscription.create!(user_type: @subscription_pack.name, user_id: current_user.id, organisation_id: @organisation.id, expiry_date: (@last_expiry_date + 1.year), payment: @subscription_pack.price_ex_gst)
 
             if @subscription.save
               # send receipt by mail to host
@@ -133,6 +144,17 @@ class PaymentsController < ApplicationController
       # Payment to SUBSCRIPTION purchase for INDEPENDENT HOST =========================
       elsif @subscription_pack.name == "independent"
         @org_user_profile = OrgUserProfile.find(current_user.org_user_profile.id)
+        #### Find the appropriate expiry date from the last subscription by this independent host:
+        if @org_user_profile.user.subscriptions.present? # if this host has previous subscription
+          @last_subscription = Subscription.find(@org_user_profile.user.subscriptions.last.id) # get the LAST subscription of this independent host.
+          if @last_subscription.active # if last subscription is active, get the expiry date from this last subscription as the last expiry date.
+            @last_expiry_date = @last_subscription.expiry_date
+          elsif @last_subscription.expired # if the last subscription already expired, get today's date as the last expiry date.
+            @last_expiry_date = Date.today
+          end
+        else
+          @last_expiry_date = Date.today # if this host doesn't have previous subscription (brand new), get today's date as the last expiry date.
+        end
 
         # Amount in cents
         @amount = ((@subscription_pack.price_ex_gst + (@subscription_pack.price_ex_gst * @subscription_pack.gst_rate)) * 100).to_i
@@ -152,12 +174,12 @@ class PaymentsController < ApplicationController
                           'Host Name'     =>  current_user.org_user_profile.name,
                           'Email'         =>  current_user.email,
                           'Subscription Type' => @subscription_pack.name,
-                          'expiry_date'   =>   1.year.from_now.getlocal.strftime('%e %B %Y')
+                          'expiry_date'   =>   (@last_expiry_date + 1.year).strftime('%e %B %Y')
                         }
         )
         if charge['paid']
           # create new subscription
-          @subscription = Subscription.create!(user_type: @subscription_pack.name, user_id: current_user.id, expiry_date: 1.year.from_now, payment: @subscription_pack.price_ex_gst)
+          @subscription = Subscription.create!(user_type: @subscription_pack.name, user_id: current_user.id, expiry_date: (@last_expiry_date + 1.year), payment: @subscription_pack.price_ex_gst)
 
           if @subscription.save
             # send receipt by mail to host
@@ -177,6 +199,17 @@ class PaymentsController < ApplicationController
       # Payment to SUBSCRIPTION purchase for CANDIDATE =========================
       elsif @subscription_pack.name == "candidate"
         @profile = Profile.find(current_user.profile.id)
+        #### Find the appropriate expiry date from the last subscription by this candidate:
+        if @profile.user.subscriptions.present? # if this candidate has previous subscription
+          @last_subscription = Subscription.find(@profile.user.subscriptions.last.id) # get the LAST subscription of this candidate.
+          if @last_subscription.active # if last subscription is active, get the expiry date from this last subscription as the last expiry date.
+            @last_expiry_date = @last_subscription.expiry_date
+          elsif @last_subscription.expired # if the last subscription already expired, get today's date as the last expiry date.
+            @last_expiry_date = Date.today
+          end
+        else
+          @last_expiry_date = Date.today # if this host doesn't have previous subscription (brand new), get today's date as the last expiry date.
+        end
 
         # Amount in cents
         @amount = ((@subscription_pack.price_ex_gst + (@subscription_pack.price_ex_gst * @subscription_pack.gst_rate)) * 100).to_i
@@ -196,13 +229,13 @@ class PaymentsController < ApplicationController
                           'Host Name'     =>  current_user.profile.name,
                           'Email'         =>  current_user.email,
                           'Subscription Type' => @subscription_pack.name,
-                          'expiry_date'   =>   1.year.from_now.getlocal.strftime('%e %B %Y')
+                          'expiry_date'   =>   (@last_expiry_date + 1.year).strftime('%e %B %Y')
                         }
         )
         if charge['paid']
           puts "Stripe receipt number #{charge['receipt_number']}"
           # create new subscription
-          @subscription = Subscription.create!(user_type: @subscription_pack.name, user_id: current_user.id, expiry_date: 1.year.from_now, payment: @subscription_pack.price_ex_gst)
+          @subscription = Subscription.create!(user_type: @subscription_pack.name, user_id: current_user.id, expiry_date: (@last_expiry_date + 1.year), payment: @subscription_pack.price_ex_gst)
 
           if @subscription.save
             SubscriptionMailer.new_subscription(@subscription.id).deliver_now # send receipt by mail to host

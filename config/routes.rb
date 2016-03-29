@@ -75,7 +75,7 @@ Rails.application.routes.draw do
   end
   resources :organisations do
     member do
-      get :remove_host_from, :add_admin_into, :add_host_into
+      get :remove_host_from, :add_admin_into, :add_host_into, :contact_host_of
     end
   end
   resources :organisation_types

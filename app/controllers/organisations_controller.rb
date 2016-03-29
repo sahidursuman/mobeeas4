@@ -1,5 +1,5 @@
 class OrganisationsController < ApplicationController
-  before_action :set_organisation, only: [:remove_host_from, :add_admin_into, :add_host_into, :show, :edit, :update, :destroy]
+  before_action :set_organisation, only: [:remove_host_from, :add_admin_into, :add_host_into, :contact_host_of, :show, :edit, :update, :destroy]
   # skip_before_action :check_admin, except: [:index, :show]
   # skip_before_action :check_admin, except: [:show]
 
@@ -23,6 +23,14 @@ class OrganisationsController < ApplicationController
     @organisation.users << user
     NewOrgUserProfileMailer.new_organisation_host(@organisation.id, user.id).deliver_now
     NewOrgUserProfileMailer.register_user(@organisation.id, user.id).deliver_now
+    redirect_to @organisation
+  end
+
+  # this function is called in app/views/organisations/show.html.erb
+  def contact_host_of
+    @receiver = User.find(params[:receiver_id])
+    @sender = User.find(params[:sender_id])
+    OrganisationMailer.notify_host(@receiver.id, @sender.id).deliver_now
     redirect_to @organisation
   end
 
