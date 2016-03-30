@@ -64,17 +64,40 @@
     <strong>School type:</strong>
     <%= @organisation.school_type %>
   </p>
+  <!-- Modal Trigger -->
+  <a class="modal-trigger" href="#edit-organisation"><i class="material-icons">help</i></a>
+
+  <!-- Modal Structure -->
+  <div id="edit-organisation" class="modal">
+    <div class="modal-content">
+      <h4>Organisation Profile</h4>
+      <p>
+        If the Organisation Executive has changed detail and you can't access it, please contact MOBEEAS Admin at <b>mobeeas@mobeeas.com</b>.
+      </p>
+    </div>
+    <div class="modal-footer">
+      <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Close</a>
+    </div>
+  </div>
 
   <% @org_linked =  current_user.org_users.find_by(organisation_id: @organisation.id)%>
   <% unless @org_linked.nil? %>
 
-    <%# If the current_user's admin status is true %>
-    <% if @org_linked.admin_status %>
+    <%# If the current_user's admin status in his record in org_user table is true
+      or
+      If the current_user is a MOBEEAS Admin.
+    %>
+    <% if (@org_linked.admin_status) %>
       <div class="margin-top-20px">
         <%= link_to "Edit Organisation", edit_organisation_path(@organisation.id), class: 'btn' %>
       </div>
     <% end %>
     <%# add a bubble button with modal popup to say that if the Executive has changed detail and you can't access it, please contact MOBEEAS Admin %>
+  <% end %>
+  <% if (current_user.has_role? :admin) %>
+    <div class="margin-top-20px">
+      <%= link_to "ADMIN Edit", edit_organisation_path(@organisation.id), class: 'btn' %>
+    </div>
   <% end %>
 
     <%# @orgs.each do |f| %>
