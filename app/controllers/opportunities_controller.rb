@@ -100,6 +100,9 @@ class OpportunitiesController < ApplicationController
 
     elsif params[:status] == 'archived'
       @opportunities = Opportunity.archived
+
+    elsif params[:status] == 'sponsored_by_us'
+      @opportunities = Opportunity.all
     end
   end
 

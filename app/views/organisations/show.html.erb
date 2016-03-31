@@ -1,5 +1,7 @@
 <p id="notice"><%= notice %></p>
-
+<% if current_user.has_role? :admin %>
+  <h5 class="red-text">THIS IS LIVE DATA. PLEASE DO NOT MODIFY THE RECORD BELOW EXCEPT THE RED BUTTON</h5>
+<% end %>
 <div class="row">
   <%# PROFILE %>
   <div class="col m4">

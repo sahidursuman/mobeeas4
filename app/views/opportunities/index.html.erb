@@ -1,69 +1,54 @@
 <div class="row">
-  <div class="col c12 m8 offset-m2 l8 offset-l2">
+  <div class="col c12 m11 offset-m1 l11 offset-l1">
     <%= render 'layouts/sidebar' %>
 
     <p id="notice"><%= notice %></p>
-    <% if params[:status] == 'draft'%>
+    <% if params[:status] == 'draft' %>
       <h4>Draft Opportunities</h4>
 
-    <% elsif params[:status] == 'listed'%>
+    <% elsif params[:status] == 'listed' %>
       <h4>Listed Opportunities</h4>
 
-    <% elsif params[:status] == 'active'%>
+    <% elsif params[:status] == 'active' %>
       <h4>Active Opportunities</h4>
 
-    <% elsif params[:status] == 'post_active'%>
+    <% elsif params[:status] == 'post_active' %>
       <h4>Completed Opportunities</h4>
 
-    <% elsif params[:status] == 'archived'%>
+    <% elsif params[:status] == 'archived' %>
       <h4>Archived Opportunities</h4>
+
+    <% elsif params[:status] == 'sponsored_by_us' %>
+      <h4>Sponsored Opportunities by Us</h4>
 
     <% end %>
     <% if @opportunities.present? %>
     <%# The Host can not see all of the other host's opportunity EXCEPT the other host's DRAFT opportunity. %>
       <% @opportunities.each do |opportunity| %>
+        <% @opportunity = opportunity %><%# for rendering index_card %>
         <% if opportunity.opportunity_status == 'draft' %>
           <%# Only the owner of the opportunity or the Admin user can view draft opportunities %>
           <% if (current_user.id == opportunity.user_id) || (current_user.has_role? :admin) %>
-            <div class="row">
-              <div class="col s12">
-                <div class="card">
-                  <div class="card-content">
-                    <%# Check if the current user has engagement with this opportunity %>
-                      <h5><strong></strong><%= opportunity.title %></h5>
-                      <p><strong>Description: </strong><%= opportunity.description %></p>
-                      <% if opportunity.organisation.present? %>
-                        <p><strong>Organisation: </strong><%= opportunity.organisation.name %></p>
-                      <% end %>
-                      <p><strong>Host Name: </strong><%= opportunity.user.org_user_profile.name %></p>
-
-                      <p><strong></strong><%= link_to 'Show more...', opportunity %></p>
-                  </div>
-                </div>
-              </div>
-            </div><%# end of row %>
+            <%= render 'index_card' %>
           <% end %>
-        <% else %> <%# all other opportunities that do not have status DRAFT are visible to all Hosts %>
-          <div class="row">
-            <div class="col s12">
-              <div class="card">
-                <div class="card-content">
-                  <%# Check if the current user has engagement with this opportunity %>
-                    <h5><strong></strong><%= opportunity.title %></h5>
-                    <p><strong>Description: </strong><%= opportunity.description %></p>
-                    <% if opportunity.organisation.present? %>
-                      <p><strong>Organisation: </strong><%= opportunity.organisation.name %></p>
-                    <% end %>
-                    <p><strong>Host Name: </strong><%= opportunity.user.org_user_profile.name %></p>
-
-                    <p><strong></strong><%= link_to 'Show more...', opportunity %></p>
-                </div>
-              </div>
-            </div>
-          </div><%# end of row %>
+        <% else %> <%# all other opportunities which status is not DRAFT are visible to all Hosts, Sponsor and MOBEEAS ADMIN %>
+          <% if (current_user.has_role? :host) || (current_user.has_role? :candidate) || (current_user.has_role? :admin) %>
+            <%= render 'index_card' %>
+          <% end %>
         <% end %>
       <% end %><%# end of @opportunities loop %>
     <% end %><%# end of if @opportunities.present %>
-    <%#= link_to 'New Opportunity', new_opportunity_path %>
+
+    <%# Displays all opportunities sponsored by the the current user Sponsor %>
+    <% if params[:status] == 'sponsored_by_us' %>
+      <% if @opportunities.present? %>
+        <% @opportunities.each do |opportunity| %>
+          <% @opportunity = opportunity %>
+          <% if opportunity.sponsors.include?(current_user.sponsor) %>
+            <%= render 'index_card' %>
+          <% end %>
+        <% end %>
+      <% end %>
+    <% end %>
   </div>
 </div>

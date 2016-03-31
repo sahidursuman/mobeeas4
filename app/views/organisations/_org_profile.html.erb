@@ -96,7 +96,7 @@
   <% end %>
   <% if (current_user.has_role? :admin) %>
     <div class="margin-top-20px">
-      <%= link_to "ADMIN Edit", edit_organisation_path(@organisation.id), class: 'btn' %>
+      <%= link_to "ADMIN Edit", edit_organisation_path(@organisation.id), class: 'btn red-background' %>
     </div>
   <% end %>
 

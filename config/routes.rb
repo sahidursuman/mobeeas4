@@ -86,7 +86,7 @@ Rails.application.routes.draw do
   end
   resources :skills do
     member do
-      get :add_user, :remove_user, :add_required, :remove_required, :admin_approves_new
+      get :add_user, :remove_user, :add_required, :remove_required, :admin_approves_new, :find_opportunities
     end
   end
   resources :skill_categories
@@ -123,7 +123,7 @@ Rails.application.routes.draw do
   get 'unverified_wwc', to: 'pages#unverified_wwc'
   get 'independent_host', to: 'pages#independent_host'
   get 'income', to: 'pages#income'
-
+  get 'search_opportunities', to: 'pages#search_opportunities'
 
   devise_for :users
   # The priority is based upon order of creation: first created -> highest priority.

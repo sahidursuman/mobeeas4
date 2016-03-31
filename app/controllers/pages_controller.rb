@@ -105,5 +105,8 @@ class PagesController < ApplicationController
 		 end
 	end
 
+	def search_opportunities
+		@skill_categories = SkillCategory.includes(:skills)
+	end
 
 end

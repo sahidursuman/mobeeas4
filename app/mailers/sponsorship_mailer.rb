@@ -14,7 +14,7 @@ class SponsorshipMailer < ApplicationMailer
   def approved(sponsor_id, opportunity_id)
     @opportunity = Opportunity.find(opportunity_id)
     @sponsor = Sponsor.find(sponsor_id)
-    mail(to: @sponsor.user.email, subject: 'MOBEEAS Sponsorship Approval')
+    mail(to: @sponsor.user.email, subject: 'MOBEEAS Sponsorship')
   end
 
 

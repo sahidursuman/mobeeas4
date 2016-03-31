@@ -1,5 +1,5 @@
 class SkillsController < ApplicationController
-  before_action :set_skill, only: [:add_user, :remove_user, :add_required, :remove_required, :admin_approves_new, :show, :edit, :update, :destroy]
+  before_action :set_skill, only: [:add_user, :remove_user, :add_required, :remove_required, :admin_approves_new, :find_opportunities, :show, :edit, :update, :destroy]
   skip_before_action :check_admin, only: [:add_user, :remove_user, :admin_approves_new]
 
   def add_user
@@ -32,6 +32,11 @@ class SkillsController < ApplicationController
       NewlyAddedSkillMailer.notification_of_approved_new_skill(@skill.id, @user.id).deliver_now
       redirect_to thanks_path(type: 'approved_new_skill', skill_id: @skill.id, user_id: @user.id)
     end
+  end
+
+  def find_opportunities
+    redirect_to search_opportunities_path(skill_searched: @skill.id)
+    # the page will be directed to the same page with additional value of skill_searched for searching the associated opportunities if any.
   end
 
   # GET /skills
