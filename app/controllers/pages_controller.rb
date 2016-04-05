@@ -2,11 +2,12 @@ class PagesController < ApplicationController
 	skip_before_action :authenticate_user!, only: [:home, :contact, :thanks, :about]
 	layout 'home', only: :home
   def home
+
   end
 
   def admin_page
     if current_user.has_role? :admin
-			if current_user.admins.present?
+			if current_user.admin.present?
 	      @admin = Admin.find_by(user_id: current_user.id)
 			end
     else

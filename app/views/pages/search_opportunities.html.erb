@@ -48,11 +48,11 @@
                       <% if opportunity.sponsors.present? %>
                         <% opportunity.sponsors.each do |sponsor| %>
                           Sponsored by: <b><%= sponsor.organisation %></b>
+                          <br>
                         <% end %>
-                      <% else %>
-                        none
                       <% end %>
                     </li>
+                    <br>
                   <% end %>
                 <% end %>
               </ol>

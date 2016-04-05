@@ -7,7 +7,7 @@ class User < ActiveRecord::Base
 	has_one :profile # a user can create one candidate profile
 	has_one :agreement
 	has_many :security_checks
-	has_many :admins
+	has_one :admin # a user can create one admin profile
 	has_one :sponsor # a user can create one sponsor profile
 	has_many :subscriptions
 
