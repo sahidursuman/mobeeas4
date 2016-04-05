@@ -58,7 +58,10 @@
       <% end %>
     <br>
     <% else %> <%# it’s good to notify reader if not found %>
-      <p>There are no organisations with description: <%= params[:search] %>.</p>
+      <p>
+        There are no organisations with description: <b><%= params[:search] %></b>.
+        <br>
+      </p>
       <%# Only the user with role as Host can add a new organisation %>
       <%# Any users with roles other than Host can also sign up to be come a Host %>
       <%= link_to 'Register New Organisation', new_organisation_path(subs_type: 'new_org'), class: 'btn' %>

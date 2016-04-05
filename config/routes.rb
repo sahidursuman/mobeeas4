@@ -124,8 +124,10 @@ Rails.application.routes.draw do
   get 'independent_host', to: 'pages#independent_host'
   get 'income', to: 'pages#income'
   get 'search_opportunities', to: 'pages#search_opportunities'
+  get 'my_roles', to: 'pages#my_roles'
 
-  devise_for :users
+
+  devise_for :users, controllers: { registrations: "registrations" }
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

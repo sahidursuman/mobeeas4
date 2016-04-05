@@ -25,7 +25,7 @@ class ApplicationController < ActionController::Base
       @admin = Admin.find(current_user.admin.id)
       admin_page_path
     else
-      root_path
+      my_roles_path
     end
   end
 

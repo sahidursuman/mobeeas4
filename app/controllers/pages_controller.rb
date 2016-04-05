@@ -110,4 +110,8 @@ class PagesController < ApplicationController
 		@skill_categories = SkillCategory.includes(:skills)
 	end
 
+	def my_roles
+
+	end
+
 end

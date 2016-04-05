@@ -1,0 +1,126 @@
+<div class="section">
+  <!-- <div class="row container"> -->
+    <h5 class="header align-center margin-top-20px margin-bottom-30px">
+      <% if user_signed_in? %>
+        <% if !(current_user.has_role? :host) && !(current_user.has_role? :sponsor) && !(current_user.has_role? :candidate) %>
+        Thank you for signing up
+        <br>
+        Please create one of the following profiles
+        <% elsif (current_user.has_role? :host) || (current_user.has_role? :sponsor) || (current_user.has_role? :candidate) %>
+          Already registered? You will find everything you need from your MOBEEAS dashboard.
+        <% end %>
+      <% else %>
+        Get involved in Australian collaborative learning experiences
+      <% end %>
+    </h5>
+
+    <div class="row align-center">
+      <div class="col s12 m4 l4">
+        <div class="card palette1-bg" style="height: 280px;">
+          <div class="card-content white-text">
+                <% if user_signed_in? %>
+                  <% if current_user.org_user_profile.present? %>
+                    <a class="waves-effect white btn margin-top-20px margin-bottom-20px" href="/host_profile">
+                      <span class="palette2">
+                        My Dashboard
+                      </span>
+                    </a>
+                    <%# In host dashboard the user will have distinction if he has a role as a Host or not. %>
+                  <% else %>
+                    <a class="waves-effect white btn margin-top-20px margin-bottom-20px" href="/host_profile">
+                      <span class="palette2">
+                        Become a Host
+                      </span>
+                    </a>
+                  <% end %>
+                <% else %>
+                  <a class="waves-effect white btn margin-top-20px margin-bottom-20px" href="/host_profile">
+                    <span class="palette2">
+                      Become a Host
+                    </span>
+                  </a>
+                <% end %>
+
+            <p class="font-20px">
+                Looking for an expert to help with your educational initiative?
+                Can your organisation provide employment or<br>work experience?
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col s12 m4 l4">
+        <div class="card palette1-bg" style="height: 280px;">
+          <div class="card-content white-text">
+            <% if user_signed_in? %>
+              <% if current_user.sponsor.present? %>
+                <% @sponsor = Sponsor.find_by(user_id: current_user.id) %>
+                <a class="waves-effect white btn margin-top-20px margin-bottom-20px" href="/sponsors/<%= current_user.sponsor.id %>">
+                  <span class="palette2">
+                    My Dashboard
+                  </span>
+                </a>
+              <% else %>
+                <a class="waves-effect white btn margin-top-20px margin-bottom-20px" href="/sponsors/new">
+                  <span class="palette2">
+                    Become a Sponsor
+                  </span>
+                </a>
+              <% end %> <%# end of if current_user.sponsor.present? %>
+            <% else %>
+              <a class="waves-effect white btn margin-top-20px margin-bottom-20px" href="/users/sign_in">
+                <span class="palette2">
+                  Become a Sponsor
+                </span>
+              </a>
+            <% end %><%# end of if user_signed_in? %>
+
+            <p class="font-20px">
+              Can your organisation help by becoming a MOBEEAS partner, sponsoring an event or making a donation?
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col s12 m4 l4">
+        <div class="card palette1-bg" style="height: 280px;">
+          <div class="card-content white-text">
+            <% if user_signed_in? %>
+              <% if current_user.profile.present? %>
+                <a class="waves-effect white btn margin-top-20px margin-bottom-20px" href="/candidate_profile">
+                  <span class="palette2">
+                    My Dashboard
+                  </span>
+                </a>
+              <% else %>
+                <a class="waves-effect white btn margin-top-20px margin-bottom-20px" href="/profiles/new">
+                  <span class="palette2">
+                    Become a Candidate
+                  </span>
+                </a>
+              <% end %>
+            <% else %>
+              <a class="waves-effect white btn margin-top-20px margin-bottom-20px" href="/users/sign_in">
+                <span class="palette2">
+                  Become a Candidate
+                </span>
+              </a>
+            <% end %>
+
+            <p class="font-20px">
+              Are you a professional, an academic or a university student that would
+              like to get involved as a tutor, guest speaker, consultant or judge?
+            </p>
+          </div>
+        </div>
+      </div>
+    </div><%# row align-center %>
+
+    <span class="margin-top-20px">
+      <h5 class="align-center margin-top-40px">
+        Register now to become a MOBEEAS mentor or to invite a MOBEEAS mentor to participate in your collaborative learning opportunity. Sponsors for these opportunities are welcome.
+        <br>
+      </h5>
+    </span>
+  <!-- </div><%# end of row container %> -->
+</div><%# end of section-white %>

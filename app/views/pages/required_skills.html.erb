@@ -68,7 +68,7 @@
       </div>
       <div class="card-action">
         <% if @opportunity.present? %>
-          <%= link_to 'Return to Opportunity details', opportunity_path(@opportunity) %>
+          <%= link_to 'Return to Opportunity details', opportunity_path(@opportunity), class: 'btn white-text' %>
         <% end %>
       </div>
     </div>
