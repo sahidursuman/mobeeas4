@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160321051000) do
+ActiveRecord::Schema.define(version: 20160406015528) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -100,11 +100,10 @@ ActiveRecord::Schema.define(version: 20160321051000) do
   create_table "engagements", force: :cascade do |t|
     t.integer  "opportunity_id"
     t.integer  "profile_id"
-    t.string   "status",                default: "pending"
-    t.datetime "created_at",                                null: false
-    t.datetime "updated_at",                                null: false
-    t.integer  "progress_report_ids",   default: [],                     array: true
-    t.integer  "completion_report_ids", default: [],                     array: true
+    t.datetime "created_at",                         null: false
+    t.datetime "updated_at",                         null: false
+    t.integer  "progress_report_ids",   default: [],              array: true
+    t.integer  "completion_report_ids", default: [],              array: true
   end
 
   add_index "engagements", ["opportunity_id"], name: "index_engagements_on_opportunity_id", using: :btree
@@ -159,7 +158,6 @@ ActiveRecord::Schema.define(version: 20160321051000) do
     t.text     "employment_terms"
     t.integer  "school_year_id"
     t.integer  "skill_id"
-    t.integer  "number_of_tokens",   default: 0
     t.boolean  "archived",           default: false
   end
 

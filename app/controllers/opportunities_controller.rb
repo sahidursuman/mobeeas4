@@ -1,44 +1,46 @@
 class OpportunitiesController < ApplicationController
-  before_action :set_opportunity, only: [:increase_one_token_into, :decrease_one_token_from, :increase_one_token_into_independent, :decrease_one_token_from_independent, :status_draft, :status_listed, :post_active, :status_archived, :purchase_more_tokens_for, :contact_candidate_for, :contact_host_for, :show, :edit, :update, :destroy]
+  before_action :set_opportunity, only: [:status_draft, :status_listed, :post_active, :status_archived, :purchase_more_tokens_for, :contact_candidate_for, :contact_host_for, :show, :edit, :update, :destroy]
 
+  # Wed, 6 April 2016: This function refers to the opportunities/show_v2.html.erb
+  # To be kept for reference only, def name above has been removed, DO NOT USE IT-----------------------.
 
-  def increase_one_token_into
-    @opportunity.number_of_tokens += 1
-    @opportunity.save!
-    @organisation = Organisation.find(params[:org_id])
-    @organisation.number_of_tokens -= 1
-    @organisation.save!
-    redirect_to @opportunity
-  end
-
-  def decrease_one_token_from
-    @opportunity.number_of_tokens -= 1
-    @opportunity.save!
-    @organisation = Organisation.find(params[:org_id])
-    @organisation.number_of_tokens += 1
-    @organisation.save!
-    redirect_to @opportunity
-  end
-
-  def increase_one_token_into_independent
-    @opportunity.number_of_tokens += 1
-    @opportunity.save!
-    @user = User.find(@opportunity.user_id)
-    @oup = @user.org_user_profile
-    @oup.number_of_tokens_for_independent -= 1
-    @oup.save!
-    redirect_to @opportunity
-  end
-
-  def decrease_one_token_from_independent
-    @opportunity.number_of_tokens -= 1
-    @opportunity.save!
-    @user = User.find(@opportunity.user_id)
-    @oup = @user.org_user_profile
-    @oup.number_of_tokens_for_independent += 1
-    @oup.save!
-    redirect_to @opportunity
-  end
+  # def increase_one_token_into
+  #   @opportunity.number_of_tokens += 1
+  #   @opportunity.save!
+  #   @organisation = Organisation.find(params[:org_id])
+  #   @organisation.number_of_tokens -= 1
+  #   @organisation.save!
+  #   redirect_to @opportunity
+  # end
+  #
+  # def decrease_one_token_from
+  #   @opportunity.number_of_tokens -= 1
+  #   @opportunity.save!
+  #   @organisation = Organisation.find(params[:org_id])
+  #   @organisation.number_of_tokens += 1
+  #   @organisation.save!
+  #   redirect_to @opportunity
+  # end
+  #
+  # def increase_one_token_into_independent
+  #   @opportunity.number_of_tokens += 1
+  #   @opportunity.save!
+  #   @user = User.find(@opportunity.user_id)
+  #   @oup = @user.org_user_profile
+  #   @oup.number_of_tokens_for_independent -= 1
+  #   @oup.save!
+  #   redirect_to @opportunity
+  # end
+  #
+  # def decrease_one_token_from_independent
+  #   @opportunity.number_of_tokens -= 1
+  #   @opportunity.save!
+  #   @user = User.find(@opportunity.user_id)
+  #   @oup = @user.org_user_profile
+  #   @oup.number_of_tokens_for_independent += 1
+  #   @oup.save!
+  #   redirect_to @opportunity
+  # end
 
   def status_draft
     @opportunity.opportunity_status = 'draft'
@@ -190,6 +192,6 @@ class OpportunitiesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def opportunity_params
-      params.require(:opportunity).permit(:organisation_id, :user_id, :opportunity_status, :title, :description, :pay, :paid_engagement, :experiences, :employment_terms, :number_of_tokens, :school_year_ids => [])
+      params.require(:opportunity).permit(:organisation_id, :user_id, :opportunity_status, :title, :description, :pay, :paid_engagement, :experiences, :employment_terms, :school_year_ids => [])
     end
 end

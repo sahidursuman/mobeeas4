@@ -1,4 +1,4 @@
-
+<%# original code, before the modification on Wednesday, 6 April 2016 %>
 <div class="row">
 <%# OPPORTUNITY ===========================================%>
 
@@ -486,11 +486,25 @@
             <p><%# displays the number of tokens this opportunity currently holds %>
               You will need to assign 1 token for each candidate to be engaged in this collaborative learning experience.
               <br><br>
+              This opportunity currently holds: <b><%= @opportunity.number_of_tokens %> <%= (@opportunity.number_of_tokens > 1) ? 'tokens' : 'token' %></b>
+              <%# if the host has enough token, he can transfer a token to this opportunity %>
+              <% if (@organisation.number_of_tokens > 0) && !(@opportunity.opportunity_status == 'post_active') && !(@opportunity.archived) %>
+                <div class="margin-top-5px margin-bottom-5px">
+                  <%= link_to 'Transfer 1 Token', increase_one_token_into_opportunity_path(org_id: @organisation.id), class: 'btn' %>
+                </div>
+              <% end %>
+              <%# if this opportunity holds at least one token, the host can choose to transfer it back to his host profile %>
+              <% if (@opportunity.number_of_tokens > 0) && !(@opportunity.opportunity_status == 'post_active') && !(@opportunity.archived) %>
+                <div class="margin-top-5px margin-bottom-20px">
+                  <%= link_to 'Remove 1 Token', decrease_one_token_from_opportunity_path(org_id: @organisation.id), class: 'btn' %>
+                </div>
+              <% end %>
 
               Your organisation currently holds: <b><%= @organisation.number_of_tokens %> <%= (@organisation.number_of_tokens > 1) ? 'tokens' : 'token' %></b></p>
               <%# if the host does not have enough token, he should buy at least one token. %>
               <% if !(@opportunity.opportunity_status == 'post_active') && !(@opportunity.archived) %>
                 <% if (@organisation.number_of_tokens == 0) && !(@opportunity.opportunity_status == 'post_active') && !(@opportunity.archived) %>
+
                   <p>More tokens can be purchased here (price ex GST):</p>
                   <%# =========== %>
                   <% current_user.org_users.each do |org_user| %>
@@ -537,9 +551,27 @@
 
           <%# This is the token function for Independent host, not representing an organisation %>
           <% elsif (current_user.org_user_profile.agency == "independent host") %>
-            <p>Currently you are holding: <b><%= current_user.org_user_profile.number_of_tokens_for_independent %> <%= (current_user.org_user_profile.number_of_tokens_for_independent > 1) ? 'tokens' : 'token' %></b></p>
+            <%# if the host has enough token, he can transfer it to this opportunity %>
+            <% if (current_user.org_user_profile.number_of_tokens_for_independent > 0) && !(@opportunity.opportunity_status == 'post_active') && !(@opportunity.archived) %>
+              <p>
+                <br>
+                Currently you are holding: <b><%= current_user.org_user_profile.number_of_tokens_for_independent %> <%= (current_user.org_user_profile.number_of_tokens_for_independent > 1) ? 'tokens' : 'token' %></b>
+                <br>
+                This opportunity currently holds: <b><%= @opportunity.number_of_tokens %> <%= (@opportunity.number_of_tokens > 1) ? 'tokens' : 'token' %></b>
+              </p>
+              <div class="margin-top-20px">
+                <%= link_to 'Transfer 1 Token', increase_one_token_into_independent_opportunity_path, class: 'btn' %>
+              </div>
             <%# if the host does not have enough token, he should buy at least one token. %>
-            <% if (current_user.org_user_profile.number_of_tokens_for_independent <= 0) && !(@opportunity.opportunity_status == 'post_active') && !(@opportunity.archived) %>
+            <% elsif (current_user.org_user_profile.number_of_tokens_for_independent == 0) && !(@opportunity.opportunity_status == 'post_active') && !(@opportunity.archived) %>
+              <p>This opportunity currently holds: <b><%= @opportunity.number_of_tokens %> <%= (@opportunity.number_of_tokens > 1) ? 'tokens' : 'token' %></b></p>
+              <%# if this opportunity holds at least one token, the host can choose to transfer it back to his host profile %>
+              <% if (@opportunity.number_of_tokens > 0) && !(@opportunity.opportunity_status == 'post_active') && !(@opportunity.archived) %>
+                <div class="margin-top-5px">
+                  <%= link_to 'Remove 1 Token', decrease_one_token_from_independent_opportunity_path, class: 'btn' %>
+                </div>
+              <% end %>
+              <br>
               <%# buttons to buy more tokens for independent host %>
               <p>
                 You have used all your tokens. Please purchase more tokens (price ex GST).
@@ -654,8 +686,7 @@
                   <br>
                   <%# Modal popup appears next to candidate's name and if clicked will show the profile of the candidate %>
                   <!-- Modal Trigger -->
-                  <a class="modal-trigger" href="#candidate-profile"><span class="palette1"><i class="fa fa-user"></i></span> <b><%= @profile.name %></b></a> |
-                  <%= render 'contact_candidate' %>
+                  <a class="modal-trigger" href="#candidate-profile"><span class="palette1"><i class="fa fa-user"></i></span> <b><%= @profile.name %></b></a>
 
                   <!-- Modal Structure -->
                   <div id="candidate-profile" class="modal modal-fixed-footer">
@@ -721,9 +752,10 @@
                   <% end %><%# end of value.each loop %>
                 <% end %><%# end of if current_user.has_role? :profile %>
 
-              <%= render 'candidate_engagement' %>
+              <%= render 'engagement_links' %>
             <% end %><%# end of hash.each_pair loop %>
           <% end %><%# end of if hash.empty? %>
+          <br><br>
         <% end %><%# end of if the list status is still draft %>
       </div><%# end of card-content %>
     </div><%# end of card %>

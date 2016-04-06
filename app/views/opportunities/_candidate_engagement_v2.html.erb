@@ -1,3 +1,11 @@
+<%#
+  Wednesday, 6 April 2016: This is the VERSION 2, where the engagement status has steps:
+  1. pending (default)
+  2. invited
+  3. accepted
+  4. assigned a token
+%>
+
 <%# This part will appear on Host Dashboard ---------------------------------------%>
 <%# The engagement links for the owner of this opportunity %>
 <% if (current_user.has_role? :host) && (current_user.id == @opportunity.user_id) %>
