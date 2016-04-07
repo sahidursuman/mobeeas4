@@ -1,6 +1,18 @@
-<li class="bold active margin-top-50px"><%= link_to 'Candidate Profile', candidate_profile_path(profile_id: current_user.profile.id) %></li>
-<li class="bold"><%= link_to 'Organisations Index', organisations_candidate_path %></li>
-<li class="bold"><%= link_to 'Listed Opportunities', opportunities_path(status: 'listed') %></li>
-<li class="bold"><%= link_to 'Active Opportunities', opportunities_path(status: 'active') %></li>
-<li class="bold"><%= link_to 'Completed Opportunities', opportunities_path(status: 'post_active') %></li>
-<li class="bold"><%= link_to 'Archived Opportunities', opportunities_path(status: 'archived') %></li>
+<% if current_user.profile.present? %>
+  <li class="bold active margin-top-50px"><%= link_to 'Candidate Profile', candidate_profile_path(profile_id: current_user.profile.id) %></li>
+  <% if (current_user.profile.approved) %>
+    <li class="bold"><%= link_to 'Organisations Index', organisations_candidate_path %></li>
+    <li class="bold"><%= link_to 'Listed Opportunities', opportunities_path(status: 'listed') %></li>
+    <li class="bold"><%= link_to 'Active Opportunities', opportunities_path(status: 'active') %></li>
+    <li class="bold"><%= link_to 'Completed Opportunities', opportunities_path(status: 'post_active') %></li>
+    <li class="bold"><%= link_to 'Archived Opportunities', opportunities_path(status: 'archived') %></li>
+    <li class="bold"><%= link_to 'Feedback', new_feedback_path(user_id: current_user.id) %></li>
+  <% else %>
+    <li class="bold"><div class="grey-text margin-left-15px margin-top-15px">Organisations Index</div></li>
+    <li class="bold"><div class="grey-text margin-left-15px margin-top-15px">Listed Opportunities</div></li>
+    <li class="bold"><div class="grey-text margin-left-15px margin-top-15px">Active Opportunities</div></li>
+    <li class="bold"><div class="grey-text margin-left-15px margin-top-15px">Completed Opportunities</div></li>
+    <li class="bold"><div class="grey-text margin-left-15px margin-top-15px">Archived Opportunities</div></li>
+    <li class="bold"><div class="grey-text margin-left-15px margin-top-15px">Feedback</div></li>
+  <% end %>
+<% end %>

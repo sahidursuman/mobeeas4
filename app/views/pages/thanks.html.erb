@@ -1,58 +1,71 @@
-<div class="card ">
-  <div class="card-content black-text">
-    <%#-------------------------------%>
-    <% if params[:type] == 'enquiry' %>
-      <h5>Thank you for your enquiry. We will be in touch shortly.</h5>
-      <br>
-      <p><a href="/">Home</a></p>
+<div class="row">
+  <div class="col s12 m11 offset-m1 l11 offset-l1">
+    <div class="card ">
+      <div class="card-content black-text">
+        <%#-------------------------------%>
+        <% if params[:type] == 'enquiry' %>
+          <h5>Thank you for your enquiry. We will be in touch shortly.</h5>
+          <br>
+          <p><a href="/">Home</a></p>
 
-    <%#-------------------------------%>
-    <% elsif params[:type] == 'skill-verification' %>
-      <h5>Thank you for taking the time to provide a reference for this MOBEEAS candidate.</h5>
-      <br>
-      <p><a href="/">Home</a></p>
+        <%#-------------------------------%>
+        <% elsif params[:type] == 'skill-verification' %>
+          <h5>Thank you for taking the time to provide a reference for this MOBEEAS candidate.</h5>
+          <br>
+          <p><a href="/">Home</a></p>
 
-    <%#-------------------------------%>
-    <% elsif params[:type] == 'purchase' %>
-      <span class="card-title blue-text text-darken-2">
-        Thank you for your purchase. We have emailed your receipt.
-      </span>
-      <br>
-      <%# <p><a href="/org_user_profiles/%><%#= current_user.org_user_profile.id %><%#">My Profile Page</a></p> %>
+        <%#-------------------------------%>
+        <% elsif params[:type] == 'purchase' %>
+          <span class="card-title blue-text text-darken-2">
+            Thank you for your purchase. We have emailed your receipt.
+          </span>
+          <br>
+          <%# <p><a href="/org_user_profiles/%><%#= current_user.org_user_profile.id %><%#">My Profile Page</a></p> %>
 
-    <%#-------------------------------%>
-    <% elsif params[:type] == 'approved_new_skill' %>
-      <% @skill = Skill.find(params[:skill_id]) %>
-      <% @user = User.find(params[:user_id]) %>
-      <p>
-        You have approved a new skill:<br>
-        Skill Name: <strong><%= @skill.name %> (Skill ID: <%= @skill.id %>)</strong><br>
-        Skill Category: <strong><%= @skill.skill_category.name %></strong><br>
-        <% if @user.has_role? :host %>
-          This new skill was created by this host: <strong><%= @user.org_user_profile.name %></strong><br>
-          Host Email: <strong><%= @user.email %></strong>
-        <% elsif @user.has_role? :candidate %>
-          This new skill was created by this candidate: <strong><%= @user.profile.name %></strong><br>
-          Candidate Email: <strong><%= @user.email %></strong>
+        <%#-------------------------------%>
+        <% elsif params[:type] == 'approved_new_skill' %>
+          <% @skill = Skill.find(params[:skill_id]) %>
+          <% @user = User.find(params[:user_id]) %>
+          <p>
+            You have approved a new skill:<br>
+            Skill Name: <strong><%= @skill.name %> (Skill ID: <%= @skill.id %>)</strong><br>
+            Skill Category: <strong><%= @skill.skill_category.name %></strong><br>
+            <% if @user.has_role? :host %>
+              This new skill was created by this host: <strong><%= @user.org_user_profile.name %></strong><br>
+              Host Email: <strong><%= @user.email %></strong>
+            <% elsif @user.has_role? :candidate %>
+              This new skill was created by this candidate: <strong><%= @user.profile.name %></strong><br>
+              Candidate Email: <strong><%= @user.email %></strong>
+            <% end %>
+          </p>
+
+        <%#-------------------------------%>
+        <% elsif params[:type] == 'verified_host' %>
+          <h5>Thank you for the approval.</h5>
+          <p>
+            Please visit MOBEEAS website.
+            <br>
+            <a href="/">Return to Home</a>
+          </p>
+
+        <%#-------------------------------%>
+        <% elsif params[:type] == 'expression_of_interest' %>
+          <h5>Thank you for your expression of interest. We will be in touch shortly.</h5>
+          <br>
+          <p><%= link_to "My Profile", sponsor_path(current_user.sponsor) %></p>
+
+        <%#-------------------------------%>
+        <% elsif params[:type] == 'feedback' %>
+        <div class="row">
+          <div class="col s12 m11 offset-m1 l11 offset-l1">
+            <%= render 'layouts/sidebar' %>
+            <h5>Thank you for your feedback.</h5>
+          </div>
+        </div>
+
         <% end %>
-      </p>
 
-    <%#-------------------------------%>
-    <% elsif params[:type] == 'verified_host' %>
-      <h5>Thank you for the approval.</h5>
-      <p>
-        Please visit MOBEEAS website.
-        <br>
-        <a href="/">Return to Home</a>
-      </p>
-
-      <%#-------------------------------%>
-      <% elsif params[:type] == 'expression_of_interest' %>
-        <h5>Thank you for your expression of interest. We will be in touch shortly.</h5>
-        <br>
-        <p><%= link_to "My Profile", sponsor_path(current_user.sponsor) %></p>
-    <% end %>
-
-
+      </div>
+    </div>
   </div>
 </div>

@@ -1,0 +1,13 @@
+<%= simple_form_for(@feedback) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="form-inputs">
+    <%= f.association :user, :as => :hidden, input_html: { value: params[:user_id] } %>
+    <%= f.input :message %>
+    <%= f.input :picture %>
+  </div>
+  <br>
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>

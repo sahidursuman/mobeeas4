@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :feedbacks
   resources :expression_of_interests do
     member do
       get :notify, :approve

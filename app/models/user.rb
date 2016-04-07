@@ -10,6 +10,7 @@ class User < ActiveRecord::Base
 	has_one :admin # a user can create one admin profile
 	has_one :sponsor # a user can create one sponsor profile
 	has_many :subscriptions
+	has_many :feedbacks
 
 
 	has_many :candidate_skills, dependent: :destroy
