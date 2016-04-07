@@ -630,98 +630,41 @@
             <p>No matching candidate</p>
           <% else %>
             <% hash.each_pair do |key, value| %> <%# key is user id, value is skill name %>
-              <% @profile = Profile.find_by(user_id: key)%>
-                <%# The Candidate who logged in and view an opportunity will be able to see his own name and details in opportunity.
-                He won't be able to see other candidates listed in the same opportunity  %>
-                <% if (current_user.has_role? :candidate) %>
-                  <% if (current_user.profile.id == @profile.id ) %>
-                    <br><b><%= current_user.profile.name %></b> (User ID: <%= current_user.id %>)
-                    <% value.each do |val| %>
-                      <br><%= val[0] %> - <%= val[1] %><%# skill_category - skill %>
-                    <% end %>
-                    <p>Location: <%= @profile.suburb %>, <%= @profile.state %></p>
-                    <% @profile.user.security_checks.each do |security_check| %>
-                      <%= security_check.name %>
-                      <% if security_check.verified %>
-                        <span class="green-text"><i class="fa fa-check-circle"></i></span>
-                      <% else %>
-                        <span class="red-text"><i class="fa fa-times"></i></span>
-                      <% end %>
-                      <br>
-                    <% end %><%# end of @profile.user.security_checks loop %>
-                  <% end %><%# end if current_user.profile.id == @profile.id %>
-                <% else %><%# Else if the user's role is NOT a candidate, he can view the details of all other candidates in an opportunity as modal popup%>
-                  <br>
-                  <%# Modal popup appears next to candidate's name and if clicked will show the profile of the candidate %>
-                  <!-- Modal Trigger -->
-                  <a class="modal-trigger" href="#candidate-profile"><span class="palette1"><i class="fa fa-user"></i></span> <b><%= @profile.name %></b></a> |
-                  <%= render 'contact_candidate' %>
-
-                  <!-- Modal Structure -->
-                  <div id="candidate-profile" class="modal modal-fixed-footer">
-                    <div class="modal-content">
-                      <div class="row">
-                        <div class="col m2">
-                          <% if @profile.picture.present? %>
-                            <%= cl_image_tag(@profile.picture, class: 'img-responsive activator', :width=>110, :crop=>:scale) %>
-                          <% else %>
-                            <%= cl_image_tag("user.png", :opacity=>30, class: 'img-responsive activator', :width=>110, :crop=>:scale) %>
-                          <% end %>
-                        </div>
-                        <div class="col m10">
-                          <h4><%= @profile.name %></h4>
-                        </div>
-                      </div>
-                        <p>
-                          User ID: <%= @profile.user.id %>
-                          <br>
-                          Location: <%= @profile.suburb %>, <%= @profile.state %>
-                          <% if @profile.country.present? %>
-                            <%= @profile.country_name(@profile.country) %>
-                          <% end %>
-                          <br>
-                          <%# Display candidate's skills %>
-                          List of all skills:
-                          <ol class="margin-top-0px">
-                            <% @profile.user.candidate_skills.each do |candidate_skill| %>
-                              <li><%= candidate_skill.skill.skill_category.name %> - <%= candidate_skill.skill.name %></li>
-                            <% end %><%# end of value.each loop %>
-                          </ol>
-
-                          <%# Display candidate's educations %>
-                          List of educations:
-                          <ol class="margin-top-0px">
-                            <% @profile.user.educations.each do |education| %>
-                              <% if education.verified %><%# only displays the verified education records %>
-                              <li><%= education.institution %> - <%= education.course %>, completed: <%= education.year_completed %> - <%= link_to 'File uploaded  ', education.achievement_url %></li>
-                              <% end %>
-                            <% end %><%# end of value.each loop %>
-                          </ol>
-
-                          <%# Display candidate's security checks %>
-                          <% @profile.user.security_checks.each do |security_check| %>
-                            <%= security_check.name %>: <%= security_check.number %> (<%= security_check.state %>)
-                            <% if security_check.verified %>
-                               - <span class="bold green-text">Verified</i></span>
-                            <% else %>
-                               - <span class="bold purple-text">Not Verified</span>
-                            <% end %>
-                            <br>
-                          <% end %><%# end of @profile.user.security_checks loop %>
-                        </p>
-                      </div>
-                    <div class="modal-footer">
-                      <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat ">Close</a>
-                    </div>
-                  </div>
-                  <%# end of Modal structure %>
-
+              <% @user_profile = User.find(key) %>
+              <%# The Candidate who logged in and view an opportunity will be able to see his own name and details in opportunity.
+              He won't be able to see other candidates listed in the same opportunity  %>
+              <% if (current_user.has_role? :candidate) %>
+                <% if (current_user.id == @user_profile.id ) %>
+                  <br><b><%= current_user.profile.name %></b> (User ID: <%= current_user.id %>)
                   <% value.each do |val| %>
-                    <br><%= val[0] %> - <%= val[1] %><%# display skill category - skill name %>
-                  <% end %><%# end of value.each loop %>
-                <% end %><%# end of if current_user.has_role? :profile %>
+                    <br><%= val[0] %> - <%= val[1] %><%# skill_category - skill %>
+                  <% end %>
+                  <p>Location: <%= @user_profile.profile.suburb %>, <%= @user_profile.profile.state %></p>
+                  <% @user_profile.profile.user.security_checks.each do |security_check| %>
+                    <%= security_check.name %>
+                    <% if security_check.verified %>
+                      <span class="green-text"><i class="fa fa-check-circle"></i></span>
+                    <% else %>
+                      <span class="red-text"><i class="fa fa-times"></i></span>
+                    <% end %>
+                    <br>
+                  <% end %><%# end of @profile.user.security_checks loop %>
+                <% end %><%# end if current_user.profile.id == @profile.id %>
+              <% else %><%# Else if the user's role is NOT a candidate, he can view the details of all other candidates in an opportunity as modal popup%>
+                <br>
+                <div class="font-16px palette1">
+                  <i class="fa fa-user"></i></span><b> <%= link_to @user_profile.profile.name, candidate_profile_mini_path(opportunity_id: @opportunity.id, user_profile: @user_profile.id) %></b></span>
+                </div>
+                <% value.each do |val| %><%# displays candidate's matching skills %>
+                  <%= val[0] %> - <%= val[1] %><br><%# display skill category - skill name %>
+                <% end %><%# end of value.each loop %>
+                <%= render 'candidate_engagement' %>
+                <% if (current_user.id == @opportunity.user_id) %>
+                  <%= link_to 'Contact', contact_candidate_path(opportunity_id: @opportunity.id, user_profile: @user_profile.id), class: 'btn' %>
+                  <br>
+                <% end  %>
 
-              <%= render 'candidate_engagement' %>
+              <% end %><%# end of if current_user does not has_role? :candidate %>
             <% end %><%# end of hash.each_pair loop %>
           <% end %><%# end of if hash.empty? %>
         <% end %><%# end of if the list status is still draft %>

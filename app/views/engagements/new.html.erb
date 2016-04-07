@@ -1,6 +1,16 @@
 <h5>Would you like to engage <%= Profile.find(params[:profile_id]).first_name %> to this opportunity?</h5>
-<p>By clicking ENGAGE, you will assign a token to this candidate.</p>
 <p>
-  <%= link_to 'Back', opportunity_path(params[:opp_id]), class: "btn" %>
-  <%= render 'form' %>
+  If you click ENGAGE an email will be sent to this candidate to confirm their engagement.
+  You will receive a copy of this email.
+  <br>
+  An engagement token will be assigned to this candidate.</p>
+<p>
+  <div class="row">
+    <div class="col l2">
+      <%= link_to 'Back', opportunity_path(params[:opp_id]), class: "btn" %>
+    </div>
+    <div class="col l2">
+      <%= render 'form' %>
+    </div>
+  </div>
 </p>

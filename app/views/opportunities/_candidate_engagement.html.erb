@@ -3,12 +3,12 @@
 <% if (current_user.has_role? :host) && (current_user.id == @opportunity.user_id) %>
   <% @engaged = false %><%# starts with the assumption that a candidate is not engaged yet (false)%>
   <% @opportunity.engagements.each do |engagement| %> <%# go through all the engagements of this opportunity to see if one is created for this candidate %>
-    <% if @profile.id == engagement.profile_id %><%# when a candidate already engaged to this opportunity %>
+    <% if @user_profile.profile.id == engagement.profile_id %><%# when a candidate already engaged to this opportunity %>
       <% @engaged = true %><%# if candidate id is matching, then there is already an engagement connection (true) and thus candidate reports can be created %>
 
       <%# The progress and completion reports link for the Opportunity owner to see %>
       <% if (engagement.progress_report_ids.present?) || (engagement.completion_report_ids.present?) %>
-        <%= link_to "View All Reports for "+ @profile.first_name, candidate_reports_path(engagement_id: engagement.id) %><br>
+        <%= link_to "View All Reports for "+ @user_profile.profile.first_name, candidate_reports_path(engagement_id: engagement.id) %><br>
       <% end %>
 
       <%# New Progress report link appears if:
@@ -16,7 +16,7 @@
       2. if the opportunity is not archived.
       Progress Report can be created repeatedly and the progress report ids will be entered in progress_report_ids column in engagements table %>
       <% if (@opportunity.opportunity_status == 'active') && !(@opportunity.archived) %>
-        <%= link_to "Create Progress Report", new_report_path(opportunity_id: @opportunity.id, profile_id: @profile.id, engagement_id: engagement.id, report_type: 'progress')%><br>
+        <%= link_to "Create Progress Report", new_report_path(opportunity_id: @opportunity.id, profile_id: @user_profile.profile.id, engagement_id: engagement.id, report_type: 'progress')%><br>
       <% end %>
 
       <%# New Completion report link appears if:
@@ -24,7 +24,7 @@
       2. if the opportunity is not archived
       Completion reports can be created repeatedly %>
       <% if (@opportunity.opportunity_status == 'post_active') && !(@opportunity.archived) %>
-        <%= link_to "Create Completion Report", new_report_path(opportunity_id: @opportunity.id, profile_id: @profile.id, engagement_id: engagement.id, report_type: 'completion')%><br>
+        <%= link_to "Create Completion Report", new_report_path(opportunity_id: @opportunity.id, profile_id: @user_profile.profile.id, engagement_id: engagement.id, report_type: 'completion')%><br>
       <% end %>
       </p>
     <% end %><%# end of if engagement.profile_id == @profile.id %>
@@ -37,15 +37,13 @@
         <% if (@opportunity.organisation.number_of_tokens <= 0) %><%# ask to buy more tokens if the organisation has 0 token %>
           <p class="purple-text"><strong>Please purchase a token to engage this candidate.<strong></p>
         <% else %>
-          <br>
-          <%= link_to 'Engage ' + @profile.first_name, new_engagement_path(opp_id: @opportunity.id, profile_id: @profile.id), class: "btn margin-bottom-20px" %>
+          <%= link_to 'Engage', new_engagement_path(opp_id: @opportunity.id, profile_id: @user_profile.profile.id), class: "btn" %>
         <% end %>
       <% elsif (@opportunity.user.org_user_profile.agency == 'independent host') %><%# For the independent host %>
         <% if (@opportunity.user.org_user_profile.number_of_tokens_for_independent <= 0) %><%# ask to buy more tokens if the host has 0 token %>
           <p class="purple-text"><strong>Please purchase a token to engage this candidate.<strong></p>
         <% else %>
-          <br>
-          <%= link_to 'Engage ' + @profile.first_name, new_engagement_path(opp_id: @opportunity.id, profile_id: @profile.id), class: "btn margin-bottom-20px" %>
+          <%= link_to 'Engage', new_engagement_path(opp_id: @opportunity.id, profile_id: @user_profile.profile.id), class: "btn" %>
         <% end %>
       <% end %>
     <% end %>
@@ -57,10 +55,10 @@
  Candidate will appear if his/her skill matches with opportunity skill.
  @candidate is the candidate/participants who has profile.
 %>
-<% if (@profile.user.has_role? :candidate) && (@profile.engagements.present?) %>
-  <% @profile.engagements.each do |engagement| %>
+<% if (@user_profile.profile.user.has_role? :candidate) && (@user_profile.profile.engagements.present?) %>
+  <% @user_profile.profile.engagements.each do |engagement| %>
     <%# If the host engaged this candidate, the candidate dashboard will display 'Engaged' %>
-    <% if (engagement.profile_id == @profile.id ) && (engagement.opportunity_id == @opportunity.id) %>
+    <% if (engagement.profile_id == @user_profile.profile.id ) && (engagement.opportunity_id == @opportunity.id) %>
       <% if (current_user.profile.present?) && (current_user.profile.id == engagement.profile_id) %><%# only this candidate can view the 'Engaged' message %>
         <p>Status: Received a token <span class="orange-text"><i class="fa fa-star"></i></span></p>
         <%# The progress and completion reports link for the candidate to see %>

@@ -73,7 +73,8 @@ class OpportunitiesController < ApplicationController
   end
 
   def contact_candidate_for
-    OpportunityMailer.contact_candidate(@opportunity.id, params[:profile_id]).deliver_now
+    @profile = Profile.find(params[:profile_id])
+    OpportunityMailer.contact_candidate(@opportunity.id, @profile.id).deliver_now
     redirect_to @opportunity
   end
 

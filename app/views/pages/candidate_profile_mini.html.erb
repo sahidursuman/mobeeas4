@@ -1,0 +1,56 @@
+<div class="card">
+  <div class="card-content">
+    <span class="card-title purple-text"><h4><%= @user_profile.profile.name %></h4></span>
+    <div class="align-left margin-bottom-20px">
+      <% if @user_profile.profile.picture.present? %>
+        <%= cl_image_tag(@user_profile.profile.picture, class: 'img-responsive activator', :width=>110, :crop=>:scale) %>
+      <% else %>
+        <%= cl_image_tag("user.png", :opacity=>30, class: 'img-responsive activator', :width=>110, :crop=>:scale) %>
+      <% end %>
+    </div>
+    <p>
+      User ID: <%= @user_profile.id %>
+      <br>
+      Location: <%= @user_profile.profile.suburb %>, <%= @user_profile.profile.state %>
+      <% if @user_profile.profile.country.present? %>
+        <%= @user_profile.profile.country_name(@user_profile.profile.country) %>
+      <% end %>
+      <br>
+      <%# Display candidate's skills %>
+      List of all skills:
+      <ol class="margin-top-0px">
+        <% @user_profile.profile.user.candidate_skills.each do |candidate_skill| %>
+          <li><%= candidate_skill.skill.skill_category.name %> - <%= candidate_skill.skill.name %></li>
+        <% end %><%# end of value.each loop %>
+      </ol>
+
+      <%# Display candidate's educations %>
+      List of educations:
+      <ol class="margin-top-0px">
+        <% @user_profile.profile.user.educations.each do |education| %>
+          <% if education.verified %><%# only displays the verified education records %>
+          <li><%= education.institution %> - <%= education.course %>, completed: <%= education.year_completed %> - <%= link_to 'File uploaded  ', education.achievement_url %></li>
+          <% end %>
+        <% end %><%# end of value.each loop %>
+      </ol>
+
+      <%# Display candidate's security checks %>
+      <% @user_profile.profile.user.security_checks.each do |security_check| %>
+        <%= security_check.name %>: <%= security_check.number %> (<%= security_check.state %>)
+        <% if security_check.verified %>
+           - <span class="bold green-text">Verified</i></span>
+        <% else %>
+           - <span class="bold purple-text">Not Verified</span>
+        <% end %>
+        <br>
+      <% end %><%# end of @profile.user.security_checks loop %>
+    </p>
+
+  </div>
+  <div class="card-action">
+    <%= link_to "Back", opportunity_path(@opportunity), class: 'btn white-text' %>
+    <% if (current_user.id == @opportunity.user_id) %>
+      <%= link_to 'Contact', contact_candidate_path(opportunity_id: @opportunity.id, user_profile: @user_profile.id), class: 'btn white-text' %>
+    <% end %>
+  </div>
+</div>

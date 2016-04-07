@@ -9,6 +9,8 @@
       <% @profile = Profile.find(current_user.profile.id) %>
     <% end %>
 
+
+
     <%# Please note: render profiles/show below is rendering the partial file called '_show.html.erb',
     which then will be rendering the template 'show.html.erb' %>
     <%= render 'profiles/show' %>

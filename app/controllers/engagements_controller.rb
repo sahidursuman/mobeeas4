@@ -63,6 +63,7 @@ class EngagementsController < ApplicationController
   def create
     @engagement = Engagement.new(engagement_params)
     @opportunity = Opportunity.find(params[:opp_id])
+    @candidate = Profile.find(params[:profile_id])
 
     respond_to do |format|
       if @engagement.save
@@ -78,7 +79,7 @@ class EngagementsController < ApplicationController
         if !(@opportunity.opportunity_status == 'active')
           @opportunity.update_attributes(opportunity_status: 'active')
         end
-        OpportunityMailer.assigned_a_token(params[:opportunity_id], params[:profile_id]).deliver_now
+        OpportunityMailer.assigned_a_token(@opportunity.id, @candidate.id).deliver_now
         format.html { redirect_to @opportunity, notice: 'Engagement was successfully created.' }
         format.json { render :show, status: :created, location: @engagement }
       else

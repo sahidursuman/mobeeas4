@@ -125,6 +125,9 @@ Rails.application.routes.draw do
   get 'income', to: 'pages#income'
   get 'search_opportunities', to: 'pages#search_opportunities'
   get 'my_roles', to: 'pages#my_roles'
+  get 'contact_candidate', to: 'pages#contact_candidate'
+  get 'candidate_profile_mini', to: 'pages#candidate_profile_mini'
+
 
 
   devise_for :users, controllers: { registrations: "registrations" }

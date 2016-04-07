@@ -1,16 +1,22 @@
 <div class="card-image waves-effect waves-block waves-light">
   <% if @profile.present? %>
-    <% if @profile.picture.present? %>
-      <%= cl_image_tag(@profile.picture, class: 'img-responsive activator') %>
-    <% else %>
-      <%= cl_image_tag("user.png", :opacity=>30, class: 'img-responsive activator') %>
+    <%# other user who is not the profile owner can see the picture %>
+    <% if (current_user.id == @profile.user.id) || !(current_user.id == @profile.user.id) %>
+      <% if @profile.picture.present? %>
+        <%= cl_image_tag(@profile.picture, class: 'img-responsive activator') %>
+      <% else %>
+        <%= cl_image_tag("user.png", :opacity=>30, class: 'img-responsive activator') %>
+      <% end %>
     <% end %>
   <% end %>
 </div>
 <div class="card-content">
   <span class="card-title activator blue-text"><i class="fa fa-user"></i> Profile<i class="material-icons right">mode_edit</i></span>
   <% if @profile.present? %>
-    <h4><%= @profile.name %></h4>
+    <%# other user who is not the profile owner can see the Candidate's name %>
+    <% if (current_user.id == @profile.user.id) || !(current_user.id == @profile.user.id) %>
+      <h4><%= @profile.name %></h4>
+    <% end %>
     <p><strong>User ID: </strong><%= @profile.user.id %></p>
     <p><strong>Date of birth:</strong> <%= @profile.dob.strftime('%d/%m/%y') if @profile.dob %>
     <p><strong>Email:</strong> <%= @profile.user.email %></p>

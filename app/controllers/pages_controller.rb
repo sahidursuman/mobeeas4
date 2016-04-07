@@ -111,7 +111,16 @@ class PagesController < ApplicationController
 	end
 
 	def my_roles
+	end
 
+	def contact_candidate
+		@opportunity = Opportunity.find(params[:opportunity_id])
+		@user_profile = User.find(params[:user_profile])
+	end
+
+	def candidate_profile_mini
+		@opportunity = Opportunity.find(params[:opportunity_id])
+		@user_profile = User.find(params[:user_profile])
 	end
 
 end
