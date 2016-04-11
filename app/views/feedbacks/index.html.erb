@@ -18,7 +18,13 @@
       <tbody>
         <% @feedbacks.each do |feedback| %>
           <tr>
-            <td><%= feedback.user.id %></td>
+            <% if feedback.user.has_role? :host %>
+              <td><%= link_to feedback.user.id, host_profile_path(viewer: 'admin', org_user_profile_id: feedback.user.org_user_profile.id ) %></td>
+            <% elsif feedback.user.has_role? :candidate %>
+              <td><%= link_to feedback.user.id, candidate_profile_path(profile_id: feedback.user.profile.id) %></td>
+            <% elsif feedback.user.has_role? :sponsor %>
+              <td><%= link_to feedback.user.id, sponsor_path(feedback.user.sponsor) %></td>
+            <% end %>
             <td><%= feedback.message %></td>
             <% if feedback.picture_url.present? %>
               <td><%= link_to 'Download', feedback.picture_url %></td>
@@ -26,8 +32,7 @@
               <td>None</td>
             <% end %>
             <td><%= link_to 'Show', feedback %></td>
-            <td><%= link_to 'Edit', edit_feedback_path(feedback) %></td>
-            <td><%= link_to 'Destroy', feedback, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+            <td><%= link_to 'Delete', feedback, method: :delete, data: { confirm: 'Are you sure?' } %></td>
           </tr>
         <% end %>
       </tbody>
