@@ -53,18 +53,19 @@ class OrgUserProfilesController < ApplicationController
             @organisation = Organisation.find(params[:org_id])
             @organisation.users << current_user
             NewOrgUserProfileMailer.new_organisation_host(@organisation.id, current_user.id).deliver_now
-            NewOrgUserProfileMailer.register_user(@organisation.id, current_user.id).deliver_now
+            # NewOrgUserProfileMailer.register_user(@organisation.id, current_user.id).deliver_now
           end
           if params[:is_admin].present?
             if (params[:is_admin] == 'yes') # if params is_admin is true
               current_user.org_users.each do |org_user|
                 if (org_user.user_id == current_user.id) && (org_user.organisation_id == @organisation)
                   org_user.admin_status = true
+                  org_user.save!
                 end
               end # end of loop
               NewOrgUserProfileMailer.new_organisation_host(@organisation.id, current_user.id).deliver_now
               NewOrgUserProfileMailer.register_admin(@organisation.id, current_user.id).deliver_now
-            else # else if params[:is_admin] == 'no'
+            elsif params[:is_admin] == 'no'
               NewOrgUserProfileMailer.new_organisation_host(@organisation.id, current_user.id).deliver_now
               NewOrgUserProfileMailer.register_user(@organisation.id, current_user.id).deliver_now
             end # end of if params[:is_admin]

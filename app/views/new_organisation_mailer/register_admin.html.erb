@@ -14,8 +14,6 @@
   <br><br>
   Here are your organisation details in MOBEEAS:
 <p>
-
-<p>
   <strong>Organisation type:</strong>
   <%= @organisation.organisation_type.name %>
 </p>
@@ -77,7 +75,7 @@
 </p>
 
 <p>
-    <strong>Name: </strong><%= @user.org_user_profile.first_name %> <%= @user.org_user_profile.last_name %>
+    <strong>Name: </strong><%= @user.org_user_profile.name %>
 </p>
 <p>
     <strong>Phone: </strong><%= @user.org_user_profile.phone %>

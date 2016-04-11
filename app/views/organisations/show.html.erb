@@ -129,10 +129,10 @@
               <% if @connected == false %><%# if no connection is found %>
                 <p>You already have a host profile but not connected to <%= @organisation.name %>, would you like to host <%= @organisation.name %>?</p>
                 <div class="row">
-                  <div class="col s4 m4 l4">
+                  <div class="col s4 m4 l4 margin-top-15px">
                     <%= link_to "Connect me...", add_admin_into_organisation_path(@organisation, user_id: current_user.id), data: {confirm: "You are about to link your profile to this organisation"}, class: "waves-effect waves-light btn" %>
                   </div>
-                  <div class="col s4 m4 l4">
+                  <div class="col s4 m4 l4 margin-top-15px">
                     <%# Modal Trigger %>
                     <a class="waves-effect waves-light btn modal-trigger" href="#host_profile">My Profile</a>
                   </div>
@@ -205,10 +205,10 @@
               <% if @connected == false %><%# if no connection is found %>
               <p>You already have a host profile but not connected to <%= @organisation.name %>, would you like to host <%= @organisation.name %>?</p>
                 <div class="row">
-                  <div class="col s4 m4 l4">
+                  <div class="col s4 m4 l4 margin-top-15px">
                     <%= link_to "Connect me...", add_admin_into_organisation_path(@organisation, user_id: current_user.id), data: {confirm: "You are about to link your profile to this organisation"}, class: "waves-effect waves-light btn" %>
                   </div>
-                  <div class="col s4 m4 l4">
+                  <div class="col s4 m4 l4 margin-top-15px">
                     <%# Modal Trigger %>
                     <a class="waves-effect waves-light btn modal-trigger" href="#host_profile">My Profile</a>
                   </div>
@@ -254,7 +254,7 @@
                 Would you like create a host profile and to become an admin host of <%= @organisation.name %>?<br>
                 Your application is subject to the approval of the organisation supervisor.<br>
               </p>
-              <div class='margin-top-5px'><%= link_to 'Create My Profile', new_org_user_profile_path(org_id: @organisation.id), class: 'btn' %></div>
+              <div class='margin-top-5px'><%= link_to 'Create My Profile', new_org_user_profile_path(org_id: @organisation.id, is_admin: 'yes'), class: 'btn' %></div>
             <% end %>
           <% else %>
   <%#---%><p>
@@ -318,10 +318,10 @@
               <% if @connected == false %><%# if no connection is found %>
                 <p>You already have a host profile but not connected to <%= @organisation.name %>, would you like to host <%= @organisation.name %>?</p>
                 <div class="row">
-                  <div class="col s4 m4 l4">
+                  <div class="col s4 m4 l4 margin-top-15px">
                     <%= link_to "Connect me...", add_host_into_organisation_path(@organisation, user_id: current_user.id), data: {confirm: "You are about to link your profile to this organisation"}, class: "waves-effect waves-light btn" %>
                   </div>
-                  <div class="col s4 m4 l4">
+                  <div class="col s4 m4 l4 margin-top-15px">
                     <%# Modal Trigger %>
                     <a class="waves-effect waves-light btn modal-trigger" href="#host_profile">My Profile</a>
                   </div>
@@ -365,7 +365,7 @@
             <% else %><%# else if the user does not have a profile created %>
               <p>
                 You haven't created a host profile.<br>
-                Would you like create a host profile and to become an admin host of <%= @organisation.name %>?<br>
+                Would you like create a host profile and to become an adminzzz host of <%= @organisation.name %>?<br>
                 Your application is subject to the approval of the organisation supervisor.<br>
               </p>
               <div class='margin-top-5px'><%= link_to 'Create My Profile', new_org_user_profile_path(org_id: @organisation.id), class: 'btn' %></div>
@@ -394,10 +394,10 @@
               <% if @connected == false %><%# if no connection is found %>
               <p>You already have a host profile but not connected to <%= @organisation.name %>, would you like to host <%= @organisation.name %>?</p>
               <div class="row">
-                <div class="col s4 m4 l4">
+                <div class="col s4 m4 l4 margin-top-15px">
                   <%= link_to "Connect me...", add_host_into_organisation_path(@organisation, user_id: current_user.id), data: {confirm: "You are about to link your profile to this organisation"}, class: "waves-effect waves-light btn" %>
                 </div>
-                <div class="col s4 m4 l4">
+                <div class="col s4 m4 l4 margin-top-15px">
                   <%# Modal Trigger %>
                   <a class="waves-effect waves-light btn modal-trigger" href="#host_profile">My Profile</a>
                 </div>
@@ -441,7 +441,7 @@
             <% else %><%# else if the user does not have a profile created %>
               <p>
                 You haven't created a host profile.<br>
-                Would you like create a host profile and to become an admin host of <%= @organisation.name %>?<br>
+                Would you like create a host profile and to become a host of <%= @organisation.name %>?<br>
                 Your application is subject to the approval of the organisation supervisor.<br>
               </p>
               <div class='margin-top-5px'><%= link_to 'Create My Profile', new_org_user_profile_path(org_id: @organisation.id), class: 'btn' %></div>
@@ -464,10 +464,10 @@
 
     <% if (current_user.has_role? :host) || (current_user.has_role? :admin) %>
       <% if current_user.org_user_profile.present? %>
-        <div class="card">
-          <div class="card-content">
-            <% @organisation.org_users.each do |org_user| %>
-              <% if (org_user.user.id == current_user.id) %>
+        <% @organisation.org_users.each do |org_user| %>
+          <% if (org_user.user.id == current_user.id) %>
+            <div class="card">
+              <div class="card-content">
                 <h5>Organisation Subscription</h5>
                 <p>
                   <%# There is an identical subscription process below in another file:
@@ -508,10 +508,10 @@
                   <% end %>
                 <% end %>
                 </p>
-              <% end %><%# end of if (org_user.user.id == current_user.id)%>
-            <% end %><%# end of @organisation.org_users loop %>
-          </div><%# end of card content %>
-        </div><%# end of card %>
+              </div><%# end of card content %>
+            </div><%# end of card %>
+          <% end %><%# end of if (org_user.user.id == current_user.id)%>
+        <% end %><%# end of @organisation.org_users loop %>
       <% end %>
     <% end %>
     <%#----------------------------------%>
