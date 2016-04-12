@@ -32,7 +32,7 @@
           data-email="<%= current_user.email %>"
           data-receipt-email="<%= current_user.email %>"
           data-description="<%= @token_pack.name %>"
-          data-amount="<%= (@token_pack.price_ex_gst * 100).to_int %>" <%# why price_ex_gst ??? %>
+          data-amount="<%= ((@token_pack.price_ex_gst + (@token_pack.price_ex_gst * @token_pack.gst_rate )) * 100).to_int %>" <%# why price_ex_gst ??? %>
           data-locale="auto"></script>
   <% end %>
 
@@ -63,7 +63,7 @@
           data-email="<%= current_user.email %>"
           data-receipt-email="<%= current_user.email %>"
           data-description="<%= @token_pack.name %>"
-          data-amount="<%= (@token_pack.price_ex_gst * 100).to_int %>"
+          data-amount="<%= ((@token_pack.price_ex_gst + (@token_pack.price_ex_gst * @token_pack.gst_rate )) * 100).to_int %>"
           data-locale="auto"></script>
   <% end %>
 <% end %>
