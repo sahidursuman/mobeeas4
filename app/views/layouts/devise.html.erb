@@ -10,8 +10,10 @@
   <title><%= content_for?(:title) ? yield(:title) : "Mobeeas" %></title>
   <%= stylesheet_link_tag    'application', media: 'all' %>
   <%= javascript_include_tag 'application' %>
-
   <%= csrf_meta_tags %>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
+	<link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css">
+
   <%# HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries %>
     <%#[if lt IE 9]>
       <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
@@ -52,7 +54,7 @@
      });
 
 		 // the "href" attribute of .modal-trigger must specify the modal ID that wants to be triggered
-		 // without this, the FAQ's modal won't open when you are in sign-up/sign-in page
+		 // without this modal-trigger, the FAQ's modal won't open when you are in sign-up/sign-in page
 		 $('.modal-trigger').leanModal();
   }); // end of document ready
 })(jQuery); // end of jQuery name space

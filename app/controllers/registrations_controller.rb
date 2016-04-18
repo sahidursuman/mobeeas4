@@ -1,4 +1,5 @@
-# class RegistrationsController < ApplicationController ## original line
+# class RegistrationsController < ApplicationController ## original line when newly created, do not use, for reference only
+# This RegistrationsController is to use for redirecting user to a specific page on successful sign up (registration)
 class RegistrationsController < Devise::RegistrationsController
   protected
 
