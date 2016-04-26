@@ -34,6 +34,11 @@
         <% end %><%# end of value.each loop %>
       </ol>
 
+      <br>
+        <strong>LinkedIn Profile:</strong>
+        <a href="<%= @user_profile.profile.linkedin %>"><%= @user_profile.profile.linkedin %></a>
+      <br>
+
       <%# Display candidate's security checks %>
       <% @user_profile.profile.user.security_checks.each do |security_check| %>
         <%= security_check.name %>: State <%= security_check.state %>

@@ -26,8 +26,9 @@
     </p>
 
     <p>
-      <strong>Website:</strong>
-      <%= @profile.website %>
+      <strong>LinkedIn Profile:</strong>
+      <%#= link_to @profile.linkedin %>
+      <a href="<%= @profile.linkedin %>"><%= @profile.linkedin %></a>
     </p>
     <hr>
     <h5>About me:</h5>

@@ -1,5 +1,5 @@
 class PagesController < ApplicationController
-	skip_before_action :authenticate_user!, only: [:home, :contact, :thanks, :about]
+	skip_before_action :authenticate_user!, only: [:home, :contact, :thanks, :faqs]
 	layout 'home', only: :home
   def home
 
@@ -41,7 +41,7 @@ class PagesController < ApplicationController
   def thanks
   end
 
-  def about
+  def faqs
   end
 
 	def host_profile

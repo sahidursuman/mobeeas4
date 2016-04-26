@@ -17,7 +17,7 @@
         <%# <li><a href="sass.html"><i class="material-icons left">search</i>Find Opportunities</a></li> %>
         <li><%= link_to root_path do %><i class="material-icons left">home</i> Home<% end %></li>
         <li><a href="/enquiries/new"><i class="material-icons left">group_add</i> Get Involved</a></li>
-        <li><a href="/about"><i class="material-icons left">help_outline</i> About</a></li>
+        <li><a href="/faqs"><i class="material-icons left">help_outline</i> FAQ's</a></li>
         <% if user_signed_in? %>
           <% if current_user.has_role? :admin %>
             <li><%= link_to admin_page_path do %><i class="material-icons left">account_box</i> Admin<% end %></li>

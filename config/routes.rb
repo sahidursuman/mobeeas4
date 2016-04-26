@@ -109,7 +109,7 @@ Rails.application.routes.draw do
   root 'pages#home'
   get 'my_skills', to: 'pages#my_skills'
   get 'thanks', to: 'pages#thanks'
-  get 'about', to: 'pages#about'
+  get 'faqs', to: 'pages#faqs'
   get 'host_profile', to: 'pages#host_profile'
   get 'candidate_profile', to: 'pages#candidate_profile'
   get 'organisations_host', to: 'pages#organisations_host'
