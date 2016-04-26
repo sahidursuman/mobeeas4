@@ -11,7 +11,7 @@
     <p>
       User ID: <%= @user_profile.id %>
       <br>
-      Location: <%= @user_profile.profile.suburb %>, <%= @user_profile.profile.state %>
+      Location: <%= @user_profile.profile.state %>
       <% if @user_profile.profile.country.present? %>
         <%= @user_profile.profile.country_name(@user_profile.profile.country) %>
       <% end %>
@@ -36,7 +36,7 @@
 
       <%# Display candidate's security checks %>
       <% @user_profile.profile.user.security_checks.each do |security_check| %>
-        <%= security_check.name %>: <%= security_check.number %> (<%= security_check.state %>)
+        <%= security_check.name %>: State <%= security_check.state %>
         <% if security_check.verified %>
            - <span class="bold green-text">Verified</i></span>
         <% else %>
