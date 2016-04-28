@@ -1,18 +1,23 @@
-<p id="notice"><%= notice %></p>
+<div class="row">
+	<%= render 'layouts/sidebar' %>
+  <div class="col s12 m10 offset-m2 l10 offset-l2">
+    <p id="notice"><%= notice %></p>
 
-<p>
-  <b>Skill category:</b>
-  <%= @skill.skill_category.name %>
-</p>
+    <p>
+      <b>Skill category:</b>
+      <%= @skill.skill_category.name %>
+    </p>
 
-<p>
-  <b>Name:</b>
-  <%= @skill.name %>
-</p>
+    <p>
+      <b>Name:</b>
+      <%= @skill.name %>
+    </p>
 
-<!-- <p>
-  <strong>Description:</strong>
-  <%#= @skill.description %>
-</p> -->
+    <!-- <p>
+      <strong>Description:</strong>
+      <%#= @skill.description %>
+    </p> -->
 
-<%= link_to 'Back to Listing Skill Categories', skill_categories_path, class: 'btn margin-top-5px' %>
+    <%= link_to 'Back to Listing Skill Categories', skill_categories_path, class: 'btn margin-top-5px' %>
+  </div>
+</div>

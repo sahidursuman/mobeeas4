@@ -18,7 +18,7 @@
             <% skill_category.skills.each do |skill| %>
               <% if skill.approved %><%# appears only if admin approved the skill %>
                 <!-- <div class='btn-flat'><%#= skill.name %></div> -->
-                <%= link_to skill.name, skill_path(skill, status: 'admin_approved'), class: 'waves-effect waves-teal btn-flat' %>
+                <%= link_to skill.name, skill_path(skill), class: 'waves-effect waves-teal btn-flat' %>
                 <%= link_to 'Edit', edit_skill_path(skill) %> |
                 <%= link_to 'Delete', skill, method: :delete, data: { confirm: 'Are you sure?' } %>
                 <br>

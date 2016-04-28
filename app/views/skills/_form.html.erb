@@ -4,7 +4,10 @@
   <div class="form-inputs">
     <%= f.association :skill_category, as: :hidden %>
     <%= f.input :name %>
-    <%#= f.input :description %>
+    <%#= f.input :description %> <%# at this stage do not use description %>
+    <% if current_user.has_role? :admin %>
+      <%= f.input :approved, :as => :hidden, input_html: { value: true } %> <%# new skill that is created by the Admin has value 'true'%>
+    <% end %>
   </div>
 
   <div class="form-actions">
