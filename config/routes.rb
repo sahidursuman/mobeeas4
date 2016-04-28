@@ -129,6 +129,8 @@ Rails.application.routes.draw do
   get 'contact_candidate', to: 'pages#contact_candidate'
   get 'candidate_profile_mini', to: 'pages#candidate_profile_mini'
 
+
+
   # This path is used to redirec user to a specific page on successful sign up (registration)
   devise_for :users, controllers: { registrations: "registrations" }
 

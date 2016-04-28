@@ -71,8 +71,11 @@ class PagesController < ApplicationController
 	def required_skills
 		@skill_categories = SkillCategory.includes(:skills)
 		# @skills = Skill.all
-		@opportunity = Opportunity.find(params[:oppo_id])
-		@required_skills = @opportunity.skills
+		if params[:oppo_id].present?
+			@opportunity = Opportunity.find(params[:oppo_id])
+			@required_skills = @opportunity.skills
+		end
+
 	end
 
 	def candidate_profile
@@ -122,5 +125,6 @@ class PagesController < ApplicationController
 		@opportunity = Opportunity.find(params[:opportunity_id])
 		@user_profile = User.find(params[:user_profile])
 	end
+
 
 end

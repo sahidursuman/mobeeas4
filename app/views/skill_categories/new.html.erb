@@ -1,5 +1,8 @@
-<h1>New Skill Category</h1>
-
-<%= render 'form' %>
-
-<%= link_to 'Back', skill_categories_path %>
+<div class="row">
+	<%= render 'layouts/sidebar' %>
+  <div class="col s12 m10 offset-m2 l10 offset-l2">
+    <h5>New Skill Category</h5>
+    <%= render 'form' %>
+    <%= link_to 'Back to Listing Skill Categories', skill_categories_path, class: 'btn margin-top-5px' %>
+  </div>
+</div>

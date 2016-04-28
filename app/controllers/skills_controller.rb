@@ -1,6 +1,7 @@
 class SkillsController < ApplicationController
   before_action :set_skill, only: [:add_user, :remove_user, :add_required, :remove_required, :admin_approves_new, :find_opportunities, :show, :edit, :update, :destroy]
   skip_before_action :check_admin, only: [:add_user, :remove_user, :admin_approves_new]
+  before_action :check_admin, only: [:index, :show, :new, :edit, :update, :destroy]
 
   def add_user
     @skill.users << current_user
@@ -66,17 +67,21 @@ class SkillsController < ApplicationController
     @skill = Skill.new(skill_params)
     respond_to do |format|
       if @skill.save
-        @candidate_skill = CandidateSkill.create(user_id: current_user.id, skill_id: @skill.id)
-        @candidate_skill.save!
-        NewlyAddedSkillMailer.approve_new_skill(@skill.id, current_user.id).deliver_now
-
-        # format.html { redirect_to @skill, notice: 'Skill was successfully created.' }
-         if params[:oppo_id].present?
-          format.html { redirect_to required_skills_path(oppo_id: params[:oppo_id]), notice: 'Skill was successfully created.' }
+        if @skill.approved == true # approved value is true if it is created by the Admin user
+          format.html { redirect_to skill_categories_path, notice: 'Skill was successfully created.' }
           format.json { render :show, status: :created, location: @skill }
-        else
-          format.html { redirect_to my_skills_path, notice: 'Skill was successfully created.' }
-          format.json { render :show, status: :created, location: @skill }
+        else # approved value is false if it's created by the Host or Candidate, and it requires Admin's approval
+          @candidate_skill = CandidateSkill.create(user_id: current_user.id, skill_id: @skill.id)
+          @candidate_skill.save!
+          NewlyAddedSkillMailer.approve_new_skill(@skill.id, current_user.id).deliver_now
+          # format.html { redirect_to @skill, notice: 'Skill was successfully created.' }
+          if params[:oppo_id].present?
+            format.html { redirect_to required_skills_path(oppo_id: params[:oppo_id]), notice: 'Skill was successfully created.' }
+            format.json { render :show, status: :created, location: @skill }
+          else
+            format.html { redirect_to my_skills_path, notice: 'Skill was successfully created.' }
+            format.json { render :show, status: :created, location: @skill }
+          end
         end
       else
         format.html { render :new }
@@ -104,7 +109,7 @@ class SkillsController < ApplicationController
   def destroy
     @skill.destroy
     respond_to do |format|
-      format.html { redirect_to skills_url, notice: 'Skill was successfully destroyed.' }
+      format.html { redirect_to skill_categories_path, notice: 'Skill was successfully destroyed.' }
       format.json { head :no_content }
     end
   end

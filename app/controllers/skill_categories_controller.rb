@@ -1,6 +1,6 @@
 class SkillCategoriesController < ApplicationController
   before_action :set_skill_category, only: [:show, :edit, :update, :destroy]
-  before_action :check_admin
+  before_action :check_admin, only: [:index, :show, :new, :edit, :create, :update, :destroy]
   # GET /skill_categories
   # GET /skill_categories.json
   def index

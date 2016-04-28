@@ -1,19 +1,18 @@
 <p id="notice"><%= notice %></p>
 
 <p>
-  <strong>Skill category:</strong>
-  <%= @skill.skill_category %>
+  <b>Skill category:</b>
+  <%= @skill.skill_category.name %>
 </p>
 
 <p>
-  <strong>Name:</strong>
+  <b>Name:</b>
   <%= @skill.name %>
 </p>
 
-<p>
+<!-- <p>
   <strong>Description:</strong>
-  <%= @skill.description %>
-</p>
+  <%#= @skill.description %>
+</p> -->
 
-<%= link_to 'Edit', edit_skill_path(@skill) %> |
-<%= link_to 'Back', skills_path %>
+<%= link_to 'Back to Listing Skill Categories', skill_categories_path, class: 'btn margin-top-5px' %>
