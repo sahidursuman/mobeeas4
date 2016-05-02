@@ -18,7 +18,7 @@
             <td><%= check.name %></td>
             <td><%= check.state %></td>
             <% if check.expiry_date.present? %>
-              <td><%= check.expiry_date.strftime('%d %b %y') %></td>
+              <td><%= check.expiry_date %></td>
             <% end %>
             <td> <%= check.number %></td>
             <td class="right-align">

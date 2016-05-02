@@ -10,6 +10,10 @@
         <%= f.input :last_name %>
       </div>
       <div class="col l6">
+        <label for="dob">* Date of Birth</label><%# must add * manually because this label is from the <label> tag where * won't appear automatically %>
+        <%= f.date_field :dob, as: :string, input_html: { class: 'datetimepicker1' }, placeholder: 'dd/mm/yyyy' %>
+      </div>
+      <div class="col l6">
         <%= f.input :phone %>
       </div>
       <div class="col l6">

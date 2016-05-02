@@ -11,9 +11,9 @@
         <% @security_checks.each do |security_check| %>
           <% if (security_check.user.has_role? :candidate) && (security_check.expiry_date.present?) && (params[:type] == "candidate") %>
             <li>
-              Candidate Profile ID: <%= security_check.user.profile.id %> - <b><%= security_check.user.profile.name %></b> - <%= link_to 'View', candidate_profile_path(profile_id: security_check.user.profile.id, viewer: 'admin') %>
+              Candidate Profile ID: <%= security_check.user.profile.id %> - <b><%= security_check.user.profile.name %></b> - DOB: <b><%= security_check.user.profile.dob %></b> - <%= link_to 'View', candidate_profile_path(profile_id: security_check.user.profile.id, viewer: 'admin') %>
               <br>
-              Check number: <b><%= security_check.number %></b>, expiry date: <b><%= security_check.expiry_date.strftime("%e %b %Y") %></b>.<br>
+              Check number: <b><%= security_check.number %></b>, expiry date: <b><%= security_check.expiry_date %></b>.<br>
               Current Verification Code: <b><%= security_check.verification_code %></b>.
               <br><br>
 
@@ -41,9 +41,9 @@
             </li>
           <% elsif (security_check.user.has_role? :host) && (security_check.expiry_date.present?) && (params[:type] == "host") %>
             <li>
-              Host Profile ID: <%= security_check.user.org_user_profile.id %> - <b><%= security_check.user.org_user_profile.name %></b> - <%= link_to 'View', host_profile_path(org_user_profile_id: security_check.user.org_user_profile.id, viewer: 'admin') %>
+              Host Profile ID: <%= security_check.user.org_user_profile.id %> - <b><%= security_check.user.org_user_profile.name %></b> - DOB: <b><%= security_check.user.org_user_profile.dob %></b> - <%= link_to 'View', host_profile_path(org_user_profile_id: security_check.user.org_user_profile.id, viewer: 'admin') %>
               <br>
-              Check number: <b><%= security_check.number %></b>, expiry date: <b><%= security_check.expiry_date.strftime("%e %b %Y") %></b>.<br>
+              Check number: <b><%= security_check.number %></b>, expiry date: <b><%= security_check.expiry_date %></b>.<br>
               Current Verification Code: <b><%= security_check.verification_code %></b>.
               <br><br>
 

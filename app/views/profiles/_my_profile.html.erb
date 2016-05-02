@@ -18,7 +18,7 @@
       <h4><%= @profile.name %></h4>
     <% end %>
     <p><strong>User ID: </strong><%= @profile.user.id %></p>
-    <p><strong>Date of birth:</strong> <%= @profile.dob.strftime('%d/%m/%y') if @profile.dob %>
+    <p><strong>Date of birth:</strong> <%= @profile.dob.strftime('%d/%m/%Y') if @profile.dob %>
     <p><strong>Email:</strong> <%= @profile.user.email %></p>
     <p>
       <strong>Phone:</strong>

@@ -20,6 +20,11 @@
         <b><%= @org_user_profile.last_name %></b>
         </p>
 
+        <p>
+        Date of Birth:
+        <b><%= @org_user_profile.dob %></b>
+        </p>
+
         <%# Protect sensitive information of the host from all viewers.
             Only the host who created this profile OR the Admin user can view these info.
         %>
@@ -74,7 +79,7 @@
           <% if @org_user_profile.user.subscriptions.present? %>
             <% @subscription = Subscription.find(@org_user_profile.user.subscriptions.last.id) %><%# get the LAST subscription of this ORGANISATION %>
             Your subscription expiry date:<br>
-            <b><%= @subscription.expiry_date.getlocal.strftime('%e %b %Y') %></b>
+            <b><%= @subscription.expiry_date.getlocal.strftime('%e %B %Y') %></b>
             <% if (@subscription.active) %><%# =============== if the last subscription is ACTIVE %>
               <% if @subscription.expires_in_less_than_30_days %>
                 - <span class="red-text bold">Expiring soon!</span>

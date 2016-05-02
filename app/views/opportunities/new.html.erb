@@ -25,7 +25,7 @@
           <% if (@subscription.active) %><%# =============== if the last subscription is ACTIVE %>
             <% if @subscription.expires_in_less_than_30_days %>
               <br>
-              Your subscription expiry date: <b><%= @subscription.expiry_date.getlocal.strftime('%e %b %Y') %></b>
+              Your subscription expiry date: <b><%= @subscription.expiry_date.getlocal.strftime('%e %B %Y') %></b>
               - <span class="red-text bold">Expiring soon!</span>
               <br>
               Please renew your annual subscription.<br>
@@ -38,7 +38,7 @@
             <%= render 'form' %>
           <% elsif (@subscription.expired)%><%# =============== if the last subscription has EXPIRED %>
             <br>
-            Your subscription expiry date: <b><%= @subscription.expiry_date.getlocal.strftime('%e %b %Y') %></b>
+            Your subscription expiry date: <b><%= @subscription.expiry_date.getlocal.strftime('%e %B %Y') %></b>
             - <span class="red-text bold">Expired!</span>
             <br>
             Please renew your annual subscription.<br>

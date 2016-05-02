@@ -26,18 +26,19 @@
         <%= f.input :last_name %>
       </div>
     </div>
-    <label for="dob">Date of birth</label>
-    <%#= f.date_field :dob, input_html: { class: 'datetimepicker' } %>
-    <%= f.date_field :dob, as: :string, input_html: { class: 'datetimepicker' } %>
 
     <div class="row">
-      <div class="col s12">
+      <div class="col s6">
+        <label for="dob">* Date of birth</label><%# must add * manually because this label is from the <label> tag where * won't appear automatically %>
+        <%= f.date_field :dob, as: :string, input_html: { class: 'datetimepicker1' }, placeholder: 'dd/mm/yyyy' %>
+      </div>
+      <div class="col s6">
         <%= f.input :picture %>
       </div>
     </div>
     <div class="row">
       <div class="col s12">
-        <%= f.input :bio %>
+        <%= f.input :bio, input_html: { maxlength: 400 } %>
       </div>
     </div>
     <% if @profile.new_record? %>

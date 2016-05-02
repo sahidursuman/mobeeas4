@@ -13,8 +13,9 @@
       <%= f.input :number, label: 'Check Number' %>
     </div>
     <div class="col l6">
-      Expiry Date:
-      <%= f.date_field :expiry_date, as: :string, input_html: { class: 'datetimepicker' } %>
+      <label for="expiry_date">* Expiry Date</label><%# must add * manually because this label is from the <label> tag where * won't appear automatically %>
+      <%= f.date_field :expiry_date, as: :string, input_html: { class: 'datetimepicker1' }, placeholder: 'dd/mm/yyyy' %>
+
     </div>
   </div>
   <div class="form-actions">

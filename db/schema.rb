@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160426035024) do
+ActiveRecord::Schema.define(version: 20160502001154) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -241,6 +241,7 @@ ActiveRecord::Schema.define(version: 20160426035024) do
     t.string   "state"
     t.string   "postcode"
     t.string   "country"
+    t.date     "dob"
   end
 
   add_index "org_user_profiles", ["guid"], name: "index_org_user_profiles_on_guid", using: :btree
