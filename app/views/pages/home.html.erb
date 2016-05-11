@@ -42,13 +42,13 @@
       <h5>
         <div class="row">
           <div class="col s12 l12 font-20px">
-            Looking for a specialist to help with your educational initiative?
+            <%= link_to "Looking for a specialist", become_host_candidate_sponsor_path(type: "host") %> to help with your educational initiative?
             <br><br>
-            Can your organisation help by sponsoring an educational opportunity or making a donation?
+            <%= link_to "Can your organisation", become_host_candidate_sponsor_path(type: "sponsor") %> help by sponsoring an educational opportunity or making a donation?
             <br><br>
-            Do you have expertise to share as an enthusiast, a professional, an academic or a tertiary student?
+            <%= link_to "Do you have expertise", become_host_candidate_sponsor_path(type: "candidate") %> to share as an enthusiast, a professional, an academic or a tertiary student?
             <br><br>
-            <div class="btn">Register Now</div>
+            <%= link_to "REGISTER NOW", new_user_session_path, class: 'btn' %>
             <br><br>
           </div>
         </div>

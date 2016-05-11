@@ -1,0 +1,72 @@
+<% if params[:type] == 'host' %><%#-- BECOME HOST ------------------------------%>
+  <h4>Become a MOBEEAS Host</h4>
+  <p>
+    If you are looking for someone with knowledge, skills and experience that you’d like to engage for a one-off event or a regular program, become a MOBEEAS host.
+    You might need someone to help as:
+    <ul class="list-style-disc">
+      <li class="list-style-disc">A mentor for a classroom activity or after-school program </li class="list-style-disc">
+      <li class="list-style-disc">A judge or marshall for a school or community competition </li class="list-style-disc">
+      <li class="list-style-disc">A guest speaker at a school or community event </li>
+    </ul>
+    <br>
+    Registered MOBEEAS hosts can post opportunities up on the MOBEEAS website.
+    We’ll step you through the process as we gather details about who, when and where you’d like some help.
+    If we have a registered candidate that matches your requirements, we’ll provide a contact link so that you can get in touch and arrange a meeting or interview.
+    Suitable candidates will also have the opportunity to contact you via the MOBEEAS website.
+    <br><br>
+    In order to best meet your requirements, when you register you’ll need to let us know whether you’re
+    associated with a large organisation like a school, or whether you are an individual or owner of a small company.
+    This is so that we can offer appropriate authorisation processes.
+    <br><br>
+    Registered hosts can advertise paid or voluntary engagements.
+    In some cases you may prefer to offer a voluntary trial that then leads to a paid engagement.
+    Payment rates and terms are negotiated between the host and candidate with advice from MOBEEAS if required.
+    <br><br>
+    What does it cost to join the MOBEEAS community?
+    <br><br>
+    In order to become a registered host you will need to pay an annual subscription fee of <%= number_to_currency(@organisation_pack.price_ex_gst) %>
+    for organisations and <%= number_to_currency(@independent_pack.price_ex_gst) %> for independent hosts (ex. GST).
+    Each time you engage a candidate you’ll pay an engagement fee of <%= number_to_currency(@one_token.price_ex_gst) %> (ex. GST) in the form of a pre-purchased token. Your annual subscription includes one engagement token and more tokens can be purchased as you need them.
+    <br><br>
+    MOBEEAS can help you engage a specialist to inspire your teachers and students or participate in an event, so <%= link_to "REGISTER NOW", new_user_session_path, class: 'btn' %>
+  </p>
+
+<% elsif params[:type] == 'candidate' %><%# -- BECOME CANDIDATE ------------------------------%>
+  <h4>Become a MOBEEAS Candidate</h4>
+  <p>
+    If you have knowledge, skills and experience that you’d like to share please register to become a MOBEEAS candidate. You could be invited to contribute as
+
+    <ul class="list-style-disc">
+      <li class="list-style-disc">A mentor for a classroom activity or after-school program </li class="list-style-disc">
+      <li class="list-style-disc">A judge or marshall for a school or community competition </li class="list-style-disc">
+      <li class="list-style-disc">A guest speaker at a school or community event </li>
+    </ul>
+
+    Opportunities are posted up on the MOBEEAS website by registered MOBEEAS Hosts. They will tell you a little about the opportunity, and if your skills match their requirements they will be given the chance to contact you to discuss the opportunity further. You will also be able to contact MOBEEAS hosts if you see something that you’d like to be involved in.
+    <br><br>
+    Opportunities may be advertised as paid or voluntary engagements. In some cases you may be offered a voluntary trial that then leads to a paid engagement.
+    <br><br>
+    When you register you will need to fill in a personal profile including your contact details along with a list of the skills you’d like to share and any educational qualifications.
+    Given that most collaborative learning experiences will involve school-aged students, you’ll also be required to obtain a Working With Children check valid for your region.
+    Some situations may also call for a Police Check.
+    More details are provided when you register.
+    <br><br>
+    What does it cost to join the MOBEEAS community?
+    <br><br>
+    In order to become a part of the MOBEEAS community and be considered for engagements you will need to pay an annual subscription fee of <%= number_to_currency(@candidate_pack.price_ex_gst) %> (ex. GST). This minimal fee helps cover MOBEEAS administration costs.
+    <br><br>
+    We’d love to have you on board to inspire the next generation, so <%= link_to "REGISTER NOW", new_user_session_path, class: 'btn' %>
+  </p>
+
+<% elsif params[:type] == 'sponsor' %><%#-- BECOME SPONSOR ------------------------------%>
+  <h4>Become a MOBEEAS Sponsor</h4>
+  <p>
+    As a MOBEEAS sponsor you can help fund activities that inspire our teachers and students.
+    You might be able to pay for educational resources or a specialist’s time. Perhaps you can provide a venue or cover the catering costs for an event?
+    Many extra-curricula school activities are facilitated by not-for-profit organisations, so anything you can offer or donate is very much appreciated.
+    <br><br>
+    As a registered sponsor you’ll be able to choose which of the posted MOBEEAS opportunities you’d like to support, or you can make a donation to help cover MOBEEAS administration costs. Sponsor registration is free and we’d love to have you on board.
+    <br><br>
+    <%= link_to "REGISTER NOW", new_user_session_path, class: 'btn' %>
+  </p>
+<% end %>

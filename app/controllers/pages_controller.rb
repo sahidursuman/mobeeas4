@@ -1,5 +1,5 @@
 class PagesController < ApplicationController
-	skip_before_action :authenticate_user!, only: [:home, :contact, :thanks, :faqs]
+	skip_before_action :authenticate_user!, only: [:home, :contact, :thanks, :faqs, :become_host_candidate_sponsor]
 	layout 'home', only: :home
   def home
 
@@ -126,5 +126,11 @@ class PagesController < ApplicationController
 		@user_profile = User.find(params[:user_profile])
 	end
 
+	def become_host_candidate_sponsor
+		@organisation_pack = SubscriptionPack.find(1)
+		@independent_pack = SubscriptionPack.find(2)
+		@candidate_pack = SubscriptionPack.find(3)
+		@one_token = EngagementTokenPack.find(1)
+	end
 
 end

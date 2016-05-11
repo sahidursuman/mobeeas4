@@ -128,6 +128,8 @@ Rails.application.routes.draw do
   get 'my_roles', to: 'pages#my_roles'
   get 'contact_candidate', to: 'pages#contact_candidate'
   get 'candidate_profile_mini', to: 'pages#candidate_profile_mini'
+  get 'become_host_candidate_sponsor', to: 'pages#become_host_candidate_sponsor'
+
 
 
 
