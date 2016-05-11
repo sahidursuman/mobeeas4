@@ -7,6 +7,7 @@
     <li class="bold"><%= link_to 'Completed Opportunities', opportunities_path(status: 'post_active') %></li>
     <li class="bold"><%= link_to 'Archived Opportunities', opportunities_path(status: 'archived') %></li>
     <li class="bold"><%= link_to 'Feedback', new_feedback_path(user_id: current_user.id) %></li>
+    <li class="bold"><%= link_to 'Edit Login', edit_user_registration_path %></li>
   <% else %>
     <li class="bold"><div class="grey-text margin-left-15px margin-top-15px">Organisations Index</div></li>
     <li class="bold"><div class="grey-text margin-left-15px margin-top-15px">Listed Opportunities</div></li>
