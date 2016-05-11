@@ -35,7 +35,9 @@
         </p>
         <% if (current_user.has_role? :sponsor) && (current_user.id == @sponsor.user.id) %>
           <%# <p>match</p> %>
-          <%= link_to "Edit", edit_sponsor_path(@sponsor), class: 'btn'%>
+          <%= link_to "Edit Profile", edit_sponsor_path(@sponsor), class: 'btn'%>
+          <a class="waves-effect waves-light btn modal-trigger" href="/my_roles">Add New Role</a>
+
         <% end %>
       </div>
 
