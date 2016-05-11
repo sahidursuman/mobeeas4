@@ -42,7 +42,7 @@
                   <% if organisation.logo.present? %>
                     <%= cl_image_tag(organisation.logo_url, :width=>50, :gravity=>"face", :radius=>"max", :crop=>:scale, :class=>:circle ) %>
                   <% else %>
-                    <%= cl_image_tag("noPhoto-icon.png", :width=>50, :gravity=>"face", :radius=>"max", :crop=>:scale, :class=>:circle ) %>
+                    <%= cl_image_tag("noPhoto-icon.png", :class=>:circle ) %>
                   <% end %>
                   <span class="bold"><%= organisation.name %></span>
                   <p>
