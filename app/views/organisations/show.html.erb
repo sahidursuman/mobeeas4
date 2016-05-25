@@ -31,8 +31,9 @@
       <% end %>
     <% end %>
   </div><%# end of class="col m4 %>
-<%# ========================================== %>
-<%# RIGHT COLUMN %>
+
+  <%# =============================================================== %>
+  <%# RIGHT COLUMN=================================================== %>
   <div class="col m8">
     <%# WELCOME BUTTON%>
     <a class="waves-effect waves-light btn modal-trigger margin-bottom-10px" href="#modal-welcome"><i class="material-icons left">speaker_notes</i>Getting Started</a>
@@ -46,276 +47,422 @@
         </div>
       </div>
 
-    <%# ========================================== %>
-    <%# if current user has just applied for host admin or host and waiting for the approval of the organisation administrator, this message will appear %>
-    <% if (current_user.org_user_profile.present?) %>
-      <% current_user.org_users.each do |org_user| %>
-        <%# if matching then this user has already a connection with this organisation %>
-        <% if org_user.organisation_id == @organisation.id %>
-          <%# if current user has a connection to this organisation but has not been approved by the organisation user, then this card will appear %>
-          <% if !(current_user.org_users.find_by(organisation_id: @organisation.id).admin_status) && !(current_user.org_users.find_by(organisation_id: @organisation.id).verified_status) %>
-          <div class="card light-amber">
-            <div class="card-content">
-              Your request has been submitted to the  <%= @organisation.name %> Executive and is pending approval.
+  <%# ========================================== %>
+  <%# In the case that:
+      1. the organisation is just newly created
+      2. there is only one user associated with this org
+      3. there is no user org_user_profile created,
+      then the user must enter the profile details in the form below. %>
+  <% if (@organisation.users.count == 1) && !(@organisation.users.first.org_user_profile.present?) %>
+    <div class="card">
+      <div class="card-content">
+        <h5>Please create your Administration Host profile:</h5>
+        <%# CREATE A NEW ORG USER PROFILE %>
+        <%# The user who creates a new organisation will have role as a host %>
+        <% @new_org_user_profile = OrgUserProfile.new %>
+        <%= simple_form_for(@new_org_user_profile) do |f| %>
+          <%= f.error_notification %>
+          <%= f.association :user, :as => :hidden, input_html: { value: current_user.id }%>
+          <%= f.input :org_creator, :as => :hidden, input_html: { value: true } %>
+          <div class="form-inputs">
+            <div class="row">
+              <div class="col l6">
+                <%= f.input :first_name %>
+              </div>
+              <div class="col l6">
+                <%= f.input :last_name %>
+              </div>
+              <div class="col l6">
+                <label for="dob">* Date of Birth</label><%# must add * manually because this label is from the <label> tag where * won't appear automatically %>
+                <%= f.date_field :dob, as: :string, input_html: { class: 'datetimepicker1' }, placeholder: 'dd/mm/yyyy' %>
+              </div>
+              <div class="col l6">
+                <%= f.input :phone %>
+              </div>
+              <div class="col l6">
+                <%= f.input :position %>
+              </div>
+              <div class="col l6">
+                <%= f.input :suburb %>
+              </div>
+              <div class="col l6">
+                <%= f.input :state, priority: [ "NSW" ], collection: [ "NSW", "QLD", "SA", "TAS", "VIC", "ACT", "WA"] %>
+              </div>
+              <div class="col l6">
+                <%= f.input :postcode %>
+              </div>
+              <div class="col l6">
+                <%= f.input :country, priority: [ "Australia" ] %>
+              </div>
             </div>
+            <%= f.input :agency, :as => :hidden, input_html: { value: 'organisation host' } %>
+            <%= hidden_field_tag(:org_id, @organisation.id )%>
+            <%#= f.input :guid %>
           </div>
-          <% end %>
-        <% end %><%# end of if org_user.organisation_id == @organisation.id%>
-      <% end %>
+
+          <div class="form-actions">
+              <%= f.button :submit, "Create Organisation User Profile" %>
+          </div>
+        </div>
+      </div>
     <% end %>
-
-    <%# APPROVED ADMINISTRATOR ======================================= %>
-    <div class="card">
-      <div class="card-content">
-        <h5>Approved Administrator</h5>
-        <p>Approved Administrator will have the ability to purchase and apply organisation tokens.</p>
-
-        <%# When a new organisation is created, the very first host who created it must become the Administrator Host, not just a Host %>
-        <%# This will display the list of Admin Host of this organisation%>
-        <% if @organisation.org_users.admin_user.present? %>
-          <p>List of approved Administrator Host:</p>
-          <ol>
-            <% @organisation.users.each do |user| %>
-              <% if user.org_users.present? %>
-                <% user.org_users.each do |org_user| %>
-                <%# just show the profile that is linked to this organisation %>
-                  <% if org_user.organisation_id == @organisation.id %>
-                    <% if (org_user.admin_status) && (org_user.verified_status) %>
-                      <li><p>
-                      <%# ONLY the current user can see his own Profile page %>
-                      <% if current_user.id == user.id %>
-                        <b><%= link_to user.org_user_profile.name, host_profile_path(user.org_user_profile.id) %></b>
-                      <% else %>
-                        <% @host = User.find(user.id) %>
-                        <b><%= user.org_user_profile.name %></b> |
-                        <%= render 'contact_host_modal' %>
-                      <% end %>
-                      (Verified)
-                      <%# if the curret user is already linked to this organisation they can edit or delete %>
-                      <% if org_user.user_id == current_user.id %>
-                        <%= link_to edit_org_user_profile_path(user.org_user_profile, org_id: @organisation.id) do %><i class="material-icons tiny">mode_edit</i><% end %>
-                        <%= link_to 'Disconnect', remove_host_from_organisation_path(@organisation, user_id: user.id), data: {confirm: "Are you sure to remove the connection?"}%>
-                      <% end %><%# end of org_user.user_id == current_user.id %>
-                      </p></li>
-                    <% elsif (org_user.admin_status) && !(org_user.verified_status) %>
-                      <li><p>
-                      <strong><%= link_to user.org_user_profile.name, org_user_profile_path(user.org_user_profile.id) %></strong>
-                      (Not Verified)
-                      </p></li>
-                    <% end %>
-
-                  <% end %><%# if org_user.organisation_id == @organisation.id %>
-                <% end %><%# end loop %>
-              <% end %><%# if user.org_users.present? %>
-            <% end %><%# end of loop %>
-          </ol>
-
-        <%# CHECK IF CURRENT USER WANTS TO JOIN IN WITH THIS ORGANISATION %>
-          <% if current_user.has_role? :host %>
-            <%# check if current user already has profile %>
-            <% if current_user.org_user_profile.present? %>
-              <%#  if already has a profile, check if it is linked to this organisation %>
-              <% @connected = false %><%# starts with connected is false %>
-
-              <% current_user.org_users.each do |curr_org_user| %>
-
-                <% if curr_org_user.organisation_id == @organisation.id %>
-                  <% @connected = true %>
-                  <%# if at least one match is found from many organisations, connected is true because current user is already linked up his profile to this organisation
-                      and don't do anything %>
-                <% end %>
-
-              <% end %><%# end curr_org_user loop %>
-              <% if @connected == false %><%# if no connection is found %>
-                <p>You already have a host profile but not connected to <%= @organisation.name %>, would you like to host <%= @organisation.name %>?</p>
-                <div class="row">
-                  <div class="col s4 m4 l4 margin-top-15px">
-                    <%= link_to "Connect me...", add_admin_into_organisation_path(@organisation, user_id: current_user.id), data: {confirm: "You are about to link your profile to this organisation"}, class: "waves-effect waves-light btn" %>
-                  </div>
-                  <div class="col s4 m4 l4 margin-top-15px">
-                    <%# Modal Trigger %>
-                    <a class="waves-effect waves-light btn modal-trigger" href="#host_profile">My Profile</a>
-                  </div>
-                </div><%# end of row %>
-                <%# Modal Structure %>
-                <div id="host_profile" class="modal">
-                  <div class="modal-content">
-                    <h4>Modal Header</h4>
-                    <p>
-                    <strong>First name:</strong>
-                    <%= current_user.org_user_profile.first_name %>
-                    </p>
-
-                    <p>
-                    <strong>Last name:</strong>
-                    <%= current_user.org_user_profile.last_name %>
-                    </p>
-
-                    <p>
-                    <strong>Phone:</strong>
-                    <%= current_user.org_user_profile.phone %>
-                    </p>
-
-                    <p>
-                    <strong>Email:</strong>
-                    <%= current_user.org_user_profile.user.email %>
-                    </p>
-                    <p>
-                    <strong>Position:</strong>
-                    <%= current_user.org_user_profile.position %>
-                    </p>
-
-                  </div>
-                  <div class="modal-footer">
-                    <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Close</a>
-                  </div>
-                </div>
-                <%# end of Modal %>
-              <% end %>
-            <% else %><%# else if the current user does not have a profile created %>
-              <p>
-                You haven't created a host profile.<br>
-                Would you like create a host profile and to become an admin host of <%= @organisation.name %>?<br>
-                Your application is subject to the approval of the organisation supervisor.<br>
-              </p>
-              <div class='margin-top-5px'><%= link_to 'Create My Profile', new_org_user_profile_path(org_id: @organisation.id), class: 'btn' %></div>
+    <%# In the case that:
+        1. the organisation is not newly created
+        2. there is at least one user associated with this org
+        3. and the associated user has created his org_user_profile, then he can view the details of the organisaiton,
+        then the user must enter the profile details in the form below. %>
+  <% elsif (@organisation.users.count >= 1) && (@organisation.users.first.org_user_profile.present?)%>
+      <%# if current user has just applied for host admin or host and waiting for the approval of the organisation administrator, this message will appear %>
+      <% if (current_user.org_user_profile.present?) %>
+        <% current_user.org_users.each do |org_user| %>
+          <%# if matching then this user has already a connection with this organisation %>
+          <% if org_user.organisation_id == @organisation.id %>
+            <%# if current user has a connection to this organisation but has not been approved by the organisation user, then this card will appear %>
+            <% if !(current_user.org_users.find_by(organisation_id: @organisation.id).admin_status) && !(current_user.org_users.find_by(organisation_id: @organisation.id).verified_status) %>
+            <div class="card light-amber">
+              <div class="card-content">
+                Your request has been submitted to the  <%= @organisation.name %> Executive and is pending approval.
+              </div>
+            </div>
             <% end %>
-          <% else %><%# else if the current user does not have a role as a Host and thus no org_user_profile was created %>
-  <%#---%><p>
-              If you want to register as an ADMIN Host of this Organisation, please click on the link below.
-              <br>
-              <%= link_to 'Add me as an ADMIN Host to this Organisation', new_org_user_profile_path(org_id: @organisation.id, is_admin: 'yes'), class: 'btn' %>
-            </p>
-          <% end  %>
+          <% end %><%# end of if org_user.organisation_id == @organisation.id%>
+        <% end %>
+      <% end %>
 
-        <% else %><%# else if this organisation do not have a single host attached to it at all %>
-          <% if current_user.has_role? :host %>
-            <%# CHECK IF CURRENT USER WANTS TO JOIN IN WITH THIS ORGANISATION %>
-            <%# check if current user already has profile %>
-            <% if current_user.org_user_profile.present? %>
-              <%#  if already has a profile, check if it is linked to this organisation %>
-              <% @connected = false %><%# starts with connected is false %>
-              <%  current_user.org_users.each do |curr_org_user| %>
-                <% if curr_org_user.organisation_id == @organisation.id %>
-                  <% @connected = true %>
-                  <%# if at least one match is found from many organisations, connected is true because current user is already linked up his profile to this organisation
-                      and don't do anything %>
-                <% end %>
-              <% end %><%# end curr_org_user loop %>
-              <% if @connected == false %><%# if no connection is found %>
-              <p>You already have a host profile but not connected to <%= @organisation.name %>, would you like to host <%= @organisation.name %>?</p>
-                <div class="row">
-                  <div class="col s4 m4 l4 margin-top-15px">
-                    <%= link_to "Connect me...", add_admin_into_organisation_path(@organisation, user_id: current_user.id), data: {confirm: "You are about to link your profile to this organisation"}, class: "waves-effect waves-light btn" %>
-                  </div>
-                  <div class="col s4 m4 l4 margin-top-15px">
-                    <%# Modal Trigger %>
-                    <a class="waves-effect waves-light btn modal-trigger" href="#host_profile">My Profile</a>
-                  </div>
-                </div><%# end of row %>
-                <%# Modal Structure %>
-                <div id="host_profile" class="modal">
-                  <div class="modal-content">
-                    <h4>Modal Header</h4>
-                    <p>
-                    <strong>First name:</strong>
-                    <%= current_user.org_user_profile.first_name %>
-                    </p>
+      <%# APPROVED ADMINISTRATOR ======================================= %>
+      <div class="card">
+        <div class="card-content">
+          <h5>Approved Administrator</h5>
+          <p>Approved Administrator will have the ability to purchase and apply organisation tokens.</p>
 
-                    <p>
-                    <strong>Last name:</strong>
-                    <%= current_user.org_user_profile.last_name %>
-                    </p>
-
-                    <p>
-                    <strong>Phone:</strong>
-                    <%= current_user.org_user_profile.phone %>
-                    </p>
-
-                    <p>
-                    <strong>Email:</strong>
-                    <%= current_user.org_user_profile.user.email %>
-                    </p>
-                    <p>
-                    <strong>Position:</strong>
-                    <%= current_user.org_user_profile.position %>
-                    </p>
-
-                  </div>
-                  <div class="modal-footer">
-                    <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Close</a>
-                  </div>
-                </div>
-                <%# end of Modal %>
-              <% end %>
-            <% else %><%# else if the user does not have a profile created %>
-              <p>
-                You haven't created a host profile.<br>
-                Would you like create a host profile and to become an admin host of <%= @organisation.name %>?<br>
-                Your application is subject to the approval of the organisation supervisor.<br>
-              </p>
-              <div class='margin-top-5px'><%= link_to 'Create My Profile', new_org_user_profile_path(org_id: @organisation.id, is_admin: 'yes'), class: 'btn' %></div>
-            <% end %>
-          <% else %>
-  <%#---%><p>
-              If you want to register as an ADMIN Host of this Organisation, please click on the link below.
-              <br>
-              <%= link_to 'Add me as an ADMIN Host to this Organisation', new_org_user_profile_path(org_id: @organisation.id, is_admin: 'yes'), class: 'btn' %>
-            </p>
-          <% end %><%# end if current_user.has_role? :host %>
-        <% end %><%# end of if @organisation.org_users.admin_user.present? %>
-      </div><%# end of card content %>
-    </div><%# end of card %>
-
-
-    <%#----------------------------------%>
-    <%# APPROVED HOSTS (NOT ADMIN HOST) %>
-    <%# Host %>
-    <div class="card">
-      <div class="card-content">
-        <h5>Approved Hosts</h5>
-        <p>Approved Hosts will have the ability to create an opportunity and apply organisation tokens.</p>
-        <% if @organisation.org_users.host_user.present? %><%# host_user looks for org_user record with admin_status: false, verified_status: true %>
-          <p>List of approved Hosts:</p>
-          <ol>
-            <% @organisation.users.each do |user| %>
-              <% if user.org_users.present? %>
-                <% user.org_users.each do |org_user| %>
-                  <% if org_user.organisation_id == @organisation.id %><%# just show the profile that is linked to this organisation %>
-                    <% if org_user.is_host_user %><%# is_host_user looks for org_user with admin_status: true, verified_status: true %>
-                      <li><p>
-                        <% if current_user.id == user.id %><%# ONLY the current user can see his own Profile page %>
+          <%# When a new organisation is created, the very first host who created it must become the Administrator Host, not just a Host %>
+          <%# This will display the list of Admin Host of this organisation%>
+          <% if @organisation.org_users.admin_user.present? %>
+            <p>List of approved Administrator Host:</p>
+            <ol>
+              <% @organisation.users.each do |user| %>
+                <% if user.org_users.present? %>
+                  <% user.org_users.each do |org_user| %>
+                  <%# just show the profile that is linked to this organisation %>
+                    <% if org_user.organisation_id == @organisation.id %>
+                      <% if (org_user.admin_status) && (org_user.verified_status) %>
+                        <li><p>
+                        <%# ONLY the current user can see his own Profile page %>
+                        <% if current_user.id == user.id %>
                           <b><%= link_to user.org_user_profile.name, host_profile_path(user.org_user_profile.id) %></b>
-                          (Verified)
-                          <%= link_to edit_org_user_profile_path(user.org_user_profile, org_id: @organisation.id) do %><i class="material-icons tiny">mode_edit</i><% end %>
-                          <%= link_to 'Disconnect', remove_host_from_organisation_path(@organisation, user_id: user.id), data: {confirm: "Are you sure to remove the connection?"}%>
                         <% else %>
                           <% @host = User.find(user.id) %>
-                          <b><%= user.org_user_profile.name %></b> (Verified) |
+                          <b><%= user.org_user_profile.name %></b> |
                           <%= render 'contact_host_modal' %>
                         <% end %>
-                      </p></li>
-                    <% end %>
-                  <% end %><%# if org_user.organisation_id == @organisation.id %>
-                <% end %><%# end loop %>
-              <% end %><%# if user.org_users.present? %>
-            <% end %><%# end of loop %>
-          </ol>
+                        (Verified)
+                        <%# if the curret user is already linked to this organisation they can edit or delete %>
+                        <% if org_user.user_id == current_user.id %>
+                          <%= link_to edit_org_user_profile_path(user.org_user_profile, org_id: @organisation.id) do %><i class="material-icons tiny">mode_edit</i><% end %>
+                          <%= link_to 'Disconnect', remove_host_from_organisation_path(@organisation, user_id: user.id), data: {confirm: "Are you sure to remove the connection?"}%>
+                        <% end %><%# end of org_user.user_id == current_user.id %>
+                        </p></li>
+                      <% elsif (org_user.admin_status) && !(org_user.verified_status) %>
+                        <li><p>
+                        <strong><%= link_to user.org_user_profile.name, org_user_profile_path(user.org_user_profile.id) %></strong>
+                        (Not Verified)
+                        </p></li>
+                      <% end %>
 
-        <%# CHECK IF CURRENT USER WANTS TO JOIN IN WITH THIS ORGANISATION %>
-          <% if current_user.has_role? :host %>
-            <%# check if current user already has profile %>
-            <% if current_user.org_user_profile.present? %>
-              <%#  if already has a profile, check if it is linked to this organisation %>
-              <% @connected = false %><%# starts with connected is false %>
-              <%  current_user.org_users.each do |curr_org_user| %>
-                <% if curr_org_user.organisation_id == @organisation.id %>
-                  <% @connected = true %>
-                  <%# if at least one match is found from many organisations, connected is true because current user is already linked up his profile to this organisation
-                      and don't do anything %>
+                    <% end %><%# if org_user.organisation_id == @organisation.id %>
+                  <% end %><%# end loop %>
+                <% end %><%# if user.org_users.present? %>
+              <% end %><%# end of loop %>
+            </ol>
+
+          <%# CHECK IF CURRENT USER WANTS TO JOIN IN WITH THIS ORGANISATION %>
+            <% if current_user.has_role? :host %>
+              <%# check if current user already has profile %>
+              <% if current_user.org_user_profile.present? %>
+                <%#  if already has a profile, check if it is linked to this organisation %>
+                <% @connected = false %><%# starts with connected is false %>
+
+                <% current_user.org_users.each do |curr_org_user| %>
+
+                  <% if curr_org_user.organisation_id == @organisation.id %>
+                    <% @connected = true %>
+                    <%# if at least one match is found from many organisations, connected is true because current user is already linked up his profile to this organisation
+                        and don't do anything %>
+                  <% end %>
+
+                <% end %><%# end curr_org_user loop %>
+                <% if @connected == false %><%# if no connection is found %>
+                  <p>You already have a host profile but not connected to <%= @organisation.name %>, would you like to host <%= @organisation.name %>?</p>
+                  <div class="row">
+                    <div class="col s4 m4 l4 margin-top-15px">
+                      <%= link_to "Connect me...", add_admin_into_organisation_path(@organisation, user_id: current_user.id), data: {confirm: "You are about to link your profile to this organisation"}, class: "waves-effect waves-light btn" %>
+                    </div>
+                    <div class="col s4 m4 l4 margin-top-15px">
+                      <%# Modal Trigger %>
+                      <a class="waves-effect waves-light btn modal-trigger" href="#host_profile">My Profile</a>
+                    </div>
+                  </div><%# end of row %>
+                  <%# Modal Structure %>
+                  <div id="host_profile" class="modal">
+                    <div class="modal-content">
+                      <h4>Modal Header</h4>
+                      <p>
+                      <strong>First name:</strong>
+                      <%= current_user.org_user_profile.first_name %>
+                      </p>
+
+                      <p>
+                      <strong>Last name:</strong>
+                      <%= current_user.org_user_profile.last_name %>
+                      </p>
+
+                      <p>
+                      <strong>Phone:</strong>
+                      <%= current_user.org_user_profile.phone %>
+                      </p>
+
+                      <p>
+                      <strong>Email:</strong>
+                      <%= current_user.org_user_profile.user.email %>
+                      </p>
+                      <p>
+                      <strong>Position:</strong>
+                      <%= current_user.org_user_profile.position %>
+                      </p>
+
+                    </div>
+                    <div class="modal-footer">
+                      <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Close</a>
+                    </div>
+                  </div>
+                  <%# end of Modal %>
                 <% end %>
-              <% end %><%# end curr_org_user loop %>
-              <% if @connected == false %><%# if no connection is found %>
+              <% else %><%# else if the current user does not have a profile created %>
+                <p>
+                  You haven't created a host profile.<br>
+                  Would you like create a host profile and to become an admin host of <%= @organisation.name %>?<br>
+                  Your application is subject to the approval of the organisation supervisor.<br>
+                </p>
+                <div class='margin-top-5px'><%= link_to 'Create My Profile', new_org_user_profile_path(org_id: @organisation.id, is_admin: 'yes'), class: 'btn' %></div>
+              <% end %>
+            <% else %><%# else if the current user does not have a role as a Host and thus no org_user_profile was created %>
+    <%#---%><p>
+                If you want to register as an ADMIN Host of this Organisation, please click on the link below.
+                <br>
+                <div class="margin-top-15px">
+                  <%= link_to 'Add me as an ADMIN Host to this Organisation', new_org_user_profile_path(org_id: @organisation.id, is_admin: 'yes'), class: 'btn' %>
+                </div>
+              </p>
+            <% end  %>
+
+          <% else %><%# else if this organisation do not have a single host attached to it at all %>
+            <% if current_user.has_role? :host %>
+              <%# CHECK IF CURRENT USER WANTS TO JOIN IN WITH THIS ORGANISATION %>
+              <%# check if current user already has profile %>
+              <% if current_user.org_user_profile.present? %>
+                <%#  if already has a profile, check if it is linked to this organisation %>
+                <% @connected = false %><%# starts with connected is false %>
+                <%  current_user.org_users.each do |curr_org_user| %>
+                  <% if curr_org_user.organisation_id == @organisation.id %>
+                    <% @connected = true %>
+                    <%# if at least one match is found from many organisations, connected is true because current user is already linked up his profile to this organisation
+                        and don't do anything %>
+                  <% end %>
+                <% end %><%# end curr_org_user loop %>
+                <% if @connected == false %><%# if no connection is found %>
+                <p>You already have a host profile but not connected to <%= @organisation.name %>, would you like to host <%= @organisation.name %>?</p>
+                  <div class="row">
+                    <div class="col s4 m4 l4 margin-top-15px">
+                      <%= link_to "Connect me...", add_admin_into_organisation_path(@organisation, user_id: current_user.id), data: {confirm: "You are about to link your profile to this organisation"}, class: "waves-effect waves-light btn" %>
+                    </div>
+                    <div class="col s4 m4 l4 margin-top-15px">
+                      <%# Modal Trigger %>
+                      <a class="waves-effect waves-light btn modal-trigger" href="#host_profile">My Profile</a>
+                    </div>
+                  </div><%# end of row %>
+                  <%# Modal Structure %>
+                  <div id="host_profile" class="modal">
+                    <div class="modal-content">
+                      <h4>Modal Header</h4>
+                      <p>
+                      <strong>First name:</strong>
+                      <%= current_user.org_user_profile.first_name %>
+                      </p>
+
+                      <p>
+                      <strong>Last name:</strong>
+                      <%= current_user.org_user_profile.last_name %>
+                      </p>
+
+                      <p>
+                      <strong>Phone:</strong>
+                      <%= current_user.org_user_profile.phone %>
+                      </p>
+
+                      <p>
+                      <strong>Email:</strong>
+                      <%= current_user.org_user_profile.user.email %>
+                      </p>
+                      <p>
+                      <strong>Position:</strong>
+                      <%= current_user.org_user_profile.position %>
+                      </p>
+
+                    </div>
+                    <div class="modal-footer">
+                      <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Close</a>
+                    </div>
+                  </div>
+                  <%# end of Modal %>
+                <% end %>
+              <% else %><%# else if the user does not have a profile created %>
+                <p>
+                  You haven't created a host profile.<br>
+                  Would you like create a host profile and to become an admin host of <%= @organisation.name %>?<br>
+                  Your application is subject to the approval of the organisation supervisor.<br>
+                </p>
+                <div class='margin-top-5px'><%= link_to 'Create My Profile', new_org_user_profile_path(org_id: @organisation.id, is_admin: 'yes'), class: 'btn' %></div>
+              <% end %>
+            <% else %>
+    <%#---%><p>
+                If you want to register as an ADMIN Host of this Organisation, please click on the link below.
+                <br>
+                <div class="margin-top-15px">
+                  <%= link_to 'Add me as an ADMIN Host to this Organisation', new_org_user_profile_path(org_id: @organisation.id, is_admin: 'yes'), class: 'btn' %>
+                </div>
+              </p>
+            <% end %><%# end if current_user.has_role? :host %>
+          <% end %><%# end of if @organisation.org_users.admin_user.present? %>
+        </div><%# end of card content %>
+      </div><%# end of card %>
+
+
+      <%#----------------------------------%>
+      <%# APPROVED HOSTS (NOT ADMIN HOST) %>
+      <%# Host %>
+      <div class="card">
+        <div class="card-content">
+          <h5>Approved Hosts</h5>
+          <p>Approved Hosts will have the ability to create an opportunity and apply organisation tokens.</p>
+          <% if @organisation.org_users.host_user.present? %><%# host_user looks for org_user record with admin_status: false, verified_status: true %>
+            <p>List of approved Hosts:</p>
+            <ol>
+              <% @organisation.users.each do |user| %>
+                <% if user.org_users.present? %>
+                  <% user.org_users.each do |org_user| %>
+                    <% if org_user.organisation_id == @organisation.id %><%# just show the profile that is linked to this organisation %>
+                      <% if org_user.is_host_user %><%# is_host_user looks for org_user with admin_status: true, verified_status: true %>
+                        <li><p>
+                          <% if current_user.id == user.id %><%# ONLY the current user can see his own Profile page %>
+                            <b><%= link_to user.org_user_profile.name, host_profile_path(user.org_user_profile.id) %></b>
+                            (Verified)
+                            <%= link_to edit_org_user_profile_path(user.org_user_profile, org_id: @organisation.id) do %><i class="material-icons tiny">mode_edit</i><% end %>
+                            <%= link_to 'Disconnect', remove_host_from_organisation_path(@organisation, user_id: user.id), data: {confirm: "Are you sure to remove the connection?"}%>
+                          <% else %>
+                            <% @host = User.find(user.id) %>
+                            <b><%= user.org_user_profile.name %></b> (Verified) |
+                            <%= render 'contact_host_modal' %>
+                          <% end %>
+                        </p></li>
+                      <% end %>
+                    <% end %><%# if org_user.organisation_id == @organisation.id %>
+                  <% end %><%# end loop %>
+                <% end %><%# if user.org_users.present? %>
+              <% end %><%# end of loop %>
+            </ol>
+
+          <%# CHECK IF CURRENT USER WANTS TO JOIN IN WITH THIS ORGANISATION %>
+            <% if current_user.has_role? :host %>
+              <%# check if current user already has profile %>
+              <% if current_user.org_user_profile.present? %>
+                <%#  if already has a profile, check if it is linked to this organisation %>
+                <% @connected = false %><%# starts with connected is false %>
+                <%  current_user.org_users.each do |curr_org_user| %>
+                  <% if curr_org_user.organisation_id == @organisation.id %>
+                    <% @connected = true %>
+                    <%# if at least one match is found from many organisations, connected is true because current user is already linked up his profile to this organisation
+                        and don't do anything %>
+                  <% end %>
+                <% end %><%# end curr_org_user loop %>
+                <% if @connected == false %><%# if no connection is found %>
+                  <p>You already have a host profile but not connected to <%= @organisation.name %>, would you like to host <%= @organisation.name %>?</p>
+                  <div class="row">
+                    <div class="col s4 m4 l4 margin-top-15px">
+                      <%= link_to "Connect me...", add_host_into_organisation_path(@organisation, user_id: current_user.id), data: {confirm: "You are about to link your profile to this organisation"}, class: "waves-effect waves-light btn" %>
+                    </div>
+                    <div class="col s4 m4 l4 margin-top-15px">
+                      <%# Modal Trigger %>
+                      <a class="waves-effect waves-light btn modal-trigger" href="#host_profile">My Profile</a>
+                    </div>
+                  </div><%# end of row %>
+
+                  <%# Modal Structure %>
+                  <div id="host_profile" class="modal">
+                    <div class="modal-content">
+                      <h4>Modal Header</h4>
+                      <p>
+                      <strong>First name:</strong>
+                      <%= current_user.org_user_profile.first_name %>
+                      </p>
+
+                      <p>
+                      <strong>Last name:</strong>
+                      <%= current_user.org_user_profile.last_name %>
+                      </p>
+
+                      <p>
+                      <strong>Phone:</strong>
+                      <%= current_user.org_user_profile.phone %>
+                      </p>
+
+                      <p>
+                      <strong>Email:</strong>
+                      <%= current_user.org_user_profile.user.email %>
+                      </p>
+                      <p>
+                      <strong>Position:</strong>
+                      <%= current_user.org_user_profile.position %>
+                      </p>
+
+                    </div>
+                    <div class="modal-footer">
+                      <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Close</a>
+                    </div>
+                  </div>
+                  <%# end of Modal %>
+                <% end %>
+              <% else %><%# else if the user does not have a profile created %>
+                <p>
+                  You haven't created a host profile.<br>
+                  Would you like create a host profile and to become an adminzzz host of <%= @organisation.name %>?<br>
+                  Your application is subject to the approval of the organisation supervisor.<br>
+                </p>
+                <div class='margin-top-5px'><%= link_to 'Create My Profile', new_org_user_profile_path(org_id: @organisation.id), class: 'btn' %></div>
+              <% end %>
+            <% else %><%# else if the current user does not have Host role %>
+    <%#---%><p>
+                If you want to register as a HOST of this Organisation, please click on the link below.
+                <br>
+                <div class="margin-top-15px">
+                  <%= link_to 'Add me as a HOST to this Organisation', new_org_user_profile_path(org_id: @organisation.id, is_admin: 'no'), class: 'btn' %>
+                </div>
+              </p>
+            <% end %><%# end if user has role as Host %>
+          <% else %><%# else if this organisation do not have a single host attached to it at all %>
+            <%# CHECK IF CURRENT USER WANTS TO JOIN IN WITH THIS ORGANISATION %>
+            <% if current_user.has_role? :host %>
+              <%# check if current user already has profile %>
+              <% if current_user.org_user_profile.present? %>
+                <%#  if already has a profile, check if it is linked to this organisation %>
+                <% @connected = false %><%# starts with connected is false %>
+                <%  current_user.org_users.each do |curr_org_user| %>
+                  <% if curr_org_user.organisation_id == @organisation.id %>
+                    <% @connected = true %>
+                    <%# if at least one match is found from many organisations, connected is true because current user is already linked up his profile to this organisation
+                        and don't do anything %>
+                  <% end %>
+                <% end %><%# end curr_org_user loop %>
+                <% if @connected == false %><%# if no connection is found %>
                 <p>You already have a host profile but not connected to <%= @organisation.name %>, would you like to host <%= @organisation.name %>?</p>
                 <div class="row">
                   <div class="col s4 m4 l4 margin-top-15px">
@@ -327,191 +474,119 @@
                   </div>
                 </div><%# end of row %>
 
-                <%# Modal Structure %>
-                <div id="host_profile" class="modal">
-                  <div class="modal-content">
-                    <h4>Modal Header</h4>
-                    <p>
-                    <strong>First name:</strong>
-                    <%= current_user.org_user_profile.first_name %>
-                    </p>
+                  <%# Modal Structure %>
+                  <div id="host_profile" class="modal">
+                    <div class="modal-content">
+                      <h4>Modal Header</h4>
+                      <p>
+                      <strong>First name:</strong>
+                      <%= current_user.org_user_profile.first_name %>
+                      </p>
 
-                    <p>
-                    <strong>Last name:</strong>
-                    <%= current_user.org_user_profile.last_name %>
-                    </p>
+                      <p>
+                      <strong>Last name:</strong>
+                      <%= current_user.org_user_profile.last_name %>
+                      </p>
 
-                    <p>
-                    <strong>Phone:</strong>
-                    <%= current_user.org_user_profile.phone %>
-                    </p>
+                      <p>
+                      <strong>Phone:</strong>
+                      <%= current_user.org_user_profile.phone %>
+                      </p>
 
-                    <p>
-                    <strong>Email:</strong>
-                    <%= current_user.org_user_profile.user.email %>
-                    </p>
-                    <p>
-                    <strong>Position:</strong>
-                    <%= current_user.org_user_profile.position %>
-                    </p>
+                      <p>
+                      <strong>Email:</strong>
+                      <%= current_user.org_user_profile.user.email %>
+                      </p>
+                      <p>
+                      <strong>Position:</strong>
+                      <%= current_user.org_user_profile.position %>
+                      </p>
 
+                    </div>
+                    <div class="modal-footer">
+                      <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Close</a>
+                    </div>
                   </div>
-                  <div class="modal-footer">
-                    <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Close</a>
-                  </div>
-                </div>
-                <%# end of Modal %>
-              <% end %>
-            <% else %><%# else if the user does not have a profile created %>
-              <p>
-                You haven't created a host profile.<br>
-                Would you like create a host profile and to become an adminzzz host of <%= @organisation.name %>?<br>
-                Your application is subject to the approval of the organisation supervisor.<br>
-              </p>
-              <div class='margin-top-5px'><%= link_to 'Create My Profile', new_org_user_profile_path(org_id: @organisation.id), class: 'btn' %></div>
-            <% end %>
-          <% else %><%# else if the current user does not have Host role %>
-  <%#---%><p>
-              If you want to register as a HOST of this Organisation, please click on the link below.
-              <br>
-              <%= link_to 'Add me as a HOST to this Organisation', new_org_user_profile_path(org_id: @organisation.id, is_admin: 'no'), class: 'btn' %>
-            </p>
-          <% end %><%# end if user has role as Host %>
-        <% else %><%# else if this organisation do not have a single host attached to it at all %>
-          <%# CHECK IF CURRENT USER WANTS TO JOIN IN WITH THIS ORGANISATION %>
-          <% if current_user.has_role? :host %>
-            <%# check if current user already has profile %>
-            <% if current_user.org_user_profile.present? %>
-              <%#  if already has a profile, check if it is linked to this organisation %>
-              <% @connected = false %><%# starts with connected is false %>
-              <%  current_user.org_users.each do |curr_org_user| %>
-                <% if curr_org_user.organisation_id == @organisation.id %>
-                  <% @connected = true %>
-                  <%# if at least one match is found from many organisations, connected is true because current user is already linked up his profile to this organisation
-                      and don't do anything %>
+                  <%# end of Modal %>
                 <% end %>
-              <% end %><%# end curr_org_user loop %>
-              <% if @connected == false %><%# if no connection is found %>
-              <p>You already have a host profile but not connected to <%= @organisation.name %>, would you like to host <%= @organisation.name %>?</p>
-              <div class="row">
-                <div class="col s4 m4 l4 margin-top-15px">
-                  <%= link_to "Connect me...", add_host_into_organisation_path(@organisation, user_id: current_user.id), data: {confirm: "You are about to link your profile to this organisation"}, class: "waves-effect waves-light btn" %>
-                </div>
-                <div class="col s4 m4 l4 margin-top-15px">
-                  <%# Modal Trigger %>
-                  <a class="waves-effect waves-light btn modal-trigger" href="#host_profile">My Profile</a>
-                </div>
-              </div><%# end of row %>
-
-                <%# Modal Structure %>
-                <div id="host_profile" class="modal">
-                  <div class="modal-content">
-                    <h4>Modal Header</h4>
-                    <p>
-                    <strong>First name:</strong>
-                    <%= current_user.org_user_profile.first_name %>
-                    </p>
-
-                    <p>
-                    <strong>Last name:</strong>
-                    <%= current_user.org_user_profile.last_name %>
-                    </p>
-
-                    <p>
-                    <strong>Phone:</strong>
-                    <%= current_user.org_user_profile.phone %>
-                    </p>
-
-                    <p>
-                    <strong>Email:</strong>
-                    <%= current_user.org_user_profile.user.email %>
-                    </p>
-                    <p>
-                    <strong>Position:</strong>
-                    <%= current_user.org_user_profile.position %>
-                    </p>
-
-                  </div>
-                  <div class="modal-footer">
-                    <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Close</a>
-                  </div>
-                </div>
-                <%# end of Modal %>
-              <% end %>
-            <% else %><%# else if the user does not have a profile created %>
-              <p>
-                You haven't created a host profile.<br>
-                Would you like create a host profile and to become a host of <%= @organisation.name %>?<br>
-                Your application is subject to the approval of the organisation supervisor.<br>
-              </p>
-              <div class='margin-top-5px'><%= link_to 'Create My Profile', new_org_user_profile_path(org_id: @organisation.id), class: 'btn' %></div>
-            <% end %><%# end of if current_user.org_user_profile.present?%>
-          <% else %>
-  <%#---%><p>
-              If you want to register as a HOST of this Organisation, please click on the link below.
-              <br>
-              <%= link_to 'Add me as a HOST to this Organisation', new_org_user_profile_path(org_id: @organisation.id, is_admin: 'no'), class: 'btn' %>
-            </p>
-          <% end %><%# end of if current user has role as a Host%>
-        <% end %><%# end of if @organisation.org_users.host_user.present? %>
-      </div><%# end of card content %>
-    </div><%# end of card %>
-
-    <%# ORGANISATION SUBSCRIPTION DETAILS ---------------------------------- %>
-    <%# The Subscription Card will display the button to purchase subscription for all the Admin Hosts of this organisation.
-        Will appear only if the current use is a host or admin AND if the current user has created a profile
-    %>
-
-    <% if (current_user.has_role? :host) || (current_user.has_role? :admin) %>
-      <% if current_user.org_user_profile.present? %>
-        <% @organisation.org_users.each do |org_user| %>
-          <% if (org_user.user.id == current_user.id) %>
-            <div class="card">
-              <div class="card-content">
-                <h5>Organisation Subscription</h5>
+              <% else %><%# else if the user does not have a profile created %>
                 <p>
-                  <%# There is an identical subscription process below in another file:
-                      app/views/opportunities/_organisation_new_opportunity.html.erb
-                  %>
-                <% if @organisation.subscriptions.present? %>
-                  <%# searching for the LAST subscription of this ORGANISATION %>
-                  <% @subscription = Subscription.find(@organisation.subscriptions.last.id) %>
-                  The subscription's expiry date is: <b><%= @organisation.subscriptions.last.expiry_date.getlocal.strftime('%e %B %Y') %></b>
-                  <% if (@subscription.active) %>
-                    <% if @subscription.expires_in_less_than_30_days %>
-                      - <span class="red-text bold">Expiring soon!</span>
-                      <br>
-                      <% if org_user.is_admin_user %><%# only admin host can view Subscription button %>
-                        <%= render 'subscription_button' %>
-                      <% elsif org_user.is_host_user %>
-                        Please contact your organisation Administrators as shown above.
-                        <br>
-                      <% end %>
-                    <% end %>
-                  <% elsif (@subscription.expired)%>
-                      - <span class="red-text bold">Expired!</span>
-                      <br>
-                      <% if org_user.is_admin_user %><%# only admin host can view Subscription button %>
-                        <%= render 'subscription_button' %>
-                      <% elsif org_user.is_host_user %>
-                        Please contact your organisation Administrators as shown above.
-                        <br>
-                      <% end %>
-                    <% end %>
-                <% else %>
-                  There is no MOBEEAS subscription record for <%= @organisation.name %>.<br>
-                  <% if org_user.is_admin_user %><%# only admin host can view Subscription button %>
-                    <%= render 'subscription_button' %>
-                  <% elsif org_user.is_host_user %>
-                    Please contact your organisation Administrator as shown above.
-                    <br>
-                  <% end %>
-                <% end %>
+                  You haven't created a host profile.<br>
+                  Would you like create a host profile and to become a host of <%= @organisation.name %>?<br>
+                  Your application is subject to the approval of the organisation supervisor.<br>
                 </p>
-              </div><%# end of card content %>
-            </div><%# end of card %>
-          <% end %><%# end of if (org_user.user.id == current_user.id)%>
-        <% end %><%# end of @organisation.org_users loop %>
+                <div class='margin-top-5px'><%= link_to 'Create My Profile', new_org_user_profile_path(org_id: @organisation.id, is_admin: 'no'), class: 'btn' %></div>
+              <% end %><%# end of if current_user.org_user_profile.present?%>
+            <% else %>
+    <%#---%><p>
+                If you want to register as a HOST of this Organisation, please click on the link below.
+                <br>
+                <div class="margin-top-15px">
+                  <%= link_to 'Add me as a HOST to this Organisation', new_org_user_profile_path(org_id: @organisation.id, is_admin: 'no'), class: 'btn' %>
+                </div>
+                </p>
+            <% end %><%# end of if current user has role as a Host%>
+          <% end %><%# end of if @organisation.org_users.host_user.present? %>
+        </div><%# end of card content %>
+      </div><%# end of card %>
+
+      <%# ORGANISATION SUBSCRIPTION DETAILS ---------------------------------- %>
+      <%# The Subscription Card will display the button to purchase subscription for all the Admin Hosts of this organisation.
+          Will appear only if the current use is a host or admin AND if the current user has created a profile
+      %>
+
+      <% if (current_user.has_role? :host) || (current_user.has_role? :admin) %>
+        <% if current_user.org_user_profile.present? %>
+          <% @organisation.org_users.each do |org_user| %>
+            <% if (org_user.user.id == current_user.id) %>
+              <div class="card">
+                <div class="card-content">
+                  <h5>Organisation Subscription</h5>
+                  <p>
+                    <%# There is an identical subscription process below in another file:
+                        app/views/opportunities/_organisation_new_opportunity.html.erb
+                    %>
+                  <% if @organisation.subscriptions.present? %>
+                    <%# searching for the LAST subscription of this ORGANISATION %>
+                    <% @subscription = Subscription.find(@organisation.subscriptions.last.id) %>
+                    The subscription's expiry date is: <b><%= @organisation.subscriptions.last.expiry_date.getlocal.strftime('%e %B %Y') %></b>
+                    <% if (@subscription.active) %>
+                      <% if @subscription.expires_in_less_than_30_days %>
+                        - <span class="red-text bold">Expiring soon!</span>
+                        <br>
+                        <% if org_user.is_admin_user %><%# only admin host can view Subscription button %>
+                          <%= render 'subscription_button' %>
+                        <% elsif org_user.is_host_user %>
+                          Please contact your organisation Administrators as shown above.
+                          <br>
+                        <% end %>
+                      <% end %>
+                    <% elsif (@subscription.expired)%>
+                        - <span class="red-text bold">Expired!</span>
+                        <br>
+                        <% if org_user.is_admin_user %><%# only admin host can view Subscription button %>
+                          <%= render 'subscription_button' %>
+                        <% elsif org_user.is_host_user %>
+                          Please contact your organisation Administrators as shown above.
+                          <br>
+                        <% end %>
+                      <% end %>
+                  <% else %>
+                    There is no MOBEEAS subscription record for <%= @organisation.name %>.<br>
+                    <% if org_user.is_admin_user %><%# only admin host can view Subscription button %>
+                      <%= render 'subscription_button' %>
+                    <% elsif org_user.is_host_user %>
+                      Please contact your organisation Administrator as shown above.
+                      <br>
+                    <% end %>
+                  <% end %>
+                  </p>
+                </div><%# end of card content %>
+              </div><%# end of card %>
+            <% end %><%# end of if (org_user.user.id == current_user.id)%>
+          <% end %><%# end of @organisation.org_users loop %>
+        <% end %>
       <% end %>
-    <% end %>
-    <%#----------------------------------%>
+      <%#----------------------------------%>
+    <%# end %><%# end of: if !(@organisation.users.first.org_user_profile.present?)%>
+  <% end %><%# end of: if (@organisation.users.count == 1) && !(@organisation.users.first.org_user_profile.present?) %>

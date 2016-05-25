@@ -51,9 +51,20 @@ class OrgUserProfilesController < ApplicationController
         if @org_user_profile.agency == 'organisation host'
           if params[:org_id].present?
             @organisation = Organisation.find(params[:org_id])
-            @organisation.users << current_user
-            NewOrgUserProfileMailer.new_organisation_host(@organisation.id, current_user.id).deliver_now
-            # NewOrgUserProfileMailer.register_user(@organisation.id, current_user.id).deliver_now
+            #this is when the organisation is new and the first Admin host profile is created
+            if (@organisation.users.count <= 1) #the org has only one Admin Host
+              if (@organisation.users.first == current_user)#check if the first Admin Host is the same with the current user, a new mail to org's exec will be sent for approval
+                NewOrganisationMailer.register_admin(@organisation.id, current_user.id).deliver_now
+                NewOrgUserProfileMailer.new_organisation_host(@organisation.id, current_user.id).deliver_now
+              else
+                @organisation.users << current_user #if the current user is not the same as the first Admin Host, add it to the org
+                NewOrgUserProfileMailer.new_organisation_host(@organisation.id, current_user.id).deliver_now
+              end
+            else # if the @organisation has more than one users already
+              @organisation.users << current_user #if the current user is not the same as the first Admin Host, add it to the org
+              NewOrgUserProfileMailer.new_organisation_host(@organisation.id, current_user.id).deliver_now
+            end
+
           end
           if params[:is_admin].present?
             if (params[:is_admin] == 'yes') # if params is_admin is true
@@ -63,10 +74,8 @@ class OrgUserProfilesController < ApplicationController
                   org_user.save!
                 end
               end # end of loop
-              NewOrgUserProfileMailer.new_organisation_host(@organisation.id, current_user.id).deliver_now
               NewOrgUserProfileMailer.register_admin(@organisation.id, current_user.id).deliver_now
-            elsif params[:is_admin] == 'no'
-              NewOrgUserProfileMailer.new_organisation_host(@organisation.id, current_user.id).deliver_now
+            elsif (params[:is_admin] == 'no')
               NewOrgUserProfileMailer.register_user(@organisation.id, current_user.id).deliver_now
             end # end of if params[:is_admin]
             current_user.save!

@@ -1,0 +1,58 @@
+<%# THIS IS  app/views/organisations/new %>
+<h5>New Organisation</h5>
+<% if params[:subs_type] == 'new_host_new_org' %><%# if the current user is creating a new host and organisation %>
+  <p>
+    Please enter your details before creating a new organisation.
+  </p>
+
+  <%# ORG USER PROFILE %>
+  <%# The user who creates a new organisation will have role as a host %>
+  <% @new_org_user_profile = OrgUserProfile.new %>
+  <%= simple_form_for(@new_org_user_profile) do |f| %>
+    <%= f.error_notification %>
+    <%= f.association :user, :as => :hidden, input_html: { value: current_user.id }%>
+    <%# org_creator is the host who created the organisation profile.
+    NOT ALL hosts are organisation profile creators,
+    some host are just associated with some organisations %>
+    <%= f.input :org_creator, :as => :hidden, input_html: { value: true } %>
+    <div class="form-inputs">
+      <div class="row">
+        <div class="col l6">
+          <%= f.input :first_name %>
+        </div>
+        <div class="col l6">
+          <%= f.input :last_name %>
+        </div>
+        <div class="col l6">
+          <%= f.input :phone %>
+        </div>
+        <div class="col l6">
+          <%= f.input :position %>
+        </div>
+        <div class="col l6">
+          <%= f.input :suburb %>
+        </div>
+        <div class="col l6">
+          <%= f.input :state, priority: [ "NSW" ], collection: [ "NSW", "QLD", "SA", "TAS", "VIC", "ACT", "WA"] %>
+        </div>
+        <div class="col l6">
+          <%= f.input :postcode %>
+        </div>
+        <div class="col l6">
+          <%= f.input :country, priority: [ "Australia" ] %>
+        </div>
+      </div>
+      <%= f.input :agency, :as => :hidden, input_html: { value: 'organisation host' } %>
+
+      <%#= f.input :guid %>
+    </div>
+
+    <div class="form-actions">
+        <%= f.button :submit, "Create Organisation User Profile" %>
+    </div>
+  <% end %>
+
+  <br><br>
+<% elsif params[:subs_type] == 'new_org' %><%# if the current user is not creating a new host profile, render form %>
+  <%= render 'form' %>
+<% end %>

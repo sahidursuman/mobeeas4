@@ -69,7 +69,6 @@ class OrganisationsController < ApplicationController
       if @organisation.save
         @organisation.users << current_user
         NewOrganisationMailer.notify(@organisation.id).deliver_now
-        NewOrganisationMailer.register_admin(@organisation.id, current_user.id).deliver_now
         format.html { redirect_to @organisation, notice: 'Organisation was successfully created.' }
         format.json { render :show, status: :created, location: @organisation }
       else

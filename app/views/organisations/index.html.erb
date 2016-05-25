@@ -64,7 +64,7 @@
       </p>
       <%# Only the user with role as Host can add a new organisation %>
       <%# Any users with roles other than Host can also sign up to be come a Host %>
-      <%= link_to 'Register New Organisation', new_organisation_path(subs_type: 'new_host_new_org'), class: 'btn' %>
+      <%= link_to 'Register New Organisation', new_organisation_path, class: 'btn' %>
 
     <% end %>
   </div>
