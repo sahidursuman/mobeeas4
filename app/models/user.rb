@@ -31,4 +31,13 @@ class User < ActiveRecord::Base
   # 	RegistrationMailer.registration(self.id).deliver_now
   # end
 
+	def all_security_check_verified
+    self.security_checks.each do |check|
+      unless check.verified
+        return false
+      end
+      true
+    end
+  end
+
 end

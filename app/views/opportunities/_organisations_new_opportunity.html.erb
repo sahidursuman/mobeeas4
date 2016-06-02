@@ -76,14 +76,21 @@
           <% elsif !(org_user.verified_status) || !(org_user.user.org_user_profile.approved) %>
             <div class="card">
               <div class="card-content">
-                <div class="col l8">
-                  <p>
-                    Your connection with <b><%= link_to organisation.name, organisation_path(organisation.id) %></b> has not been verified or your MOBEEAS registration has not yet been approved.
-                  </p>
-                </div>
-                <div class="col l4 margin-bottom-20px">
+                <p>
+                  Your connection with <b><%= link_to organisation.name, organisation_path(organisation.id) %></b> has not been verified or your MOBEEAS registration has not yet been approved.
+                </p>
+
+                <div class="col m6 margin-top-20px margin-bottom-20px">
                   <%# if not verified, host can not create a new opportunity here %>
                   <a class="btn disabled">New Opportunity</a>
+                </div>
+                <div class="col m6 margin-top-20px margin-bottom-20px">
+                  <%# if not verified, host can resend email to Org's Executive to approve his application to be the Host %>
+                  <% if org_user.admin_status == true %><%# if applying for Admin Host Rights %>
+                    <%#= link_to "Resend A Application Email", resend_register_admin_mailer_org_user_profile_path(@organisation.id), class: "btn" %>
+                  <% elsif org_user.admin_status == false %><%# if applying for Host Rights %>
+                    <%#= link_to "Resend H Application Email", resend_register_user_mailer_org_user_profile_path(@organisation.id), class: "btn" %>
+                  <% end %>
                 </div>
               </div>
             </div>

@@ -1,5 +1,5 @@
 class OrgUserProfilesController < ApplicationController
-  before_action :set_org_user_profile, only: [:show, :edit, :update, :destroy, :approve, :prohibit]
+  before_action :set_org_user_profile, only: [:show, :edit, :update, :destroy, :approve, :prohibit, :resend_register_admin_mailer, :resend_register_user_mailer]
   # skip_before_action :check_admin, except: [:show]
 
   # This function is for admin user only, to approve a host to appear in MOBEEAS website
@@ -16,6 +16,17 @@ class OrgUserProfilesController < ApplicationController
     @org_user_profile.approved = false
     @org_user_profile.save!
     redirect_to org_user_profiles_path(status: 'approved')
+  end
+
+  def resend_register_admin_mailer(organisation_id, org_user_profile)
+    @organisation = Organisation.find(organisation_id)
+    @org_user_profile = org_user_profile
+    NewOrgUserProfileMailer.register_admin(@organisation.id, @org_user_profile.user.id).deliver_now
+  end
+
+  def resend_register_user_mailer(organisation_id)
+    @organisation = Organisation.find(organisation_id)
+    NewOrgUserProfileMailer.register_user(@organisation.id, current_user.id).deliver_now
   end
 
   # GET /org_user_profiles
@@ -136,4 +147,6 @@ class OrgUserProfilesController < ApplicationController
     def org_user_profile_params
       params.require(:org_user_profile).permit(:first_name, :last_name, :phone, :position, :guid, :user_id, :org_creator, :connections, :agency, :number_of_tokens_for_independent, :approved, :suburb, :state, :postcode, :country, :dob)
     end
+
+
 end

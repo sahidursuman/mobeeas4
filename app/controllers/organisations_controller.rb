@@ -13,6 +13,9 @@ class OrganisationsController < ApplicationController
   def add_admin_into
     user = User.find(params[:user_id])
     @organisation.users << user
+    @org_user = OrgUser.find_by(organisation_id: @organisation.id, user_id: user.id)
+    @org_user.update_attributes(admin_status: true)
+    @org_user.save!
     NewOrgUserProfileMailer.new_organisation_host(@organisation.id, user.id).deliver_now
     NewOrgUserProfileMailer.register_admin(@organisation.id, user.id).deliver_now
     redirect_to @organisation

@@ -42,7 +42,7 @@ Rails.application.routes.draw do
 
   resources :org_user_profiles do
     member do
-      get :approve, :prohibit
+      get :approve, :prohibit, :resend_register_admin_mailer, :resend_register_user_mailer
     end
   end
 

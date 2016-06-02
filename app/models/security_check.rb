@@ -2,6 +2,7 @@ class SecurityCheck < ActiveRecord::Base
   belongs_to :user
 
   scope :unverified, -> {where(verified: false)}
+  scope :verified, -> {where(verified: true)}
 
   def verify(user)
     @user = User.find(user)

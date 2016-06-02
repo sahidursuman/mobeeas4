@@ -5,6 +5,82 @@
 <% end %>
 
 <div class="row">
+  <div class="col s12 m12">
+    <div class="card">
+      <div class="card-content">
+        <% @percentage = 0 %>
+        <div class="col s2 m2 align-left">
+          <% if @org_user_profile.valid? %><%# Checking valid Profile %>
+            <span class="green-text"><i class="fa fa-check-circle"></i></span> Profile
+            <% @percentage += 25 %>
+          <% else %>
+            <span class="red-text"><i class="fa fa-times"></i></span> Profile
+          <% end %>
+        </div>
+        <div class="col s2 m2 align-left"><%# Checking valid Agreement %>
+          <% if @org_user_profile.user.agreement.host_all_agreed %>
+            <span class="green-text"><i class="fa fa-check-circle"></i></span> Agreements
+            <% @percentage += 25 %>
+          <% else %>
+            <span class="red-text"><i class="fa fa-times"></i></span> Agreements
+          <% end %>
+        </div>
+        <div class="col s2 m2 align-left"><%# Checking valid Security Check %>
+          <% if @org_user_profile.user.security_checks.present? %>
+            <% if @org_user_profile.user.all_security_check_verified %>
+              <span class="green-text"><i class="fa fa-check-circle"></i></span> Security Check
+              <% @percentage += 25 %>
+            <% else %>
+              <span class="red-text"><i class="fa fa-times"></i></span> Security Check
+            <% end %>
+          <% else %>
+            <span class="red-text"><i class="fa fa-times"></i></span> Security Check
+          <% end %>
+        </div>
+        <div class="col s6 m6 align-left">
+          <% if @org_user_profile.agency == 'independent host' %>
+            <% if @org_user_profile.user.subscriptions.present? %>
+              <% if @org_user_profile.user.subscriptions.last.active %>
+                <span class="green-text"><i class="fa fa-check-circle"></i></span> Subscription
+                <% @percentage += 25 %>
+              <% else %>
+                <span class="red-text"><i class="fa fa-times"></i></span> Subscription
+              <% end %>
+            <% else %>
+              <span class="red-text"><i class="fa fa-times"></i></span> Subscription
+            <% end %>
+          <% elsif @org_user_profile.agency == 'organisation host' %>
+            <% @flag_all_subs_active = true %>
+            <%# this is to mark if at least one of the current subscription of the connected organisation is not active.
+                if one associated organisation's latest subcription is not active, flag will be set to false %>
+            <% @org_user_profile.user.organisations.each do |organisation| %>
+              <% if organisation.subscriptions.last.present? %>
+                <% if organisation.last_subscription_is_active %>
+                  <span class="green-text"><i class="fa fa-check-circle"></i></span> <%=  organisation.name %> Subscription<br>
+                <% else %>
+                  <span class="red-text"><i class="fa fa-times"></i></span> <%=  organisation.name %> Subscription<br>
+                  <% @flag_all_subs_active = false %>
+                <% end %>
+              <% else %>
+                <span class="red-text"><i class="fa fa-times"></i></span> <%=  organisation.name %> Subscription<br>
+                <% @flag_all_subs_active = false %>
+              <% end %>
+
+            <% end %><%# end of loop %>
+            <% if @flag_all_subs_active %>
+              <% @percentage += 25 %>
+            <% end %>
+          <% end %>
+        </div>
+
+        <br><br>
+        Your Progress:
+        <div class="progress">
+          <div class="determinate" style="width: <%= @percentage %>%"></div>
+        </div>
+      </div>
+    </div>
+  </div>
   <%# The LEFT column ===================================== %>
   <div class="col s12 m4">
     <div class="card">

@@ -165,8 +165,9 @@
                       <% elsif (org_user.admin_status) && !(org_user.verified_status) %>
                         <li><p>
                         <strong><%= link_to user.org_user_profile.name, org_user_profile_path(user.org_user_profile.id) %></strong>
-                        (Not Verified)
+                        <span class="red-text">(Not Verified)</span> | <%#= link_to "Resend Request", resend_register_admin_mailer_org_user_profile_path(@organisation.id, org_user.user.org_user_profile) %>
                         </p></li>
+
                       <% end %>
 
                     <% end %><%# if org_user.organisation_id == @organisation.id %>
