@@ -69,6 +69,8 @@ class SubscriptionsController < ApplicationController
 
   # GET /subscriptions/1/edit
   def edit
+    @users = User.all
+    @organisations = Organisation.all
   end
 
   # POST /subscriptions

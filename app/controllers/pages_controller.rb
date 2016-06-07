@@ -135,6 +135,8 @@ class PagesController < ApplicationController
 
 	def manual_receipt
 		@subscription = Subscription.new
+		@users = User.all
+		@organisations = Organisation.all
 	end
 
 end
