@@ -1,5 +1,5 @@
   <tr>
-    <td><%= @subscription.id %></td>
+    <td><%= link_to @subscription.id, subscription_path(@subscription.id) %></td>
     <td><%= @subscription.user_type %></td>
     <%# displaying the name of the organisation host, independent host or the candidate %>
     <% if params[:organisation].present? || params[:independent].present? %>

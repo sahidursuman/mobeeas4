@@ -133,4 +133,8 @@ class PagesController < ApplicationController
 		@one_token = EngagementTokenPack.find(1)
 	end
 
+	def manual_receipt
+		@subscription = Subscription.new
+	end
+
 end

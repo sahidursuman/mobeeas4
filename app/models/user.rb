@@ -40,4 +40,8 @@ class User < ActiveRecord::Base
     end
   end
 
+	def name
+		self.email
+	end
+
 end

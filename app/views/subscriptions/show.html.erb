@@ -1,29 +1,49 @@
-<p id="notice"><%= notice %></p>
+<div class="row">
+  <div class="col s12 m11 offset-m1 l11 offset-l1">
+		<%= render 'layouts/sidebar' %>
+    <p id="notice"><%= notice %></p>
 
-<p>
-  <strong>User type:</strong>
-  <%= @subscription.user_type %>
-</p>
+    <p>
+      <b>User type:</b>
+      <%= @subscription.user_type %>
+    </p>
 
-<p>
-  <strong>User:</strong>
-  <%= @subscription.user %>
-</p>
+    <p>
+      <b>User Email:</b>
+      <%= @subscription.user.email %>
+    </p>
 
-<p>
-  <strong>Organisation:</strong>
-  <%= @subscription.organisation %>
-</p>
+    <p>
+      <% if @subscription.organisation.present? %>
+        <b>Organisation:</b>
+        <%= @subscription.organisation.name %>
+      <% end %>
+    </p>
 
-<p>
-  <strong>Expiry date:</strong>
-  <%= @subscription.expiry_date %>
-</p>
+    <p>
+      <b>Created date:</b>
+      <%= @subscription.created_at.strftime('%d/%m/%Y') %>
+    </p>
 
-<p>
-  <strong>Payment:</strong>
-  <%= @subscription.payment %>
-</p>
+    <p>
+      <b>Expiry date:</b>
+      <%= @subscription.expiry_date.strftime('%d/%m/%Y') %>
+    </p>
 
-<%= link_to 'Edit', edit_subscription_path(@subscription) %> |
-<%= link_to 'Back', subscriptions_path %>
+    <p>
+      <b>Payment:</b>
+      <%= number_to_currency(@subscription.payment) %>
+    </p>
+
+    <% if(@subscription.manual_receipt) %>
+      <% if @subscription.notes.present? %>
+        <p>
+          <b>Manual Receipt Notes:</b>
+          <%= @subscription.notes %>
+        </p>
+      <% end %>
+    <% end %>
+
+    <%= link_to 'Edit', edit_subscription_path(@subscription) %>
+  </div>
+</div>

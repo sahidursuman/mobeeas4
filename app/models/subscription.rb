@@ -1,6 +1,7 @@
 class Subscription < ActiveRecord::Base
   belongs_to :user
   belongs_to :organisation
+  validates :user_id, presence: true
 
   scope :organisation, -> { where(user_type: 'organisation') }
   scope :independent, -> { where(user_type: 'independent') }

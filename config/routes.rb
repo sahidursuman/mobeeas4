@@ -129,6 +129,8 @@ Rails.application.routes.draw do
   get 'contact_candidate', to: 'pages#contact_candidate'
   get 'candidate_profile_mini', to: 'pages#candidate_profile_mini'
   get 'become_host_candidate_sponsor', to: 'pages#become_host_candidate_sponsor'
+  get 'manual_receipt', to: 'pages#manual_receipt'
+
 
 
 

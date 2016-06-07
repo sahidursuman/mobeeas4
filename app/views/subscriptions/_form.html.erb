@@ -2,11 +2,22 @@
   <%= f.error_notification %>
 
   <div class="form-inputs">
-    <%= f.input :user_type %>
-    <%= f.association :user %>
-    <%= f.association :organisation %>
-    <%= f.input :expiry_date %>
-    <%= f.input :payment %>
+    <%= f.input :user_type, priority: [ "organisation" ], collection: [ "organisation", "independent", "candidate"] %>
+    <%= f.association :user, collection: User.all, label: "Choose a User" %>
+    <%= f.association :organisation, collection: Organisation.all, label: "Select if ORGANISATION Host" %>
+
+    <div class="row">
+      <div class="col m6">
+        <label for="expiry_date">Expiry Date</label><%# must add * manually because this label is from the <label> tag where * won't appear automatically %>
+          <%= f.date_field :expiry_date, as: :string, input_html: { class: 'datetimepicker1' }, placeholder: 'dd/mm/yyyy' %>
+        </label>
+      </div>
+      <div class="col m6">
+        <%= f.input :payment %>
+      </div>
+    </div>
+    <%= f.input :manual_receipt, :as => :hidden, input_html: { value: true} %>
+    <%= f.input :notes %>
   </div>
 
   <div class="form-actions">
