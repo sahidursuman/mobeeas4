@@ -13,10 +13,10 @@
         </label>
       </div>
       <div class="col m6">
-        <%= f.input :payment %>
+        <%= f.input :payment, label: "Payment ex. GST" %>
       </div>
     </div>
-    <%= f.input :manual_receipt, :as => :hidden, input_html: { value: true} %>
+    <%= f.input :manual_receipt, :as => :hidden, input_html: { value: true } %>
     <%= f.input :notes %>
   </div>
 

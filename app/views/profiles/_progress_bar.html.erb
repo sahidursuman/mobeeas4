@@ -1,0 +1,53 @@
+<%# START OF PROGRESS BAR ================= %>
+<div class="card">
+  <div class="card-content">
+    <% @percentage = 0 %>
+    <div class="col s3 m3 align-left">
+      <% if @profile.valid? %><%# Checking valid Profile %>
+        <span class="green-text"><i class="fa fa-check-circle"></i></span> Profile
+        <% @percentage += 25 %>
+      <% else %>
+        <span class="red-text"><i class="fa fa-times"></i></span> Profile
+      <% end %>
+    </div>
+    <div class="col s3 m3 align-left"><%# Checking valid Agreement %>
+      <% if @profile.user.agreement.candidate_all_agreed %>
+        <span class="green-text"><i class="fa fa-check-circle"></i></span> Agreements
+        <% @percentage += 25 %>
+      <% else %>
+        <span class="red-text"><i class="fa fa-times"></i></span> Agreements
+      <% end %>
+    </div>
+    <div class="col s3 m3 align-left"><%# Checking valid Security Check %>
+      <% if @profile.user.security_checks.present? %>
+        <% if @profile.user.all_security_check_verified %>
+          <span class="green-text"><i class="fa fa-check-circle"></i></span> Security Check
+          <% @percentage += 25 %>
+        <% else %>
+          <span class="red-text"><i class="fa fa-times"></i></span> Security Check
+        <% end %>
+      <% else %>
+        <span class="red-text"><i class="fa fa-times"></i></span> Security Check
+      <% end %>
+    </div>
+    <div class="col s3 m3 align-left">
+      <% if @profile.user.subscriptions.present? %>
+        <% if @profile.user.subscriptions.last.active %>
+          <span class="green-text"><i class="fa fa-check-circle"></i></span> Subscription
+          <% @percentage += 25 %>
+        <% else %>
+          <span class="red-text"><i class="fa fa-times"></i></span> Subscription
+        <% end %>
+      <% else %>
+        <span class="red-text"><i class="fa fa-times"></i></span> Subscription
+      <% end %>
+    </div>
+
+    <br><br>
+    Your Progress:
+    <div class="progress">
+      <div class="determinate" style="width: <%= @percentage %>%"></div>
+    </div>
+  </div>
+</div>
+<%# END OF PROGRESS BAR ================= %>

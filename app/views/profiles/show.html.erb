@@ -12,7 +12,6 @@
         <%= render 'profiles/my_subscription' %>
       </div>
     </div>
-
   </div>
 
 <%# RIGHT COLUMN %>
@@ -30,6 +29,9 @@
         <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Close</a>
       </div><br>
     </div>
+
+  <%= render 'profiles/progress_bar' %>
+
   <% if !(@profile.approved) %>
     <%# appears only if the candidate status is not approved by admin therefore the candidate's profile will not appear in MOBEEAS website %>
     <div class="card light-amber">
