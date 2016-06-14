@@ -77,6 +77,15 @@ class SubscriptionsController < ApplicationController
   # POST /subscriptions.json
   def create
     @subscription = Subscription.new(subscription_params)
+    if @subscription.manual_receipt # this is for manual subscription, token is increased one here in controller.
+      if @subscription.user_type == "organisation" # organisation subscription
+        @organisation = Organisation.find(@subscription.organisation_id)
+        @organisation.increase_one_token
+      elsif @subscription.user_type == "independent"
+        @user = User.find(@subscription.user_id)
+        @user.org_user_profile.increase_one_token
+      end
+    end
 
     respond_to do |format|
       if @subscription.save

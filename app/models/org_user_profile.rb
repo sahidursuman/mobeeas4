@@ -26,5 +26,9 @@ class OrgUserProfile < ActiveRecord::Base
     country.translations[I18n.locale.to_s] || country.name
   end
 
+  def increase_one_token
+    self.number_of_tokens_for_independent += 1
+    self.save!
+  end
 
 end

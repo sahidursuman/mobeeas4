@@ -27,4 +27,9 @@ class Organisation < ActiveRecord::Base
     self.subscriptions.last.active
   end
 
+  def increase_one_token
+    self.number_of_tokens += 1
+    self.save!
+  end
+
 end
