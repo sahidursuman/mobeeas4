@@ -102,7 +102,7 @@ class PaymentsController < ApplicationController
         # Stripe expects amounts to be in cents; since the charge is for $5, the amount parameter is assigned 500.
         customer = Stripe::Customer.create(
           :email => params[:stripeEmail],
-          :source  => params[:stripeToken]
+          :source  => params[:stripeToken],
         )
 
         charge = Stripe::Charge.create(

@@ -1,3 +1,40 @@
+Admin.destroy_all
+Agreement.destroy_all
+CandidateSkillVerification.destroy_all
+CandidateSkill.destroy_all
+CandidateType.destroy_all
+Education.destroy_all
+EngagementTokenPack.destroy_all
+Engagement.destroy_all
+Enquiry.destroy_all
+ExpressionOfInterest.destroy_all
+Feedback.destroy_all
+FriendlyIdSlug.destroy_all
+Opportunity.destroy_all
+OpportunityApplication.destroy_all
+OpportunitySchoolYear.destroy_all
+OpportunitySkills.destroy_all
+OpportunityTime.destroy_all
+OrgUserProfile.destroy_all
+OrgUser.destroy_all
+OrganisationType.destroy_all
+Organisation.destroy_all
+Profile.destroy_all
+Report.destroy_all
+Role.destroy_all
+SchoolYear.destroy_all
+SecurityCheck.destroy_all
+SkillCategory.destroy_all
+SkillVerification.destroy_all
+Skill.destroy_all
+Sponsor.destroy_all
+SubscriptionPack.destroy_all
+Subscription.destroy_all
+TokenPurchase.destroy_all
+User.destroy_all
+UsersRole.destroy_all
+
+
 role1 = Role.create!(name: 'admin')
 role2 = Role.create!(name: 'candidate')
 role3 = Role.create!(name: 'host')
@@ -231,6 +268,8 @@ EngagementTokenPack.create!(name: 'One token', price_ex_gst: 70.00, number_of_to
 EngagementTokenPack.create!(name: 'Two tokens', price_ex_gst: 120.00, number_of_tokens: 2)
 EngagementTokenPack.create!(name: 'Five tokens', price_ex_gst: 280.00, number_of_tokens: 5)
 
-SubscriptionPack.create!(name: 'organisation', price_ex_gst: 200.00)
+SubscriptionPack.create!(name: 'organisation_6_months', price_ex_gst: 200.00)
+SubscriptionPack.create!(name: 'organisation_12_months', price_ex_gst: 200.00)
+SubscriptionPack.create!(name: 'candidate_6_months', price_ex_gst: 20.00)
+SubscriptionPack.create!(name: 'candidate_12_months', price_ex_gst: 20.00)
 SubscriptionPack.create!(name: 'independent', price_ex_gst: 80.00)
-SubscriptionPack.create!(name: 'candidate', price_ex_gst: 20.00)

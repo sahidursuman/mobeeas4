@@ -26,6 +26,8 @@
       </label>
     </article>
     <br>
+    <%#///////publishable_key %><%= Rails.configuration.stripe[:publishable_key] %><br>
+    <%#///////secret_key %><%= Rails.configuration.stripe[:secret_key] %><br>
     <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
             data-key="<%= Rails.configuration.stripe[:publishable_key] %>"
             data-image="<%= asset_path 'MOBEEAS_icon_RGB_350px.png' %>"

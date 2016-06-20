@@ -1,5 +1,7 @@
 class SubscriptionPacksController < ApplicationController
   before_action :set_subscription_pack, only: [:show, :edit, :update, :destroy]
+  before_filter :correct_user
+  before_filter :admin_user
 
   # This function is called from app/views/pages/income.html.erb
   def update_gst_rate_for
@@ -88,5 +90,13 @@ class SubscriptionPacksController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def subscription_pack_params
       params.require(:subscription_pack).permit(:name, :price_ex_gst, :gst_rate)
+    end
+
+    def correct_user
+      redirect_to(root_path) if current_user.nil?  && (!current_user.has_role? :admin)
+    end
+
+    def admin_user
+      redirect_to(root_path) unless (current_user.has_role? :admin)
     end
 end
