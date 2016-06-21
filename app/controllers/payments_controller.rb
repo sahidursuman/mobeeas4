@@ -117,7 +117,7 @@ class PaymentsController < ApplicationController
                           'Email'         =>  current_user.email,
                           'Organisation'  =>  @organisation.name,
                           'Subscription Type' => @subscription_pack.name,
-                          'expiry_date'   =>  (@last_expiry_date + 1.year).strftime('%e %B %Y')
+                          'expiry_date'   =>  (@last_expiry_date + 6.months).strftime('%e %B %Y')
                         }
         )
         if charge['paid']

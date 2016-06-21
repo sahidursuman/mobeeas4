@@ -69,7 +69,11 @@
 
   <tbody>
     <tr>
-      <td>MOBEEAS Subscription 1 Year</td>
+      <% if @subscription.user_type == "organisation_6_months" %>
+        <td>MOBEEAS Subscription 6 Months</td>
+      <% elsif @subscription.user_type == "organisation_12_months" %>
+        <td>MOBEEAS Subscription 12 Months</td>
+      <% end %>
       <td><%= number_to_currency(@subscription.payment)  %> AUD</td>
     </tr>
     <tr>
