@@ -32,4 +32,9 @@ class Organisation < ActiveRecord::Base
     self.save!
   end
 
+  def increase_two_tokens
+    self.number_of_tokens += 2
+    self.save!
+  end
+
 end

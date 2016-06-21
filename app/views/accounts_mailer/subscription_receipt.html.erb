@@ -4,7 +4,7 @@
   <div class="col m6">
     <br>
     <b>Receipt For: </b>
-    <% if @subscription.user_type == "organisation" %><%# for Organisation Host %>
+    <% if (@subscription.user_type == "organisation_6_months") || (@subscription.user_type == "organisation_12_months") %><%# for Organisation Host %>
       <% @organisation = Organisation.find(@subscription.organisation_id) %>
       <%= @organisation.name %><br><br>
       <b>Attention: </b><%= @subscription.user.org_user_profile.name %><br><br>
@@ -15,6 +15,16 @@
         <%= @organisation.country_name(@organisation.country) %>
       <% end %>
 
+    <% elsif (@subscription.user_type == "candidate_6_months") || (@subscription.user_type == "candidate_12_months") %><%# for Candidate %>
+      <%= @subscription.user.profile.name %><br>
+      <b>Address:</b><br>
+      <%= @subscription.user.profile.suburb %> <%= @subscription.user.profile.state %> <%= @subscription.user.profile.postcode %>
+      <br>
+      <% if @subscription.user.profile.country.present? %>
+        <%= @subscription.user.profile.country_name(@subscription.user.profile.country) %>
+      <% end %>
+      <br>
+
     <% elsif @subscription.user_type == "independent" %><%# for Independent Host %>
       <%= @subscription.user.org_user_profile.name %><br>
       <b>Address:</b><br>
@@ -22,16 +32,6 @@
       <br>
       <% if @subscription.user.org_user_profile.country.present? %>
         <%= @subscription.user.org_user_profile.country_name(@subscription.user.org_user_profile.country) %>
-      <% end %>
-      <br>
-
-    <% elsif @subscription.user_type == "candidate" %><%# for Candidate %>
-      <%= @subscription.user.profile.name %><br>
-      <b>Address:</b><br>
-      <%= @subscription.user.profile.suburb %> <%= @subscription.user.profile.state %> <%= @subscription.user.profile.postcode %>
-      <br>
-      <% if@subscription.user.profile.country.present? %>
-        <%= @subscription.user.profile.country_name(@subscription.user.profile.country) %>
       <% end %>
       <br>
 

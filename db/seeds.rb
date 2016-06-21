@@ -268,8 +268,8 @@ EngagementTokenPack.create!(name: 'One token', price_ex_gst: 70.00, number_of_to
 EngagementTokenPack.create!(name: 'Two tokens', price_ex_gst: 120.00, number_of_tokens: 2)
 EngagementTokenPack.create!(name: 'Five tokens', price_ex_gst: 280.00, number_of_tokens: 5)
 
-SubscriptionPack.create!(name: 'organisation_6_months', price_ex_gst: 200.00)
-SubscriptionPack.create!(name: 'organisation_12_months', price_ex_gst: 200.00)
-SubscriptionPack.create!(name: 'candidate_6_months', price_ex_gst: 20.00)
+SubscriptionPack.create!(name: 'organisation_6_months', price_ex_gst: 240.00)
+SubscriptionPack.create!(name: 'organisation_12_months', price_ex_gst: 400.00)
+SubscriptionPack.create!(name: 'candidate_6_months', price_ex_gst: 12.00)
 SubscriptionPack.create!(name: 'candidate_12_months', price_ex_gst: 20.00)
 SubscriptionPack.create!(name: 'independent', price_ex_gst: 80.00)

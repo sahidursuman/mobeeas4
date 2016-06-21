@@ -83,7 +83,8 @@ class PaymentsController < ApplicationController
     elsif params[:subscription_pack].present?
       @subscription_pack = SubscriptionPack.find(params[:subscription_pack])
 
-      if @subscription_pack.name == "organisation"
+      ### ORG HOST 6 MONTHS SUBSCRIPTION ================================
+      if @subscription_pack.name == "organisation_6_months"
         @organisation = Organisation.find(params[:org_id])
         #### Find the appropriate expiry date from the last subscription by this organisation:
         if @organisation.subscriptions.present? # if this org has previous subscription
@@ -108,7 +109,7 @@ class PaymentsController < ApplicationController
         charge = Stripe::Charge.create(
           :customer    => customer.id,
           :amount      => @amount,
-          :description => 'One Year Subscription to MOBEEAS for ' + @organisation.name,
+          :description => 'Six Months Subscription to MOBEEAS for ' + @organisation.name,
           :currency    => 'aud',
           :metadata    => {
                           'User ID'       =>  current_user.id,
@@ -123,13 +124,13 @@ class PaymentsController < ApplicationController
           # if the host is purchasing the tokens for his organisation
           if params[:org_id].present?
             # create new subscription
-            @subscription = Subscription.create!(user_type: @subscription_pack.name, user_id: current_user.id, organisation_id: @organisation.id, expiry_date: (@last_expiry_date + 1.year), payment: @subscription_pack.price_ex_gst)
+            @subscription = Subscription.create!(user_type: @subscription_pack.name, user_id: current_user.id, organisation_id: @organisation.id, expiry_date: (@last_expiry_date + 6.months), payment: @subscription_pack.price_ex_gst)
 
             if @subscription.save
               # send receipt by mail to host
               SubscriptionMailer.new_subscription(@subscription.id).deliver_now
 
-              # increase 1 token to organisation when purchasing a new or renewing their subscription via STRIPE.
+              # increase 1 token to organisation when purchasing a new or renewing their 6-month subscription via STRIPE.
               @organisation.increase_one_token
 
               # Sending the mail of the the subscription receipt
