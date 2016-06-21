@@ -83,18 +83,48 @@ class PaymentsController < ApplicationController
     elsif params[:subscription_pack].present?
       @subscription_pack = SubscriptionPack.find(params[:subscription_pack])
 
-      if params[:org_id].present?
-        @organisation = Organisation.find(params[:org_id])
-        #### Find the appropriate expiry date from the last subscription by this organisation:
-        if @organisation.subscriptions.present? # if this org has previous subscription
-          @last_subscription = Subscription.find(@organisation.subscriptions.last.id) # get the LAST subscription of this ORGANISATION
+      # Find the appropriate last subscription date as the starting point of the new subscription:
+      if (@subscription_pack.name == "organisation_6_months") || (@subscription_pack.name == "organisation_12_months")
+        if params[:org_id].present?
+          @organisation = Organisation.find(params[:org_id])
+          #### Find the appropriate expiry date from the last subscription by this organisation:
+          if @organisation.subscriptions.present? # if this org has previous subscription
+            @last_subscription = Subscription.find(@organisation.subscriptions.last.id) # get the LAST subscription of this ORGANISATION
+            if @last_subscription.active # if last subscription is active, get the expiry date from this last subscription as the last expiry date.
+              @last_expiry_date = @last_subscription.expiry_date
+            elsif @last_subscription.expired # if the last subscription already expired, get today's date as the last expiry date.
+              @last_expiry_date = Date.today
+            end
+          else
+            @last_expiry_date = Date.today # if this org doesn't have previous subscription (brand new), get today's date as the last expiry date.
+          end
+        end
+
+      elsif @subscription_pack.name == "independent"
+        @org_user_profile = OrgUserProfile.find(current_user.org_user_profile.id)
+        #### Find the appropriate expiry date from the last subscription by this independent host:
+        if @org_user_profile.user.subscriptions.present? # if this host has previous subscription
+          @last_subscription = Subscription.find(@org_user_profile.user.subscriptions.last.id) # get the LAST subscription of this independent host.
           if @last_subscription.active # if last subscription is active, get the expiry date from this last subscription as the last expiry date.
             @last_expiry_date = @last_subscription.expiry_date
           elsif @last_subscription.expired # if the last subscription already expired, get today's date as the last expiry date.
             @last_expiry_date = Date.today
           end
         else
-          @last_expiry_date = Date.today # if this org doesn't have previous subscription (brand new), get today's date as the last expiry date.
+          @last_expiry_date = Date.today # if this host doesn't have previous subscription (brand new), get today's date as the last expiry date.
+        end
+      elsif (@subscription_pack.name == "candidate_6_months") || (@subscription_pack.name == "candidate_12_months")
+        @profile = Profile.find(current_user.profile.id)
+        #### Find the appropriate expiry date from the last subscription by this candidate:
+        if @profile.user.subscriptions.present? # if this candidate has previous subscription
+          @last_subscription = Subscription.find(@profile.user.subscriptions.last.id) # get the LAST subscription of this candidate.
+          if @last_subscription.active # if last subscription is active, get the expiry date from this last subscription as the last expiry date.
+            @last_expiry_date = @last_subscription.expiry_date
+          elsif @last_subscription.expired # if the last subscription already expired, get today's date as the last expiry date.
+            @last_expiry_date = Date.today
+          end
+        else
+          @last_expiry_date = Date.today # if this host doesn't have previous subscription (brand new), get today's date as the last expiry date.
         end
       end
 
@@ -192,18 +222,7 @@ class PaymentsController < ApplicationController
 
       # Payment to SUBSCRIPTION purchase for INDEPENDENT HOST =========================
       elsif @subscription_pack.name == "independent"
-        @org_user_profile = OrgUserProfile.find(current_user.org_user_profile.id)
-        #### Find the appropriate expiry date from the last subscription by this independent host:
-        if @org_user_profile.user.subscriptions.present? # if this host has previous subscription
-          @last_subscription = Subscription.find(@org_user_profile.user.subscriptions.last.id) # get the LAST subscription of this independent host.
-          if @last_subscription.active # if last subscription is active, get the expiry date from this last subscription as the last expiry date.
-            @last_expiry_date = @last_subscription.expiry_date
-          elsif @last_subscription.expired # if the last subscription already expired, get today's date as the last expiry date.
-            @last_expiry_date = Date.today
-          end
-        else
-          @last_expiry_date = Date.today # if this host doesn't have previous subscription (brand new), get today's date as the last expiry date.
-        end
+
 
         # Amount in cents
         @amount = ((@subscription_pack.price_ex_gst + (@subscription_pack.price_ex_gst * @subscription_pack.gst_rate)) * 100).to_i
@@ -216,7 +235,7 @@ class PaymentsController < ApplicationController
         charge = Stripe::Charge.create(
           :customer    => customer.id,
           :amount      => @amount,
-          :description => 'One Year Subscription to MOBEEAS for ' + @org_user_profile.name,
+          :description => '12 Months Subscription to MOBEEAS for ' + @org_user_profile.name,
           :currency    => 'aud',
           :metadata    => {
                           'User ID'       =>  current_user.id,
@@ -245,21 +264,8 @@ class PaymentsController < ApplicationController
           redirect_to thanks_path(type: 'purchase')
         end
 
-      # Payment to SUBSCRIPTION purchase for CANDIDATE =========================
-      elsif @subscription_pack.name == "candidate"
-        @profile = Profile.find(current_user.profile.id)
-        #### Find the appropriate expiry date from the last subscription by this candidate:
-        if @profile.user.subscriptions.present? # if this candidate has previous subscription
-          @last_subscription = Subscription.find(@profile.user.subscriptions.last.id) # get the LAST subscription of this candidate.
-          if @last_subscription.active # if last subscription is active, get the expiry date from this last subscription as the last expiry date.
-            @last_expiry_date = @last_subscription.expiry_date
-          elsif @last_subscription.expired # if the last subscription already expired, get today's date as the last expiry date.
-            @last_expiry_date = Date.today
-          end
-        else
-          @last_expiry_date = Date.today # if this host doesn't have previous subscription (brand new), get today's date as the last expiry date.
-        end
-
+      # Payment to SUBSCRIPTION 6 MONTHS for CANDIDATE =========================
+      elsif @subscription_pack.name == "candidate_6_months"
         # Amount in cents
         @amount = ((@subscription_pack.price_ex_gst + (@subscription_pack.price_ex_gst * @subscription_pack.gst_rate)) * 100).to_i
         # Stripe expects amounts to be in cents; since the charge is for $5, the amount parameter is assigned 500.
@@ -271,7 +277,46 @@ class PaymentsController < ApplicationController
         charge = Stripe::Charge.create(
           :customer    => customer.id,
           :amount      => @amount,
-          :description => 'One Year Subscription to MOBEEAS for ' + @profile.name,
+          :description => '6 Months Subscription to MOBEEAS for ' + @profile.name,
+          :currency    => 'aud',
+          :metadata    => {
+                          'User ID'       =>  current_user.id,
+                          'Host Name'     =>  current_user.profile.name,
+                          'Email'         =>  current_user.email,
+                          'Subscription Type' => @subscription_pack.name,
+                          'expiry_date'   =>   (@last_expiry_date + 6.months).strftime('%e %B %Y')
+                        }
+        )
+        if charge['paid']
+          puts "Stripe receipt number #{charge['receipt_number']}"
+          # create new subscription
+          @subscription = Subscription.create!(user_type: @subscription_pack.name, user_id: current_user.id, expiry_date: (@last_expiry_date + 6.months), payment: @subscription_pack.price_ex_gst)
+
+          if @subscription.save
+            SubscriptionMailer.new_subscription(@subscription.id).deliver_now # send receipt by mail to host
+            # No token purchase for Candidate
+
+            # Sending the mail of the the subscription receipt
+            AccountsMailer.subscription_receipt(@subscription.id, charge['receipt_number']).deliver_now
+          end
+
+          redirect_to thanks_path(type: 'purchase')
+        end
+
+      # Payment to SUBSCRIPTION 12 MONTHS for CANDIDATE =========================
+    elsif @subscription_pack.name == "candidate_12_months"
+        # Amount in cents
+        @amount = ((@subscription_pack.price_ex_gst + (@subscription_pack.price_ex_gst * @subscription_pack.gst_rate)) * 100).to_i
+        # Stripe expects amounts to be in cents; since the charge is for $5, the amount parameter is assigned 500.
+        customer = Stripe::Customer.create(
+          :email => params[:stripeEmail],
+          :source  => params[:stripeToken]
+        )
+
+        charge = Stripe::Charge.create(
+          :customer    => customer.id,
+          :amount      => @amount,
+          :description => '12 Months Subscription to MOBEEAS for ' + @profile.name,
           :currency    => 'aud',
           :metadata    => {
                           'User ID'       =>  current_user.id,
@@ -296,6 +341,7 @@ class PaymentsController < ApplicationController
 
           redirect_to thanks_path(type: 'purchase')
         end
+
       end
     end # end of elsif params[:subscription_pack].present
   end # end of def create
@@ -313,11 +359,16 @@ class PaymentsController < ApplicationController
       end
     elsif params[:subscription_pack].present?
       @subscription_pack = SubscriptionPack.find(params[:subscription_pack])
-      if @subscription_pack.name == "organisation" # Subscription for HOST that represents ORGANISATION
+      # Subscription for ORGANISATION
+      if (@subscription_pack.name == "organisation_6_months") || (@subscription_pack.name == "organisation_12_months")
         redirect_to new_subscription_path(org_id: @organisation.id, user_id: current_user.id, subscription_pack: @subscription_pack.id)
-      elsif @subscription_pack.name == "independent" # Subscription for INDEPENDENT HOST
+
+      # Subscription for INDEPENDENT HOST
+      elsif @subscription_pack.name == "independent"
         redirect_to new_subscription_path(user_id: current_user.id, subscription_pack: @subscription_pack.id)
-      elsif @subscription_pack.name == "candidate" # Subscription for CANDIDATE
+
+      # Subscription for CANDIDATE
+      elsif (@subscription_pack.name == "candidate_6_months") || (@subscription_pack.name == "candidate_12_months")
         redirect_to new_subscription_path(user_id: current_user.id, subscription_pack: @subscription_pack.id)
       end
     end
