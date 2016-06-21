@@ -83,8 +83,7 @@ class PaymentsController < ApplicationController
     elsif params[:subscription_pack].present?
       @subscription_pack = SubscriptionPack.find(params[:subscription_pack])
 
-      ### ORG HOST 6 MONTHS SUBSCRIPTION ================================
-      if @subscription_pack.name == "organisation_6_months"
+      if params[:org_id].present?
         @organisation = Organisation.find(params[:org_id])
         #### Find the appropriate expiry date from the last subscription by this organisation:
         if @organisation.subscriptions.present? # if this org has previous subscription
@@ -97,7 +96,10 @@ class PaymentsController < ApplicationController
         else
           @last_expiry_date = Date.today # if this org doesn't have previous subscription (brand new), get today's date as the last expiry date.
         end
+      end
 
+      ### ORG HOST 6 MONTHS SUBSCRIPTION ================================
+      if @subscription_pack.name == "organisation_6_months"
         # Amount in cents
         @amount = ((@subscription_pack.price_ex_gst + (@subscription_pack.price_ex_gst * @subscription_pack.gst_rate)) * 100).to_i
         # Stripe expects amounts to be in cents; since the charge is for $5, the amount parameter is assigned 500.
@@ -109,7 +111,7 @@ class PaymentsController < ApplicationController
         charge = Stripe::Charge.create(
           :customer    => customer.id,
           :amount      => @amount,
-          :description => 'Six Months Subscription to MOBEEAS for ' + @organisation.name,
+          :description => '6 Months Subscription to MOBEEAS for ' + @organisation.name,
           :currency    => 'aud',
           :metadata    => {
                           'User ID'       =>  current_user.id,
@@ -132,6 +134,52 @@ class PaymentsController < ApplicationController
 
               # increase 1 token to organisation when purchasing a new or renewing their 6-month subscription via STRIPE.
               @organisation.increase_one_token
+
+              # Sending the mail of the the subscription receipt
+              AccountsMailer.subscription_receipt(@subscription.id, charge['receipt_number']).deliver_now
+            end
+
+            # redirect to a thanks page
+            redirect_to thanks_path(type: 'purchase')
+          end
+        end
+
+      ### ORG HOST 12 MONTHS SUBSCRIPTION ================================
+      elsif @subscription_pack.name == "organisation_12_months"
+        # Amount in cents
+        @amount = ((@subscription_pack.price_ex_gst + (@subscription_pack.price_ex_gst * @subscription_pack.gst_rate)) * 100).to_i
+        # Stripe expects amounts to be in cents; since the charge is for $5, the amount parameter is assigned 500.
+        customer = Stripe::Customer.create(
+          :email => params[:stripeEmail],
+          :source  => params[:stripeToken],
+        )
+
+        charge = Stripe::Charge.create(
+          :customer    => customer.id,
+          :amount      => @amount,
+          :description => '12 Months Subscription to MOBEEAS for ' + @organisation.name,
+          :currency    => 'aud',
+          :metadata    => {
+                          'User ID'       =>  current_user.id,
+                          'Host Name'     =>  current_user.org_user_profile.name,
+                          'Email'         =>  current_user.email,
+                          'Organisation'  =>  @organisation.name,
+                          'Subscription Type' => @subscription_pack.name,
+                          'expiry_date'   =>  (@last_expiry_date + 1.year).strftime('%e %B %Y')
+                        }
+        )
+        if charge['paid']
+          # if the host is purchasing the tokens for his organisation
+          if params[:org_id].present?
+            # create new subscription
+            @subscription = Subscription.create!(user_type: @subscription_pack.name, user_id: current_user.id, organisation_id: @organisation.id, expiry_date: (@last_expiry_date + 1.year), payment: @subscription_pack.price_ex_gst)
+
+            if @subscription.save
+              # send receipt by mail to host
+              SubscriptionMailer.new_subscription(@subscription.id).deliver_now
+
+              # increase 1 token to organisation when purchasing a new or renewing their 6-month subscription via STRIPE.
+              @organisation.increase_two_tokens
 
               # Sending the mail of the the subscription receipt
               AccountsMailer.subscription_receipt(@subscription.id, charge['receipt_number']).deliver_now

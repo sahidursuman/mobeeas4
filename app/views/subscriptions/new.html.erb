@@ -4,45 +4,19 @@
   <h4>New Annual MOBEEAS Subscription</h4>
 <% end %>
 
-<%# @subscription_pack = SubscriptionPack.find(params[:subscription_pack]) %>
 <p>
   <br>
-  <%# this is for ORGANISATION annual subscription ========================== %>
+  <%# this is for ORGANISATION 6 MONTHS subscription ========================== %>
   <% if @subscription_pack.name == 'organisation_6_months' %>
-    You are purchasing a six-month MOBEEAS subscription which includes 1 engagement token.
+    You are purchasing a 6-month MOBEEAS subscription which includes 1 engagement token.
     <br>
-    Organisation: <b><%= @organisation.name %></b>.
+    <%= render 'org_subscriptions' %>
+
+  <%# this is for ORGANISATION 12 MONTHS subscription ========================== %>
+  <% elsif @subscription_pack.name == 'organisation_12_months' %>
+    You are purchasing a 12-month MOBEEAS subscription which includes 2 engagement tokens.
     <br>
-    <%# this is to call the STRIPE PAYMENT PROCESS in controllers/payments_controller.rb file %>
-    <%= form_tag payments_path(subscription_pack: @subscription_pack.id, org_id: @organisation.id, user_id: current_user.id) do %>
-    <article>
-      <% if flash[:error].present? %>
-        <div id="error_explanation">
-          <p><%= flash[:error] %></p>
-        </div>
-      <% end %>
-      <label class="amount">
-        <span class="font-16px"><b>Amount: <%= number_to_currency(@subscription_pack.price_ex_gst) %></b></span> (excludes GST)
-        <br>
-        <span class="font-16px"><b>GST: <%= number_to_currency(@subscription_pack.price_ex_gst * @subscription_pack.gst_rate) %></b></span>
-        <br>
-        <span class="font-16px"><b>Total: <%= number_to_currency(@subscription_pack.price_ex_gst + (@subscription_pack.price_ex_gst * @subscription_pack.gst_rate)) %></b></span>
-      </label>
-    </article>
-    <%#<br>///////publishable_key: %><%#= Rails.configuration.stripe[:publishable_key] %>
-    <%#<br>///////secret_key: %><%#= Rails.configuration.stripe[:secret_key] %>
-    <br>
-    <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
-      data-key="<%= Rails.configuration.stripe[:publishable_key] %>"
-      data-image="<%= asset_path 'MOBEEAS_icon_RGB_350px.png' %>"
-      data-name="MOBEEAS"
-      data-currency="aud"
-      data-email="<%= current_user.email %>"
-      data-receipt-email="<%= current_user.email %>"
-      data-description="<%= @subscription_pack.name %>"
-      data-amount="<%= ((@subscription_pack.price_ex_gst + (@subscription_pack.price_ex_gst * @subscription_pack.gst_rate)) * 100).to_int %>"
-      data-locale="auto"></script>
-    <% end %>
+    <%= render 'org_subscriptions' %>
 
   <%# this is for INDEPENDENT HOST annual subscription ========================== %>
   <% elsif @subscription_pack.name == 'independent' %>
