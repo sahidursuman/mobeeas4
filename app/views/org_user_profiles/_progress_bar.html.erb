@@ -35,7 +35,7 @@
         <div class="col s6 m6 align-left">
           <% if @org_user_profile.agency == 'independent host' %>
             <% if @org_user_profile.user.subscriptions.present? %>
-              <% if @org_user_profile.user.subscriptions.last.active %>
+              <% if @org_user_profile.user.subscriptions.order('id ASC').last.active %>
                 <span class="green-text"><i class="fa fa-check-circle"></i></span> Subscription
                 <% @percentage += 25 %>
               <% else %>
@@ -49,7 +49,7 @@
             <%# this is to mark if at least one of the current subscription of the connected organisation is not active.
                 if one associated organisation's latest subcription is not active, flag will be set to false %>
             <% @org_user_profile.user.organisations.each do |organisation| %>
-              <% if organisation.subscriptions.last.present? %>
+              <% if organisation.subscriptions.order('id ASC').last.present? %>
                 <% if organisation.last_subscription_is_active %>
                   <span class="green-text"><i class="fa fa-check-circle"></i></span> <%=  organisation.name %> Subscription<br>
                 <% else %>

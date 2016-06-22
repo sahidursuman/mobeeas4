@@ -1,6 +1,7 @@
 class ReportsController < ApplicationController
   before_action :set_report, only: [:show, :edit, :update, :destroy]
-
+  before_filter :correct_user, only: :index
+  before_filter :admin_user, only: :index
   # GET /reports
   # GET /reports.json
   def index
@@ -92,5 +93,13 @@ class ReportsController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def report_params
       params.require(:report).permit(:opportunity_id, :report_type, :relevant_knowledge, :relevant_knowledge_comment, :punctual, :punctual_comment, :communication, :communication_comment, :enthusiasm, :enthusiasm_comment, :professionalism, :professionalism_comment, :strength, :further_dev, :general_comments, :profile_id, :engagement_id, :engagement_start_date, :engagement_end_date)
+    end
+
+    def correct_user
+      redirect_to(root_path) if current_user.nil?  && (!current_user.has_role? :admin)
+    end
+
+    def admin_user
+      redirect_to(root_path) unless (current_user.has_role? :admin)
     end
 end

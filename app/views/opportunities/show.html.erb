@@ -398,7 +398,7 @@
             <% if @host.org_user_profile.agency == 'organisation host' %>
               <%# The Organisation Host can change from DRAFT to LIST the opportunity only if the organisation's subscription exists and is still active %>
               <% if @organisation.subscriptions.present? %>
-                <% @subscription = Subscription.find(@organisation.subscriptions.last.id) %><%# get the LAST subscription of this ORGANISATION %>
+                <% @subscription = Subscription.find(@organisation.subscriptions.order('id ASC').last.id) %><%# get the LAST subscription of this ORGANISATION %>
                 <% if (@subscription.active) %>
                   <div class="margin-top-20px margin-bottom-20px">
                     <%= link_to "List", status_listed_opportunity_path(@opportunity), class: 'btn' %>
@@ -409,7 +409,7 @@
                     <a class="btn disabled">List</a>
                     <%= link_to "Archive", status_archived_opportunity_path(@opportunity), class: 'btn' %>
                   </div>
-                  <%= @organisation.name %> subscription has expired, please renew before you can list your opportunity.
+                  <%= @organisation.name %> subscription has <span class="red-text">expired</span>, please renew before you can list your opportunity.
                 <% end %>
               <% else %>
                 <div class="margin-top-20px margin-bottom-20px">
@@ -423,7 +423,7 @@
             <% elsif @host.org_user_profile.agency == 'independent host' %>
               <%# The Independent Host can change from DRAFT to LIST the opportunity only if the his subscription exists and is still active %>
               <% if @host.subscriptions.present? %>
-                <% @subscription = Subscription.find(@host.subscriptions.last.id) %><%# get the LAST subscription of this ORGANISATION %>
+                <% @subscription = Subscription.find(@host.subscriptions.order('id ASC').last.id) %><%# get the LAST subscription of this ORGANISATION %>
                 <% if (@subscription.active) %>
                   <div class="margin-top-20px margin-bottom-20px">
                     <%= link_to "List", status_listed_opportunity_path(@opportunity), class: 'btn' %>
@@ -584,7 +584,7 @@
                 4. his profile has been approved by admin
               %>
               <% if candidate_skill.user.subscriptions.present? %><%# check if Candidate has any subscriptions %>
-                <% @subscription = Subscription.find(candidate_skill.user.subscriptions.last) %><%# find the last subscription of this candidate %>
+                <% @subscription = Subscription.find(candidate_skill.user.subscriptions.order('id ASC').last) %><%# find the last subscription of this candidate %>
                 <% if (@subscription.active) %><%# if Candidate's subscription is active then he will be included in the next search %>
                   <% if (candidate_skill.skill_id == opportunity_skill.skill.id) && (candidate_skill.verified) && (candidate_skill.user.profile.approved) %>
                   <%# what does candidate_skill.user.profile.approved mean? %>
@@ -607,7 +607,7 @@
                 4. his profile has been approved by admin
               %>
               <% if candidate_skill.user.subscriptions.present? %><%# check if Candidate has any subscriptions %>
-                <% @subscription = Subscription.find(candidate_skill.user.subscriptions.last) %><%# find the last subscription of this candidate %>
+                <% @subscription = Subscription.find(candidate_skill.user.subscriptions.order('id ASC').last) %><%# find the last subscription of this candidate %>
                 <% if (@subscription.active) %><%# if Candidate's subscription is active then he will be included in the next search %>
                   <% if (candidate_skill.skill_id == opportunity_skill.skill.id) && (candidate_skill.verified)  && (candidate_skill.user.profile.approved) %>
                     <% hash[candidate_skill.user_id] << [candidate_skill.skill.skill_category.name, candidate_skill.skill.name] %>

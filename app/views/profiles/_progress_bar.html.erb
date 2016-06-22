@@ -32,7 +32,7 @@
     </div>
     <div class="col s3 m3 align-left">
       <% if @profile.user.subscriptions.present? %>
-        <% if @profile.user.subscriptions.last.active %>
+        <% if @profile.user.subscriptions.order('id ASC').last.active %>
           <span class="green-text"><i class="fa fa-check-circle"></i></span> Subscription
           <% @percentage += 25 %>
         <% else %>

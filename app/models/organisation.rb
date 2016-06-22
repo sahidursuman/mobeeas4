@@ -24,7 +24,7 @@ class Organisation < ActiveRecord::Base
   end
 
   def last_subscription_is_active
-    self.subscriptions.last.active
+    self.subscriptions.order('id ASC').last.active
   end
 
   def increase_one_token
