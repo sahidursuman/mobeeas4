@@ -8,7 +8,7 @@
       <td><%= @subscription.user.profile.name %></td>
     <% end %>
 
-    <%# displaying the organisation name if the subscription is for organisation %>
+    <%# displaying the organisation name for Organisation 6 months subscriptions %>
     <% if params[:organisation].present? %>
       <td><%= @subscription.organisation.name %></td>
     <% end %>

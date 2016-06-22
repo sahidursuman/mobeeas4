@@ -11,7 +11,7 @@
         <ol>
           <% @engagement_token_packs.order("id ASC").each do |engagement_token_pack| %>
             <li>
-              <%= engagement_token_pack.name %> for <%= number_to_currency(engagement_token_pack.price_ex_gst) %> AUD ex. GST
+              <b><%= engagement_token_pack.name %></b> for <%= number_to_currency(engagement_token_pack.price_ex_gst) %> AUD ex. GST
                - <%= link_to "Edit", edit_engagement_token_pack_path(engagement_token_pack) %>
               <br>
               GST amount: <%= number_to_currency(engagement_token_pack.price_ex_gst * engagement_token_pack.gst_rate) %>
@@ -39,10 +39,22 @@
       <div class="col m6">
         <h5>Subscriptions</h5>
         <ol>
-          <% @subscription_packs.order("id ASC").each do |subscription_pack| %>
+          <% @subscription_packs.order("name DESC").each do |subscription_pack| %>
             <li>
-              Annual <%= subscription_pack.name %> <%= number_to_currency(subscription_pack.price_ex_gst) %> AUD ex. GST
+              <% if subscription_pack.name == 'organisation_6_months' %>
+                <b>6 Months Organisation Subscription</b>
+              <% elsif subscription_pack.name == 'organisation_12_months' %>
+                <b>12 Months Organisation Subscription</b>
+              <% elsif subscription_pack.name == 'candidate_6_months' %>
+                <b>6 Months Candidate Subscription</b>
+              <% elsif subscription_pack.name == 'candidate_12_months' %>
+                <b>12 Months Candidate Subscription</b>
+              <% elsif subscription_pack.name == 'independent' %>
+                <b>12 Months Independent Subscription</b>
+              <% end %>
                - <%= link_to "Edit", edit_subscription_pack_path(subscription_pack) %>
+               <br>
+               <%= number_to_currency(subscription_pack.price_ex_gst) %> AUD ex. GST
                <br>
                GST amount: <%= number_to_currency(subscription_pack.price_ex_gst * subscription_pack.gst_rate) %>
                <br>

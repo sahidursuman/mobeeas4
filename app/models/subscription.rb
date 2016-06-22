@@ -3,9 +3,9 @@ class Subscription < ActiveRecord::Base
   belongs_to :organisation
   validates :user_id, presence: true
 
-  scope :organisation, -> { where(user_type: 'organisation') }
+  scope :organisation, -> { where('user_type =? OR user_type =?', 'organisation_6_months','organisation_12_months') }
   scope :independent, -> { where(user_type: 'independent') }
-  scope :candidate, -> { where(user_type: 'candidate') }
+  scope :candidate, -> { where('user_type =? OR user_type =?', 'candidate_6_months','candidate_12_months') }
   scope :expiring_in_less_than_30_days, -> { where('expiry_date < ?', 30.day.from_now) }
   scope :expiring_in_more_than_30_days, -> { where('expiry_date >= ?', 30.day.from_now) }
   scope :are_active, -> { where('expiry_date >= ?', Date.today) }
