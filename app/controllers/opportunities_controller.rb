@@ -1,47 +1,6 @@
 class OpportunitiesController < ApplicationController
   before_action :set_opportunity, only: [:status_draft, :status_listed, :post_active, :status_archived, :purchase_more_tokens_for, :contact_candidate_for, :contact_host_for, :show, :edit, :update, :destroy]
 
-  # Wed, 6 April 2016: This function refers to the opportunities/show_v2.html.erb
-  # To be kept for reference only, def name above has been removed, DO NOT USE IT-----------------------.
-
-  # def increase_one_token_into
-  #   @opportunity.number_of_tokens += 1
-  #   @opportunity.save!
-  #   @organisation = Organisation.find(params[:org_id])
-  #   @organisation.number_of_tokens -= 1
-  #   @organisation.save!
-  #   redirect_to @opportunity
-  # end
-  #
-  # def decrease_one_token_from
-  #   @opportunity.number_of_tokens -= 1
-  #   @opportunity.save!
-  #   @organisation = Organisation.find(params[:org_id])
-  #   @organisation.number_of_tokens += 1
-  #   @organisation.save!
-  #   redirect_to @opportunity
-  # end
-  #
-  # def increase_one_token_into_independent
-  #   @opportunity.number_of_tokens += 1
-  #   @opportunity.save!
-  #   @user = User.find(@opportunity.user_id)
-  #   @oup = @user.org_user_profile
-  #   @oup.number_of_tokens_for_independent -= 1
-  #   @oup.save!
-  #   redirect_to @opportunity
-  # end
-  #
-  # def decrease_one_token_from_independent
-  #   @opportunity.number_of_tokens -= 1
-  #   @opportunity.save!
-  #   @user = User.find(@opportunity.user_id)
-  #   @oup = @user.org_user_profile
-  #   @oup.number_of_tokens_for_independent += 1
-  #   @oup.save!
-  #   redirect_to @opportunity
-  # end
-
   def status_draft
     @opportunity.opportunity_status = 'draft'
     @opportunity.save!
@@ -180,7 +139,8 @@ class OpportunitiesController < ApplicationController
   def destroy
     @opportunity.destroy
     respond_to do |format|
-      format.html { redirect_to opportunities_url, notice: 'Opportunity was successfully destroyed.' }
+      # format.html { redirect_to opportunities_url, notice: 'Opportunity was successfully destroyed.' }
+      format.html { redirect_to host_profile_url, notice: 'Opportunity was successfully destroyed.' }
       format.json { head :no_content }
     end
   end

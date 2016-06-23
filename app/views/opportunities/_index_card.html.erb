@@ -15,7 +15,19 @@
               <br>
             <% end %>
           <% end %>
-          <p><strong></strong><%= link_to 'Show more...', @opportunity %></p>
+          <p>
+            <strong></strong><%= link_to 'Show More', @opportunity %>
+            <%# this opportunity can be deleted if:
+              1. It doesn't have a report
+              2. It is viewed by the owner of the opportunity
+            %>
+            <% unless @opportunity.reports.present? %>
+              <% if (current_user.id == @opportunity.user_id) %>
+               | <%= link_to 'Delete Opportunity', @opportunity, method: :delete, data: { confirm: 'Are you sure?' } %>
+              <% end %>
+            <% end %>
+          </p>
+
       </div>
     </div>
   </div>
