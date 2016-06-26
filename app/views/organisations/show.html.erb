@@ -549,7 +549,7 @@
                     %>
                   <% if @organisation.subscriptions.present? %>
                     <%# searching for the LAST subscription of this ORGANISATION %>
-                    <% @subscription = Subscription.order('id ASC').find(@organisation.subscriptions).last %>
+                    <% @subscription = Subscription.order('id ASC').find(@organisation.subscriptions.last) %>
 
                     The subscription's expiry date is: <b><%= @subscription.expiry_date.getlocal.strftime('%e %B %Y') %></b>
                     <% if (@subscription.active) %>
