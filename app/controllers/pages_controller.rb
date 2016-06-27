@@ -127,9 +127,11 @@ class PagesController < ApplicationController
 	end
 
 	def become_host_candidate_sponsor
-		@organisation_pack = SubscriptionPack.find(1)
-		@independent_pack = SubscriptionPack.find(2)
-		@candidate_pack = SubscriptionPack.find(3)
+		@org_6_months = SubscriptionPack.find_by(name: 'organisation_6_months')
+		@org_12_months = SubscriptionPack.find_by(name: 'organisation_12_months')
+		@independent_pack = SubscriptionPack.find_by(name: 'independent')
+		@candidate_6_months = SubscriptionPack.find_by(name: 'candidate_6_months')
+		@candidate_12_months = SubscriptionPack.find_by(name: 'candidate_12_months')
 		@one_token = EngagementTokenPack.find(1)
 	end
 

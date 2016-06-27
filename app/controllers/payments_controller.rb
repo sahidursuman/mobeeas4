@@ -208,7 +208,7 @@ class PaymentsController < ApplicationController
               # send receipt by mail to host
               SubscriptionMailer.new_subscription(@subscription.id).deliver_now
 
-              # increase 1 token to organisation when purchasing a new or renewing their 6-month subscription via STRIPE.
+              # increase 2 tokens to organisation when purchasing a new or renewing their 12-month subscription via STRIPE.
               @organisation.increase_two_tokens
 
               # Sending the mail of the the subscription receipt
