@@ -43,7 +43,9 @@ class OrgUserProfilesController < ApplicationController
   # GET /org_user_profiles/new
   def new
     @org_user_profile = OrgUserProfile.new
-    @organisation = Organisation.find(params[:org_id])
+    if params[:org_id].present?
+      @organisation = Organisation.find(params[:org_id])
+    end 
   end
 
   # GET /org_user_profiles/1/edit
@@ -102,7 +104,7 @@ class OrgUserProfilesController < ApplicationController
 
         elsif @org_user_profile.agency == 'independent host'
           NewOrgUserProfileMailer.new_independent_host(current_user.id).deliver_now # send message to MOBEEAS Admin
-          format.html { redirect_to host_profile_path, notice: 'Organisation host was successfully created.' }
+          format.html { redirect_to host_profile_path, notice: 'Independent Host was successfully created.' }
           format.json { render :show, status: :created, location: @org_user_profile }
         end
       else
