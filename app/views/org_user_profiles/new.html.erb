@@ -1,5 +1,6 @@
 <h5>New Host Profile</h5>
-
-<% @organisation = Organisation.find(params[:org_id])%>
-<p>Organisation that you would like to link to: <strong><%= @organisation.name %></strong></p>
-<%= render 'form' %>
+<% if params[:org_id].present? %>
+  <% @organisation = Organisation.find(params[:org_id])%>
+  <p>Organisation that you would like to link to: <strong><%= @organisation.name %></strong></p>
+  <%= render 'form' %>
+<% end %>
