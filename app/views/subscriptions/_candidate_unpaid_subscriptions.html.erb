@@ -4,7 +4,7 @@
   <div class="form-inputs">
     <%= f.input :user_type, as: :hidden, input_html: { value: 'candidate_6_months_unpaid' } %>
     <%= f.association :user, as: :hidden, input_html: { value: current_user.id } %>
-    <%= f.input :expiry_date, as: :hidden, input_html: { value: @last_expiry_date + 6.months } %>
+    <%= f.input :expiry_date, as: :hidden, input_html: { value: @last_expiry_date.to_date + 6.months } %>
     <%= f.input :payment, as: :hidden, input_html: { value: 0.00 } %>
   </div>
 
