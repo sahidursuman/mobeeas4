@@ -15,6 +15,7 @@ class SubscriptionsController < ApplicationController
     end
   end
 
+
   # GET /subscriptions
   # GET /subscriptions.json
   def index
@@ -63,6 +64,9 @@ class SubscriptionsController < ApplicationController
     end
     if params[:org].present?
       @organisation = Organisation.find(params[:org])
+    end
+    if params[:last_expiry_date].present?
+      @last_expiry_date = (params[:last_expiry_date]).to_date
     end
 
   end

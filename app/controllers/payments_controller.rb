@@ -87,7 +87,7 @@ class PaymentsController < ApplicationController
       if (@subscription_pack.name == "organisation_6_months") || (@subscription_pack.name == "organisation_12_months")
         if params[:org_id].present?
           @organisation = Organisation.find(params[:org_id])
-          #### Find the appropriate expiry date from the last subscription by this organisation:
+          #### Find the correct expiry date from the last subscription by this organisation:
           if @organisation.subscriptions.present? # if this org has previous subscription
             @last_subscription = Subscription.find(@organisation.subscriptions.last.id) # get the LAST subscription of this ORGANISATION
             if @last_subscription.active # if last subscription is active, get the expiry date from this last subscription as the last expiry date.
@@ -102,7 +102,7 @@ class PaymentsController < ApplicationController
 
       elsif @subscription_pack.name == "independent"
         @org_user_profile = OrgUserProfile.find(current_user.org_user_profile.id)
-        #### Find the appropriate expiry date from the last subscription by this independent host:
+        #### Find the correct expiry date from the last subscription by this independent host:
         if @org_user_profile.user.subscriptions.present? # if this host has previous subscription
           @last_subscription = Subscription.find(@org_user_profile.user.subscriptions.last.id) # get the LAST subscription of this independent host.
           if @last_subscription.active # if last subscription is active, get the expiry date from this last subscription as the last expiry date.
@@ -113,9 +113,10 @@ class PaymentsController < ApplicationController
         else
           @last_expiry_date = Date.today # if this host doesn't have previous subscription (brand new), get today's date as the last expiry date.
         end
+
       elsif (@subscription_pack.name == "candidate_6_months") || (@subscription_pack.name == "candidate_12_months")
         @profile = Profile.find(current_user.profile.id)
-        #### Find the appropriate expiry date from the last subscription by this candidate:
+        #### Find the correct expiry date from the last subscription by this candidate:
         if @profile.user.subscriptions.present? # if this candidate has previous subscription
           @last_subscription = Subscription.find(@profile.user.subscriptions.last.id) # get the LAST subscription of this candidate.
           if @last_subscription.active # if last subscription is active, get the expiry date from this last subscription as the last expiry date.

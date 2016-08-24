@@ -1,5 +1,6 @@
 <% if (@subscription_pack.name == 'organisation_6_months') || (@subscription_pack.name == 'candidate_6_months') %>
   <h4>New Six Months MOBEEAS Subscription</h4>
+<% elsif (@subscription_pack.name == 'candidate_6_months_unpaid') %>
 <% else %>
   <h4>New Annual MOBEEAS Subscription</h4>
 <% end %>
@@ -35,6 +36,16 @@
     You are purchasing a 12-month MOBEEAS subscription.
     <br>
     <%= render 'candidate_subscriptions'%>
+
+  <%# this is for Candidate 6 MONTHS UNPAID VOLUNTEER subscription ========================== %>
+  <% elsif @subscription_pack.name == 'candidate_6_months_unpaid' %>
+    You are subscribing to a 6-month unpaid MOBEEAS subscription, you will be registered as an unpaid volunteer.
+    <br>
+    <% @last_expiry_date = last_subscription(current_user) %>
+    <%= render 'candidate_unpaid_subscriptions' %>
+    <div class="margin-top-20px">
+      <%= link_to "Back to My Profile", candidate_profile_path, class: 'btn' %>
+    </div>
   <% end %>
   <br>
 

@@ -4,6 +4,7 @@
   </p>
 <% @candidate_6_months = SubscriptionPack.find_by(name: 'candidate_6_months') %><%# get the Candidate Subscription pack %>
 <% @candidate_12_months = SubscriptionPack.find_by(name: 'candidate_12_months') %><%# get the Candidate Subscription pack %>
+<% @candidate_6_months_unpaid = SubscriptionPack.find_by(name: 'candidate_6_months_unpaid') %><%# get the Candidate Subscription pack %>
 
 <%# If the candidate has one or many subscriptions ========================= %>
 <% if @profile.user.subscriptions.present? %>
@@ -22,6 +23,10 @@
       <div class="margin-top-20px">
         <%= link_to "12 Months", new_subscription_path(subscription_pack: @candidate_12_months.id), class: 'btn' %>
       </div>
+      <%#-----Subscription for Unpaid Volunteer-----%>
+      <div class="margin-top-20px">
+        <%= link_to "Unpaid Candidate", new_subscription_path(subscription_pack: @candidate_6_months_unpaid), class: 'btn' %> %>
+      </div>
     <% end %>
   <% elsif (@subscription.expired)%><%# =============== if the last subscription has EXPIRED %>
     - <span class="red-text bold">Expired!</span>
@@ -32,6 +37,10 @@
     </div>
     <div class="margin-top-20px">
       <%= link_to "12 Months", new_subscription_path(subscription_pack: @candidate_12_months), class: 'btn' %>
+    </div>
+    <%#-----Subscription for Unpaid Volunteer-----%>
+    <div class="margin-top-20px">
+      <%= link_to "Unpaid Candidate", new_subscription_path(subscription_pack: @candidate_6_months_unpaid), class: 'btn' %>
     </div>
     <br>
   <% end %>

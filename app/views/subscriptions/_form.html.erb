@@ -2,7 +2,7 @@
   <%= f.error_notification %>
 
   <div class="form-inputs">
-    <%= f.input :user_type, priority: [ "organisation" ], collection: [ "organisation", "independent", "candidate"] %>
+    <%= f.input :user_type, priority: [ "organisation_12_months" ], collection: [ "organisation_12_months", "organisation_6_months", "candidate_12_months", "candidate_6_months", "candidate_6_months_unpaid", "independent"] %>
     <%= f.association :user, collection: @users, label: "Choose a User" %>
     <%= f.association :organisation, collection: @organisations, label: "Select if ORGANISATION Host" %>
 

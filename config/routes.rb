@@ -133,8 +133,6 @@ Rails.application.routes.draw do
 
 
 
-
-
   # This path is used to redirec user to a specific page on successful sign up (registration)
   devise_for :users, controllers: { registrations: "registrations" }
 

@@ -589,6 +589,7 @@
                   <% if (candidate_skill.skill_id == opportunity_skill.skill.id) && (candidate_skill.verified) && (candidate_skill.user.profile.approved) %>
                   <%# what does candidate_skill.user.profile.approved mean? %>
                   <%# It means that the Admin has clicked the 'approve' function in the Prohibited Candidate list which calls the approve function in profiles_controller.rb file %>
+                  <%# HERE IS WHERE YOU WILL SCREEN PAID CANDIDATE OR UNPAID CANDIDATE OUT %>
                     <% hash[candidate_skill.user_id] = [] %> <%# create a hash of empty array, key is skill name, value is user id to be filled in the next loop %>
                   <% end %>
                 <% end %><%# end of if (@subscription.active)%>

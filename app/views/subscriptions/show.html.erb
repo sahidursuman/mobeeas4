@@ -3,10 +3,16 @@
 		<%= render 'layouts/sidebar' %>
     <p id="notice"><%= notice %></p>
 
-    <p>
-      <b>User type:</b>
-      <%= @subscription.user_type %>
-    </p>
+    <% if current_user.has_role? :admin %>
+      <p>
+        <b>User type:</b>
+        <%= @subscription.user_type %>
+      </p>
+    <% end %>
+
+    <% if @subscription.user_type == 'candidate_6_months_unpaid' %>
+      <h5>6 Months Unpaid Volunteer Subscription</h5>
+    <% end %>
 
     <p>
       <b>User Email:</b>
@@ -22,12 +28,12 @@
 
     <p>
       <b>Created date:</b>
-      <%= @subscription.created_at.strftime('%d/%m/%Y') %>
+      <%= @subscription.created_at.getlocal.strftime('%e %B %Y') %>
     </p>
 
     <p>
       <b>Expiry date:</b>
-      <%= @subscription.expiry_date.strftime('%d/%m/%Y') %>
+      <%= @subscription.expiry_date.getlocal.strftime('%e %B %Y') %>
     </p>
 
     <p>
@@ -43,7 +49,8 @@
         </p>
       <% end %>
     <% end %>
-
-    <%= link_to 'Edit', edit_subscription_path(@subscription) %>
+    <% if current_user.has_role? :admin %>
+      <%= link_to 'Edit', edit_subscription_path(@subscription) %>
+    <% end %>
   </div>
 </div>
