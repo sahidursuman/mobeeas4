@@ -65,10 +65,6 @@ class SubscriptionsController < ApplicationController
     if params[:org].present?
       @organisation = Organisation.find(params[:org])
     end
-    if params[:last_expiry_date].present?
-      @last_expiry_date = (params[:last_expiry_date]).to_date
-    end
-
   end
 
   # GET /subscriptions/1/edit
@@ -82,13 +78,20 @@ class SubscriptionsController < ApplicationController
   def create
     @subscription = Subscription.new(subscription_params)
     if @subscription.manual_receipt # this is for manual subscription, token is increased one here in controller.
-      if @subscription.user_type == "organisation" # organisation subscription
+      if (@subscription.user_type == "organisation_6_months") || (@subscription.user_type == "organisation_12_months")# organisation subscription
         @organisation = Organisation.find(@subscription.organisation_id)
         @organisation.increase_one_token
       elsif @subscription.user_type == "independent"
         @user = User.find(@subscription.user_id)
         @user.org_user_profile.increase_one_token
       end
+    end
+
+    # This is to update the unpaid_volunteer attribute to TRUE for unpaid candidate.
+    if (@subscription.user_type == "candidate_6_months_unpaid")
+      @profile = Profile.find(@subscription.user.profile.id)
+      @profile.unpaid_volunteer = true
+      @profile.save!
     end
 
     respond_to do |format|

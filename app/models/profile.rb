@@ -7,8 +7,10 @@ class Profile < ActiveRecord::Base
 
   validates :first_name, :last_name, :dob, :bio, :suburb, :postcode, :state, :country, presence: true
 
-  geocoded_by :profile_data
-	after_validation :geocode
+  # KEEP THIS and use geocode later
+  # geocoded_by :profile_data
+	# after_validation :geocode
+  
 	after_create :build_agreement
 
 	mount_uploader :picture, PictureUploader
@@ -24,6 +26,16 @@ class Profile < ActiveRecord::Base
 	def profile_data
 		[address, suburb, state, postcode, country].compact.join(', ')
 	end
+
+  def become_paid_candidate
+    self.update_attributes(unpaid_volunteer: false)
+    self.save!
+  end
+
+  def become_unpaid_candidate
+    self.update_attributes(unpaid_volunteer: true)
+    self.save!
+  end
 
   scope :not_approved, -> {where(approved: false)}
   scope :approved, -> {where(approved: true)}

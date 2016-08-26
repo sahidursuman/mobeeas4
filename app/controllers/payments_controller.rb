@@ -297,6 +297,10 @@ class PaymentsController < ApplicationController
             SubscriptionMailer.new_subscription(@subscription.id).deliver_now # send receipt by mail to host
             # No token purchase for Candidate
 
+            # Set the unpaid_volunteer attribute to false for paid candidate
+            @profile.update_attributes(unpaid_volunteer: false)
+            @profile.save!
+
             # Sending the mail of the the subscription receipt
             AccountsMailer.subscription_receipt(@subscription.id, charge['receipt_number']).deliver_now
           end
@@ -335,6 +339,10 @@ class PaymentsController < ApplicationController
           if @subscription.save
             SubscriptionMailer.new_subscription(@subscription.id).deliver_now # send receipt by mail to host
             # No token purchase for Candidate
+
+            # Set the unpaid_volunteer attribute to false for paid candidate
+            @profile.update_attributes(unpaid_volunteer: false)
+            @profile.save!
 
             # Sending the mail of the the subscription receipt
             AccountsMailer.subscription_receipt(@subscription.id, charge['receipt_number']).deliver_now
