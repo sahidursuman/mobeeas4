@@ -1,7 +1,7 @@
 <span class="card-title blue-text"><i class="fa fa-flag-o"></i> My Subscription</span>
-  <p>
+  <div class="margintop-10px">
     Subscription is mandatory.
-  </p>
+  </div>
 <% @candidate_6_months = SubscriptionPack.find_by(name: 'candidate_6_months') %><%# get the Candidate Subscription pack %>
 <% @candidate_12_months = SubscriptionPack.find_by(name: 'candidate_12_months') %><%# get the Candidate Subscription pack %>
 <% @candidate_6_months_unpaid = SubscriptionPack.find_by(name: 'candidate_6_months_unpaid') %><%# get the Candidate Subscription pack %>
@@ -10,50 +10,65 @@
 <% if @profile.user.subscriptions.present? %>
   <%# get the LAST subscription of this CANDIDATE %>
   <% @subscription = Subscription.order('id ASC').find(@profile.user.subscriptions.last) %>
-  <br>Your subscription expiry date:<br>
-  <b><%= @subscription.expiry_date.getlocal.strftime('%e %B %Y') %></b>
-  <% if (@subscription.active) %><%# =============== if the last subscription is ACTIVE %>
-    <% if @subscription.expires_in_less_than_30_days %>
-      - <span class="red-text bold">Expiring soon!</span>
+  <div class="margin-top-10px">
+    Your subscription type:<br>
+    <% if @profile.unpaid_volunteer %>
+      <b>Volunteer (free subscription)</b>
+    <% else %>
+      <b>Paid Candidate (paid subscription)</b>
+    <% end %>
+  </div>
+
+  <div class="margin-top-10px">
+    Your subscription expiry date:<br>
+    <b><%= @subscription.expiry_date.getlocal.strftime('%e %B %Y') %></b>
+
+    <% if (@subscription.active) %><%# =============== if the last subscription is ACTIVE %>
+      <% if @subscription.expires_in_less_than_30_days %>
+        - <span class="red-text bold">Expiring soon!</span>
+        <br>
+        Please renew your subscription.<br>
+        <div class="margin-top-10px">
+          <%= link_to "6 Months", new_subscription_path(subscription_pack: @candidate_6_months), class: 'btn' %>
+        </div>
+        <div class="margin-top-10px">
+          <%= link_to "12 Months", new_subscription_path(subscription_pack: @candidate_12_months), class: 'btn' %>
+        </div>
+        <%#-----Subscription for Unpaid Volunteer-----%>
+        <div class="margin-top-10px">
+          <%= link_to "Unpaid Candidate", new_subscription_path(subscription_pack: @candidate_6_months_unpaid), class: 'btn' %>
+        </div>
+      <% end %>
+    <% elsif (@subscription.expired)%><%# =============== if the last subscription has EXPIRED %>
+      - <span class="red-text bold">Expired!</span>
       <br>
       Please renew your subscription.<br>
-      <div class="margin-top-20px">
-        <%= link_to "6 Months", new_subscription_path(subscription_pack: @candidate_6_months.id), class: 'btn' %>
+      <div class="margin-top-10px">
+        <%= link_to "6 Months", new_subscription_path(subscription_pack: @candidate_6_months), class: 'btn' %>
       </div>
-      <div class="margin-top-20px">
-        <%= link_to "12 Months", new_subscription_path(subscription_pack: @candidate_12_months.id), class: 'btn' %>
+      <div class="margin-top-10px">
+        <%= link_to "12 Months", new_subscription_path(subscription_pack: @candidate_12_months), class: 'btn' %>
       </div>
       <%#-----Subscription for Unpaid Volunteer-----%>
-      <div class="margin-top-20px">
+      <div class="margin-top-10px">
         <%= link_to "Unpaid Candidate", new_subscription_path(subscription_pack: @candidate_6_months_unpaid), class: 'btn' %>
       </div>
     <% end %>
-  <% elsif (@subscription.expired)%><%# =============== if the last subscription has EXPIRED %>
-    - <span class="red-text bold">Expired!</span>
-    <br>
-    Please renew your subscription.<br>
-    <div class="margin-top-20px">
-      <%= link_to "6 Months", new_subscription_path(subscription_pack: @candidate_6_months), class: 'btn' %>
-    </div>
-    <div class="margin-top-20px">
-      <%= link_to "12 Months", new_subscription_path(subscription_pack: @candidate_12_months), class: 'btn' %>
-    </div>
-    <%#-----Subscription for Unpaid Volunteer-----%>
-    <div class="margin-top-20px">
-      <%= link_to "Unpaid Candidate", new_subscription_path(subscription_pack: @candidate_6_months_unpaid), class: 'btn' %>
-    </div>
-    <br>
-  <% end %>
+  </div>
 
 <%# If the candidate never subscribed at all (new candidate) ==================  %>
 <% else %>
-  <p>
+  <div class="margin-top-20px">
     Please purchase MOBEEAS subscription.
-    <div class="margin-top-20px">
-      <%= link_to "6 Months Subscription", new_subscription_path(subscription_pack: @candidate_6_months.id), class: 'btn' %>
+    <div class="margin-top-10px">
+      <%= link_to "6 Months", new_subscription_path(subscription_pack: @candidate_6_months), class: 'btn' %>
     </div>
-    <div class="margin-top-20px">
-      <%= link_to "1 Year Subscription", new_subscription_path(subscription_pack: @candidate_12_months.id), class: 'btn' %>
+    <div class="margin-top-10px">
+      <%= link_to "12 Months", new_subscription_path(subscription_pack: @candidate_12_months), class: 'btn' %>
     </div>
-  </p>
+    <%#-----Subscription for Unpaid Volunteer-----%>
+    <div class="margin-top-10px">
+      <%= link_to "Unpaid Candidate", new_subscription_path(subscription_pack: @candidate_6_months_unpaid), class: 'btn' %>
+    </div>
+  </div>
 <% end %>

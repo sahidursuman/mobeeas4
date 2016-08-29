@@ -133,8 +133,24 @@
           <% @host = User.find(@opportunity.user_id) %>
           <p>
             Hosted by: <b><%= @host.org_user_profile.name %></b>
+
+            <%# If current user is an unpaid candidate and if this is a PAID opportunity %>
+            <% if (current_user.has_role? :candidate) && (current_user.profile.unpaid_volunteer) && (@opportunity.paid_engagement) %>
+              <!-- Modal Trigger -->
+              <a class="waves-effect waves-light modal-trigger" href="#modal1"><i class="material-icons">help_outline</i></a>
+
+              <!-- Modal Structure -->
+              <div id="modal1" class="modal">
+                <div class="modal-content">
+                  <h4>PAID ENGAGEMENT</h4>
+                  <p>Currently you subscribed to MOBEEAS as a volunteer. If you would like to contact the Host of this opportunity, you need to upgrade to paid subscription.</p>
+                </div>
+                <div class="modal-footer">
+                  <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Close</a>
+                </div>
+              </div>
             <%# Do not display 'contact host' while the owner of this opportunity is viewing my own opportunity %>
-            <% if !(@host.id == current_user.id) && !(@opportunity.archived) %>
+            <% elsif !(@host.id == current_user.id) && !(@opportunity.archived) %>
                <!-- Modal Trigger -->
                 | <a class="modal-trigger" href="#contact-host">Contact Host</a>
 
