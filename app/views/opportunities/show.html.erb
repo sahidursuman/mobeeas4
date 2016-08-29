@@ -590,11 +590,17 @@
                   <%# what does candidate_skill.user.profile.approved mean? %>
                   <%# It means that the Admin has clicked the 'approve' function in the Prohibited Candidate list which calls the approve function in profiles_controller.rb file %>
                   <%# HERE IS WHERE YOU WILL SCREEN PAID CANDIDATE OR UNPAID CANDIDATE OUT %>
-                    <% hash[candidate_skill.user_id] = [] %> <%# create a hash of empty array, key is skill name, value is user id to be filled in the next loop %>
+                    <% if @opportunity.paid_engagement %><%# A paid engagement will list paid candidates only %>
+                      <% if !(candidate_skill.user.profile.unpaid_volunteer) %><%# Looking for paid candidate %>
+                        <% hash[candidate_skill.user_id] = [] %> <%# create a hash of empty array, key is skill name, value is user id to be filled in the next loop %>
+                      <% end %> <%# end of if !(candidate_skill.user.profile.unpaid_volunteer) %>
+                    <% else %><%# else if the opportunity is not a paid_engagement %>
+                      <% hash[candidate_skill.user_id] = [] %><%# then look for either paid or unpaid candidates %>
+                    <% end %><%# end of if @opportunity.paid_engagement %>
                   <% end %>
                 <% end %><%# end of if (@subscription.active)%>
               <% end %><%# end of if candidate_skill.user.subscriptions.present? %>
-            <% end %><%# end of candidate skill loop %>
+            <% end %><%# end of candidate_skills loop %>
           <% end %><%# end of opportunity loop %>
           <%# End of STEP ONE =================== %>
 
@@ -611,7 +617,14 @@
                 <% @subscription = Subscription.find(candidate_skill.user.subscriptions.order('id ASC').last) %><%# find the last subscription of this candidate %>
                 <% if (@subscription.active) %><%# if Candidate's subscription is active then he will be included in the next search %>
                   <% if (candidate_skill.skill_id == opportunity_skill.skill.id) && (candidate_skill.verified)  && (candidate_skill.user.profile.approved) %>
-                    <% hash[candidate_skill.user_id] << [candidate_skill.skill.skill_category.name, candidate_skill.skill.name] %>
+                    <%# HERE IS WHERE YOU WILL SCREEN PAID CANDIDATE OR UNPAID CANDIDATE OUT %>
+                    <% if @opportunity.paid_engagement %><%# A paid engagement will list paid candidates only %>
+                      <% if !(candidate_skill.user.profile.unpaid_volunteer) %><%# Looking for paid candidate %>
+                        <% hash[candidate_skill.user_id] << [candidate_skill.skill.skill_category.name, candidate_skill.skill.name] %>
+                      <% end %> <%# end of if !(candidate_skill.user.profile.unpaid_volunteer) %>
+                    <% else %><%# else if the opportunity is not a paid_engagement %>
+                      <% hash[candidate_skill.user_id] << [candidate_skill.skill.skill_category.name, candidate_skill.skill.name] %><%# then look for either paid or unpaid candidates %>
+                    <% end %><%# end of if @opportunity.paid_engagement %>
                   <% end %>
                 <% end %><%# end of if (@subscription.active)%>
               <% end %><%# end of if candidate_skill.user.subscriptions.present? %>
