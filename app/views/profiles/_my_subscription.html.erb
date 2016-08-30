@@ -36,7 +36,7 @@
         </div>
         <%#-----Subscription for Unpaid Volunteer-----%>
         <div class="margin-top-10px">
-          <%= link_to "Unpaid Candidate", new_subscription_path(subscription_pack: @candidate_6_months_unpaid), class: 'btn' %>
+          <%= link_to "Free Subscription", new_subscription_path(subscription_pack: @candidate_6_months_unpaid), class: 'btn' %>
         </div>
       <% end %>
     <% elsif (@subscription.expired)%><%# =============== if the last subscription has EXPIRED %>
@@ -51,7 +51,7 @@
       </div>
       <%#-----Subscription for Unpaid Volunteer-----%>
       <div class="margin-top-10px">
-        <%= link_to "Unpaid Candidate", new_subscription_path(subscription_pack: @candidate_6_months_unpaid), class: 'btn' %>
+        <%= link_to "Free Subscription", new_subscription_path(subscription_pack: @candidate_6_months_unpaid), class: 'btn' %>
       </div>
     <% end %>
   </div>
@@ -68,7 +68,7 @@
     </div>
     <%#-----Subscription for Unpaid Volunteer-----%>
     <div class="margin-top-10px">
-      <%= link_to "Unpaid Candidate", new_subscription_path(subscription_pack: @candidate_6_months_unpaid), class: 'btn' %>
+      <%= link_to "Free Subscription", new_subscription_path(subscription_pack: @candidate_6_months_unpaid), class: 'btn' %>
     </div>
   </div>
 <% end %>
