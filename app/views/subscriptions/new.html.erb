@@ -40,7 +40,7 @@
 
   <%# this is for Candidate 6 MONTHS UNPAID VOLUNTEER subscription ========================== %>
   <% elsif @subscription_pack.name == 'candidate_6_months_unpaid' %>
-    You are subscribing to a free 6-month MOBEEAS subscription, you will be able to participate in unpaid engagement as an unpaid volunteer.
+    You are subscribing to a free 6-month MOBEEAS subscription. You will be able to participate in unpaid engagements as an unpaid volunteer.
     <br>
     <% @last_expiry_date = last_subscription(current_user) %>
     <%= render 'candidate_unpaid_subscriptions' %>

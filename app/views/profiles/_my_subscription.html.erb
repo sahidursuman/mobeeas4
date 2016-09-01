@@ -24,6 +24,15 @@
     <b><%= @subscription.expiry_date.getlocal.strftime('%e %B %Y') %></b>
 
     <% if (@subscription.active) %><%# =============== if the last subscription is ACTIVE %>
+      <% if (@profile.unpaid_volunteer) %><%# For unpaid_volunteer, show the paid subscription buttons %>
+        <div class="margin-top-10px">
+          <%= link_to "6 Months", new_subscription_path(subscription_pack: @candidate_6_months), class: 'btn' %>
+        </div>
+        <div class="margin-top-10px">
+          <%= link_to "12 Months", new_subscription_path(subscription_pack: @candidate_12_months), class: 'btn' %>
+        </div>
+      <% end %>
+
       <% if @subscription.expires_in_less_than_30_days %>
         - <span class="red-text bold">Expiring soon!</span>
         <br>
