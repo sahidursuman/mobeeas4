@@ -2,10 +2,10 @@
   <%= f.error_notification %>
   <div class="row">
     <div class="col l6">
-      <%= f.input :name, label: 'Choose Check Type', priority: [ "Working with Children"], collection: ["Working with Children", "Police Check"] %>
+      <%= f.input :name, label: 'Choose Check Type', priority: [ "Working with Children"], collection: ["Working with Children", "Police Check", "VIT Card"] %>
     </div>
     <div class="col l6">
-      <%= f.input :state, label: 'State', priority: [ "NSW" ], collection: [ "NSW", "QLD", "SA", "TAS", "VIC", "ACT", "WA"] %>
+      <%= f.input :state, label: 'State', priority: [ "NSW" ], collection: [ "VIC", "ACT", "WA", "NSW", "QLD", "SA", "TAS"] %>
     </div>
   </div>
   <div class="row">
@@ -18,7 +18,7 @@
 
     </div>
   </div>
-  <div class="form-actions">
+  <div class="form-actions margin-top-20px margin-bottom-170px">
     <button type="submit" class="btn">Add Security Check</button>
   </div>
 <% end %>
