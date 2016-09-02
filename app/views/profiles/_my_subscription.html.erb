@@ -1,7 +1,4 @@
 <span class="card-title blue-text"><i class="fa fa-flag-o"></i> My Subscription</span>
-  <div class="margintop-10px">
-    Subscription is mandatory.
-  </div>
 <% @candidate_6_months = SubscriptionPack.find_by(name: 'candidate_6_months') %><%# get the Candidate Subscription pack %>
 <% @candidate_12_months = SubscriptionPack.find_by(name: 'candidate_12_months') %><%# get the Candidate Subscription pack %>
 <% @candidate_6_months_unpaid = SubscriptionPack.find_by(name: 'candidate_6_months_unpaid') %><%# get the Candidate Subscription pack %>
@@ -24,19 +21,22 @@
     <b><%= @subscription.expiry_date.getlocal.strftime('%e %B %Y') %></b>
 
     <% if (@subscription.active) %><%# =============== if the last subscription is ACTIVE %>
-      <% if (@profile.unpaid_volunteer) %><%# For unpaid_volunteer, show the paid subscription buttons %>
-        <div class="margin-top-10px">
-          <%= link_to "6 Months", new_subscription_path(subscription_pack: @candidate_6_months), class: 'btn' %>
-        </div>
-        <div class="margin-top-10px">
-          <%= link_to "12 Months", new_subscription_path(subscription_pack: @candidate_12_months), class: 'btn' %>
-        </div>
+      <% if (@profile.unpaid_volunteer) %><%# This gives the opportunity for unpaid_volunteer to change to paid candidate %>
+        <% if !(@subscription.expires_in_less_than_30_days) %>
+          <div class="margin-top-10px">
+            <%= link_to "6 Months", new_subscription_path(subscription_pack: @candidate_6_months), class: 'btn' %>
+          </div>
+          <div class="margin-top-10px">
+            <%= link_to "12 Months", new_subscription_path(subscription_pack: @candidate_12_months), class: 'btn' %>
+          </div>
+        <% end %>
       <% end %>
 
       <% if @subscription.expires_in_less_than_30_days %>
         - <span class="red-text bold">Expiring soon!</span>
-        <br>
-        Please renew your subscription.<br>
+        <div class="margin-top-10px">
+          Your subscription is about to expire. Please choose a 6 month <%= number_to_currency(@candidate_6_months.price_ex_gst) %> or 12 month <%= number_to_currency(@candidate_12_months.price_ex_gst) %> subscription for paid engagements. If you do not require payment for your services you are entitled to free subscription.
+        </div>
         <div class="margin-top-10px">
           <%= link_to "6 Months", new_subscription_path(subscription_pack: @candidate_6_months), class: 'btn' %>
         </div>
@@ -50,8 +50,9 @@
       <% end %>
     <% elsif (@subscription.expired)%><%# =============== if the last subscription has EXPIRED %>
       - <span class="red-text bold">Expired!</span>
-      <br>
-      Please renew your subscription.<br>
+      <div class="margin-top-10px">
+        Your subscription has expired. Please choose a 6 month <%= number_to_currency(@candidate_6_months.price_ex_gst) %> or 12 month <%= number_to_currency(@candidate_12_months.price_ex_gst) %> subscription for paid engagements. If you do not require payment for your services you are entitled to free subscription.
+      </div>
       <div class="margin-top-10px">
         <%= link_to "6 Months", new_subscription_path(subscription_pack: @candidate_6_months), class: 'btn' %>
       </div>
@@ -67,8 +68,8 @@
 
 <%# If the candidate never subscribed at all (new candidate) ==================  %>
 <% else %>
-  <div class="margin-top-20px">
-    Please purchase MOBEEAS subscription.
+  <p>
+    Please choose a 6 month <%= number_to_currency(@candidate_6_months.price_ex_gst) %> or 12 month <%= number_to_currency(@candidate_12_months.price_ex_gst) %> subscription for paid engagements. If you do not require payment for your services you are entitled to free subscription.
     <div class="margin-top-10px">
       <%= link_to "6 Months", new_subscription_path(subscription_pack: @candidate_6_months), class: 'btn' %>
     </div>
@@ -79,5 +80,22 @@
     <div class="margin-top-10px">
       <%= link_to "Free Subscription", new_subscription_path(subscription_pack: @candidate_6_months_unpaid), class: 'btn' %>
     </div>
-  </div>
+  </p>
 <% end %>
+
+<!-- Modal Trigger -->
+<div class="margin-top-10px">
+
+</div>
+<a class="waves-effect waves-light modal-trigger" href="#subscriptions_info"><i class="material-icons">help_outline</i></a>
+
+<!-- Modal Structure -->
+<div id="subscriptions_info" class="modal">
+  <div class="modal-content">
+    <h5>Subscriptions Information</h5>
+    <p>Candidates who would like to be considered for both paid and voluntary engagements are required to subscribe for 6 or 12 months. Candidates who would like to be considered for voluntary engagements only can sign up for free!</p>
+  </div>
+  <div class="modal-footer">
+      <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">CLOSE</a>
+  </div>
+</div>

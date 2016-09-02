@@ -15,12 +15,6 @@ class PagesController < ApplicationController
     end
   end
 
-  def contact
-  end
-
-  def welcome
-  end
-
   def find_organisation
   	@organisation_types = OrganisationType.all
   	if params[:search]

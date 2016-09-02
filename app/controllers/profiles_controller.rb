@@ -35,13 +35,9 @@ class ProfilesController < ApplicationController
       @user = @profile.user
       @candidate_skills = @user.candidate_skills
       @user_skills = @user.skills.includes(:candidate_skills)
-      # @user_skills_categories = SkillCategory.joins(@user_skills)
-      # @skill_categories = SkillCategory.alphabetical
       @user_educations = @user.educations
       @user_security_checks = @user.security_checks
       @agreement = @user.agreement
-      # pdf_link = 'http://localhost:3000/MOBEEAS-Candidate-Terms-and-Conditions-1Oct2015.pdf'
-      # send_file('https://dl.dropboxusercontent.com/u/2236963/MOBEEAS-Candidate-Terms-and-Conditions-1Oct2015.pdf', type: 'application/pdf', disposition: 'inline')
     else
       redirect_to root_path
     end

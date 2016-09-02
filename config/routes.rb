@@ -103,8 +103,6 @@ Rails.application.routes.draw do
   end
 
   get 'admin_page', to: 'pages#admin_page'
-  get 'contact', to: 'pages#contact'
-  get 'welcome', to: 'pages#welcome'
   get 'find_organisation', to: 'pages#find_organisation'
   root 'pages#home'
   get 'my_skills', to: 'pages#my_skills'
