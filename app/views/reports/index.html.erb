@@ -21,7 +21,11 @@
         <% @reports.each do |report| %>
           <tr>
             <td><%= report.opportunity.id %></td>
-            <td><%= report.opportunity.organisation.name %></td>
+            <td>
+              <% if report.opportunity.organisation.name.present? %>
+                <%= report.opportunity.organisation.name %>
+              <% end %>
+            </td>
             <% @candidate = Profile.find(report.profile_id) %>
             <td><%= @candidate.name %></td>
             <td><%= report.report_type %></td>
