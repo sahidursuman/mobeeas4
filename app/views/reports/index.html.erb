@@ -22,7 +22,7 @@
           <tr>
             <td><%= report.opportunity.id %></td>
             <td>
-              <% if report.opportunity.organisation.name.present? %>
+              <% if report.opportunity.organisation.present? %>
                 <%= report.opportunity.organisation.name %>
               <% end %>
             </td>
