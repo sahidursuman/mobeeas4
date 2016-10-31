@@ -5,7 +5,8 @@ class Subscription < ActiveRecord::Base
 
   scope :organisation, -> { where('user_type =? OR user_type =?', 'organisation_6_months','organisation_12_months') }
   scope :independent, -> { where(user_type: 'independent') }
-  scope :candidate, -> { where('user_type =? OR user_type =?', 'candidate_6_months','candidate_12_months') }
+  scope :candidate_paid, -> { where('user_type =? OR user_type =?', 'candidate_6_months','candidate_12_months') }
+  scope :candidate_volunteer, -> { where('user_type =?', 'candidate_6_months_unpaid') }
   scope :expiring_in_less_than_30_days, -> { where('expiry_date < ?', 30.day.from_now) }
   scope :expiring_in_more_than_30_days, -> { where('expiry_date >= ?', 30.day.from_now) }
   scope :are_active, -> { where('expiry_date >= ?', Date.today) }

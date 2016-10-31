@@ -4,10 +4,8 @@
     <%# displaying the name of the organisation host, independent host or the candidate %>
     <% if params[:organisation].present? || params[:independent].present? %>
       <td><%= @subscription.user.org_user_profile.name %></td>
-    <% elsif (params[:candidate].present?) %>
-      <% if @subscription.user.profile.present? %>
-        <td><%= @subscription.user.profile.name %></td>
-      <% end %>
+    <% elsif (params[:candidate_paid].present?) || (params[:candidate_volunteer].present?) %>
+      <td><%= @subscription.user.profile.name %></td>
     <% end %>
 
     <%# displaying the organisation name for Organisation 6 months subscriptions %>
@@ -16,7 +14,7 @@
     <% end %>
     <td><%= @subscription.expiry_date.getlocal.strftime('%e %b %Y') %></td>
     <td><%= number_to_currency(@subscription.payment) %></td>
-    <% if (params[:organisation] == 'expiring') || (params[:independent] == 'expiring') || (params[:candidate] == 'expiring') %>
+    <% if (params[:organisation] == 'expiring') || (params[:independent] == 'expiring') || (params[:candidate_paid] == 'expiring') || (params[:candidate_volunteer] == 'expiring') %>
       <% if @subscription.notified_at.present? %>
         <td><%= @subscription.notified_at.getlocal.strftime('%e %b %Y') %></td>
       <% else %>

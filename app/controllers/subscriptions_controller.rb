@@ -39,15 +39,23 @@ class SubscriptionsController < ApplicationController
     elsif params[:independent] == 'expired'
       @subscriptions = Subscription.independent.are_expired
 
-    elsif params[:candidate] == 'active'
-      @subscriptions = Subscription.candidate.expiring_in_more_than_30_days
+    elsif params[:candidate_paid] == 'active'
+      @subscriptions = Subscription.candidate_paid.expiring_in_more_than_30_days
 
-    elsif params[:candidate] == 'expiring'
-      @subscriptions = Subscription.candidate.expiring_in_less_than_30_days.are_active
+    elsif params[:candidate_paid] == 'expiring'
+      @subscriptions = Subscription.candidate_paid.expiring_in_less_than_30_days.are_active
 
-    elsif params[:candidate] == 'expired'
-      @subscriptions = Subscription.candidate.are_expired
+    elsif params[:candidate_paid] == 'expired'
+      @subscriptions = Subscription.candidate_paid.are_expired
 
+    elsif params[:candidate_volunteer] == 'active'
+      @subscriptions = Subscription.candidate_volunteer.expiring_in_more_than_30_days
+
+    elsif params[:candidate_volunteer] == 'expiring'
+      @subscriptions = Subscription.candidate_volunteer.expiring_in_less_than_30_days.are_active
+
+    elsif params[:candidate_volunteer] == 'expired'
+      @subscriptions = Subscription.candidate_volunteer.are_expired
     end
   end
 
