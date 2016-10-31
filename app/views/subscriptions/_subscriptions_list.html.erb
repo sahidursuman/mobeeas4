@@ -5,7 +5,7 @@
     <% if params[:organisation].present? || params[:independent].present? %>
       <td><%= @subscription.user.org_user_profile.name %></td>
     <% elsif (params[:candidate].present?) %>
-      <% @subscription.user.profile.present? %>
+      <% if @subscription.user.profile.present? %>
         <td><%= @subscription.user.profile.name %></td>
       <% end %>
     <% end %>
