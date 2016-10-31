@@ -26,9 +26,15 @@
     </p>
 
     <p>
-      <strong>LinkedIn Profile:</strong>
-      <%#= link_to @profile.linkedin %>
-      <a href="<%= @profile.linkedin %>"><%= @profile.linkedin %></a>
+      <!-- <strong>LinkedIn Profile:</strong> -->
+      <% if @profile.linkedin.present? %>
+      <a href="<%= @profile.linkedin %>"> View My LinkedIn Profile</a>
+      <% end %>
+    </p>
+    <p>
+      <% if @profile.youtube.present? %>
+      <a href="<%= @profile.youtube %>">View My YouTube Profile</a>
+      <% end %>
     </p>
     <hr>
     <h5>About me:</h5>
