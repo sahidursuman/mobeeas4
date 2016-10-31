@@ -92,6 +92,22 @@
     </li>
   </ul>
 </li>
+
+<li class="bold no-padding">
+  <ul class="collapsible collapsible-accordion">
+    <li class=" margin-top-5px">
+      <a class="collapsible-header">Candidate Volunteers</a>
+      <div class="collapsible-body">
+        <ul>
+          <li><%= link_to 'Active', subscriptions_path(candidate: "active") %></li>
+          <li><%= link_to 'Expiring', subscriptions_path(candidate: "expiring") %></li>
+          <li><%= link_to 'Expired', subscriptions_path(candidate: "expired") %></li>
+        </ul>
+      </div>
+    </li>
+  </ul>
+</li>
+
 <li class="bold"><%= link_to 'Create Manual Subscr.', manual_receipt_path %></li>
 <li class="bold"><%= link_to 'Income', income_path %></li>
 <li class="bold"><%= link_to 'Feedback', feedbacks_path %></li>
