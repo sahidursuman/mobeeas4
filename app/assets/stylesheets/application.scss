@@ -66,10 +66,17 @@ nav ul a {
 
 /*photobanner*/
 
+#photobanner-container {
+  width: 100%;
+	overflow: hidden;
+	margin: 50px auto;
+	background: white;
+}
 .photobanner {
 	height: 233px;
 	width: 3550px;
 	margin-bottom: 80px;
+  margin-top: 80px;
 }
 
 .photobanner img {
