@@ -77,6 +77,7 @@ nav ul a {
 	width: 3550px;
 	margin-bottom: 80px;
   margin-top: 80px;
+
 }
 
 .photobanner img {
@@ -85,6 +86,7 @@ nav ul a {
 	-o-transition: all 0.5s ease;
 	-ms-transition: all 0.5s ease;
 	transition: all 0.5s ease;
+  vertical-align: middle;
 }
 
 .photobanner img:hover {
@@ -195,6 +197,10 @@ nav ul a {
 }
 .align-justify {
   text-align: justify;
+}
+#vertical-middle {
+  display: inline-block;
+  vertical-align: middle;
 }
 .bg-position-center {
   background-position: center;
