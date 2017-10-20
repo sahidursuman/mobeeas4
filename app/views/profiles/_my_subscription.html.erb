@@ -35,7 +35,8 @@
       <% if @subscription.expires_in_less_than_30_days %>
         - <span class="red-text bold">Expiring soon!</span>
         <div class="margin-top-10px">
-          Your subscription is about to expire. Please choose a 6 month <%= number_to_currency(@candidate_6_months.price_ex_gst) %> or 12 month <%= number_to_currency(@candidate_12_months.price_ex_gst) %> subscription for paid engagements. If you do not require payment for your services you are entitled to free subscription.
+          Your subscription is about to expire. Please choose a 6 month <%#= number_to_currency(@candidate_6_months.price_ex_gst) %> or 12 month <%#= number_to_currency(@candidate_12_months.price_ex_gst) %> subscription for paid engagements. If you do not require payment for your services you are entitled to free subscription.
+          <!-- The figure of number_to_currency is currently commented out (20 Oct 2017) until further instruction -->
         </div>
         <div class="margin-top-10px">
           <%= link_to "6 Months", new_subscription_path(subscription_pack: @candidate_6_months), class: 'btn' %>
@@ -51,7 +52,8 @@
     <% elsif (@subscription.expired)%><%# =============== if the last subscription has EXPIRED %>
       - <span class="red-text bold">Expired!</span>
       <div class="margin-top-10px">
-        Your subscription has expired. Please choose a 6 month <%= number_to_currency(@candidate_6_months.price_ex_gst) %> or 12 month <%= number_to_currency(@candidate_12_months.price_ex_gst) %> subscription for paid engagements. If you do not require payment for your services you are entitled to free subscription.
+        Your subscription has expired. Please choose a 6 month <%#= number_to_currency(@candidate_6_months.price_ex_gst) %> or 12 month <%#= number_to_currency(@candidate_12_months.price_ex_gst) %> subscription for paid engagements. If you do not require payment for your services you are entitled to free subscription.
+        <!-- The figure of number_to_currency is currently commented out (20 Oct 2017) until further instruction -->
       </div>
       <div class="margin-top-10px">
         <%= link_to "6 Months", new_subscription_path(subscription_pack: @candidate_6_months), class: 'btn' %>
@@ -69,16 +71,17 @@
 <%# If the candidate never subscribed at all (new candidate) ==================  %>
 <% else %>
   <p>
-    Please choose a 6 month <%= number_to_currency(@candidate_6_months.price_ex_gst) %> or 12 month <%= number_to_currency(@candidate_12_months.price_ex_gst) %> subscription for paid engagements. If you do not require payment for your services you are entitled to free subscription.
+    Please choose a 6 month <%#= number_to_currency(@candidate_6_months.price_ex_gst) %> or 12 month <%#= number_to_currency(@candidate_12_months.price_ex_gst) %> subscription for paid engagements. If you do not require payment for your services you are entitled to free subscription.
+    <!-- The figure of number_to_currency is currently commented out (20 Oct 2017) until further instruction -->
     <div class="margin-top-10px">
-      <%= link_to "6 Months", new_subscription_path(subscription_pack: @candidate_6_months), class: 'btn' %>
+      <%= link_to "6 Months Subscription", new_subscription_path(subscription_pack: @candidate_6_months), class: 'btn' %>
     </div>
     <div class="margin-top-10px">
-      <%= link_to "12 Months", new_subscription_path(subscription_pack: @candidate_12_months), class: 'btn' %>
+      <%= link_to "12 Months Subscription", new_subscription_path(subscription_pack: @candidate_12_months), class: 'btn' %>
     </div>
     <%#-----Subscription for Unpaid Volunteer-----%>
     <div class="margin-top-10px">
-      <%= link_to "Free Subscription", new_subscription_path(subscription_pack: @candidate_6_months_unpaid), class: 'btn' %>
+      <%= link_to "Volunteer Subscription", new_subscription_path(subscription_pack: @candidate_6_months_unpaid), class: 'btn' %>
     </div>
   </p>
 <% end %>
